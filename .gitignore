@@ -1,4 +1,4 @@
-﻿# OS / editors
+# OS / editors
 .DS_Store
 Thumbs.db
 desktop.ini
@@ -52,3 +52,7 @@ exports/
 _logs/
 _cache/
 _tools/
+# Patch/runtime local artifacts
+_patches/*.applied.json
+frontend/*.tsbuildinfo
+frontend/**/*.tsbuildinfo

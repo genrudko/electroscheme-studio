@@ -1,0 +1,65 @@
+# Cline Rules — ElectroScheme Studio
+
+Work in patch mode only.
+
+Project root: G:\electroscheme-studio
+Patch folder: C:\1
+Product: ElectroScheme Studio
+Repository: electroscheme-studio
+Stack: Python/FastAPI backend + Vue/Vite/TypeScript frontend
+
+Token economy:
+- Do not inspect the whole repo when a few files are enough.
+- Do not print full files unless requested.
+- Do not repeat known context.
+- Do not propose multiple architectures unless asked.
+- Prefer one safe implementation.
+- Keep responses short: Done / Checks / Status / Next.
+
+Patch rules:
+- All changes go through numbered PowerShell patches.
+- Patch name: patch_XXX_short_description.ps1
+- Repair name: patch_XXX_repairN_short_description.ps1
+- Use one log only: _logs\<patch>_<timestamp>.transcript.log
+- Start every patch with Start-Transcript.
+- Always close transcript in finally.
+- A small _patches\<patch>.applied.json marker is allowed.
+- Do not create extra summary .log files.
+
+PowerShell rules:
+- Target Windows PowerShell 5.1.
+- Do not use PowerShell 7-only syntax.
+- Never write source/config files with Set-Content -Encoding UTF8.
+- Write JSON/TS/Vue/CSS/HTML/Python/TOML/MD as UTF-8 without BOM using System.Text.UTF8Encoding($false).
+- Capture stdout/stderr of important native commands with Start-Process.
+- Do not let expected failures like missing origin remote crash the patch.
+
+Git/GitHub:
+- Branch: main.
+- Repo: https://github.com/genrudko/electroscheme-studio
+- Commit only after checks pass.
+- Keep commits small.
+- Use HTTPS origin if SSH host key is not configured.
+- If pushing workflows, gh token needs workflow scope.
+
+Checks before commit:
+- Backend: install requirements and direct smoke-test health/demo_project.
+- Frontend: npm install and npm run build.
+- Keep npm run typecheck separate; do not block early MVP bootstrap on strict typecheck if Vite build passes.
+
+Scope:
+- Make minimal changes.
+- Do not change project name, stack, or architecture without request.
+- Do not add DWG/CAD/cloud/multi-user features now.
+- Do not add large dependencies without reason.
+- Do not reformat unrelated files.
+
+Repair patches:
+- Minimal repair only.
+- State root cause in patch header.
+- Re-run failed check.
+- Improve logging if the previous error was hidden.
+
+Product boundary:
+- Local-first WebUI editor for interactive electrical schemes.
+- Early focus: model, SVG renderer, selection, properties, terminals/connections, validation, export later.
