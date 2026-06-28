@@ -1,0 +1,16 @@
+﻿{
+    "patch_name":  "patch_000_prepare_environment",
+    "applied_at":  "2026-06-28T12:14:04.2338625+03:00",
+    "project_name":  "ElectroScheme Studio",
+    "project_code_name":  "electroscheme-studio",
+    "project_root":  "G:\\electroscheme-studio",
+    "status":  "WARNING",
+    "warnings":  [
+                     "node not found",
+                     "npm not found",
+                     "Required tools are missing. Run with -InstallMissingTools or install them manually."
+                 ],
+    "errors":  [
+
+               ]
+}

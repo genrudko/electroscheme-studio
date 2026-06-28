@@ -1,0 +1,16 @@
+﻿name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  placeholder:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Repository bootstrap check
+        run: |
+          test -f README.md
+          test -f backend/app/main.py
+          test -f frontend/package.json

@@ -1,0 +1,32 @@
+﻿{
+  "": "https://json-schema.org/draft/2020-12/schema",
+  "": "https://electroscheme-studio.local/schemas/project.schema.json",
+  "title": "ElectroScheme Studio Project",
+  "type": "object",
+  "required": ["version", "project", "sheets", "symbols", "connections"],
+  "properties": {
+    "version": {
+      "type": "string"
+    },
+    "project": {
+      "type": "object",
+      "required": ["name"],
+      "properties": {
+        "name": { "type": "string" },
+        "code": { "type": "string" }
+      }
+    },
+    "sheets": {
+      "type": "array",
+      "items": { "type": "object" }
+    },
+    "symbols": {
+      "type": "array",
+      "items": { "type": "object" }
+    },
+    "connections": {
+      "type": "array",
+      "items": { "type": "object" }
+    }
+  }
+}
