@@ -57,3 +57,13 @@ _patches/*.applied.json
 frontend/*.tsbuildinfo
 frontend/**/*.tsbuildinfo
 _reports/
+# Local patch/log/report artifacts
+_patches/
+# Python local artifacts
+*.pyc
+backend/.venv/
+# Frontend local artifacts
+# Local Visio source banks and binary working files
+Фигуры*.vsdx
+*.vsd
+*.vss
