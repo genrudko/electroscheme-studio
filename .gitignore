@@ -56,3 +56,4 @@ _tools/
 _patches/*.applied.json
 frontend/*.tsbuildinfo
 frontend/**/*.tsbuildinfo
+_reports/

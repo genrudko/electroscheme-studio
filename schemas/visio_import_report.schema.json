@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://electroscheme.local/schemas/visio_import_report.schema.json",
+  "title": "ElectroScheme Studio Visio Import Report",
+  "type": "object",
+  "required": [
+    "source",
+    "format",
+    "pages_count",
+    "masters_count",
+    "connection_points_total",
+    "voltage_classes",
+    "policies"
+  ],
+  "properties": {
+    "source": {
+      "type": "string"
+    },
+    "format": {
+      "const": "vsdx"
+    },
+    "pages_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "masters_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "connection_points_total": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "voltage_classes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "label"],
+        "properties": {
+          "id": { "type": "string" },
+          "label": { "type": "string" },
+          "normal_rgb": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": { "type": "integer", "minimum": 0, "maximum": 255 },
+                "minItems": 3,
+                "maxItems": 3
+              },
+              { "type": "null" }
+            ]
+          },
+          "ptk_rgb": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": { "type": "integer", "minimum": 0, "maximum": 255 },
+                "minItems": 3,
+                "maxItems": 3
+              },
+              { "type": "null" }
+            ]
+          }
+        }
+      }
+    },
+    "policies": {
+      "type": "object",
+      "required": [
+        "import_target",
+        "manual_review_required",
+        "core_library_promotion_requires_review",
+        "all_symbols_colorizable_by_voltage_class",
+        "switching_devices_require_state_variants",
+        "busbars_require_configurable_connection_points",
+        "symbols_are_rotatable",
+        "terminals_transform_with_rotation",
+        "stretchable_leads_without_body_distortion",
+        "snap_anchors_required",
+        "automatic_scheme_generation_is_first_class_goal"
+      ],
+      "properties": {
+        "import_target": { "type": "string" },
+        "manual_review_required": { "type": "boolean" },
+        "core_library_promotion_requires_review": { "type": "boolean" },
+        "all_symbols_colorizable_by_voltage_class": { "type": "boolean" },
+        "switching_devices_require_state_variants": { "type": "boolean" },
+        "busbars_require_configurable_connection_points": { "type": "boolean" },
+        "symbols_are_rotatable": { "type": "boolean" },
+        "terminals_transform_with_rotation": { "type": "boolean" },
+        "stretchable_leads_without_body_distortion": { "type": "boolean" },
+        "snap_anchors_required": { "type": "boolean" },
+        "automatic_scheme_generation_is_first_class_goal": { "type": "boolean" }
+      }
+    }
+  }
+}
