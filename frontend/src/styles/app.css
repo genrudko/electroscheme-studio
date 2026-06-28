@@ -236,3 +236,12 @@ body {
   background: #fff7ed;
   color: #9a3412;
 }
+
+.toolbar-error {
+  color: #dc2626;
+}
+
+.hint {
+  color: #718096;
+  font-style: italic;
+}
