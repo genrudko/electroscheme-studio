@@ -233,3 +233,37 @@ The converter must retain:
 - feature flags;
 - capabilities;
 - review status.
+
+<!-- ESS_SYMBOL_CAPABILITY_REQUIREMENTS_V1 -->
+
+## Expanded symbol capability requirements
+
+The complete living requirements ledger is maintained in:
+
+`	ext
+docs/development/symbol_capability_requirements.md
+`
+
+Agents must consult that file before implementing symbol import, symbol rendering, editing, snapping, routing, state handling, busbar behavior, sheet templates or automatic scheme generation.
+
+Non-negotiable capability classes:
+
+1. voltage-class colorization;
+2. rotation-safe terminals and snap anchors;
+3. stretchable leads without body distortion;
+4. terminal/snap based binding between figures;
+5. explicit state variants for switching equipment;
+6. KRU trolley state and position combinations;
+7. configurable busbar connection points;
+8. composite symbols with internal/external terminals;
+9. labels as metadata-driven objects;
+10. telemetry and state overlays separated from base geometry;
+11. sheet templates and stamps separated from electrical symbols;
+12. import provenance and manual review;
+13. validation gates before core promotion;
+14. undo/redo and fast editing workflow;
+15. automatic scheme generation from equipment/topology lists;
+16. manual override for auto-generated layouts;
+17. schema/library versioning and migration.
+
+Do not reduce imported Visio masters to static SVG stickers.

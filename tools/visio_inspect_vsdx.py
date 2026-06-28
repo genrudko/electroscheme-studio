@@ -737,6 +737,12 @@ def inspect_vsdx(source: Path, out_dir: Path) -> dict[str, Any]:
             "stretchable_leads_without_body_distortion": True,
             "snap_anchors_required": True,
             "automatic_scheme_generation_is_first_class_goal": True,
+            "automatic_scheme_generation_requires_manual_override": True,
+            "labels_are_metadata_driven": True,
+            "telemetry_overlays_separated_from_base_geometry": True,
+            "sheet_templates_separated_from_symbols": True,
+            "symbol_versioning_required": True,
+            "undo_redo_required_for_editor_operations": True,
         },
     }
 
