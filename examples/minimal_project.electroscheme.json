@@ -1,8 +1,8 @@
-﻿{
+{
   "version": "0.1",
   "project": {
-    "name": "Minimal Demo",
-    "code": "minimal-demo"
+    "name": "ElectroScheme Demo",
+    "code": "demo"
   },
   "sheets": [
     {
@@ -21,28 +21,117 @@
       "label": "1C",
       "x": 60,
       "y": 60,
-      "width": 260,
+      "width": 320,
       "height": 0,
       "terminals": [
-        { "id": "t1", "x": 120, "y": 60 },
-        { "id": "t2", "x": 220, "y": 60 }
+        { "id": "t1", "x": 100, "y": 60 },
+        { "id": "t2", "x": 180, "y": 60 },
+        { "id": "t3", "x": 260, "y": 60 },
+        { "id": "t4", "x": 340, "y": 60 }
       ]
     },
     {
       "id": "q1",
-      "type": "circuit_breaker",
+      "type": "circuit_breaker_contact",
       "label": "Q1",
-      "x": 120,
+      "x": 100,
       "y": 110,
-      "rotation": 90,
+      "width": 53,
+      "current_state": "closed",
       "terminals": [
-        { "id": "a", "x": 120, "y": 80 },
-        { "id": "b", "x": 120, "y": 145 }
+        { "id": "a", "x": 100, "y": 80 },
+        { "id": "b", "x": 100, "y": 145 }
       ],
       "properties": {
-        "name": "Demo circuit breaker",
-        "voltage_kv": 10,
-        "state": "closed"
+        "name": "Автоматический выключатель",
+        "voltage_kv": 10
+      }
+    },
+    {
+      "id": "fu1",
+      "type": "fuse",
+      "label": "FU1",
+      "x": 180,
+      "y": 110,
+      "width": 53,
+      "current_state": "intact",
+      "terminals": [
+        { "id": "a", "x": 180, "y": 80 },
+        { "id": "b", "x": 180, "y": 145 }
+      ],
+      "properties": {
+        "name": "Предохранитель",
+        "rating_a": 16
+      }
+    },
+    {
+      "id": "km1",
+      "type": "contactor",
+      "label": "KM1",
+      "x": 260,
+      "y": 110,
+      "width": 53,
+      "current_state": "closed",
+      "terminals": [
+        { "id": "a", "x": 260, "y": 80 },
+        { "id": "b", "x": 260, "y": 145 }
+      ],
+      "properties": {
+        "name": "Контактор",
+        "coil_voltage": 220
+      }
+    },
+    {
+      "id": "t1tr",
+      "type": "transformer_2w",
+      "label": "T1",
+      "x": 100,
+      "y": 200,
+      "width": 80,
+      "current_state": "normal",
+      "terminals": [
+        { "id": "hv", "x": 120, "y": 200 },
+        { "id": "lv", "x": 160, "y": 200 }
+      ],
+      "properties": {
+        "name": "Силовой трансформатор",
+        "voltage_kv_hv": 10,
+        "voltage_kv_lv": 0.4,
+        "power_mva": 1.0
+      }
+    },
+    {
+      "id": "m1",
+      "type": "motor_ac",
+      "label": "M1",
+      "x": 200,
+      "y": 200,
+      "width": 60,
+      "terminals": [
+        { "id": "a", "x": 220, "y": 200 },
+        { "id": "b", "x": 240, "y": 200 }
+      ],
+      "properties": {
+        "name": "Асинхронный двигатель",
+        "power_kw": 11,
+        "voltage_kv": 0.4
+      }
+    },
+    {
+      "id": "qs1",
+      "type": "disconnector",
+      "label": "QS1",
+      "x": 340,
+      "y": 110,
+      "width": 53,
+      "current_state": "open",
+      "terminals": [
+        { "id": "a", "x": 340, "y": 80 },
+        { "id": "b", "x": 340, "y": 145 }
+      ],
+      "properties": {
+        "name": "Разъединитель",
+        "voltage_kv": 10
       }
     }
   ],
@@ -50,7 +139,56 @@
     {
       "id": "conn_1",
       "from": "busbar_1.t1",
-      "to": "q1.a"
+      "to": "q1.a",
+      "route_mode": "ortho"
+    },
+    {
+      "id": "conn_2",
+      "from": "busbar_1.t2",
+      "to": "fu1.a",
+      "route_mode": "ortho"
+    },
+    {
+      "id": "conn_3",
+      "from": "busbar_1.t3",
+      "to": "km1.a",
+      "route_mode": "ortho"
+    },
+    {
+      "id": "conn_4",
+      "from": "busbar_1.t4",
+      "to": "qs1.a",
+      "route_mode": "ortho"
+    },
+    {
+      "id": "conn_5",
+      "from": "q1.b",
+      "to": "t1tr.hv",
+      "route_mode": "ortho"
+    },
+    {
+      "id": "conn_6",
+      "from": "fu1.b",
+      "to": "m1.a",
+      "route_mode": "ortho",
+      "kind": "wire"
+    },
+    {
+      "id": "conn_7",
+      "from": "km1.b",
+      "to": "t1tr.lv",
+      "route_mode": "ortho"
+    },
+    {
+      "id": "conn_ctrl_1",
+      "from": "km1.b",
+      "to": "m1.b",
+      "route_mode": "manual",
+      "kind": "control",
+      "points": [
+        { "x": 260, "y": 175 },
+        { "x": 230, "y": 175 }
+      ]
     }
   ]
 }

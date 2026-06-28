@@ -1,0 +1,3974 @@
+{
+  "version": "6.0",
+  "description": "GOST/ESKD-compliant symbol library for single-line and normal-mode electrical connection diagrams of power facilities 6-750 kV",
+  "gost_references": [
+    {
+      "id": "GOST_2_701_2008",
+      "title": "ГОСТ 2.701-2008",
+      "description": "Схемы. Виды и элементы",
+      "status": "действующий"
+    },
+    {
+      "id": "GOST_2_702_2011",
+      "title": "ГОСТ 2.702-2011",
+      "description": "Правила выполнения",
+      "status": "действующий"
+    },
+    {
+      "id": "GOST_2_709_89",
+      "title": "ГОСТ 2.709-89",
+      "description": "Линии связей",
+      "status": "действующий"
+    },
+    {
+      "id": "GOST_2_710_81",
+      "title": "ГОСТ 2.710-81",
+      "description": "Аппараты коммутационные, контакторы, реле",
+      "status": "действующий"
+    },
+    {
+      "id": "GOST_2_721_74",
+      "title": "ГОСТ 2.721-74",
+      "description": "Обозначения условные соединений, шины, зажимы",
+      "status": "действующий"
+    },
+    {
+      "id": "GOST_2_722_68",
+      "title": "ГОСТ 2.722-68",
+      "description": "Электрические машины",
+      "status": "действующий"
+    },
+    {
+      "id": "GOST_2_723_68",
+      "title": "ГОСТ 2.723-68",
+      "description": "Трансформаторы и катушки индуктивности",
+      "status": "действующий"
+    },
+    {
+      "id": "GOST_2_727_68",
+      "title": "ГОСТ 2.727-68",
+      "description": "Лампы и устройства сигнализации",
+      "status": "действующий"
+    },
+    {
+      "id": "GOST_2_728_74",
+      "title": "ГОСТ 2.728-74",
+      "description": "Пассивные элементы, предохранители, приборы",
+      "status": "действующий"
+    },
+    {
+      "id": "GOST_2_729_68",
+      "title": "ГОСТ 2.729-68",
+      "description": "Трансформаторы, дроссели",
+      "status": "действующий"
+    },
+    {
+      "id": "GOST_2_730_73",
+      "title": "ГОСТ 2.730-73",
+      "description": "Трансформаторы тока и напряжения",
+      "status": "действующий"
+    },
+    {
+      "id": "GOST_2_742_68",
+      "title": "ГОСТ 2.742-68",
+      "description": "Разрядники и ограничители перенапряжений",
+      "status": "действующий"
+    },
+    {
+      "id": "GOST_2_747_68",
+      "title": "ГОСТ 2.747-68",
+      "description": "Условные обозначения элементов телемеханики",
+      "status": "действующий"
+    },
+    {
+      "id": "GOST_2_755_87",
+      "title": "ГОСТ 2.755-87",
+      "description": "Коннекторы и клеммы",
+      "status": "действующий"
+    },
+    {
+      "id": "GOST_2_756_76",
+      "title": "ГОСТ 2.756-76",
+      "description": "Обозначения заземления",
+      "status": "действующий"
+    },
+    {
+      "id": "GOST_2_759_82",
+      "title": "ГОСТ 2.759-82",
+      "description": "Реле, катушки контакторов, контакты",
+      "status": "действующий"
+    },
+    {
+      "id": "GOST_2_768_90",
+      "title": "ГОСТ 2.768-90",
+      "description": "Управляющие и распределительные устройства",
+      "status": "действующий"
+    }
+  ],
+  "categories": [
+    {
+      "id": "switching",
+      "name": "Switching devices (circuit breakers)",
+      "gost": "ГОСТ 2.755-87",
+      "description": "Автоматические выключатели",
+      "svg_preview": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"30\" x2=\"38.0\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><rect x=\"38.0\" y=\"20.0\" width=\"24\" height=\"20\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><line x1=\"62.0\" y1=\"30\" x2=\"100\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>"
+    },
+    {
+      "id": "disconnector",
+      "name": "Disconnectors",
+      "gost": "ГОСТ 2.755-87",
+      "description": "Разъединители и заземляющие ножи",
+      "svg_preview": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"30\" x2=\"30\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><circle cx=\"30\" cy=\"30\" r=\"2\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><line x1=\"30\" y1=\"30\" x2=\"70\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"70\" y1=\"22\" x2=\"70\" y2=\"38\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"70\" y1=\"30\" x2=\"100\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>"
+    },
+    {
+      "id": "contactor",
+      "name": "Contactors",
+      "gost": "ГОСТ 2.759-82",
+      "description": "Контакторы и пускатели",
+      "svg_preview": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 80\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"20\" y1=\"0\" x2=\"20\" y2=\"20\" stroke=\"black\" stroke-width=\"0.8\"/><rect x=\"10.0\" y=\"20\" width=\"20\" height=\"40\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><line x1=\"20\" y1=\"60\" x2=\"20\" y2=\"80\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>"
+    },
+    {
+      "id": "switch",
+      "name": "Manual switches",
+      "gost": "ГОСТ 2.755-87",
+      "description": "Ручные коммутационные аппараты",
+      "svg_preview": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"30\" x2=\"30\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><circle cx=\"30\" cy=\"30\" r=\"2\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><line x1=\"30\" y1=\"30\" x2=\"70\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"70\" y1=\"22\" x2=\"70\" y2=\"38\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"70\" y1=\"30\" x2=\"100\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>"
+    },
+    {
+      "id": "fuse",
+      "name": "Fuses",
+      "gost": "ГОСТ 2.728-74",
+      "description": "Предохранители",
+      "svg_preview": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"30\" x2=\"35.0\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><rect x=\"35.0\" y=\"20.0\" width=\"30\" height=\"20\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><line x1=\"35.0\" y1=\"40.0\" x2=\"65.0\" y2=\"20.0\" stroke=\"black\" stroke-width=\"0.35\"/><line x1=\"65.0\" y1=\"30\" x2=\"100\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>"
+    },
+    {
+      "id": "arrester",
+      "name": "Arresters and surge arresters",
+      "gost": "ГОСТ 2.742-68",
+      "description": "Разрядники и ОПН",
+      "svg_preview": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"30\" x2=\"38.0\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><rect x=\"38.0\" y=\"20.0\" width=\"24\" height=\"20\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><line x1=\"42.0\" y1=\"25.0\" x2=\"58.0\" y2=\"35.0\" stroke=\"black\" stroke-width=\"0.35\"/><line x1=\"42.0\" y1=\"35.0\" x2=\"58.0\" y2=\"25.0\" stroke=\"black\" stroke-width=\"0.35\"/><line x1=\"62.0\" y1=\"30\" x2=\"100\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>"
+    },
+    {
+      "id": "transformer",
+      "name": "Transformers",
+      "gost": "ГОСТ 2.723-68",
+      "description": "Силовые трансформаторы и автотрансформаторы",
+      "svg_preview": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"50\" y1=\"0\" x2=\"50\" y2=\"32\" stroke=\"black\" stroke-width=\"0.8\"/><circle cx=\"40\" cy=\"50\" r=\"18\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><circle cx=\"60\" cy=\"50\" r=\"18\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><line x1=\"50\" y1=\"68\" x2=\"50\" y2=\"100\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>"
+    },
+    {
+      "id": "ct_vt",
+      "name": "Instrument transformers",
+      "gost": "ГОСТ 2.723-68",
+      "description": "Трансформаторы тока и напряжения",
+      "svg_preview": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"30\" x2=\"28.5\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><circle cx=\"38.5\" cy=\"30\" r=\"10\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><circle cx=\"61.5\" cy=\"30\" r=\"10\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><line x1=\"71.5\" y1=\"30\" x2=\"100\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>"
+    },
+    {
+      "id": "relay",
+      "name": "Relay protection",
+      "gost": "ГОСТ 2.759-82",
+      "description": "Реле и устройства РЗА",
+      "svg_preview": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 80\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"20\" y1=\"0\" x2=\"20\" y2=\"20\" stroke=\"black\" stroke-width=\"0.8\"/><rect x=\"10\" y=\"20\" width=\"20\" height=\"40\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><text x=\"20\" y=\"40\" font-family=\"Arial,Helvetica,sans-serif\" font-size=\"7\" fill=\"black\" text-anchor=\"middle\" dominant-baseline=\"central\">I></text><line x1=\"20\" y1=\"60\" x2=\"20\" y2=\"80\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>"
+    },
+    {
+      "id": "instruments",
+      "name": "Measuring instruments",
+      "gost": "ГОСТ 2.729-68",
+      "description": "Измерительные приборы",
+      "svg_preview": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"30\" x2=\"36\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><circle cx=\"50\" cy=\"30\" r=\"14\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><text x=\"50\" y=\"30\" font-family=\"Arial,Helvetica,sans-serif\" font-size=\"10\" fill=\"black\" text-anchor=\"middle\" dominant-baseline=\"central\">A</text><line x1=\"64\" y1=\"30\" x2=\"100\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>"
+    },
+    {
+      "id": "machines",
+      "name": "Electrical machines",
+      "gost": "ГОСТ 2.722-68",
+      "description": "Генераторы, двигатели",
+      "svg_preview": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 80\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"40\" y1=\"0\" x2=\"40\" y2=\"15\" stroke=\"black\" stroke-width=\"0.8\"/><circle cx=\"40\" cy=\"40\" r=\"25\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><text x=\"40\" y=\"40\" font-family=\"Arial,Helvetica,sans-serif\" font-size=\"16\" fill=\"black\" text-anchor=\"middle\" dominant-baseline=\"central\">M</text><line x1=\"40\" y1=\"65\" x2=\"40\" y2=\"80\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>"
+    },
+    {
+      "id": "passive",
+      "name": "Passive components",
+      "gost": "ГОСТ 2.728-74",
+      "description": "Резисторы, конденсаторы, катушки",
+      "svg_preview": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 40\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"20\" x2=\"30.0\" y2=\"20\" stroke=\"black\" stroke-width=\"0.8\"/><rect x=\"30.0\" y=\"13.0\" width=\"40\" height=\"14\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><line x1=\"70.0\" y1=\"20\" x2=\"100\" y2=\"20\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>"
+    },
+    {
+      "id": "reactor",
+      "name": "Reactors",
+      "gost": "ГОСТ 2.723-68",
+      "description": "Шунтирующие реакторы",
+      "svg_preview": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"30\" x2=\"29\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><path d=\"M29,30 A7,7 0 0,1 43,30\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><path d=\"M43,30 A7,7 0 0,1 57,30\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><path d=\"M57,30 A7,7 0 0,1 71,30\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><line x1=\"71\" y1=\"30\" x2=\"100\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"29\" y1=\"42\" x2=\"71\" y2=\"42\" stroke=\"black\" stroke-width=\"0.35\"/></g></svg>"
+    },
+    {
+      "id": "bus_line",
+      "name": "Bus bars and lines",
+      "gost": "ГОСТ 2.702-2011",
+      "description": "Шины и соединительные линии",
+      "svg_preview": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 20\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"10\" x2=\"100\" y2=\"10\" stroke=\"black\" stroke-width=\"2.5\"/></g></svg>"
+    },
+    {
+      "id": "terminals",
+      "name": "Terminals and connectors",
+      "gost": "ГОСТ 2.721-74",
+      "description": "Зажимы и клеммы",
+      "svg_preview": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 30 30\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"15\" cy=\"15\" r=\"3\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/></g></svg>"
+    },
+    {
+      "id": "ground",
+      "name": "Earthing",
+      "gost": "ГОСТ 2.756-76",
+      "description": "Заземление",
+      "svg_preview": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 50\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"20\" y1=\"0\" x2=\"20\" y2=\"15\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"6\" y1=\"15\" x2=\"34\" y2=\"15\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"11\" y1=\"22\" x2=\"29\" y2=\"22\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"16\" y1=\"29\" x2=\"24\" y2=\"29\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>"
+    },
+    {
+      "id": "enclosure",
+      "name": "Enclosures and switchgear",
+      "gost": "ГОСТ 2.721-74",
+      "description": "Корпуса и ячейки КРУ",
+      "svg_preview": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 80\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"5\" y=\"5\" width=\"90\" height=\"70\" stroke=\"black\" stroke-width=\"0.35\" fill=\"none\"/></g></svg>"
+    },
+    {
+      "id": "battery",
+      "name": "Batteries and power supplies",
+      "gost": "ГОСТ 2.721-74",
+      "description": "Аккумуляторные батареи",
+      "svg_preview": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"30\" x2=\"35\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"35\" y1=\"18\" x2=\"35\" y2=\"42\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"42\" y1=\"24\" x2=\"42\" y2=\"36\" stroke=\"black\" stroke-width=\"0.35\"/><line x1=\"49\" y1=\"18\" x2=\"49\" y2=\"42\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"56\" y1=\"24\" x2=\"56\" y2=\"36\" stroke=\"black\" stroke-width=\"0.35\"/><line x1=\"63\" y1=\"18\" x2=\"63\" y2=\"42\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"63\" y1=\"30\" x2=\"100\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>"
+    },
+    {
+      "id": "cable",
+      "name": "Cables and wiring",
+      "gost": "ГОСТ 2.721-74",
+      "description": "Кабели и провода",
+      "svg_preview": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 40\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"20\" x2=\"100\" y2=\"20\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"40\" y1=\"12\" x2=\"40\" y2=\"28\" stroke=\"black\" stroke-width=\"0.35\"/><line x1=\"50\" y1=\"12\" x2=\"50\" y2=\"28\" stroke=\"black\" stroke-width=\"0.35\"/><line x1=\"60\" y1=\"12\" x2=\"60\" y2=\"28\" stroke=\"black\" stroke-width=\"0.35\"/></g></svg>"
+    },
+    {
+      "id": "cable_accessories",
+      "name": "Cable accessories",
+      "gost": "ГОСТ 2.721-74",
+      "description": "Кабельные муфты и вводы",
+      "svg_preview": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 50 40\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"20\" x2=\"15\" y2=\"20\" stroke=\"black\" stroke-width=\"0.8\"/><rect x=\"15\" y=\"12\" width=\"20\" height=\"16\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><line x1=\"35\" y1=\"20\" x2=\"50\" y2=\"20\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>"
+    },
+    {
+      "id": "lightning",
+      "name": "Lightning and earthing protection",
+      "gost": "ГОСТ 2.742-68",
+      "description": "Молниезащита и заземляющие устройства",
+      "svg_preview": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 80\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"25\" x2=\"35\" y2=\"25\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"35\" y1=\"25\" x2=\"50\" y2=\"13\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"50\" y1=\"37\" x2=\"65\" y2=\"25\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"65\" y1=\"25\" x2=\"100\" y2=\"25\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"50\" y1=\"37\" x2=\"50\" y2=\"65\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"38\" y1=\"65\" x2=\"62\" y2=\"65\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"43\" y1=\"71\" x2=\"57\" y2=\"71\" stroke=\"black\" stroke-width=\"0.35\"/></g></svg>"
+    },
+    {
+      "id": "contact_types",
+      "name": "Contact types",
+      "gost": "ГОСТ 2.759-82",
+      "description": "Контакты замыкающие, размыкающие, переключающие",
+      "svg_preview": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"15\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><circle cx=\"65\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><line x1=\"15\" y1=\"40\" x2=\"46.12777768298169\" y2=\"18.204095418660252\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>"
+    },
+    {
+      "id": "signaling",
+      "name": "Signaling devices",
+      "gost": "ГОСТ 2.727-68",
+      "description": "Лампы, индикаторы, сигнализация",
+      "svg_preview": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"30\" x2=\"36\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><circle cx=\"50\" cy=\"30\" r=\"14\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><text x=\"50\" y=\"30\" font-family=\"Arial,Helvetica,sans-serif\" font-size=\"10\" fill=\"black\" text-anchor=\"middle\" dominant-baseline=\"central\">H</text><line x1=\"64\" y1=\"30\" x2=\"100\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>"
+    },
+    {
+      "id": "protection_devices",
+      "name": "Protection devices",
+      "gost": "ГОСТ 2.728-74",
+      "description": "Устройства защиты",
+      "svg_preview": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"30\" x2=\"35.0\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><rect x=\"35.0\" y=\"20.0\" width=\"30\" height=\"20\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><line x1=\"35.0\" y1=\"40.0\" x2=\"65.0\" y2=\"20.0\" stroke=\"black\" stroke-width=\"0.35\"/><line x1=\"65.0\" y1=\"30\" x2=\"100\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>"
+    },
+    {
+      "id": "motors",
+      "name": "Motors and starters",
+      "gost": "ГОСТ 2.722-68",
+      "description": "Электродвигатели и пусковые устройства",
+      "svg_preview": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 80\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"40\" y1=\"0\" x2=\"40\" y2=\"15\" stroke=\"black\" stroke-width=\"0.8\"/><circle cx=\"40\" cy=\"40\" r=\"25\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><text x=\"40\" y=\"40\" font-family=\"Arial,Helvetica,sans-serif\" font-size=\"16\" fill=\"black\" text-anchor=\"middle\" dominant-baseline=\"central\">M</text><line x1=\"40\" y1=\"65\" x2=\"40\" y2=\"80\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>"
+    }
+  ],
+  "symbols": [
+    {
+      "id": "cb_vacuum",
+      "type": "cb_vacuum",
+      "name": "Vacuum circuit breaker QF",
+      "category": "switching",
+      "gost": "ГОСТ 2.755-87",
+      "gost_ref": "fig.1",
+      "viewBox": "0 0 100 60",
+      "default_width": 100,
+      "default_height": 60,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"30\" x2=\"38.0\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><rect x=\"38.0\" y=\"20.0\" width=\"24\" height=\"20\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><line x1=\"62.0\" y1=\"30\" x2=\"100\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": true,
+      "default_state": "closed",
+      "current_state": "closed",
+      "states": [
+        {
+          "id": "closed",
+          "name": "Closed",
+          "alternate_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"15\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><circle cx=\"65\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><line x1=\"15\" y1=\"40\" x2=\"65\" y2=\"40\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>"
+        },
+        {
+          "id": "open",
+          "name": "Open",
+          "alternate_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"15\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><circle cx=\"65\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><line x1=\"15\" y1=\"40\" x2=\"46.12777768298169\" y2=\"18.204095418660252\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>"
+        },
+        {
+          "id": "blown",
+          "name": "Blown",
+          "alternate_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"15\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><circle cx=\"65\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><line x1=\"15\" y1=\"40\" x2=\"45\" y2=\"22\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"45\" y1=\"42\" x2=\"45\" y2=\"48\" stroke=\"black\" stroke-width=\"0.35\"/></g></svg>"
+        }
+      ],
+      "letter_designation": "QF",
+      "module_width": 100,
+      "module_height": 60,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "cb_sf6",
+      "type": "cb_sf6",
+      "name": "SF6 circuit breaker QF",
+      "category": "switching",
+      "gost": "ГОСТ 2.755-87",
+      "gost_ref": "fig.1",
+      "viewBox": "0 0 100 60",
+      "default_width": 100,
+      "default_height": 60,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"30\" x2=\"38.0\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><rect x=\"38.0\" y=\"20.0\" width=\"24\" height=\"20\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><line x1=\"62.0\" y1=\"30\" x2=\"100\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": true,
+      "default_state": "closed",
+      "current_state": "closed",
+      "states": [
+        {
+          "id": "closed",
+          "name": "Closed",
+          "alternate_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"15\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><circle cx=\"65\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><line x1=\"15\" y1=\"40\" x2=\"65\" y2=\"40\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>"
+        },
+        {
+          "id": "open",
+          "name": "Open",
+          "alternate_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"15\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><circle cx=\"65\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><line x1=\"15\" y1=\"40\" x2=\"46.12777768298169\" y2=\"18.204095418660252\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>"
+        },
+        {
+          "id": "blown",
+          "name": "Blown",
+          "alternate_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"15\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><circle cx=\"65\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><line x1=\"15\" y1=\"40\" x2=\"45\" y2=\"22\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"45\" y1=\"42\" x2=\"45\" y2=\"48\" stroke=\"black\" stroke-width=\"0.35\"/></g></svg>"
+        }
+      ],
+      "letter_designation": "QF",
+      "module_width": 100,
+      "module_height": 60,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "cb_air",
+      "type": "cb_air",
+      "name": "Air circuit breaker QF",
+      "category": "switching",
+      "gost": "ГОСТ 2.755-87",
+      "gost_ref": "fig.1",
+      "viewBox": "0 0 100 60",
+      "default_width": 100,
+      "default_height": 60,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"30\" x2=\"38.0\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><rect x=\"38.0\" y=\"20.0\" width=\"24\" height=\"20\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><line x1=\"62.0\" y1=\"30\" x2=\"100\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": true,
+      "default_state": "closed",
+      "current_state": "closed",
+      "states": [
+        {
+          "id": "closed",
+          "name": "Closed",
+          "alternate_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"15\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><circle cx=\"65\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><line x1=\"15\" y1=\"40\" x2=\"65\" y2=\"40\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>"
+        },
+        {
+          "id": "open",
+          "name": "Open",
+          "alternate_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"15\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><circle cx=\"65\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><line x1=\"15\" y1=\"40\" x2=\"46.12777768298169\" y2=\"18.204095418660252\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>"
+        },
+        {
+          "id": "blown",
+          "name": "Blown",
+          "alternate_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"15\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><circle cx=\"65\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><line x1=\"15\" y1=\"40\" x2=\"45\" y2=\"22\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"45\" y1=\"42\" x2=\"45\" y2=\"48\" stroke=\"black\" stroke-width=\"0.35\"/></g></svg>"
+        }
+      ],
+      "letter_designation": "QF",
+      "module_width": 100,
+      "module_height": 60,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "cb_oil",
+      "type": "cb_oil",
+      "name": "Oil circuit breaker QF",
+      "category": "switching",
+      "gost": "ГОСТ 2.755-87",
+      "gost_ref": "fig.1",
+      "viewBox": "0 0 100 60",
+      "default_width": 100,
+      "default_height": 60,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"30\" x2=\"38.0\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><rect x=\"38.0\" y=\"20.0\" width=\"24\" height=\"20\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><line x1=\"62.0\" y1=\"30\" x2=\"100\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": true,
+      "default_state": "closed",
+      "current_state": "closed",
+      "states": [
+        {
+          "id": "closed",
+          "name": "Closed",
+          "alternate_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"15\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><circle cx=\"65\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><line x1=\"15\" y1=\"40\" x2=\"65\" y2=\"40\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>"
+        },
+        {
+          "id": "open",
+          "name": "Open",
+          "alternate_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"15\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><circle cx=\"65\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><line x1=\"15\" y1=\"40\" x2=\"46.12777768298169\" y2=\"18.204095418660252\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>"
+        },
+        {
+          "id": "blown",
+          "name": "Blown",
+          "alternate_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"15\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><circle cx=\"65\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><line x1=\"15\" y1=\"40\" x2=\"45\" y2=\"22\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"45\" y1=\"42\" x2=\"45\" y2=\"48\" stroke=\"black\" stroke-width=\"0.35\"/></g></svg>"
+        }
+      ],
+      "letter_designation": "QF",
+      "module_width": 100,
+      "module_height": 60,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "cb_moulded",
+      "type": "cb_moulded",
+      "name": "Moulded-case circuit breaker (MCCB) QF",
+      "category": "switching",
+      "gost": "ГОСТ 2.755-87",
+      "gost_ref": "fig.1",
+      "viewBox": "0 0 100 60",
+      "default_width": 100,
+      "default_height": 60,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"30\" x2=\"38.0\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><rect x=\"38.0\" y=\"20.0\" width=\"24\" height=\"20\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><line x1=\"62.0\" y1=\"30\" x2=\"100\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": true,
+      "default_state": "closed",
+      "current_state": "closed",
+      "states": [
+        {
+          "id": "closed",
+          "name": "Closed",
+          "alternate_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"15\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><circle cx=\"65\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><line x1=\"15\" y1=\"40\" x2=\"65\" y2=\"40\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>"
+        },
+        {
+          "id": "open",
+          "name": "Open",
+          "alternate_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"15\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><circle cx=\"65\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><line x1=\"15\" y1=\"40\" x2=\"46.12777768298169\" y2=\"18.204095418660252\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>"
+        },
+        {
+          "id": "blown",
+          "name": "Blown",
+          "alternate_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"15\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><circle cx=\"65\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><line x1=\"15\" y1=\"40\" x2=\"45\" y2=\"22\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"45\" y1=\"42\" x2=\"45\" y2=\"48\" stroke=\"black\" stroke-width=\"0.35\"/></g></svg>"
+        }
+      ],
+      "letter_designation": "QF",
+      "module_width": 100,
+      "module_height": 60,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "cb_miniature",
+      "type": "cb_miniature",
+      "name": "Miniature circuit breaker (MCB) QF",
+      "category": "switching",
+      "gost": "ГОСТ 2.755-87",
+      "gost_ref": "fig.1",
+      "viewBox": "0 0 100 60",
+      "default_width": 100,
+      "default_height": 60,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"30\" x2=\"38.0\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><rect x=\"38.0\" y=\"20.0\" width=\"24\" height=\"20\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><line x1=\"62.0\" y1=\"30\" x2=\"100\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": true,
+      "default_state": "closed",
+      "current_state": "closed",
+      "states": [
+        {
+          "id": "closed",
+          "name": "Closed",
+          "alternate_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"15\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><circle cx=\"65\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><line x1=\"15\" y1=\"40\" x2=\"65\" y2=\"40\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>"
+        },
+        {
+          "id": "open",
+          "name": "Open",
+          "alternate_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"15\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><circle cx=\"65\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><line x1=\"15\" y1=\"40\" x2=\"46.12777768298169\" y2=\"18.204095418660252\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>"
+        },
+        {
+          "id": "blown",
+          "name": "Blown",
+          "alternate_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"15\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><circle cx=\"65\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><line x1=\"15\" y1=\"40\" x2=\"45\" y2=\"22\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"45\" y1=\"42\" x2=\"45\" y2=\"48\" stroke=\"black\" stroke-width=\"0.35\"/></g></svg>"
+        }
+      ],
+      "letter_designation": "QF",
+      "module_width": 100,
+      "module_height": 60,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "cb_magnetic",
+      "type": "cb_magnetic",
+      "name": "Magnetic contactor-circuit breaker QF",
+      "category": "switching",
+      "gost": "ГОСТ 2.755-87",
+      "gost_ref": "fig.1",
+      "viewBox": "0 0 100 60",
+      "default_width": 100,
+      "default_height": 60,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"30\" x2=\"38.0\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><rect x=\"38.0\" y=\"20.0\" width=\"24\" height=\"20\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><line x1=\"62.0\" y1=\"30\" x2=\"100\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": true,
+      "default_state": "closed",
+      "current_state": "closed",
+      "states": [
+        {
+          "id": "closed",
+          "name": "Closed",
+          "alternate_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"15\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><circle cx=\"65\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><line x1=\"15\" y1=\"40\" x2=\"65\" y2=\"40\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>"
+        },
+        {
+          "id": "open",
+          "name": "Open",
+          "alternate_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"15\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><circle cx=\"65\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><line x1=\"15\" y1=\"40\" x2=\"46.12777768298169\" y2=\"18.204095418660252\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>"
+        },
+        {
+          "id": "blown",
+          "name": "Blown",
+          "alternate_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"15\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><circle cx=\"65\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><line x1=\"15\" y1=\"40\" x2=\"45\" y2=\"22\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"45\" y1=\"42\" x2=\"45\" y2=\"48\" stroke=\"black\" stroke-width=\"0.35\"/></g></svg>"
+        }
+      ],
+      "letter_designation": "QF",
+      "module_width": 100,
+      "module_height": 60,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "cb_vacuum_n",
+      "type": "cb_vacuum_n",
+      "name": "Vacuum circuit breaker QF (normal)",
+      "category": "switching",
+      "gost": "ГОСТ 2.755-87",
+      "gost_ref": "fig.1",
+      "viewBox": "0 0 80 60",
+      "default_width": 80,
+      "default_height": 60,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"30\" x2=\"40.0\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><rect x=\"40.0\" y=\"22.0\" width=\"20\" height=\"16\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><line x1=\"60.0\" y1=\"30\" x2=\"100\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": true,
+      "default_state": "closed",
+      "current_state": "closed",
+      "states": [
+        {
+          "id": "closed",
+          "name": "Closed",
+          "alternate_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"15\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><circle cx=\"65\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><line x1=\"15\" y1=\"40\" x2=\"65\" y2=\"40\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>"
+        },
+        {
+          "id": "open",
+          "name": "Open",
+          "alternate_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"15\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><circle cx=\"65\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><line x1=\"15\" y1=\"40\" x2=\"46.12777768298169\" y2=\"18.204095418660252\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>"
+        },
+        {
+          "id": "blown",
+          "name": "Blown",
+          "alternate_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"15\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><circle cx=\"65\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><line x1=\"15\" y1=\"40\" x2=\"45\" y2=\"22\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"45\" y1=\"42\" x2=\"45\" y2=\"48\" stroke=\"black\" stroke-width=\"0.35\"/></g></svg>"
+        }
+      ],
+      "letter_designation": "QF",
+      "module_width": 80,
+      "module_height": 60,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "ds_horizontal",
+      "type": "ds_horizontal",
+      "name": "Horizontal disconnector QS",
+      "category": "disconnector",
+      "gost": "ГОСТ 2.755-87",
+      "gost_ref": "fig.2",
+      "viewBox": "0 0 100 60",
+      "default_width": 100,
+      "default_height": 60,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"30\" x2=\"30\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><circle cx=\"30\" cy=\"30\" r=\"2\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><line x1=\"30\" y1=\"30\" x2=\"70\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"70\" y1=\"22\" x2=\"70\" y2=\"38\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"70\" y1=\"30\" x2=\"100\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": true,
+      "default_state": "closed",
+      "current_state": "closed",
+      "states": [
+        {
+          "id": "closed",
+          "name": "Closed",
+          "alternate_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"15\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><circle cx=\"65\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><line x1=\"65\" y1=\"32\" x2=\"65\" y2=\"48\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"15\" y1=\"40\" x2=\"65\" y2=\"40\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>"
+        },
+        {
+          "id": "open",
+          "name": "Open",
+          "alternate_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"15\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><circle cx=\"65\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><line x1=\"65\" y1=\"32\" x2=\"65\" y2=\"48\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"15\" y1=\"40\" x2=\"46.12777768298169\" y2=\"18.204095418660252\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>"
+        }
+      ],
+      "letter_designation": "QS",
+      "module_width": 100,
+      "module_height": 60,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "ds_vertical",
+      "type": "ds_vertical",
+      "name": "Vertical disconnector QS",
+      "category": "disconnector",
+      "gost": "ГОСТ 2.755-87",
+      "gost_ref": "fig.2",
+      "viewBox": "0 0 100 60",
+      "default_width": 100,
+      "default_height": 60,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"30\" x2=\"30\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><circle cx=\"30\" cy=\"30\" r=\"2\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><line x1=\"30\" y1=\"30\" x2=\"70\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"70\" y1=\"22\" x2=\"70\" y2=\"38\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"70\" y1=\"30\" x2=\"100\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": true,
+      "default_state": "closed",
+      "current_state": "closed",
+      "states": [
+        {
+          "id": "closed",
+          "name": "Closed",
+          "alternate_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"15\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><circle cx=\"65\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><line x1=\"65\" y1=\"32\" x2=\"65\" y2=\"48\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"15\" y1=\"40\" x2=\"65\" y2=\"40\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>"
+        },
+        {
+          "id": "open",
+          "name": "Open",
+          "alternate_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"15\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><circle cx=\"65\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><line x1=\"65\" y1=\"32\" x2=\"65\" y2=\"48\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"15\" y1=\"40\" x2=\"46.12777768298169\" y2=\"18.204095418660252\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>"
+        }
+      ],
+      "letter_designation": "QS",
+      "module_width": 100,
+      "module_height": 60,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "ds_center",
+      "type": "ds_center",
+      "name": "Center-break disconnector QS",
+      "category": "disconnector",
+      "gost": "ГОСТ 2.755-87",
+      "gost_ref": "fig.2",
+      "viewBox": "0 0 100 60",
+      "default_width": 100,
+      "default_height": 60,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"30\" x2=\"30\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><circle cx=\"30\" cy=\"30\" r=\"2\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><line x1=\"30\" y1=\"30\" x2=\"70\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"70\" y1=\"22\" x2=\"70\" y2=\"38\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"70\" y1=\"30\" x2=\"100\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": true,
+      "default_state": "closed",
+      "current_state": "closed",
+      "states": [
+        {
+          "id": "closed",
+          "name": "Closed",
+          "alternate_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"15\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><circle cx=\"65\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><line x1=\"65\" y1=\"32\" x2=\"65\" y2=\"48\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"15\" y1=\"40\" x2=\"65\" y2=\"40\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>"
+        },
+        {
+          "id": "open",
+          "name": "Open",
+          "alternate_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"15\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><circle cx=\"65\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><line x1=\"65\" y1=\"32\" x2=\"65\" y2=\"48\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"15\" y1=\"40\" x2=\"46.12777768298169\" y2=\"18.204095418660252\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>"
+        }
+      ],
+      "letter_designation": "QS",
+      "module_width": 100,
+      "module_height": 60,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "ds_double",
+      "type": "ds_double",
+      "name": "Double-break disconnector QS",
+      "category": "disconnector",
+      "gost": "ГОСТ 2.755-87",
+      "gost_ref": "fig.2",
+      "viewBox": "0 0 100 60",
+      "default_width": 100,
+      "default_height": 60,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"30\" x2=\"30\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><circle cx=\"30\" cy=\"30\" r=\"2\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><line x1=\"30\" y1=\"30\" x2=\"70\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"70\" y1=\"22\" x2=\"70\" y2=\"38\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"70\" y1=\"30\" x2=\"100\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": true,
+      "default_state": "closed",
+      "current_state": "closed",
+      "states": [
+        {
+          "id": "closed",
+          "name": "Closed",
+          "alternate_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"15\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><circle cx=\"65\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><line x1=\"65\" y1=\"32\" x2=\"65\" y2=\"48\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"15\" y1=\"40\" x2=\"65\" y2=\"40\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>"
+        },
+        {
+          "id": "open",
+          "name": "Open",
+          "alternate_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"15\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><circle cx=\"65\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><line x1=\"65\" y1=\"32\" x2=\"65\" y2=\"48\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"15\" y1=\"40\" x2=\"46.12777768298169\" y2=\"18.204095418660252\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>"
+        }
+      ],
+      "letter_designation": "QS",
+      "module_width": 100,
+      "module_height": 60,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "grounding_switch",
+      "type": "grounding_switch",
+      "name": "Grounding switch ZN",
+      "category": "disconnector",
+      "gost": "ГОСТ 2.755-87",
+      "gost_ref": "fig.3",
+      "viewBox": "0 0 100 80",
+      "default_width": 100,
+      "default_height": 80,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 25
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 80\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"30\" x2=\"30\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><circle cx=\"30\" cy=\"30\" r=\"2\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><line x1=\"30\" y1=\"30\" x2=\"70\" y2=\"60\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"58\" y1=\"60\" x2=\"82\" y2=\"60\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"63\" y1=\"66\" x2=\"77\" y2=\"66\" stroke=\"black\" stroke-width=\"0.35\"/><line x1=\"68\" y1=\"72\" x2=\"72\" y2=\"72\" stroke=\"black\" stroke-width=\"0.35\"/></g></svg>",
+      "interactive": true,
+      "default_state": "closed",
+      "current_state": "closed",
+      "states": [
+        {
+          "id": "closed",
+          "name": "Closed",
+          "alternate_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 80\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"30\" x2=\"30\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><circle cx=\"30\" cy=\"30\" r=\"2\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><line x1=\"30\" y1=\"30\" x2=\"70\" y2=\"60\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"58\" y1=\"60\" x2=\"82\" y2=\"60\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"63\" y1=\"66\" x2=\"77\" y2=\"66\" stroke=\"black\" stroke-width=\"0.35\"/><line x1=\"68\" y1=\"72\" x2=\"72\" y2=\"72\" stroke=\"black\" stroke-width=\"0.35\"/></g></svg>"
+        },
+        {
+          "id": "open",
+          "name": "Open",
+          "alternate_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 80\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"30\" x2=\"30\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><circle cx=\"30\" cy=\"30\" r=\"2\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><line x1=\"30\" y1=\"30\" x2=\"47.5\" y2=\"60.31088913245535\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"58\" y1=\"60\" x2=\"82\" y2=\"60\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"63\" y1=\"66\" x2=\"77\" y2=\"66\" stroke=\"black\" stroke-width=\"0.35\"/><line x1=\"68\" y1=\"72\" x2=\"72\" y2=\"72\" stroke=\"black\" stroke-width=\"0.35\"/></g></svg>"
+        }
+      ],
+      "letter_designation": "ZN",
+      "module_width": 100,
+      "module_height": 80,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "ds_with_grounding",
+      "type": "ds_with_grounding",
+      "name": "Disconnector QS with grounding knife",
+      "category": "disconnector",
+      "gost": "ГОСТ 2.755-87",
+      "gost_ref": "fig.2-3",
+      "viewBox": "0 0 100 100",
+      "default_width": 100,
+      "default_height": 100,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 30
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 30
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"30\" x2=\"30\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><circle cx=\"30\" cy=\"30\" r=\"2\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><line x1=\"30\" y1=\"30\" x2=\"70\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"70\" y1=\"22\" x2=\"70\" y2=\"38\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"70\" y1=\"30\" x2=\"100\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "QS",
+      "module_width": 100,
+      "module_height": 100,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "contactor_ac",
+      "type": "contactor_ac",
+      "name": "AC contactor KM",
+      "category": "contactor",
+      "gost": "ГОСТ 2.759-82",
+      "gost_ref": "fig.5",
+      "viewBox": "0 0 40 80",
+      "default_width": 40,
+      "default_height": 80,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 50,
+          "ry": 0
+        },
+        {
+          "id": "t2",
+          "rx": 50,
+          "ry": 100
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 80\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"20\" y1=\"0\" x2=\"20\" y2=\"20\" stroke=\"black\" stroke-width=\"0.8\"/><rect x=\"10.0\" y=\"20\" width=\"20\" height=\"40\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><line x1=\"20\" y1=\"60\" x2=\"20\" y2=\"80\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "KM",
+      "module_width": 40,
+      "module_height": 80,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "contactor_dc",
+      "type": "contactor_dc",
+      "name": "DC contactor KM",
+      "category": "contactor",
+      "gost": "ГОСТ 2.759-82",
+      "gost_ref": "fig.5",
+      "viewBox": "0 0 40 80",
+      "default_width": 40,
+      "default_height": 80,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 50,
+          "ry": 0
+        },
+        {
+          "id": "t2",
+          "rx": 50,
+          "ry": 100
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 80\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"20\" y1=\"0\" x2=\"20\" y2=\"20\" stroke=\"black\" stroke-width=\"0.8\"/><rect x=\"10.0\" y=\"20\" width=\"20\" height=\"40\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><line x1=\"20\" y1=\"60\" x2=\"20\" y2=\"80\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "KM",
+      "module_width": 40,
+      "module_height": 80,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "switch_load",
+      "type": "switch_load",
+      "name": "Load-break switch Q",
+      "category": "switch",
+      "gost": "ГОСТ 2.755-87",
+      "gost_ref": "fig.1",
+      "viewBox": "0 0 100 60",
+      "default_width": 100,
+      "default_height": 60,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"30\" x2=\"30\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><circle cx=\"30\" cy=\"30\" r=\"2\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><line x1=\"30\" y1=\"30\" x2=\"70\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"70\" y1=\"22\" x2=\"70\" y2=\"38\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"70\" y1=\"30\" x2=\"100\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": true,
+      "default_state": "closed",
+      "current_state": "closed",
+      "states": [
+        {
+          "id": "closed",
+          "name": "Closed",
+          "alternate_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"15\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><circle cx=\"65\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><line x1=\"65\" y1=\"32\" x2=\"65\" y2=\"48\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"15\" y1=\"40\" x2=\"65\" y2=\"40\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>"
+        },
+        {
+          "id": "open",
+          "name": "Open",
+          "alternate_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"15\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><circle cx=\"65\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><line x1=\"65\" y1=\"32\" x2=\"65\" y2=\"48\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"15\" y1=\"40\" x2=\"46.12777768298169\" y2=\"18.204095418660252\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>"
+        }
+      ],
+      "letter_designation": "Q",
+      "module_width": 100,
+      "module_height": 60,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "switch_isolating",
+      "type": "switch_isolating",
+      "name": "Isolating switch Q",
+      "category": "switch",
+      "gost": "ГОСТ 2.755-87",
+      "gost_ref": "fig.1",
+      "viewBox": "0 0 100 60",
+      "default_width": 100,
+      "default_height": 60,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"30\" x2=\"30\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><circle cx=\"30\" cy=\"30\" r=\"2\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><line x1=\"30\" y1=\"30\" x2=\"70\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"70\" y1=\"22\" x2=\"70\" y2=\"38\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"70\" y1=\"30\" x2=\"100\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": true,
+      "default_state": "closed",
+      "current_state": "closed",
+      "states": [
+        {
+          "id": "closed",
+          "name": "Closed",
+          "alternate_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"15\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><circle cx=\"65\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><line x1=\"65\" y1=\"32\" x2=\"65\" y2=\"48\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"15\" y1=\"40\" x2=\"65\" y2=\"40\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>"
+        },
+        {
+          "id": "open",
+          "name": "Open",
+          "alternate_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"15\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><circle cx=\"65\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><line x1=\"65\" y1=\"32\" x2=\"65\" y2=\"48\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"15\" y1=\"40\" x2=\"46.12777768298169\" y2=\"18.204095418660252\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>"
+        }
+      ],
+      "letter_designation": "Q",
+      "module_width": 100,
+      "module_height": 60,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "fuse_limiting",
+      "type": "fuse_limiting",
+      "name": "Limiting fuse FU",
+      "category": "fuse",
+      "gost": "ГОСТ 2.728-74",
+      "gost_ref": "fig.9",
+      "viewBox": "0 0 100 60",
+      "default_width": 100,
+      "default_height": 60,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"30\" x2=\"35.0\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><rect x=\"35.0\" y=\"20.0\" width=\"30\" height=\"20\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><line x1=\"35.0\" y1=\"40.0\" x2=\"65.0\" y2=\"20.0\" stroke=\"black\" stroke-width=\"0.35\"/><line x1=\"65.0\" y1=\"30\" x2=\"100\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "FU",
+      "module_width": 100,
+      "module_height": 60,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "fuse_protective",
+      "type": "fuse_protective",
+      "name": "Protective fuse FU",
+      "category": "fuse",
+      "gost": "ГОСТ 2.728-74",
+      "gost_ref": "fig.9",
+      "viewBox": "0 0 100 60",
+      "default_width": 100,
+      "default_height": 60,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"30\" x2=\"35.0\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><rect x=\"35.0\" y=\"20.0\" width=\"30\" height=\"20\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><line x1=\"35.0\" y1=\"40.0\" x2=\"65.0\" y2=\"20.0\" stroke=\"black\" stroke-width=\"0.35\"/><line x1=\"65.0\" y1=\"30\" x2=\"100\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "FU",
+      "module_width": 100,
+      "module_height": 60,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "fuse_holders",
+      "type": "fuse_holders",
+      "name": "Fuse with holders FU",
+      "category": "fuse",
+      "gost": "ГОСТ 2.728-74",
+      "gost_ref": "fig.9",
+      "viewBox": "0 0 100 60",
+      "default_width": 100,
+      "default_height": 60,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"30\" x2=\"30\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><rect x=\"30\" y=\"18\" width=\"15\" height=\"24\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><rect x=\"55\" y=\"18\" width=\"15\" height=\"24\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><line x1=\"30\" y1=\"22\" x2=\"45\" y2=\"38\" stroke=\"black\" stroke-width=\"0.35\"/><line x1=\"55\" y1=\"38\" x2=\"70\" y2=\"22\" stroke=\"black\" stroke-width=\"0.35\"/><line x1=\"70\" y1=\"30\" x2=\"100\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "FU",
+      "module_width": 100,
+      "module_height": 60,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "spark_gap",
+      "type": "spark_gap",
+      "name": "Spark gap FV",
+      "category": "arrester",
+      "gost": "ГОСТ 2.742-68",
+      "gost_ref": "fig.7",
+      "viewBox": "0 0 100 60",
+      "default_width": 100,
+      "default_height": 60,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"30\" x2=\"35\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"35\" y1=\"30\" x2=\"50\" y2=\"20\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"50\" y1=\"40\" x2=\"65\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"65\" y1=\"30\" x2=\"100\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "FV",
+      "module_width": 100,
+      "module_height": 60,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "opn",
+      "type": "opn",
+      "name": "Surge arrester (OPN) FV",
+      "category": "arrester",
+      "gost": "ГОСТ 2.742-68",
+      "gost_ref": "fig.7",
+      "viewBox": "0 0 100 60",
+      "default_width": 100,
+      "default_height": 60,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"30\" x2=\"38.0\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><rect x=\"38.0\" y=\"20.0\" width=\"24\" height=\"20\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><line x1=\"42.0\" y1=\"25.0\" x2=\"58.0\" y2=\"35.0\" stroke=\"black\" stroke-width=\"0.35\"/><line x1=\"42.0\" y1=\"35.0\" x2=\"58.0\" y2=\"25.0\" stroke=\"black\" stroke-width=\"0.35\"/><line x1=\"62.0\" y1=\"30\" x2=\"100\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "FV",
+      "module_width": 100,
+      "module_height": 60,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "surge_capacitor",
+      "type": "surge_capacitor",
+      "name": "Surge capacitor FV",
+      "category": "arrester",
+      "gost": "ГОСТ 2.742-68",
+      "gost_ref": "fig.7",
+      "viewBox": "0 0 100 60",
+      "default_width": 100,
+      "default_height": 60,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"30\" x2=\"42\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"42\" y1=\"20\" x2=\"42\" y2=\"40\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"58\" y1=\"20\" x2=\"58\" y2=\"40\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"58\" y1=\"30\" x2=\"100\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"42\" y1=\"30\" x2=\"58\" y2=\"30\" stroke=\"black\" stroke-width=\"0.35\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "FV",
+      "module_width": 100,
+      "module_height": 60,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "xfmr_2w",
+      "type": "xfmr_2w",
+      "name": "Two-winding transformer T",
+      "category": "transformer",
+      "gost": "ГОСТ 2.723-68",
+      "gost_ref": "fig.4",
+      "viewBox": "0 0 100 100",
+      "default_width": 80,
+      "default_height": 100,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 50,
+          "ry": 0
+        },
+        {
+          "id": "t2",
+          "rx": 50,
+          "ry": 100
+        }
+      ],
+      "default_properties": {
+        "primary_voltage": "",
+        "secondary_voltage": ""
+      },
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"50\" y1=\"0\" x2=\"50\" y2=\"32\" stroke=\"black\" stroke-width=\"0.8\"/><circle cx=\"40\" cy=\"50\" r=\"18\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><circle cx=\"60\" cy=\"50\" r=\"18\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><line x1=\"50\" y1=\"68\" x2=\"50\" y2=\"100\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "T",
+      "module_width": 80,
+      "module_height": 100,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "xfmr_3w",
+      "type": "xfmr_3w",
+      "name": "Three-winding transformer T",
+      "category": "transformer",
+      "gost": "ГОСТ 2.723-68",
+      "gost_ref": "fig.4",
+      "viewBox": "0 0 100 120",
+      "default_width": 80,
+      "default_height": 120,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 50,
+          "ry": 0
+        },
+        {
+          "id": "t2",
+          "rx": 50,
+          "ry": 100
+        },
+        {
+          "id": "t3",
+          "rx": 80,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 120\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"50\" y1=\"0\" x2=\"50\" y2=\"45\" stroke=\"black\" stroke-width=\"0.8\"/><circle cx=\"32\" cy=\"60\" r=\"15\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><circle cx=\"50\" cy=\"60\" r=\"15\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><circle cx=\"68\" cy=\"60\" r=\"15\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><line x1=\"50\" y1=\"75\" x2=\"50\" y2=\"120\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "T",
+      "module_width": 80,
+      "module_height": 120,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "xfmr_delta_wye",
+      "type": "xfmr_delta_wye",
+      "name": "Transformer Dy11 T",
+      "category": "transformer",
+      "gost": "ГОСТ 2.723-68",
+      "gost_ref": "fig.4",
+      "viewBox": "0 0 100 110",
+      "default_width": 80,
+      "default_height": 110,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 50,
+          "ry": 0
+        },
+        {
+          "id": "t2",
+          "rx": 50,
+          "ry": 100
+        }
+      ],
+      "default_properties": {
+        "connection_group": "Dyn11"
+      },
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 110\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"50\" y1=\"0\" x2=\"50\" y2=\"37\" stroke=\"black\" stroke-width=\"0.8\"/><circle cx=\"38\" cy=\"55\" r=\"18\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><circle cx=\"62\" cy=\"55\" r=\"18\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><path d=\"M57,71 L62,77 L67,71Z\" stroke=\"black\" stroke-width=\"0.35\" fill=\"none\"/><line x1=\"50\" y1=\"73\" x2=\"50\" y2=\"110\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "T",
+      "module_width": 80,
+      "module_height": 110,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "autotransformer",
+      "type": "autotransformer",
+      "name": "Autotransformer TA",
+      "category": "transformer",
+      "gost": "ГОСТ 2.723-68",
+      "gost_ref": "fig.4",
+      "viewBox": "0 0 100 110",
+      "default_width": 80,
+      "default_height": 110,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 30,
+          "ry": 0
+        },
+        {
+          "id": "t2",
+          "rx": 70,
+          "ry": 100
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 110\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"30\" y1=\"0\" x2=\"30\" y2=\"35\" stroke=\"black\" stroke-width=\"0.8\"/><circle cx=\"50\" cy=\"55\" r=\"20\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><line x1=\"30\" y1=\"35\" x2=\"50\" y2=\"35\" stroke=\"black\" stroke-width=\"0.35\"/><line x1=\"30\" y1=\"55\" x2=\"50\" y2=\"75\" stroke=\"black\" stroke-width=\"0.35\"/><line x1=\"70\" y1=\"75\" x2=\"70\" y2=\"110\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "TA",
+      "module_width": 80,
+      "module_height": 110,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "ct_wound",
+      "type": "ct_wound",
+      "name": "Wound-type current transformer TA",
+      "category": "ct_vt",
+      "gost": "ГОСТ 2.723-68",
+      "gost_ref": "fig.5",
+      "viewBox": "0 0 100 60",
+      "default_width": 100,
+      "default_height": 60,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"30\" x2=\"28.5\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><circle cx=\"38.5\" cy=\"30\" r=\"10\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><circle cx=\"61.5\" cy=\"30\" r=\"10\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><line x1=\"71.5\" y1=\"30\" x2=\"100\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "TA",
+      "module_width": 100,
+      "module_height": 60,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "ct_bar",
+      "type": "ct_bar",
+      "name": "Bar-type current transformer TA",
+      "category": "ct_vt",
+      "gost": "ГОСТ 2.723-68",
+      "gost_ref": "fig.5",
+      "viewBox": "0 0 100 60",
+      "default_width": 100,
+      "default_height": 60,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"30\" x2=\"28.5\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><circle cx=\"38.5\" cy=\"30\" r=\"10\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><circle cx=\"61.5\" cy=\"30\" r=\"10\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><line x1=\"71.5\" y1=\"30\" x2=\"100\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "TA",
+      "module_width": 100,
+      "module_height": 60,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "ct_normal",
+      "type": "ct_normal",
+      "name": "Current transformer (normal diagram) TA",
+      "category": "ct_vt",
+      "gost": "ГОСТ 2.723-68",
+      "gost_ref": "fig.5",
+      "viewBox": "0 0 80 60",
+      "default_width": 80,
+      "default_height": 60,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"30\" x2=\"38\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><circle cx=\"50\" cy=\"30\" r=\"12\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><line x1=\"62\" y1=\"30\" x2=\"80\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"50\" y1=\"42\" x2=\"50\" y2=\"60\" stroke=\"black\" stroke-width=\"0.8\"/><circle cx=\"50\" cy=\"50\" r=\"5\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "TA",
+      "module_width": 80,
+      "module_height": 60,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "vt_inductive",
+      "type": "vt_inductive",
+      "name": "Inductive voltage transformer TV",
+      "category": "ct_vt",
+      "gost": "ГОСТ 2.723-68",
+      "gost_ref": "fig.5",
+      "viewBox": "0 0 100 80",
+      "default_width": 100,
+      "default_height": 80,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 25
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 25
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 80\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"25\" x2=\"38\" y2=\"25\" stroke=\"black\" stroke-width=\"0.8\"/><circle cx=\"50\" cy=\"40\" r=\"12\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><line x1=\"50\" y1=\"25\" x2=\"50\" y2=\"28\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"50\" y1=\"52\" x2=\"50\" y2=\"70\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"42\" y1=\"70\" x2=\"58\" y2=\"70\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"45\" y1=\"75\" x2=\"55\" y2=\"75\" stroke=\"black\" stroke-width=\"0.35\"/><line x1=\"48\" y1=\"80\" x2=\"52\" y2=\"80\" stroke=\"black\" stroke-width=\"0.35\"/><line x1=\"62\" y1=\"25\" x2=\"100\" y2=\"25\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "TV",
+      "module_width": 100,
+      "module_height": 80,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "vt_normal",
+      "type": "vt_normal",
+      "name": "Voltage transformer (normal diagram) TV",
+      "category": "ct_vt",
+      "gost": "ГОСТ 2.723-68",
+      "gost_ref": "fig.5",
+      "viewBox": "0 0 60 80",
+      "default_width": 60,
+      "default_height": 80,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 50,
+          "ry": 0
+        },
+        {
+          "id": "t2",
+          "rx": 50,
+          "ry": 100
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 60 80\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"30\" y1=\"0\" x2=\"30\" y2=\"8\" stroke=\"black\" stroke-width=\"0.8\"/><circle cx=\"30\" cy=\"20\" r=\"12\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><line x1=\"30\" y1=\"32\" x2=\"30\" y2=\"80\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "TV",
+      "module_width": 60,
+      "module_height": 80,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "r_overcurrent",
+      "type": "r_overcurrent",
+      "name": "Overcurrent relay 50/51",
+      "category": "relay",
+      "gost": "ГОСТ 2.759-82",
+      "gost_ref": "fig.5",
+      "viewBox": "0 0 40 80",
+      "default_width": 40,
+      "default_height": 80,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 50,
+          "ry": 0
+        },
+        {
+          "id": "t2",
+          "rx": 50,
+          "ry": 100
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 80\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"20\" y1=\"0\" x2=\"20\" y2=\"20\" stroke=\"black\" stroke-width=\"0.8\"/><rect x=\"10\" y=\"20\" width=\"20\" height=\"40\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><text x=\"20\" y=\"40\" font-family=\"Arial,Helvetica,sans-serif\" font-size=\"7\" fill=\"black\" text-anchor=\"middle\" dominant-baseline=\"central\">I></text><line x1=\"20\" y1=\"60\" x2=\"20\" y2=\"80\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "50/51",
+      "module_width": 40,
+      "module_height": 80,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "r_diff",
+      "type": "r_diff",
+      "name": "Differential relay 87",
+      "category": "relay",
+      "gost": "ГОСТ 2.759-82",
+      "gost_ref": "fig.5",
+      "viewBox": "0 0 40 80",
+      "default_width": 40,
+      "default_height": 80,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 50,
+          "ry": 0
+        },
+        {
+          "id": "t2",
+          "rx": 50,
+          "ry": 100
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 80\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"20\" y1=\"0\" x2=\"20\" y2=\"20\" stroke=\"black\" stroke-width=\"0.8\"/><rect x=\"10\" y=\"20\" width=\"20\" height=\"40\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><text x=\"20\" y=\"40\" font-family=\"Arial,Helvetica,sans-serif\" font-size=\"7\" fill=\"black\" text-anchor=\"middle\" dominant-baseline=\"central\">ΔI</text><line x1=\"20\" y1=\"60\" x2=\"20\" y2=\"80\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "87",
+      "module_width": 40,
+      "module_height": 80,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "r_distance",
+      "type": "r_distance",
+      "name": "Distance relay 21",
+      "category": "relay",
+      "gost": "ГОСТ 2.759-82",
+      "gost_ref": "fig.5",
+      "viewBox": "0 0 40 80",
+      "default_width": 40,
+      "default_height": 80,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 50,
+          "ry": 0
+        },
+        {
+          "id": "t2",
+          "rx": 50,
+          "ry": 100
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 80\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"20\" y1=\"0\" x2=\"20\" y2=\"20\" stroke=\"black\" stroke-width=\"0.8\"/><rect x=\"10\" y=\"20\" width=\"20\" height=\"40\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><text x=\"20\" y=\"40\" font-family=\"Arial,Helvetica,sans-serif\" font-size=\"7\" fill=\"black\" text-anchor=\"middle\" dominant-baseline=\"central\">Z</text><line x1=\"20\" y1=\"60\" x2=\"20\" y2=\"80\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "21",
+      "module_width": 40,
+      "module_height": 80,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "r_earth_fault",
+      "type": "r_earth_fault",
+      "name": "Earth-fault relay 51N",
+      "category": "relay",
+      "gost": "ГОСТ 2.759-82",
+      "gost_ref": "fig.5",
+      "viewBox": "0 0 40 80",
+      "default_width": 40,
+      "default_height": 80,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 50,
+          "ry": 0
+        },
+        {
+          "id": "t2",
+          "rx": 50,
+          "ry": 100
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 80\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"20\" y1=\"0\" x2=\"20\" y2=\"20\" stroke=\"black\" stroke-width=\"0.8\"/><rect x=\"10\" y=\"20\" width=\"20\" height=\"40\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><text x=\"20\" y=\"40\" font-family=\"Arial,Helvetica,sans-serif\" font-size=\"6\" fill=\"black\" text-anchor=\"middle\" dominant-baseline=\"central\">3I0</text><line x1=\"20\" y1=\"60\" x2=\"20\" y2=\"80\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "51N",
+      "module_width": 40,
+      "module_height": 80,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "r_thermal",
+      "type": "r_thermal",
+      "name": "Thermal relay 49",
+      "category": "relay",
+      "gost": "ГОСТ 2.759-82",
+      "gost_ref": "fig.5",
+      "viewBox": "0 0 40 80",
+      "default_width": 40,
+      "default_height": 80,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 50,
+          "ry": 0
+        },
+        {
+          "id": "t2",
+          "rx": 50,
+          "ry": 100
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 80\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"20\" y1=\"0\" x2=\"20\" y2=\"20\" stroke=\"black\" stroke-width=\"0.8\"/><rect x=\"10\" y=\"20\" width=\"20\" height=\"40\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><text x=\"20\" y=\"40\" font-family=\"Arial,Helvetica,sans-serif\" font-size=\"7\" fill=\"black\" text-anchor=\"middle\" dominant-baseline=\"central\">T</text><line x1=\"20\" y1=\"60\" x2=\"20\" y2=\"80\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "49",
+      "module_width": 40,
+      "module_height": 80,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "r_pressure",
+      "type": "r_pressure",
+      "name": "Pressure relay 63",
+      "category": "relay",
+      "gost": "ГОСТ 2.759-82",
+      "gost_ref": "fig.5",
+      "viewBox": "0 0 40 80",
+      "default_width": 40,
+      "default_height": 80,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 50,
+          "ry": 0
+        },
+        {
+          "id": "t2",
+          "rx": 50,
+          "ry": 100
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 80\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"20\" y1=\"0\" x2=\"20\" y2=\"20\" stroke=\"black\" stroke-width=\"0.8\"/><rect x=\"10\" y=\"20\" width=\"20\" height=\"40\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><text x=\"20\" y=\"40\" font-family=\"Arial,Helvetica,sans-serif\" font-size=\"7\" fill=\"black\" text-anchor=\"middle\" dominant-baseline=\"central\">P</text><line x1=\"20\" y1=\"60\" x2=\"20\" y2=\"80\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "63",
+      "module_width": 40,
+      "module_height": 80,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "r_overload",
+      "type": "r_overload",
+      "name": "Overload relay 49",
+      "category": "relay",
+      "gost": "ГОСТ 2.759-82",
+      "gost_ref": "fig.5",
+      "viewBox": "0 0 40 80",
+      "default_width": 40,
+      "default_height": 80,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 50,
+          "ry": 0
+        },
+        {
+          "id": "t2",
+          "rx": 50,
+          "ry": 100
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 80\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"20\" y1=\"0\" x2=\"20\" y2=\"20\" stroke=\"black\" stroke-width=\"0.8\"/><rect x=\"10\" y=\"20\" width=\"20\" height=\"40\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><text x=\"20\" y=\"40\" font-family=\"Arial,Helvetica,sans-serif\" font-size=\"7\" fill=\"black\" text-anchor=\"middle\" dominant-baseline=\"central\">I></text><line x1=\"20\" y1=\"60\" x2=\"20\" y2=\"80\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "49",
+      "module_width": 40,
+      "module_height": 80,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "r_buchholz",
+      "type": "r_buchholz",
+      "name": "Buchholz relay 71",
+      "category": "relay",
+      "gost": "ГОСТ 2.759-82",
+      "gost_ref": "fig.5",
+      "viewBox": "0 0 40 80",
+      "default_width": 40,
+      "default_height": 80,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 50,
+          "ry": 0
+        },
+        {
+          "id": "t2",
+          "rx": 50,
+          "ry": 100
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 80\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"20\" y1=\"0\" x2=\"20\" y2=\"20\" stroke=\"black\" stroke-width=\"0.8\"/><rect x=\"10\" y=\"20\" width=\"20\" height=\"40\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><text x=\"20\" y=\"40\" font-family=\"Arial,Helvetica,sans-serif\" font-size=\"7\" fill=\"black\" text-anchor=\"middle\" dominant-baseline=\"central\">B</text><line x1=\"20\" y1=\"60\" x2=\"20\" y2=\"80\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "71",
+      "module_width": 40,
+      "module_height": 80,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "r_gas",
+      "type": "r_gas",
+      "name": "Gas relay 71",
+      "category": "relay",
+      "gost": "ГОСТ 2.759-82",
+      "gost_ref": "fig.5",
+      "viewBox": "0 0 40 80",
+      "default_width": 40,
+      "default_height": 80,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 50,
+          "ry": 0
+        },
+        {
+          "id": "t2",
+          "rx": 50,
+          "ry": 100
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 80\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"20\" y1=\"0\" x2=\"20\" y2=\"20\" stroke=\"black\" stroke-width=\"0.8\"/><rect x=\"10\" y=\"20\" width=\"20\" height=\"40\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><text x=\"20\" y=\"40\" font-family=\"Arial,Helvetica,sans-serif\" font-size=\"7\" fill=\"black\" text-anchor=\"middle\" dominant-baseline=\"central\">G</text><line x1=\"20\" y1=\"60\" x2=\"20\" y2=\"80\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "71",
+      "module_width": 40,
+      "module_height": 80,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "ammeter",
+      "type": "ammeter",
+      "name": "Ammeter PA",
+      "category": "instruments",
+      "gost": "ГОСТ 2.729-68",
+      "gost_ref": "fig.1",
+      "viewBox": "0 0 100 60",
+      "default_width": 100,
+      "default_height": 60,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"30\" x2=\"36\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><circle cx=\"50\" cy=\"30\" r=\"14\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><text x=\"50\" y=\"30\" font-family=\"Arial,Helvetica,sans-serif\" font-size=\"10\" fill=\"black\" text-anchor=\"middle\" dominant-baseline=\"central\">A</text><line x1=\"64\" y1=\"30\" x2=\"100\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "A",
+      "module_width": 100,
+      "module_height": 60,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "voltmeter",
+      "type": "voltmeter",
+      "name": "Voltmeter PV",
+      "category": "instruments",
+      "gost": "ГОСТ 2.729-68",
+      "gost_ref": "fig.1",
+      "viewBox": "0 0 100 60",
+      "default_width": 100,
+      "default_height": 60,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"30\" x2=\"36\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><circle cx=\"50\" cy=\"30\" r=\"14\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><text x=\"50\" y=\"30\" font-family=\"Arial,Helvetica,sans-serif\" font-size=\"10\" fill=\"black\" text-anchor=\"middle\" dominant-baseline=\"central\">V</text><line x1=\"64\" y1=\"30\" x2=\"100\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "V",
+      "module_width": 100,
+      "module_height": 60,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "wattmeter",
+      "type": "wattmeter",
+      "name": "Wattmeter PW",
+      "category": "instruments",
+      "gost": "ГОСТ 2.729-68",
+      "gost_ref": "fig.1",
+      "viewBox": "0 0 100 60",
+      "default_width": 100,
+      "default_height": 60,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"30\" x2=\"36\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><circle cx=\"50\" cy=\"30\" r=\"14\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><text x=\"50\" y=\"30\" font-family=\"Arial,Helvetica,sans-serif\" font-size=\"10\" fill=\"black\" text-anchor=\"middle\" dominant-baseline=\"central\">W</text><line x1=\"64\" y1=\"30\" x2=\"100\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "W",
+      "module_width": 100,
+      "module_height": 60,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "varmeter",
+      "type": "varmeter",
+      "name": "Varmeter PVAR",
+      "category": "instruments",
+      "gost": "ГОСТ 2.729-68",
+      "gost_ref": "fig.1",
+      "viewBox": "0 0 100 60",
+      "default_width": 100,
+      "default_height": 60,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"30\" x2=\"36\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><circle cx=\"50\" cy=\"30\" r=\"14\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><text x=\"50\" y=\"30\" font-family=\"Arial,Helvetica,sans-serif\" font-size=\"10\" fill=\"black\" text-anchor=\"middle\" dominant-baseline=\"central\">VAR</text><line x1=\"64\" y1=\"30\" x2=\"100\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "VAR",
+      "module_width": 100,
+      "module_height": 60,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "frequency_meter",
+      "type": "frequency_meter",
+      "name": "Frequency meter PF",
+      "category": "instruments",
+      "gost": "ГОСТ 2.729-68",
+      "gost_ref": "fig.1",
+      "viewBox": "0 0 100 60",
+      "default_width": 100,
+      "default_height": 60,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"30\" x2=\"36\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><circle cx=\"50\" cy=\"30\" r=\"14\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><text x=\"50\" y=\"30\" font-family=\"Arial,Helvetica,sans-serif\" font-size=\"10\" fill=\"black\" text-anchor=\"middle\" dominant-baseline=\"central\">Hz</text><line x1=\"64\" y1=\"30\" x2=\"100\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "Hz",
+      "module_width": 100,
+      "module_height": 60,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "power_factor_meter",
+      "type": "power_factor_meter",
+      "name": "Power factor meter PCos",
+      "category": "instruments",
+      "gost": "ГОСТ 2.729-68",
+      "gost_ref": "fig.1",
+      "viewBox": "0 0 100 60",
+      "default_width": 100,
+      "default_height": 60,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"30\" x2=\"36\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><circle cx=\"50\" cy=\"30\" r=\"14\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><text x=\"50\" y=\"30\" font-family=\"Arial,Helvetica,sans-serif\" font-size=\"10\" fill=\"black\" text-anchor=\"middle\" dominant-baseline=\"central\">cos</text><line x1=\"64\" y1=\"30\" x2=\"100\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "cos",
+      "module_width": 100,
+      "module_height": 60,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "ohmmeter",
+      "type": "ohmmeter",
+      "name": "Ohmmeter PO",
+      "category": "instruments",
+      "gost": "ГОСТ 2.729-68",
+      "gost_ref": "fig.1",
+      "viewBox": "0 0 100 60",
+      "default_width": 100,
+      "default_height": 60,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"30\" x2=\"36\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><circle cx=\"50\" cy=\"30\" r=\"14\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><text x=\"50\" y=\"30\" font-family=\"Arial,Helvetica,sans-serif\" font-size=\"10\" fill=\"black\" text-anchor=\"middle\" dominant-baseline=\"central\">Ohm</text><line x1=\"64\" y1=\"30\" x2=\"100\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "Ohm",
+      "module_width": 100,
+      "module_height": 60,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "energy_meter",
+      "type": "energy_meter",
+      "name": "Energy meter E",
+      "category": "instruments",
+      "gost": "ГОСТ 2.729-68",
+      "gost_ref": "fig.1",
+      "viewBox": "0 0 100 60",
+      "default_width": 100,
+      "default_height": 60,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"30\" x2=\"36\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><circle cx=\"50\" cy=\"30\" r=\"14\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><text x=\"50\" y=\"30\" font-family=\"Arial,Helvetica,sans-serif\" font-size=\"10\" fill=\"black\" text-anchor=\"middle\" dominant-baseline=\"central\">Wh</text><line x1=\"64\" y1=\"30\" x2=\"100\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "Wh",
+      "module_width": 100,
+      "module_height": 60,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "synchronous_gen",
+      "type": "synchronous_gen",
+      "name": "Synchronous generator GS",
+      "category": "machines",
+      "gost": "ГОСТ 2.722-68",
+      "gost_ref": "fig.1",
+      "viewBox": "0 0 80 80",
+      "default_width": 80,
+      "default_height": 80,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 50,
+          "ry": 0
+        },
+        {
+          "id": "t2",
+          "rx": 50,
+          "ry": 100
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 90\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"40\" y1=\"0\" x2=\"40\" y2=\"23\" stroke=\"black\" stroke-width=\"0.8\"/><circle cx=\"40\" cy=\"45\" r=\"22\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><text x=\"40\" y=\"42\" font-family=\"Arial,Helvetica,sans-serif\" font-size=\"14\" fill=\"black\" text-anchor=\"middle\" dominant-baseline=\"central\">G</text><line x1=\"34\" y1=\"53\" x2=\"46\" y2=\"53\" stroke=\"black\" stroke-width=\"0.35\"/><line x1=\"40\" y1=\"67\" x2=\"40\" y2=\"90\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "GS",
+      "module_width": 80,
+      "module_height": 80,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "synchronous_motor",
+      "type": "synchronous_motor",
+      "name": "Synchronous motor MS",
+      "category": "machines",
+      "gost": "ГОСТ 2.722-68",
+      "gost_ref": "fig.1",
+      "viewBox": "0 0 80 80",
+      "default_width": 80,
+      "default_height": 80,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 50,
+          "ry": 0
+        },
+        {
+          "id": "t2",
+          "rx": 50,
+          "ry": 100
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 80\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"40\" y1=\"0\" x2=\"40\" y2=\"15\" stroke=\"black\" stroke-width=\"0.8\"/><circle cx=\"40\" cy=\"40\" r=\"25\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><text x=\"40\" y=\"40\" font-family=\"Arial,Helvetica,sans-serif\" font-size=\"16\" fill=\"black\" text-anchor=\"middle\" dominant-baseline=\"central\">M</text><line x1=\"40\" y1=\"65\" x2=\"40\" y2=\"80\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "MS",
+      "module_width": 80,
+      "module_height": 80,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "asynchronous_motor",
+      "type": "asynchronous_motor",
+      "name": "Asynchronous (induction) motor MI",
+      "category": "machines",
+      "gost": "ГОСТ 2.722-68",
+      "gost_ref": "fig.1",
+      "viewBox": "0 0 80 80",
+      "default_width": 80,
+      "default_height": 80,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 50,
+          "ry": 0
+        },
+        {
+          "id": "t2",
+          "rx": 50,
+          "ry": 100
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 80\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"40\" y1=\"0\" x2=\"40\" y2=\"15\" stroke=\"black\" stroke-width=\"0.8\"/><circle cx=\"40\" cy=\"40\" r=\"25\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><text x=\"40\" y=\"40\" font-family=\"Arial,Helvetica,sans-serif\" font-size=\"16\" fill=\"black\" text-anchor=\"middle\" dominant-baseline=\"central\">M</text><line x1=\"40\" y1=\"65\" x2=\"40\" y2=\"80\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "MI",
+      "module_width": 80,
+      "module_height": 80,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "dc_generator",
+      "type": "dc_generator",
+      "name": "DC generator GD",
+      "category": "machines",
+      "gost": "ГОСТ 2.722-68",
+      "gost_ref": "fig.1",
+      "viewBox": "0 0 80 80",
+      "default_width": 80,
+      "default_height": 80,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 50,
+          "ry": 0
+        },
+        {
+          "id": "t2",
+          "rx": 50,
+          "ry": 100
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 90\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"40\" y1=\"0\" x2=\"40\" y2=\"23\" stroke=\"black\" stroke-width=\"0.8\"/><circle cx=\"40\" cy=\"45\" r=\"22\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><text x=\"40\" y=\"42\" font-family=\"Arial,Helvetica,sans-serif\" font-size=\"14\" fill=\"black\" text-anchor=\"middle\" dominant-baseline=\"central\">G</text><line x1=\"34\" y1=\"53\" x2=\"46\" y2=\"53\" stroke=\"black\" stroke-width=\"0.35\"/><line x1=\"40\" y1=\"67\" x2=\"40\" y2=\"90\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "GD",
+      "module_width": 80,
+      "module_height": 80,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "dc_motor",
+      "type": "dc_motor",
+      "name": "DC motor MD",
+      "category": "machines",
+      "gost": "ГОСТ 2.722-68",
+      "gost_ref": "fig.1",
+      "viewBox": "0 0 80 80",
+      "default_width": 80,
+      "default_height": 80,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 50,
+          "ry": 0
+        },
+        {
+          "id": "t2",
+          "rx": 50,
+          "ry": 100
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 80\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"40\" y1=\"0\" x2=\"40\" y2=\"15\" stroke=\"black\" stroke-width=\"0.8\"/><circle cx=\"40\" cy=\"40\" r=\"25\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><text x=\"40\" y=\"40\" font-family=\"Arial,Helvetica,sans-serif\" font-size=\"16\" fill=\"black\" text-anchor=\"middle\" dominant-baseline=\"central\">M</text><line x1=\"40\" y1=\"65\" x2=\"40\" y2=\"80\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "MD",
+      "module_width": 80,
+      "module_height": 80,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "universal_motor",
+      "type": "universal_motor",
+      "name": "Universal motor MU",
+      "category": "machines",
+      "gost": "ГОСТ 2.722-68",
+      "gost_ref": "fig.1",
+      "viewBox": "0 0 80 80",
+      "default_width": 80,
+      "default_height": 80,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 50,
+          "ry": 0
+        },
+        {
+          "id": "t2",
+          "rx": 50,
+          "ry": 100
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 80\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"40\" y1=\"0\" x2=\"40\" y2=\"15\" stroke=\"black\" stroke-width=\"0.8\"/><circle cx=\"40\" cy=\"40\" r=\"25\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><text x=\"40\" y=\"40\" font-family=\"Arial,Helvetica,sans-serif\" font-size=\"16\" fill=\"black\" text-anchor=\"middle\" dominant-baseline=\"central\">M</text><line x1=\"40\" y1=\"65\" x2=\"40\" y2=\"80\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "MU",
+      "module_width": 80,
+      "module_height": 80,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "special_machine",
+      "type": "special_machine",
+      "name": "Special electrical machine",
+      "category": "machines",
+      "gost": "ГОСТ 2.722-68",
+      "gost_ref": "fig.1",
+      "viewBox": "0 0 80 80",
+      "default_width": 80,
+      "default_height": 80,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 50,
+          "ry": 0
+        },
+        {
+          "id": "t2",
+          "rx": 50,
+          "ry": 100
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 80\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"40\" y1=\"0\" x2=\"40\" y2=\"15\" stroke=\"black\" stroke-width=\"0.8\"/><circle cx=\"40\" cy=\"40\" r=\"25\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><text x=\"40\" y=\"40\" font-family=\"Arial,Helvetica,sans-serif\" font-size=\"16\" fill=\"black\" text-anchor=\"middle\" dominant-baseline=\"central\">X</text><line x1=\"40\" y1=\"65\" x2=\"40\" y2=\"80\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "X",
+      "module_width": 80,
+      "module_height": 80,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "servo_motor",
+      "type": "servo_motor",
+      "name": "Servo motor",
+      "category": "machines",
+      "gost": "ГОСТ 2.722-68",
+      "gost_ref": "fig.1",
+      "viewBox": "0 0 80 80",
+      "default_width": 80,
+      "default_height": 80,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 50,
+          "ry": 0
+        },
+        {
+          "id": "t2",
+          "rx": 50,
+          "ry": 100
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 80\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"40\" y1=\"0\" x2=\"40\" y2=\"15\" stroke=\"black\" stroke-width=\"0.8\"/><circle cx=\"40\" cy=\"40\" r=\"25\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><text x=\"40\" y=\"40\" font-family=\"Arial,Helvetica,sans-serif\" font-size=\"16\" fill=\"black\" text-anchor=\"middle\" dominant-baseline=\"central\">SM</text><line x1=\"40\" y1=\"65\" x2=\"40\" y2=\"80\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "SM",
+      "module_width": 80,
+      "module_height": 80,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "resistor",
+      "type": "resistor",
+      "name": "Resistor R",
+      "category": "passive",
+      "gost": "ГОСТ 2.728-74",
+      "gost_ref": "fig.1",
+      "viewBox": "0 0 100 40",
+      "default_width": 100,
+      "default_height": 40,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 40\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"20\" x2=\"30.0\" y2=\"20\" stroke=\"black\" stroke-width=\"0.8\"/><rect x=\"30.0\" y=\"13.0\" width=\"40\" height=\"14\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><line x1=\"70.0\" y1=\"20\" x2=\"100\" y2=\"20\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "R",
+      "module_width": 100,
+      "module_height": 40,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "rheostat",
+      "type": "rheostat",
+      "name": "Rheostat R",
+      "category": "passive",
+      "gost": "ГОСТ 2.728-74",
+      "gost_ref": "fig.1",
+      "viewBox": "0 0 100 50",
+      "default_width": 100,
+      "default_height": 50,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 50\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"25\" x2=\"30\" y2=\"25\" stroke=\"black\" stroke-width=\"0.8\"/><rect x=\"30\" y=\"18.0\" width=\"40\" height=\"14\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><line x1=\"70\" y1=\"25\" x2=\"100\" y2=\"25\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"50\" y1=\"18.0\" x2=\"50\" y2=\"8.0\" stroke=\"black\" stroke-width=\"0.35\"/><path d=\"M45,8.0 L50,13.0 L55,8.0\" stroke=\"black\" stroke-width=\"0.35\" fill=\"none\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "R",
+      "module_width": 100,
+      "module_height": 50,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "var_resistor",
+      "type": "var_resistor",
+      "name": "Variable resistor R",
+      "category": "passive",
+      "gost": "ГОСТ 2.728-74",
+      "gost_ref": "fig.1",
+      "viewBox": "0 0 100 50",
+      "default_width": 100,
+      "default_height": 50,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 50\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"25\" x2=\"30\" y2=\"25\" stroke=\"black\" stroke-width=\"0.8\"/><rect x=\"30\" y=\"18.0\" width=\"40\" height=\"14\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><line x1=\"70\" y1=\"25\" x2=\"100\" y2=\"25\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"25\" y1=\"37.0\" x2=\"75\" y2=\"13.0\" stroke=\"black\" stroke-width=\"0.35\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "R",
+      "module_width": 100,
+      "module_height": 50,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "capacitor",
+      "type": "capacitor",
+      "name": "Capacitor C",
+      "category": "passive",
+      "gost": "ГОСТ 2.728-74",
+      "gost_ref": "fig.2",
+      "viewBox": "0 0 100 50",
+      "default_width": 100,
+      "default_height": 50,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 50\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"25\" x2=\"46.0\" y2=\"25\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"46.0\" y1=\"9\" x2=\"46.0\" y2=\"41\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"54.0\" y1=\"9\" x2=\"54.0\" y2=\"41\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"54.0\" y1=\"25\" x2=\"100\" y2=\"25\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "C",
+      "module_width": 100,
+      "module_height": 50,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "electrolytic_capacitor",
+      "type": "electrolytic_capacitor",
+      "name": "Electrolytic capacitor C",
+      "category": "passive",
+      "gost": "ГОСТ 2.728-74",
+      "gost_ref": "fig.2",
+      "viewBox": "0 0 100 55",
+      "default_width": 100,
+      "default_height": 55,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 55\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"28\" x2=\"45\" y2=\"28\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"45\" y1=\"14\" x2=\"45\" y2=\"42\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"55\" y1=\"14\" x2=\"55\" y2=\"42\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"55\" y1=\"28\" x2=\"100\" y2=\"28\" stroke=\"black\" stroke-width=\"0.8\"/><text x=\"50\" y=\"10\" font-family=\"Arial,Helvetica,sans-serif\" font-size=\"5\" fill=\"black\" text-anchor=\"middle\" dominant-baseline=\"central\">+</text></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "C",
+      "module_width": 100,
+      "module_height": 55,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "inductor",
+      "type": "inductor",
+      "name": "Inductor (coil) L",
+      "category": "passive",
+      "gost": "ГОСТ 2.723-68",
+      "gost_ref": "fig.3",
+      "viewBox": "0 0 100 60",
+      "default_width": 100,
+      "default_height": 60,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"30\" x2=\"29\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><path d=\"M29,30 A7,7 0 0,0 43,30\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><path d=\"M43,30 A7,7 0 0,0 57,30\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><path d=\"M57,30 A7,7 0 0,0 71,30\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><line x1=\"71\" y1=\"30\" x2=\"100\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "L",
+      "module_width": 100,
+      "module_height": 60,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "shunt_reactor",
+      "type": "shunt_reactor",
+      "name": "Shunt reactor L",
+      "category": "reactor",
+      "gost": "ГОСТ 2.723-68",
+      "gost_ref": "fig.3",
+      "viewBox": "0 0 100 60",
+      "default_width": 100,
+      "default_height": 60,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"30\" x2=\"29\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><path d=\"M29,30 A7,7 0 0,1 43,30\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><path d=\"M43,30 A7,7 0 0,1 57,30\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><path d=\"M57,30 A7,7 0 0,1 71,30\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><line x1=\"71\" y1=\"30\" x2=\"100\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"29\" y1=\"42\" x2=\"71\" y2=\"42\" stroke=\"black\" stroke-width=\"0.35\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "L",
+      "module_width": 100,
+      "module_height": 60,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "filter_reactor",
+      "type": "filter_reactor",
+      "name": "Filter reactor L",
+      "category": "reactor",
+      "gost": "ГОСТ 2.723-68",
+      "gost_ref": "fig.3",
+      "viewBox": "0 0 100 60",
+      "default_width": 100,
+      "default_height": 60,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"30\" x2=\"29\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><path d=\"M29,30 A7,7 0 0,1 43,30\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><path d=\"M43,30 A7,7 0 0,1 57,30\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><path d=\"M57,30 A7,7 0 0,1 71,30\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><line x1=\"71\" y1=\"30\" x2=\"100\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"29\" y1=\"42\" x2=\"71\" y2=\"42\" stroke=\"black\" stroke-width=\"0.35\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "L",
+      "module_width": 100,
+      "module_height": 60,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "bus_bar",
+      "type": "bus_bar",
+      "name": "Bus bar (main bus)",
+      "category": "bus_line",
+      "gost": "ГОСТ 2.702-2011",
+      "gost_ref": "fig.2",
+      "viewBox": "0 0 100 20",
+      "default_width": 100,
+      "default_height": 20,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 20\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"10\" x2=\"100\" y2=\"10\" stroke=\"black\" stroke-width=\"2.5\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "",
+      "module_width": 100,
+      "module_height": 20,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "bus_tap",
+      "type": "bus_tap",
+      "name": "Bus tap / branch",
+      "category": "bus_line",
+      "gost": "ГОСТ 2.702-2011",
+      "gost_ref": "fig.2",
+      "viewBox": "0 0 60 60",
+      "default_width": 60,
+      "default_height": 60,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 50,
+          "ry": 0
+        },
+        {
+          "id": "t2",
+          "rx": 50,
+          "ry": 100
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 60 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"10\" x2=\"60\" y2=\"10\" stroke=\"black\" stroke-width=\"2.5\"/><line x1=\"30\" y1=\"10\" x2=\"30\" y2=\"60\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "",
+      "module_width": 60,
+      "module_height": 60,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "bus_node",
+      "type": "bus_node",
+      "name": "Bus node / junction",
+      "category": "bus_line",
+      "gost": "ГОСТ 2.702-2011",
+      "gost_ref": "fig.2",
+      "viewBox": "0 0 40 40",
+      "default_width": 40,
+      "default_height": 40,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 50,
+          "ry": 0
+        },
+        {
+          "id": "t2",
+          "rx": 50,
+          "ry": 100
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 40\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"20\" cy=\"20\" r=\"3\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "",
+      "module_width": 40,
+      "module_height": 40,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "power_line",
+      "type": "power_line",
+      "name": "Power line (overhead)",
+      "category": "bus_line",
+      "gost": "ГОСТ 2.702-2011",
+      "gost_ref": "fig.2",
+      "viewBox": "0 0 100 20",
+      "default_width": 100,
+      "default_height": 20,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 20\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"10\" x2=\"100\" y2=\"10\" stroke=\"black\" stroke-width=\"2.5\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "",
+      "module_width": 100,
+      "module_height": 20,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "terminal",
+      "type": "terminal",
+      "name": "Terminal / binding post",
+      "category": "terminals",
+      "gost": "ГОСТ 2.721-74",
+      "gost_ref": "fig.6",
+      "viewBox": "0 0 30 30",
+      "default_width": 30,
+      "default_height": 30,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 50,
+          "ry": 100
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 30 30\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"15\" cy=\"15\" r=\"3\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "",
+      "module_width": 30,
+      "module_height": 30,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "terminal_board",
+      "type": "terminal_board",
+      "name": "Terminal board",
+      "category": "terminals",
+      "gost": "ГОСТ 2.721-74",
+      "gost_ref": "fig.6",
+      "viewBox": "0 0 100 30",
+      "default_width": 100,
+      "default_height": 30,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 10,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 90,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 30\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"10\" cy=\"15\" r=\"3\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><circle cx=\"30\" cy=\"15\" r=\"3\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><circle cx=\"50\" cy=\"15\" r=\"3\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><circle cx=\"70\" cy=\"15\" r=\"3\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><circle cx=\"90\" cy=\"15\" r=\"3\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "",
+      "module_width": 100,
+      "module_height": 30,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "ground",
+      "type": "ground",
+      "name": "Protective earth PE",
+      "category": "ground",
+      "gost": "ГОСТ 2.756-76",
+      "gost_ref": "fig.1",
+      "viewBox": "0 0 40 50",
+      "default_width": 40,
+      "default_height": 50,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 50,
+          "ry": 0
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 50\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"20\" y1=\"0\" x2=\"20\" y2=\"15\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"6\" y1=\"15\" x2=\"34\" y2=\"15\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"11\" y1=\"22\" x2=\"29\" y2=\"22\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"16\" y1=\"29\" x2=\"24\" y2=\"29\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "",
+      "module_width": 40,
+      "module_height": 50,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "frame_ground",
+      "type": "frame_ground",
+      "name": "Frame / chassis ground",
+      "category": "ground",
+      "gost": "ГОСТ 2.756-76",
+      "gost_ref": "fig.1",
+      "viewBox": "0 0 40 50",
+      "default_width": 40,
+      "default_height": 50,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 50,
+          "ry": 0
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 50\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"20\" y1=\"0\" x2=\"20\" y2=\"15\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"6\" y1=\"15\" x2=\"34\" y2=\"15\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"15\" y1=\"20\" x2=\"25\" y2=\"25\" stroke=\"black\" stroke-width=\"0.35\"/><line x1=\"25\" y1=\"20\" x2=\"15\" y2=\"25\" stroke=\"black\" stroke-width=\"0.35\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "",
+      "module_width": 40,
+      "module_height": 50,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "signal_ground",
+      "type": "signal_ground",
+      "name": "Signal / reference ground",
+      "category": "ground",
+      "gost": "ГОСТ 2.756-76",
+      "gost_ref": "fig.1",
+      "viewBox": "0 0 40 55",
+      "default_width": 40,
+      "default_height": 55,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 50,
+          "ry": 0
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 55\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"20\" y1=\"0\" x2=\"20\" y2=\"15\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"6\" y1=\"15\" x2=\"34\" y2=\"15\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"10\" y1=\"22\" x2=\"30\" y2=\"22\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"14\" y1=\"29\" x2=\"26\" y2=\"29\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"18\" y1=\"36\" x2=\"22\" y2=\"36\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "",
+      "module_width": 40,
+      "module_height": 55,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "earthing_device",
+      "type": "earthing_device",
+      "name": "Earthing device",
+      "category": "ground",
+      "gost": "ГОСТ 2.756-76",
+      "gost_ref": "fig.1",
+      "viewBox": "0 0 60 80",
+      "default_width": 60,
+      "default_height": 80,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 50,
+          "ry": 0
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 60 80\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"30\" y1=\"0\" x2=\"30\" y2=\"20\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"20\" y1=\"20\" x2=\"40\" y2=\"20\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"30\" y1=\"20\" x2=\"30\" y2=\"40\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"15\" y1=\"40\" x2=\"45\" y2=\"40\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"20\" y1=\"47\" x2=\"40\" y2=\"47\" stroke=\"black\" stroke-width=\"0.35\"/><line x1=\"25\" y1=\"54\" x2=\"35\" y2=\"54\" stroke=\"black\" stroke-width=\"0.35\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "",
+      "module_width": 60,
+      "module_height": 80,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "enclosure_general",
+      "type": "enclosure_general",
+      "name": "General enclosure / cubicle",
+      "category": "enclosure",
+      "gost": "ГОСТ 2.721-74",
+      "gost_ref": "fig.12",
+      "viewBox": "0 0 100 80",
+      "default_width": 100,
+      "default_height": 80,
+      "terminals": [],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 80\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"5\" y=\"5\" width=\"90\" height=\"70\" stroke=\"black\" stroke-width=\"0.35\" fill=\"none\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "",
+      "module_width": 100,
+      "module_height": 80,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "switchgear_cell",
+      "type": "switchgear_cell",
+      "name": "Switchgear cell (KRU)",
+      "category": "enclosure",
+      "gost": "ГОСТ 2.721-74",
+      "gost_ref": "fig.12",
+      "viewBox": "0 0 100 120",
+      "default_width": 100,
+      "default_height": 120,
+      "terminals": [],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 120\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"5\" y=\"5\" width=\"90\" height=\"110\" stroke=\"black\" stroke-width=\"0.35\" fill=\"none\"/><line x1=\"5\" y1=\"30\" x2=\"95\" y2=\"30\" stroke=\"black\" stroke-width=\"0.35\"/><line x1=\"5\" y1=\"60\" x2=\"95\" y2=\"60\" stroke=\"black\" stroke-width=\"0.35\"/><line x1=\"5\" y1=\"90\" x2=\"95\" y2=\"90\" stroke=\"black\" stroke-width=\"0.35\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "",
+      "module_width": 100,
+      "module_height": 120,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "withdrawable_cell",
+      "type": "withdrawable_cell",
+      "name": "Withdrawable (truck-type) cell",
+      "category": "enclosure",
+      "gost": "ГОСТ 2.721-74",
+      "gost_ref": "fig.12",
+      "viewBox": "0 0 100 80",
+      "default_width": 100,
+      "default_height": 80,
+      "terminals": [],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 80\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"5\" y=\"5\" width=\"90\" height=\"70\" stroke=\"black\" stroke-width=\"0.35\" fill=\"none\"/><line x1=\"10\" y1=\"5\" x2=\"10\" y2=\"75\" stroke=\"black\" stroke-width=\"0.35\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "",
+      "module_width": 100,
+      "module_height": 80,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "battery",
+      "type": "battery",
+      "name": "Battery (multiple cells) GB",
+      "category": "battery",
+      "gost": "ГОСТ 2.721-74",
+      "gost_ref": "fig.8",
+      "viewBox": "0 0 100 60",
+      "default_width": 100,
+      "default_height": 60,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"30\" x2=\"35\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"35\" y1=\"18\" x2=\"35\" y2=\"42\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"42\" y1=\"24\" x2=\"42\" y2=\"36\" stroke=\"black\" stroke-width=\"0.35\"/><line x1=\"49\" y1=\"18\" x2=\"49\" y2=\"42\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"56\" y1=\"24\" x2=\"56\" y2=\"36\" stroke=\"black\" stroke-width=\"0.35\"/><line x1=\"63\" y1=\"18\" x2=\"63\" y2=\"42\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"63\" y1=\"30\" x2=\"100\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "GB",
+      "module_width": 100,
+      "module_height": 60,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "battery_cell",
+      "type": "battery_cell",
+      "name": "Single battery cell GB",
+      "category": "battery",
+      "gost": "ГОСТ 2.721-74",
+      "gost_ref": "fig.8",
+      "viewBox": "0 0 60 60",
+      "default_width": 60,
+      "default_height": 60,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 60 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"30\" x2=\"22\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"22\" y1=\"20\" x2=\"22\" y2=\"40\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"30\" y1=\"25\" x2=\"30\" y2=\"35\" stroke=\"black\" stroke-width=\"0.35\"/><line x1=\"30\" y1=\"30\" x2=\"60\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "GB",
+      "module_width": 60,
+      "module_height": 60,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "accumulator",
+      "type": "accumulator",
+      "name": "Accumulator (rechargeable) GBA",
+      "category": "battery",
+      "gost": "ГОСТ 2.721-74",
+      "gost_ref": "fig.8",
+      "viewBox": "0 0 100 60",
+      "default_width": 100,
+      "default_height": 60,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"30\" x2=\"30\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"30\" y1=\"18\" x2=\"30\" y2=\"42\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"38\" y1=\"24\" x2=\"38\" y2=\"36\" stroke=\"black\" stroke-width=\"0.35\"/><line x1=\"46\" y1=\"18\" x2=\"46\" y2=\"42\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"54\" y1=\"24\" x2=\"54\" y2=\"36\" stroke=\"black\" stroke-width=\"0.35\"/><line x1=\"62\" y1=\"18\" x2=\"62\" y2=\"42\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"62\" y1=\"30\" x2=\"100\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><text x=\"46\" y=\"12\" font-family=\"Arial,Helvetica,sans-serif\" font-size=\"6\" fill=\"black\" text-anchor=\"middle\" dominant-baseline=\"central\">+</text></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "GBA",
+      "module_width": 100,
+      "module_height": 60,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "cable_1phase",
+      "type": "cable_1phase",
+      "name": "Single-phase cable",
+      "category": "cable",
+      "gost": "ГОСТ 2.721-74",
+      "gost_ref": "fig.10",
+      "viewBox": "0 0 100 40",
+      "default_width": 100,
+      "default_height": 40,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 40\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"20\" x2=\"100\" y2=\"20\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"40\" y1=\"12\" x2=\"40\" y2=\"28\" stroke=\"black\" stroke-width=\"0.35\"/><line x1=\"50\" y1=\"12\" x2=\"50\" y2=\"28\" stroke=\"black\" stroke-width=\"0.35\"/><line x1=\"60\" y1=\"12\" x2=\"60\" y2=\"28\" stroke=\"black\" stroke-width=\"0.35\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "",
+      "module_width": 100,
+      "module_height": 40,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "cable_pair",
+      "type": "cable_pair",
+      "name": "Cable pair",
+      "category": "cable",
+      "gost": "ГОСТ 2.721-74",
+      "gost_ref": "fig.10",
+      "viewBox": "0 0 100 40",
+      "default_width": 100,
+      "default_height": 40,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 40\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"15\" x2=\"100\" y2=\"15\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"0\" y1=\"25\" x2=\"100\" y2=\"25\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"45\" y1=\"9\" x2=\"45\" y2=\"31\" stroke=\"black\" stroke-width=\"0.35\"/><line x1=\"55\" y1=\"9\" x2=\"55\" y2=\"31\" stroke=\"black\" stroke-width=\"0.35\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "",
+      "module_width": 100,
+      "module_height": 40,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "cable_3phase",
+      "type": "cable_3phase",
+      "name": "Three-phase cable",
+      "category": "cable",
+      "gost": "ГОСТ 2.721-74",
+      "gost_ref": "fig.10",
+      "viewBox": "0 0 100 40",
+      "default_width": 100,
+      "default_height": 40,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 40\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"20\" x2=\"100\" y2=\"20\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"40\" y1=\"12\" x2=\"40\" y2=\"28\" stroke=\"black\" stroke-width=\"0.35\"/><line x1=\"50\" y1=\"12\" x2=\"50\" y2=\"28\" stroke=\"black\" stroke-width=\"0.35\"/><line x1=\"60\" y1=\"12\" x2=\"60\" y2=\"28\" stroke=\"black\" stroke-width=\"0.35\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "",
+      "module_width": 100,
+      "module_height": 40,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "cable_shielded",
+      "type": "cable_shielded",
+      "name": "Shielded cable",
+      "category": "cable",
+      "gost": "ГОСТ 2.721-74",
+      "gost_ref": "fig.10",
+      "viewBox": "0 0 100 50",
+      "default_width": 100,
+      "default_height": 50,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 50\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"25\" x2=\"100\" y2=\"25\" stroke=\"black\" stroke-width=\"0.8\"/><rect x=\"30\" y=\"15\" width=\"40\" height=\"20\" stroke=\"black\" stroke-width=\"0.35\" fill=\"none\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "",
+      "module_width": 100,
+      "module_height": 50,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "cable_joint",
+      "type": "cable_joint",
+      "name": "Cable joint / splice",
+      "category": "cable",
+      "gost": "ГОСТ 2.721-74",
+      "gost_ref": "fig.10",
+      "viewBox": "0 0 100 40",
+      "default_width": 100,
+      "default_height": 40,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 40\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"20\" x2=\"35\" y2=\"20\" stroke=\"black\" stroke-width=\"0.8\"/><rect x=\"35\" y=\"12\" width=\"30\" height=\"16\" stroke=\"black\" stroke-width=\"0.35\" fill=\"none\"/><line x1=\"65\" y1=\"20\" x2=\"100\" y2=\"20\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "",
+      "module_width": 100,
+      "module_height": 40,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "cable_gland",
+      "type": "cable_gland",
+      "name": "Cable gland",
+      "category": "cable_accessories",
+      "gost": "ГОСТ 2.721-74",
+      "gost_ref": "fig.10",
+      "viewBox": "0 0 50 40",
+      "default_width": 50,
+      "default_height": 40,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 50 40\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"20\" x2=\"15\" y2=\"20\" stroke=\"black\" stroke-width=\"0.8\"/><rect x=\"15\" y=\"12\" width=\"20\" height=\"16\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><line x1=\"35\" y1=\"20\" x2=\"50\" y2=\"20\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "",
+      "module_width": 50,
+      "module_height": 40,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "cable_duct",
+      "type": "cable_duct",
+      "name": "Cable duct / tray",
+      "category": "cable_accessories",
+      "gost": "ГОСТ 2.721-74",
+      "gost_ref": "fig.10",
+      "viewBox": "0 0 100 40",
+      "default_width": 100,
+      "default_height": 40,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 40\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"14\" x2=\"100\" y2=\"14\" stroke=\"black\" stroke-width=\"0.35\"/><line x1=\"0\" y1=\"26\" x2=\"100\" y2=\"26\" stroke=\"black\" stroke-width=\"0.35\"/><line x1=\"0\" y1=\"20\" x2=\"100\" y2=\"20\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "",
+      "module_width": 100,
+      "module_height": 40,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "lightning_rod",
+      "type": "lightning_rod",
+      "name": "Lightning rod / air terminal",
+      "category": "lightning",
+      "gost": "ГОСТ 2.742-68",
+      "gost_ref": "fig.7",
+      "viewBox": "0 0 100 80",
+      "default_width": 100,
+      "default_height": 80,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 80\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"25\" x2=\"35\" y2=\"25\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"35\" y1=\"25\" x2=\"50\" y2=\"13\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"50\" y1=\"37\" x2=\"65\" y2=\"25\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"65\" y1=\"25\" x2=\"100\" y2=\"25\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"50\" y1=\"37\" x2=\"50\" y2=\"65\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"38\" y1=\"65\" x2=\"62\" y2=\"65\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"43\" y1=\"71\" x2=\"57\" y2=\"71\" stroke=\"black\" stroke-width=\"0.35\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "",
+      "module_width": 100,
+      "module_height": 80,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "lightning_arrester",
+      "type": "lightning_arrester",
+      "name": "Lightning arrester",
+      "category": "lightning",
+      "gost": "ГОСТ 2.742-68",
+      "gost_ref": "fig.7",
+      "viewBox": "0 0 100 80",
+      "default_width": 100,
+      "default_height": 80,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 80\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"25\" x2=\"35\" y2=\"25\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"35\" y1=\"25\" x2=\"50\" y2=\"13\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"50\" y1=\"37\" x2=\"65\" y2=\"25\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"65\" y1=\"25\" x2=\"100\" y2=\"25\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"50\" y1=\"37\" x2=\"50\" y2=\"65\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"38\" y1=\"65\" x2=\"62\" y2=\"65\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"43\" y1=\"71\" x2=\"57\" y2=\"71\" stroke=\"black\" stroke-width=\"0.35\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "",
+      "module_width": 100,
+      "module_height": 80,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "earthing_conductor",
+      "type": "earthing_conductor",
+      "name": "Earthing conductor",
+      "category": "lightning",
+      "gost": "ГОСТ 2.756-76",
+      "gost_ref": "fig.1",
+      "viewBox": "0 0 60 80",
+      "default_width": 60,
+      "default_height": 80,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 50,
+          "ry": 0
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 60 80\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"30\" y1=\"0\" x2=\"30\" y2=\"20\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"20\" y1=\"20\" x2=\"40\" y2=\"20\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"30\" y1=\"20\" x2=\"30\" y2=\"40\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"15\" y1=\"40\" x2=\"45\" y2=\"40\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"20\" y1=\"47\" x2=\"40\" y2=\"47\" stroke=\"black\" stroke-width=\"0.35\"/><line x1=\"25\" y1=\"54\" x2=\"35\" y2=\"54\" stroke=\"black\" stroke-width=\"0.35\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "",
+      "module_width": 60,
+      "module_height": 80,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "no_contact",
+      "type": "no_contact",
+      "name": "Normally open (NO) contact",
+      "category": "contact_types",
+      "gost": "ГОСТ 2.759-82",
+      "gost_ref": "fig.1",
+      "viewBox": "0 0 80 60",
+      "default_width": 80,
+      "default_height": 60,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"15\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><circle cx=\"65\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><line x1=\"15\" y1=\"40\" x2=\"46.12777768298169\" y2=\"18.204095418660252\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": true,
+      "default_state": "open",
+      "current_state": "open",
+      "states": [
+        {
+          "id": "open",
+          "name": "Open",
+          "alternate_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"15\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><circle cx=\"65\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><line x1=\"15\" y1=\"40\" x2=\"46.12777768298169\" y2=\"18.204095418660252\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>"
+        },
+        {
+          "id": "closed",
+          "name": "Closed",
+          "alternate_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"15\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><circle cx=\"65\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><line x1=\"15\" y1=\"40\" x2=\"65\" y2=\"40\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>"
+        }
+      ],
+      "letter_designation": "",
+      "module_width": 80,
+      "module_height": 60,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "nc_contact",
+      "type": "nc_contact",
+      "name": "Normally closed (NC) contact",
+      "category": "contact_types",
+      "gost": "ГОСТ 2.759-82",
+      "gost_ref": "fig.1",
+      "viewBox": "0 0 80 60",
+      "default_width": 80,
+      "default_height": 60,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"15\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><circle cx=\"65\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><line x1=\"15\" y1=\"40\" x2=\"46.12777768298169\" y2=\"18.204095418660252\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"61\" y1=\"44\" x2=\"69\" y2=\"36\" stroke=\"black\" stroke-width=\"0.35\"/></g></svg>",
+      "interactive": true,
+      "default_state": "closed",
+      "current_state": "closed",
+      "states": [
+        {
+          "id": "closed",
+          "name": "Closed",
+          "alternate_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"15\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><circle cx=\"65\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><line x1=\"15\" y1=\"40\" x2=\"46.12777768298169\" y2=\"18.204095418660252\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"61\" y1=\"44\" x2=\"69\" y2=\"36\" stroke=\"black\" stroke-width=\"0.35\"/></g></svg>"
+        },
+        {
+          "id": "open",
+          "name": "Open",
+          "alternate_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"15\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><circle cx=\"65\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><line x1=\"15\" y1=\"40\" x2=\"65\" y2=\"40\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"61\" y1=\"44\" x2=\"69\" y2=\"36\" stroke=\"black\" stroke-width=\"0.35\"/></g></svg>"
+        }
+      ],
+      "letter_designation": "",
+      "module_width": 80,
+      "module_height": 60,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "changeover_contact",
+      "type": "changeover_contact",
+      "name": "Changeover (CO) contact",
+      "category": "contact_types",
+      "gost": "ГОСТ 2.759-82",
+      "gost_ref": "fig.1",
+      "viewBox": "0 0 80 80",
+      "default_width": 80,
+      "default_height": 80,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 30
+        },
+        {
+          "id": "t3",
+          "rx": 100,
+          "ry": 70
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 80\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"15\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><circle cx=\"65\" cy=\"25\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><circle cx=\"65\" cy=\"55\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><line x1=\"15\" y1=\"40\" x2=\"51.39739883840375\" y2=\"29.080780348478875\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"15\" y1=\"40\" x2=\"15\" y2=\"0\" stroke=\"black\" stroke-width=\"0.35\"/><line x1=\"65\" y1=\"25\" x2=\"80\" y2=\"25\" stroke=\"black\" stroke-width=\"0.35\"/><line x1=\"65\" y1=\"55\" x2=\"80\" y2=\"55\" stroke=\"black\" stroke-width=\"0.35\"/></g></svg>",
+      "interactive": true,
+      "default_state": "pos1",
+      "current_state": "pos1",
+      "states": [
+        {
+          "id": "pos1",
+          "name": "Position 1",
+          "alternate_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 80\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"15\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><circle cx=\"65\" cy=\"25\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><circle cx=\"65\" cy=\"55\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><line x1=\"15\" y1=\"40\" x2=\"65\" y2=\"25\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"15\" y1=\"40\" x2=\"15\" y2=\"0\" stroke=\"black\" stroke-width=\"0.35\"/><line x1=\"65\" y1=\"25\" x2=\"80\" y2=\"25\" stroke=\"black\" stroke-width=\"0.35\"/><line x1=\"65\" y1=\"55\" x2=\"80\" y2=\"55\" stroke=\"black\" stroke-width=\"0.35\"/></g></svg>"
+        },
+        {
+          "id": "pos2",
+          "name": "Position 2",
+          "alternate_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 80\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"15\" cy=\"40\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><circle cx=\"65\" cy=\"25\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><circle cx=\"65\" cy=\"55\" r=\"2.5\" stroke=\"black\" stroke-width=\"0.35\" fill=\"black\"/><line x1=\"15\" y1=\"40\" x2=\"51.39739883840375\" y2=\"29.080780348478875\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"15\" y1=\"40\" x2=\"15\" y2=\"0\" stroke=\"black\" stroke-width=\"0.35\"/><line x1=\"65\" y1=\"25\" x2=\"80\" y2=\"25\" stroke=\"black\" stroke-width=\"0.35\"/><line x1=\"65\" y1=\"55\" x2=\"80\" y2=\"55\" stroke=\"black\" stroke-width=\"0.35\"/></g></svg>"
+        }
+      ],
+      "letter_designation": "",
+      "module_width": 80,
+      "module_height": 80,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "relay_coil",
+      "type": "relay_coil",
+      "name": "Relay coil / electromagnetic drive",
+      "category": "contact_types",
+      "gost": "ГОСТ 2.759-82",
+      "gost_ref": "fig.5",
+      "viewBox": "0 0 40 80",
+      "default_width": 40,
+      "default_height": 80,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 50,
+          "ry": 0
+        },
+        {
+          "id": "t2",
+          "rx": 50,
+          "ry": 100
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 80\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"20\" y1=\"0\" x2=\"20\" y2=\"20\" stroke=\"black\" stroke-width=\"0.8\"/><rect x=\"10.0\" y=\"20\" width=\"20\" height=\"40\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><line x1=\"20\" y1=\"60\" x2=\"20\" y2=\"80\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "",
+      "module_width": 40,
+      "module_height": 80,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "indicator_lamp",
+      "type": "indicator_lamp",
+      "name": "Indicator lamp H",
+      "category": "signaling",
+      "gost": "ГОСТ 2.727-68",
+      "gost_ref": "fig.1",
+      "viewBox": "0 0 80 60",
+      "default_width": 80,
+      "default_height": 60,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"30\" x2=\"38\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><circle cx=\"50\" cy=\"30\" r=\"12\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><text x=\"50\" y=\"30\" font-family=\"Arial,Helvetica,sans-serif\" font-size=\"10\" fill=\"black\" text-anchor=\"middle\" dominant-baseline=\"central\">H</text><line x1=\"62\" y1=\"30\" x2=\"100\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "H",
+      "module_width": 80,
+      "module_height": 60,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "alarm_lamp",
+      "type": "alarm_lamp",
+      "name": "Alarm lamp H",
+      "category": "signaling",
+      "gost": "ГОСТ 2.727-68",
+      "gost_ref": "fig.1",
+      "viewBox": "0 0 80 60",
+      "default_width": 80,
+      "default_height": 60,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"30\" x2=\"38\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><circle cx=\"50\" cy=\"30\" r=\"12\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><text x=\"50\" y=\"30\" font-family=\"Arial,Helvetica,sans-serif\" font-size=\"10\" fill=\"black\" text-anchor=\"middle\" dominant-baseline=\"central\">H</text><line x1=\"62\" y1=\"30\" x2=\"100\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "H",
+      "module_width": 80,
+      "module_height": 60,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "buzzer",
+      "type": "buzzer",
+      "name": "Buzzer / audible alarm",
+      "category": "signaling",
+      "gost": "ГОСТ 2.727-68",
+      "gost_ref": "fig.1",
+      "viewBox": "0 0 80 60",
+      "default_width": 80,
+      "default_height": 60,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"30\" x2=\"38\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><circle cx=\"50\" cy=\"30\" r=\"12\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><text x=\"50\" y=\"30\" font-family=\"Arial,Helvetica,sans-serif\" font-size=\"10\" fill=\"black\" text-anchor=\"middle\" dominant-baseline=\"central\">BZ</text><line x1=\"62\" y1=\"30\" x2=\"100\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "BZ",
+      "module_width": 80,
+      "module_height": 60,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "bell",
+      "type": "bell",
+      "name": "Electric bell",
+      "category": "signaling",
+      "gost": "ГОСТ 2.727-68",
+      "gost_ref": "fig.1",
+      "viewBox": "0 0 80 60",
+      "default_width": 80,
+      "default_height": 60,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"30\" x2=\"38\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><circle cx=\"50\" cy=\"30\" r=\"12\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><text x=\"50\" y=\"30\" font-family=\"Arial,Helvetica,sans-serif\" font-size=\"10\" fill=\"black\" text-anchor=\"middle\" dominant-baseline=\"central\">BL</text><line x1=\"62\" y1=\"30\" x2=\"100\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "BL",
+      "module_width": 80,
+      "module_height": 60,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "horn",
+      "type": "horn",
+      "name": "Electric horn / siren",
+      "category": "signaling",
+      "gost": "ГОСТ 2.727-68",
+      "gost_ref": "fig.1",
+      "viewBox": "0 0 80 60",
+      "default_width": 80,
+      "default_height": 60,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"30\" x2=\"38\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><circle cx=\"50\" cy=\"30\" r=\"12\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><text x=\"50\" y=\"30\" font-family=\"Arial,Helvetica,sans-serif\" font-size=\"10\" fill=\"black\" text-anchor=\"middle\" dominant-baseline=\"central\">HN</text><line x1=\"62\" y1=\"30\" x2=\"100\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "HN",
+      "module_width": 80,
+      "module_height": 60,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "surge_protector",
+      "type": "surge_protector",
+      "name": "Surge protector / SPD",
+      "category": "protection_devices",
+      "gost": "ГОСТ 2.742-68",
+      "gost_ref": "fig.7",
+      "viewBox": "0 0 100 60",
+      "default_width": 100,
+      "default_height": 60,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"30\" x2=\"38.0\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><rect x=\"38.0\" y=\"20.0\" width=\"24\" height=\"20\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><line x1=\"42.0\" y1=\"25.0\" x2=\"58.0\" y2=\"35.0\" stroke=\"black\" stroke-width=\"0.35\"/><line x1=\"42.0\" y1=\"35.0\" x2=\"58.0\" y2=\"25.0\" stroke=\"black\" stroke-width=\"0.35\"/><line x1=\"62.0\" y1=\"30\" x2=\"100\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "FV",
+      "module_width": 100,
+      "module_height": 60,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    },
+    {
+      "id": "overvoltage_protector",
+      "type": "overvoltage_protector",
+      "name": "Overvoltage protector",
+      "category": "protection_devices",
+      "gost": "ГОСТ 2.742-68",
+      "gost_ref": "fig.7",
+      "viewBox": "0 0 100 60",
+      "default_width": 100,
+      "default_height": 60,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 50
+        },
+        {
+          "id": "t2",
+          "rx": 100,
+          "ry": 50
+        }
+      ],
+      "default_properties": {},
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 60\"><g stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"0\" y1=\"30\" x2=\"38.0\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/><rect x=\"38.0\" y=\"20.0\" width=\"24\" height=\"20\" stroke=\"black\" stroke-width=\"0.8\" fill=\"none\"/><line x1=\"42.0\" y1=\"25.0\" x2=\"58.0\" y2=\"35.0\" stroke=\"black\" stroke-width=\"0.35\"/><line x1=\"42.0\" y1=\"35.0\" x2=\"58.0\" y2=\"25.0\" stroke=\"black\" stroke-width=\"0.35\"/><line x1=\"62.0\" y1=\"30\" x2=\"100\" y2=\"30\" stroke=\"black\" stroke-width=\"0.8\"/></g></svg>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": [],
+      "letter_designation": "FV",
+      "module_width": 100,
+      "module_height": 60,
+      "line_width_main": 0.8,
+      "line_width_contour": 0.35
+    }
+  ]
+}

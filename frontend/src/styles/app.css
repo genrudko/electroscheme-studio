@@ -128,6 +128,7 @@ body {
   padding: 32px;
   display: grid;
   place-items: start center;
+  outline: none;
 }
 
 .sheet {
@@ -196,6 +197,30 @@ body {
   font-weight: 700;
 }
 
+/* mode toggle */
+.mode-toggle {
+  margin-left: auto;
+  padding: 4px 10px;
+  border: 1px solid #6b7280;
+  border-radius: 4px;
+  background: #374151;
+  color: #d1d5db;
+  cursor: pointer;
+  font-size: 12px;
+  white-space: nowrap;
+}
+.mode-toggle:hover { background: #4b5563; }
+.mode-toggle.active { background: #2563eb; border-color: #3b82f6; color: #fff; }
+
+/* symbol editor full area */
+.symbol-editor-area {
+  grid-column: 1 / -1;
+  grid-row: 2 / -1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
 .props {
   display: grid;
   grid-template-columns: 130px 1fr;
@@ -244,4 +269,269 @@ body {
 .hint {
   color: #718096;
   font-style: italic;
+  font-size: 12px;
+  margin: 4px 0 8px;
+}
+
+.lib-category {
+  margin-bottom: 8px;
+}
+
+.lib-category-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: #596579;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin: 10px 0 4px;
+}
+
+.lib-symbol {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  font-size: 12px;
+}
+
+.lib-draggable {
+  cursor: grab;
+  user-select: none;
+}
+
+.lib-draggable:active {
+  cursor: grabbing;
+}
+
+.lib-draggable:hover {
+  border-color: #93b4e0;
+  background: #f0f5fc;
+}
+
+.lib-icon {
+  width: 32px;
+  height: 20px;
+  flex-shrink: 0;
+  stroke: #111827;
+  stroke-width: 2;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.svg-symbol {
+  color: #111827;
+}
+
+.svg-symbol.interactive {
+  cursor: pointer;
+}
+
+.svg-symbol.interactive:hover .svg-symbol-content {
+  filter: brightness(0.85);
+}
+
+.svg-symbol-content {
+  overflow: visible;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.state-section {
+  margin: 12px 0;
+  padding: 10px 12px;
+  border: 1px solid #d8dee8;
+  border-radius: 8px;
+  background: #f8fafc;
+}
+
+.state-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.state-label {
+  font-size: 12px;
+  color: #718096;
+}
+
+.state-value {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.state-value.state-closed,
+.state-value.state-intact,
+.state-value.state-normal,
+.state-value.state-de-energized,
+.state-value.state-stopped,
+.state-value.state-on,
+.state-value.state-off,
+.state-value.state-cw {
+  color: #166534;
+}
+
+.state-value.state-open,
+.state-value.state-blown,
+.state-value.state-energized,
+.state-value.state-running,
+.state-value.state-fired,
+.state-value.state-discharge,
+.state-value.state-ccw {
+  color: #9a3412;
+}
+
+.state-buttons {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.state-btn {
+  padding: 5px 12px;
+  border: 1px solid #d8dee8;
+  border-radius: 6px;
+  background: white;
+  font-size: 12px;
+  font-weight: 500;
+  color: #3a4555;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.state-btn:hover {
+  background: #e5edf8;
+  border-color: #93b4e0;
+}
+
+.state-btn.active {
+  background: #1e40af;
+  color: white;
+  border-color: #1e40af;
+  font-weight: 700;
+}
+
+.toolbar-button {
+  padding: 5px 12px;
+  border: 1px solid #d8dee8;
+  border-radius: 6px;
+  background: white;
+  font-size: 12px;
+  font-weight: 500;
+  color: #3a4555;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.toolbar-button:hover {
+  background: #e5edf8;
+  border-color: #93b4e0;
+}
+
+.toolbar-button.active {
+  background: #1e40af;
+  color: white;
+  border-color: #1e40af;
+  font-weight: 700;
+}
+
+.delete-btn {
+  width: 100%;
+  color: #9a3412;
+  border-color: #f3c4a6;
+}
+
+.delete-btn:hover {
+  background: #fff0e6;
+  border-color: #e08a4a;
+}
+
+.connection-line {
+  fill: none;
+  stroke: #111827;
+  stroke-width: 0.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  cursor: pointer;
+  pointer-events: stroke;
+}
+
+.connection-line.kind-wire {
+  stroke-width: 0.6;
+}
+
+.connection-line.kind-control {
+  stroke-width: 0.4;
+  stroke-dasharray: 4 2;
+}
+
+.connection-line.kind-bus {
+  stroke-width: 1.0;
+}
+
+.connection-line.kind-polyline {
+  stroke-width: 0.4;
+}
+
+.connection-line.selected {
+  stroke: #1e40af;
+  stroke-width: 1.2;
+}
+
+.connection-line.preview {
+  stroke: #1e40af;
+  stroke-width: 0.6;
+  stroke-dasharray: 4 2;
+  pointer-events: none;
+}
+
+.connection-waypoint {
+  fill: white;
+  stroke: #1e40af;
+  stroke-width: 0.5;
+  cursor: pointer;
+}
+
+.terminal-dot {
+  fill: white;
+  stroke: #1e40af;
+  stroke-width: 0.4;
+  cursor: crosshair;
+}
+
+.terminal-dot.start {
+  fill: #1e40af;
+}
+
+.terminal-dot.hover {
+  fill: #fbbf24;
+  stroke: #b45309;
+}
+
+.junction-dot {
+  fill: #111827;
+  stroke: none;
+  pointer-events: none;
+}
+
+.junction-dot.selected {
+  fill: #1e40af;
+}
+
+.sheet-wrap.wire-mode .sheet {
+  cursor: crosshair;
+}
+
+.wire-status {
+  color: #1e40af;
+  font-style: italic;
+}
+
+.wire-status.active {
+  font-weight: 700;
 }

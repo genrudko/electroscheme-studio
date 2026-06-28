@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.project import router as project_router
+from app.api.symbol_library import router as symbol_router
 
 app = FastAPI(
     title="ElectroScheme Studio API",
@@ -17,6 +18,7 @@ app.add_middleware(
 )
 
 app.include_router(project_router)
+app.include_router(symbol_router)
 
 
 @app.get("/api/health")

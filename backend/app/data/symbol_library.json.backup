@@ -1,0 +1,3103 @@
+{
+  "version": "2.0",
+  "description": "Расширенная библиотека графических символов ElectroScheme Studio для схем энергообъектов",
+  "gost_references": [
+    {
+      "title": "Обозначения условные графические в схемах. Резисторы, конденсаторы",
+      "id": "ГОСТ 2.728-74",
+      "description": "Обозначения условные графические в схемах. Резисторы, конденсаторы",
+      "status": "действующий"
+    },
+    {
+      "title": "Обозначения условные графические в схемах. Катушки индуктивности, дроссели, реакторы, трансформаторы",
+      "id": "ГОСТ 2.723-68",
+      "description": "Обозначения условные графические в схемах. Катушки индуктивности, дроссели, реакторы, трансформаторы",
+      "status": "действующий"
+    },
+    {
+      "title": "Обозначения условные графические в схемах. Устройства коммутационные",
+      "id": "ГОСТ 2.755-87",
+      "description": "Обозначения условные графические в схемах. Устройства коммутационные",
+      "status": "действующий"
+    },
+    {
+      "title": "Обозначения условные графические в схемах. Разрядники, предохранители",
+      "id": "ГОСТ 2.727-68",
+      "description": "Обозначения условные графические в схемах. Разрядники, предохранители",
+      "status": "действующий"
+    },
+    {
+      "title": "Обозначения условные графические в схемах. Электрические связи",
+      "id": "ГОСТ 2.756-76",
+      "description": "Обозначения условные графические в схемах. Электрические связи",
+      "status": "действующий"
+    },
+    {
+      "title": "Обозначения условные графические в схемах. Электрические машины",
+      "id": "ГОСТ 2.722-68",
+      "description": "Обозначения условные графические в схемах. Электрические машины",
+      "status": "действующий"
+    },
+    {
+      "title": "Обозначения условные графические в схемы. Приборы электроизмерительные",
+      "id": "ГОСТ 2.729-68",
+      "description": "Обозначения условные графические в схемы. Приборы электроизмерительные",
+      "status": "действующий"
+    },
+    {
+      "title": "Обозначения условные графические в схемах. Обозначения общего применения",
+      "id": "ГОСТ 2.721-74",
+      "description": "Обозначения условные графические в схемах. Обозначения общего применения",
+      "status": "действующий"
+    },
+    {
+      "title": "ЕСКД. Схемы. Виды и типы",
+      "id": "ГОСТ 2.701-2008",
+      "description": "ЕСКД. Схемы. Виды и типы",
+      "status": "действующий"
+    },
+    {
+      "title": "Обозначения условные графические в схемах. Приборы полупроводниковые",
+      "id": "ГОСТ 2.730-73",
+      "description": "Обозначения условные графические в схемах. Приборы полупроводниковые",
+      "status": "действующий"
+    },
+    {
+      "title": "Единая система конструкторской документации и стандарты организаций (секционные и шинные разъединители, ячейки КРУ)",
+      "id": "ЕСКД/СТО",
+      "description": "Единая система конструкторской документации и стандарты организаций (секционные и шинные разъединители, ячейки КРУ)",
+      "status": "действующий"
+    }
+  ],
+  "categories": [
+    {
+      "id": "passive",
+      "name": "Пассивные компоненты",
+      "gost": "ГОСТ 2.728-74"
+    },
+    {
+      "id": "magnetic",
+      "name": "Магнитные компоненты",
+      "gost": "ГОСТ 2.723-68"
+    },
+    {
+      "id": "measuring_transformers",
+      "name": "Измерительные трансформаторы",
+      "gost": "ГОСТ 2.723-68"
+    },
+    {
+      "id": "switching",
+      "name": "Коммутационные аппараты",
+      "gost": "ГОСТ 2.755-87"
+    },
+    {
+      "id": "protection",
+      "name": "Защитные аппараты",
+      "gost": "ГОСТ 2.727-68"
+    },
+    {
+      "id": "relay_protection",
+      "name": "Релейная защита и автоматика",
+      "gost": "ГОСТ 2.756-76"
+    },
+    {
+      "id": "machines",
+      "name": "Машины и источники",
+      "gost": "ГОСТ 2.722-68"
+    },
+    {
+      "id": "instruments",
+      "name": "Приборы измерения",
+      "gost": "ГОСТ 2.729-68"
+    },
+    {
+      "id": "power_lines",
+      "name": "Линии и проводники",
+      "gost": "ЕСКД"
+    },
+    {
+      "id": "switchgear",
+      "name": "Комплектные распределительные устройства",
+      "gost": "ЕСКД/СТО"
+    },
+    {
+      "id": "semiconductors",
+      "name": "Полупроводники",
+      "gost": "ГОСТ 2.730-73"
+    },
+    {
+      "id": "general",
+      "name": "Общие графические элементы",
+      "gost": "ГОСТ 2.721-74"
+    },
+    {
+      "id": "scheme_types",
+      "name": "Типы схем",
+      "gost": "ГОСТ 2.701-2008"
+    }
+  ],
+  "symbols": [
+    {
+      "id": "resistor",
+      "type": "passive",
+      "name": "Резистор",
+      "category": "passive",
+      "gost": "ГОСТ 2.728-74",
+      "gost_ref": "4.1.1",
+      "viewBox": "-2 6 104 20",
+      "default_width": 96,
+      "default_height": 20,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 10,
+          "ry": 0
+        },
+        {
+          "id": "t2",
+          "rx": 90,
+          "ry": 0
+        }
+      ],
+      "default_properties": {
+        "resistance_ohm": "10",
+        "power_w": "2",
+        "tolerance_percent": "5",
+        "units": "Ом"
+      },
+      "svg": "<line x1=\"0\" y1=\"10\" x2=\"30\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><polyline points=\"30,10 34,4 38,16 42,4 46,16 50,4 54,16 58,4 62,16 66,4 70,16 74,10 80,10\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><rect x=\"30\" y=\"4\" width=\"40\" height=\"12\" fill=\"white\" stroke=\"none\"/>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "resistor_variable",
+      "type": "passive",
+      "name": "Резистор переменный",
+      "category": "passive",
+      "gost": "ГОСТ 2.728-74",
+      "gost_ref": "4.1.2",
+      "viewBox": "-2 6 104 20",
+      "default_width": 96,
+      "default_height": 20,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 10,
+          "ry": 0
+        },
+        {
+          "id": "t2",
+          "rx": 90,
+          "ry": 0
+        }
+      ],
+      "default_properties": {
+        "resistance_max_ohm": "100",
+        "power_w": "5",
+        "tolerance_percent": "10",
+        "units": "Ом"
+      },
+      "svg": "<line x1=\"0\" y1=\"10\" x2=\"30\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><rect x=\"30\" y=\"4\" width=\"40\" height=\"12\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"30\" y1=\"4\" x2=\"70\" y2=\"16\" stroke=\"black\" stroke-width=\"1.2\"/><polygon points=\"70,16 65,13 67,18\" fill=\"black\"/>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "capacitor",
+      "type": "passive",
+      "name": "Конденсатор",
+      "category": "passive",
+      "gost": "ГОСТ 2.728-74",
+      "gost_ref": "5.1.1",
+      "viewBox": "-2 6 104 20",
+      "default_width": 96,
+      "default_height": 20,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 10,
+          "ry": 0
+        },
+        {
+          "id": "t2",
+          "rx": 90,
+          "ry": 0
+        }
+      ],
+      "default_properties": {
+        "capacitance_uF": "10",
+        "voltage_v": "400",
+        "units": "мкФ"
+      },
+      "svg": "<line x1=\"0\" y1=\"10\" x2=\"40\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"40\" y1=\"2\" x2=\"40\" y2=\"18\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"50\" y1=\"2\" x2=\"50\" y2=\"18\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"50\" y1=\"10\" x2=\"80\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "capacitor_polarized",
+      "type": "passive",
+      "name": "Конденсатор полярный",
+      "category": "passive",
+      "gost": "ГОСТ 2.728-74",
+      "gost_ref": "5.1.2",
+      "viewBox": "-2 6 104 20",
+      "default_width": 96,
+      "default_height": 20,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 10,
+          "ry": 0
+        },
+        {
+          "id": "t2",
+          "rx": 90,
+          "ry": 0
+        }
+      ],
+      "default_properties": {
+        "capacitance_uF": "100",
+        "voltage_v": "25",
+        "units": "мкФ"
+      },
+      "svg": "<line x1=\"0\" y1=\"10\" x2=\"40\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><path d=\"M40,2 Q44,10 40,18\" stroke=\"black\" stroke-width=\"1.2\" fill=\"black\"/><line x1=\"50\" y1=\"2\" x2=\"50\" y2=\"18\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"50\" y1=\"10\" x2=\"80\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><text x=\"45\" y=\"7\" font-size=\"10\" font-family=\"Arial\" fill=\"black\">+</text>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "capacitor_variable",
+      "type": "passive",
+      "name": "Конденсатор переменный",
+      "category": "passive",
+      "gost": "ГОСТ 2.728-74",
+      "gost_ref": "5.1.3",
+      "viewBox": "-2 6 104 20",
+      "default_width": 96,
+      "default_height": 20,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 10,
+          "ry": 0
+        },
+        {
+          "id": "t2",
+          "rx": 90,
+          "ry": 0
+        }
+      ],
+      "default_properties": {
+        "capacitance_max_uF": "50",
+        "voltage_v": "250",
+        "units": "мкФ"
+      },
+      "svg": "<line x1=\"0\" y1=\"10\" x2=\"40\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"40\" y1=\"2\" x2=\"40\" y2=\"18\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"50\" y1=\"2\" x2=\"50\" y2=\"18\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"50\" y1=\"10\" x2=\"80\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"40\" y1=\"2\" x2=\"55\" y2=\"18\" stroke=\"black\" stroke-width=\"1.2\"/><polygon points=\"55,18 50,15 52,20\" fill=\"black\"/>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "inductor",
+      "type": "magnetic",
+      "name": "Катушка индуктивности",
+      "category": "magnetic",
+      "gost": "ГОСТ 2.723-68",
+      "gost_ref": "3.1.1",
+      "viewBox": "-2 6 104 20",
+      "default_width": 96,
+      "default_height": 20,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 10,
+          "ry": 0
+        },
+        {
+          "id": "t2",
+          "rx": 90,
+          "ry": 0
+        }
+      ],
+      "default_properties": {
+        "inductance_mH": "100",
+        "current_a": "5",
+        "units": "мГн"
+      },
+      "svg": "<line x1=\"0\" y1=\"10\" x2=\"25\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><path d=\"M25,10 q5,-8 10,0 q5,-8 10,0 q5,-8 10,0 q5,-8 10,0 q5,-8 10,0\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"75\" y1=\"10\" x2=\"80\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "inductor_core",
+      "type": "magnetic",
+      "name": "Катушка с сердечником",
+      "category": "magnetic",
+      "gost": "ГОСТ 2.723-68",
+      "gost_ref": "3.1.2",
+      "viewBox": "-2 6 104 20",
+      "default_width": 96,
+      "default_height": 20,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 10,
+          "ry": 0
+        },
+        {
+          "id": "t2",
+          "rx": 90,
+          "ry": 0
+        }
+      ],
+      "default_properties": {
+        "inductance_mH": "500",
+        "current_a": "10",
+        "units": "мГн"
+      },
+      "svg": "<line x1=\"0\" y1=\"10\" x2=\"25\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><path d=\"M25,10 q5,-8 10,0 q5,-8 10,0 q5,-8 10,0 q5,-8 10,0 q5,-8 10,0\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"75\" y1=\"10\" x2=\"80\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"32\" y1=\"1\" x2=\"32\" y2=\"19\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"38\" y1=\"1\" x2=\"38\" y2=\"19\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"44\" y1=\"1\" x2=\"44\" y2=\"19\" stroke=\"black\" stroke-width=\"1.2\"/>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "transformer_2w",
+      "type": "magnetic",
+      "name": "Трансформатор 2-обмоточный",
+      "category": "magnetic",
+      "gost": "ГОСТ 2.723-68",
+      "gost_ref": "3.2.1",
+      "viewBox": "-2 6 104 30",
+      "default_width": 96,
+      "default_height": 30,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 10,
+          "ry": -8
+        },
+        {
+          "id": "t2",
+          "rx": 10,
+          "ry": 110
+        },
+        {
+          "id": "t3",
+          "rx": 90,
+          "ry": -8
+        },
+        {
+          "id": "t4",
+          "rx": 90,
+          "ry": 110
+        }
+      ],
+      "default_properties": {
+        "power_kVA": "630",
+        "voltage_hv_kv": "10",
+        "voltage_lv_kv": "0.4",
+        "connection": "Dyn11",
+        "units": "кВА"
+      },
+      "svg": "<circle cx=\"35\" cy=\"15\" r=\"12\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"35\" cy=\"25\" r=\"12\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"65\" cy=\"15\" r=\"12\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"65\" cy=\"25\" r=\"12\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"10\" y1=\"10\" x2=\"23\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"10\" y1=\"30\" x2=\"23\" y2=\"30\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"77\" y1=\"10\" x2=\"90\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"77\" y1=\"30\" x2=\"90\" y2=\"30\" stroke=\"black\" stroke-width=\"1.2\"/>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "transformer_2w_core",
+      "type": "magnetic",
+      "name": "Трансформатор 2-обмоточный с сердечником",
+      "category": "magnetic",
+      "gost": "ГОСТ 2.723-68",
+      "gost_ref": "3.2.2",
+      "viewBox": "-2 6 104 30",
+      "default_width": 96,
+      "default_height": 30,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 10,
+          "ry": -8
+        },
+        {
+          "id": "t2",
+          "rx": 10,
+          "ry": 110
+        },
+        {
+          "id": "t3",
+          "rx": 90,
+          "ry": -8
+        },
+        {
+          "id": "t4",
+          "rx": 90,
+          "ry": 110
+        }
+      ],
+      "default_properties": {
+        "power_kVA": "1000",
+        "voltage_hv_kv": "35",
+        "voltage_lv_kv": "10",
+        "connection": "Yyn0",
+        "units": "кВА"
+      },
+      "svg": "<circle cx=\"35\" cy=\"15\" r=\"12\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"35\" cy=\"25\" r=\"12\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"65\" cy=\"15\" r=\"12\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"65\" cy=\"25\" r=\"12\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"10\" y1=\"10\" x2=\"23\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"10\" y1=\"30\" x2=\"23\" y2=\"30\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"77\" y1=\"10\" x2=\"90\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"77\" y1=\"30\" x2=\"90\" y2=\"30\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"47\" y1=\"5\" x2=\"47\" y2=\"45\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"53\" y1=\"5\" x2=\"53\" y2=\"45\" stroke=\"black\" stroke-width=\"1.2\"/>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "transformer_3w",
+      "type": "magnetic",
+      "name": "Трансформатор 3-обмоточный",
+      "category": "magnetic",
+      "gost": "ГОСТ 2.723-68",
+      "gost_ref": "3.2.3",
+      "viewBox": "-2 6 104 40",
+      "default_width": 96,
+      "default_height": 40,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 10,
+          "ry": -8
+        },
+        {
+          "id": "t2",
+          "rx": 10,
+          "ry": 110
+        },
+        {
+          "id": "t3",
+          "rx": 90,
+          "ry": -8
+        },
+        {
+          "id": "t4",
+          "rx": 90,
+          "ry": 110
+        },
+        {
+          "id": "t5",
+          "rx": 50,
+          "ry": -8
+        },
+        {
+          "id": "t6",
+          "rx": 50,
+          "ry": 110
+        }
+      ],
+      "default_properties": {
+        "power_kVA": "25000",
+        "voltage_hv_kv": "110",
+        "voltage_mv_kv": "35",
+        "voltage_lv_kv": "10",
+        "units": "кВА"
+      },
+      "svg": "<circle cx=\"35\" cy=\"15\" r=\"10\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"35\" cy=\"25\" r=\"10\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"50\" cy=\"15\" r=\"10\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"50\" cy=\"25\" r=\"10\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"65\" cy=\"15\" r=\"10\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"65\" cy=\"25\" r=\"10\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"10\" y1=\"10\" x2=\"25\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"10\" y1=\"30\" x2=\"25\" y2=\"30\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"75\" y1=\"10\" x2=\"90\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"75\" y1=\"30\" x2=\"90\" y2=\"30\" stroke=\"black\" stroke-width=\"1.2\"/>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "autotransformer",
+      "type": "magnetic",
+      "name": "Автотрансформатор",
+      "category": "magnetic",
+      "gost": "ГОСТ 2.723-68",
+      "gost_ref": "3.3.1",
+      "viewBox": "-2 6 104 30",
+      "default_width": 96,
+      "default_height": 30,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 10,
+          "ry": -8
+        },
+        {
+          "id": "t2",
+          "rx": 10,
+          "ry": 110
+        },
+        {
+          "id": "t3",
+          "rx": 90,
+          "ry": 0
+        }
+      ],
+      "default_properties": {
+        "power_kVA": "10000",
+        "voltage_hv_kv": "220",
+        "voltage_lv_kv": "110",
+        "units": "кВА"
+      },
+      "svg": "<line x1=\"10\" y1=\"10\" x2=\"30\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><path d=\"M30,10 q5,-8 10,0 q5,-8 10,0 q5,-8 10,0 q5,-8 10,0 q5,-8 10,0 q5,-8 10,0\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"80\" y1=\"10\" x2=\"90\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"10\" y1=\"30\" x2=\"30\" y2=\"30\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"30\" y1=\"10\" x2=\"30\" y2=\"30\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"80\" y1=\"10\" x2=\"80\" y2=\"30\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"80\" y1=\"30\" x2=\"90\" y2=\"30\" stroke=\"black\" stroke-width=\"1.2\"/>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "autotransformer_rpn",
+      "type": "magnetic",
+      "name": "Автотрансформатор с РПН",
+      "category": "magnetic",
+      "gost": "ГОСТ 2.723-68",
+      "gost_ref": "3.3.2",
+      "viewBox": "-2 6 104 30",
+      "default_width": 96,
+      "default_height": 30,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 10,
+          "ry": -8
+        },
+        {
+          "id": "t2",
+          "rx": 10,
+          "ry": 110
+        },
+        {
+          "id": "t3",
+          "rx": 90,
+          "ry": 0
+        }
+      ],
+      "default_properties": {
+        "power_kVA": "50000",
+        "voltage_hv_kv": "500",
+        "voltage_lv_kv": "220",
+        "tap_position": "0",
+        "tap_min": "-8",
+        "tap_max": "8",
+        "units": "кВА"
+      },
+      "svg": "<line x1=\"10\" y1=\"10\" x2=\"30\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><path d=\"M30,10 q5,-8 10,0 q5,-8 10,0 q5,-8 10,0 q5,-8 10,0 q5,-8 10,0 q5,-8 10,0\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"80\" y1=\"10\" x2=\"90\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"10\" y1=\"30\" x2=\"30\" y2=\"30\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"30\" y1=\"10\" x2=\"30\" y2=\"30\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"80\" y1=\"10\" x2=\"80\" y2=\"30\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"80\" y1=\"30\" x2=\"90\" y2=\"30\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"55\" y1=\"10\" x2=\"65\" y2=\"20\" stroke=\"black\" stroke-width=\"1.2\"/><polygon points=\"65,20 60,17 62,22\" fill=\"black\"/>",
+      "interactive": true,
+      "default_state": "neutral",
+      "current_state": "neutral",
+      "states": [
+        {
+          "id": "tap_up",
+          "name": "РПН вверх",
+          "alternate_svg": "<line x1=\"10\" y1=\"10\" x2=\"30\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><path d=\"M30,10 q5,-8 10,0 q5,-8 10,0 q5,-8 10,0 q5,-8 10,0 q5,-8 10,0 q5,-8 10,0\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"80\" y1=\"10\" x2=\"90\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"10\" y1=\"30\" x2=\"30\" y2=\"30\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"30\" y1=\"10\" x2=\"30\" y2=\"30\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"80\" y1=\"10\" x2=\"80\" y2=\"30\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"80\" y1=\"30\" x2=\"90\" y2=\"30\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"55\" y1=\"20\" x2=\"65\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><polygon points=\"65,10 60,13 62,8\" fill=\"black\"/>"
+        },
+        {
+          "id": "tap_down",
+          "name": "РПН вниз",
+          "alternate_svg": "<line x1=\"10\" y1=\"10\" x2=\"30\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><path d=\"M30,10 q5,-8 10,0 q5,-8 10,0 q5,-8 10,0 q5,-8 10,0 q5,-8 10,0 q5,-8 10,0\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"80\" y1=\"10\" x2=\"90\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"10\" y1=\"30\" x2=\"30\" y2=\"30\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"30\" y1=\"10\" x2=\"30\" y2=\"30\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"80\" y1=\"10\" x2=\"80\" y2=\"30\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"80\" y1=\"30\" x2=\"90\" y2=\"30\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"55\" y1=\"10\" x2=\"65\" y2=\"20\" stroke=\"black\" stroke-width=\"1.2\"/><polygon points=\"65,20 60,17 62,22\" fill=\"black\"/>"
+        },
+        {
+          "id": "neutral",
+          "name": "Нейтраль",
+          "alternate_svg": "<line x1=\"10\" y1=\"10\" x2=\"30\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><path d=\"M30,10 q5,-8 10,0 q5,-8 10,0 q5,-8 10,0 q5,-8 10,0 q5,-8 10,0 q5,-8 10,0\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"80\" y1=\"10\" x2=\"90\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"10\" y1=\"30\" x2=\"30\" y2=\"30\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"30\" y1=\"10\" x2=\"30\" y2=\"30\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"80\" y1=\"10\" x2=\"80\" y2=\"30\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"80\" y1=\"30\" x2=\"90\" y2=\"30\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"55\" y1=\"10\" x2=\"65\" y2=\"20\" stroke=\"black\" stroke-width=\"1.2\"/><polygon points=\"65,20 60,17 62,22\" fill=\"black\"/>"
+        }
+      ]
+    },
+    {
+      "id": "choke",
+      "type": "magnetic",
+      "name": "Дроссель",
+      "category": "magnetic",
+      "gost": "ГОСТ 2.723-68",
+      "gost_ref": "3.4.1",
+      "viewBox": "-2 6 104 20",
+      "default_width": 96,
+      "default_height": 20,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 10,
+          "ry": 0
+        },
+        {
+          "id": "t2",
+          "rx": 90,
+          "ry": 0
+        }
+      ],
+      "default_properties": {
+        "inductance_mH": "50",
+        "current_a": "20",
+        "units": "мГн"
+      },
+      "svg": "<line x1=\"0\" y1=\"10\" x2=\"25\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><path d=\"M25,10 q5,-8 10,0 q5,-8 10,0 q5,-8 10,0 q5,-8 10,0\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"65\" y1=\"10\" x2=\"80\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"30\" y1=\"1\" x2=\"30\" y2=\"19\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"36\" y1=\"1\" x2=\"36\" y2=\"19\" stroke=\"black\" stroke-width=\"1.2\"/>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "current_limiting_reactor",
+      "type": "magnetic",
+      "name": "Реактор токоограничивающий",
+      "category": "magnetic",
+      "gost": "ГОСТ 2.723-68",
+      "gost_ref": "3.4.2",
+      "viewBox": "-2 6 104 20",
+      "default_width": 96,
+      "default_height": 20,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 10,
+          "ry": 0
+        },
+        {
+          "id": "t2",
+          "rx": 90,
+          "ry": 0
+        }
+      ],
+      "default_properties": {
+        "inductance_mH": "10",
+        "current_a": "100",
+        "units": "мГн"
+      },
+      "svg": "<line x1=\"0\" y1=\"10\" x2=\"25\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><path d=\"M25,10 q5,-8 10,0 q5,-8 10,0 q5,-8 10,0 q5,-8 10,0\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"75\" y1=\"10\" x2=\"80\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"30\" y1=\"1\" x2=\"30\" y2=\"19\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"36\" y1=\"1\" x2=\"36\" y2=\"19\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"42\" y1=\"1\" x2=\"42\" y2=\"19\" stroke=\"black\" stroke-width=\"1.2\"/>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "current_transformer",
+      "type": "measuring_transformer",
+      "name": "Трансформатор тока (ТТ)",
+      "category": "measuring_transformers",
+      "gost": "ГОСТ 2.723-68",
+      "gost_ref": "4.1.1",
+      "viewBox": "-2 6 104 20",
+      "default_width": 96,
+      "default_height": 20,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 10,
+          "ry": 0
+        },
+        {
+          "id": "t2",
+          "rx": 90,
+          "ry": 0
+        }
+      ],
+      "default_properties": {
+        "ratio": "100/5",
+        "accuracy_class": "0.5S",
+        "burden_va": "5",
+        "units": "А/А"
+      },
+      "svg": "<line x1=\"0\" y1=\"10\" x2=\"20\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"50\" cy=\"10\" r=\"20\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"80\" y1=\"10\" x2=\"90\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "voltage_transformer",
+      "type": "measuring_transformer",
+      "name": "Трансформатор напряжения (ТН)",
+      "category": "measuring_transformers",
+      "gost": "ГОСТ 2.723-68",
+      "gost_ref": "4.1.2",
+      "viewBox": "-2 6 104 30",
+      "default_width": 96,
+      "default_height": 30,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 10,
+          "ry": -8
+        },
+        {
+          "id": "t2",
+          "rx": 10,
+          "ry": 110
+        },
+        {
+          "id": "t3",
+          "rx": 90,
+          "ry": -8
+        },
+        {
+          "id": "t4",
+          "rx": 90,
+          "ry": 110
+        }
+      ],
+      "default_properties": {
+        "ratio": "10000/100",
+        "accuracy_class": "0.5",
+        "burden_va": "10",
+        "units": "В/В"
+      },
+      "svg": "<circle cx=\"35\" cy=\"15\" r=\"12\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"35\" cy=\"25\" r=\"12\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"65\" cy=\"15\" r=\"12\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"65\" cy=\"25\" r=\"12\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"10\" y1=\"10\" x2=\"23\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"10\" y1=\"30\" x2=\"23\" y2=\"30\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"77\" y1=\"10\" x2=\"90\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"77\" y1=\"30\" x2=\"90\" y2=\"30\" stroke=\"black\" stroke-width=\"1.2\"/>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "capacitive_divider",
+      "type": "measuring_transformer",
+      "name": "Делитель ёмкостной (ДН)",
+      "category": "measuring_transformers",
+      "gost": "ГОСТ 2.723-68",
+      "gost_ref": "4.1.3",
+      "viewBox": "-2 6 104 30",
+      "default_width": 96,
+      "default_height": 30,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 10,
+          "ry": -8
+        },
+        {
+          "id": "t2",
+          "rx": 10,
+          "ry": 110
+        },
+        {
+          "id": "t3",
+          "rx": 90,
+          "ry": 0
+        }
+      ],
+      "default_properties": {
+        "ratio": "110000/100",
+        "accuracy_class": "1.0",
+        "units": "В/В"
+      },
+      "svg": "<line x1=\"10\" y1=\"10\" x2=\"30\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"30\" y1=\"2\" x2=\"30\" y2=\"18\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"40\" y1=\"2\" x2=\"40\" y2=\"18\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"50\" y1=\"2\" x2=\"50\" y2=\"18\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"60\" y1=\"2\" x2=\"60\" y2=\"18\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"60\" y1=\"10\" x2=\"80\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"10\" y1=\"30\" x2=\"30\" y2=\"30\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"30\" y1=\"10\" x2=\"30\" y2=\"30\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"80\" y1=\"10\" x2=\"80\" y2=\"30\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"80\" y1=\"30\" x2=\"90\" y2=\"30\" stroke=\"black\" stroke-width=\"1.2\"/>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "contact_closing",
+      "type": "switching",
+      "name": "Контакт замыкающий",
+      "category": "switching",
+      "gost": "ГОСТ 2.755-87",
+      "gost_ref": "2.1.1",
+      "viewBox": "3 -2 34 104",
+      "default_width": 34,
+      "default_height": 100,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 10
+        },
+        {
+          "id": "t2",
+          "rx": 0,
+          "ry": 90
+        }
+      ],
+      "default_properties": {
+        "current_a": "10",
+        "voltage_v": "220",
+        "units": "А"
+      },
+      "svg": "<line x1=\"17\" y1=\"0\" x2=\"17\" y2=\"35\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"17\" y2=\"65\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"65\" x2=\"17\" y2=\"100\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"5\" y2=\"20\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"17\" cy=\"35\" r=\"2\" fill=\"black\"/><circle cx=\"17\" cy=\"65\" r=\"2\" fill=\"black\"/>",
+      "interactive": true,
+      "default_state": "closed",
+      "current_state": "closed",
+      "states": [
+        {
+          "id": "closed",
+          "name": "Замкнут",
+          "alternate_svg": "<line x1=\"17\" y1=\"0\" x2=\"17\" y2=\"35\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"17\" y2=\"65\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"65\" x2=\"17\" y2=\"100\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"5\" y2=\"20\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"17\" cy=\"35\" r=\"2\" fill=\"black\"/><circle cx=\"17\" cy=\"65\" r=\"2\" fill=\"black\"/>"
+        },
+        {
+          "id": "open",
+          "name": "Разомкнут",
+          "alternate_svg": "<line x1=\"17\" y1=\"0\" x2=\"17\" y2=\"35\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"30\" y2=\"50\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"65\" x2=\"17\" y2=\"100\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"5\" y2=\"20\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"17\" cy=\"35\" r=\"2\" fill=\"black\"/><circle cx=\"17\" cy=\"65\" r=\"2\" fill=\"black\"/>"
+        }
+      ]
+    },
+    {
+      "id": "contact_opening",
+      "type": "switching",
+      "name": "Контакт размыкающий",
+      "category": "switching",
+      "gost": "ГОСТ 2.755-87",
+      "gost_ref": "2.1.2",
+      "viewBox": "3 -2 34 104",
+      "default_width": 34,
+      "default_height": 100,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 10
+        },
+        {
+          "id": "t2",
+          "rx": 0,
+          "ry": 90
+        }
+      ],
+      "default_properties": {
+        "current_a": "10",
+        "voltage_v": "220",
+        "units": "А"
+      },
+      "svg": "<line x1=\"17\" y1=\"0\" x2=\"17\" y2=\"35\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"30\" y2=\"50\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"65\" x2=\"17\" y2=\"100\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"5\" y2=\"20\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"17\" cy=\"35\" r=\"2\" fill=\"black\"/><circle cx=\"17\" cy=\"65\" r=\"2\" fill=\"black\"/>",
+      "interactive": true,
+      "default_state": "open",
+      "current_state": "open",
+      "states": [
+        {
+          "id": "open",
+          "name": "Разомкнут",
+          "alternate_svg": "<line x1=\"17\" y1=\"0\" x2=\"17\" y2=\"35\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"30\" y2=\"50\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"65\" x2=\"17\" y2=\"100\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"5\" y2=\"20\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"17\" cy=\"35\" r=\"2\" fill=\"black\"/><circle cx=\"17\" cy=\"65\" r=\"2\" fill=\"black\"/>"
+        },
+        {
+          "id": "closed",
+          "name": "Замкнут",
+          "alternate_svg": "<line x1=\"17\" y1=\"0\" x2=\"17\" y2=\"35\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"17\" y2=\"65\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"65\" x2=\"17\" y2=\"100\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"5\" y2=\"20\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"17\" cy=\"35\" r=\"2\" fill=\"black\"/><circle cx=\"17\" cy=\"65\" r=\"2\" fill=\"black\"/>"
+        }
+      ]
+    },
+    {
+      "id": "load_switch",
+      "type": "switching",
+      "name": "Выключатель нагрузки",
+      "category": "switching",
+      "gost": "ГОСТ 2.755-87",
+      "gost_ref": "3.1.1",
+      "viewBox": "3 -2 34 104",
+      "default_width": 34,
+      "default_height": 100,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 10
+        },
+        {
+          "id": "t2",
+          "rx": 0,
+          "ry": 90
+        }
+      ],
+      "default_properties": {
+        "current_a": "630",
+        "voltage_kv": "10",
+        "units": "А"
+      },
+      "svg": "<line x1=\"17\" y1=\"0\" x2=\"17\" y2=\"35\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"17\" y2=\"65\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"65\" x2=\"17\" y2=\"100\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"5\" y2=\"20\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"17\" cy=\"35\" r=\"2\" fill=\"black\"/><circle cx=\"17\" cy=\"65\" r=\"2\" fill=\"black\"/><rect x=\"10\" y=\"65\" width=\"14\" height=\"8\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/>",
+      "interactive": true,
+      "default_state": "closed",
+      "current_state": "closed",
+      "states": [
+        {
+          "id": "closed",
+          "name": "Включён",
+          "alternate_svg": "<line x1=\"17\" y1=\"0\" x2=\"17\" y2=\"35\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"17\" y2=\"65\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"65\" x2=\"17\" y2=\"100\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"5\" y2=\"20\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"17\" cy=\"35\" r=\"2\" fill=\"black\"/><circle cx=\"17\" cy=\"65\" r=\"2\" fill=\"black\"/><rect x=\"10\" y=\"65\" width=\"14\" height=\"8\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/>"
+        },
+        {
+          "id": "open",
+          "name": "Отключён",
+          "alternate_svg": "<line x1=\"17\" y1=\"0\" x2=\"17\" y2=\"35\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"30\" y2=\"50\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"65\" x2=\"17\" y2=\"100\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"5\" y2=\"20\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"17\" cy=\"35\" r=\"2\" fill=\"black\"/><circle cx=\"17\" cy=\"65\" r=\"2\" fill=\"black\"/><rect x=\"10\" y=\"65\" width=\"14\" height=\"8\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/>"
+        }
+      ]
+    },
+    {
+      "id": "circuit_breaker",
+      "type": "switching",
+      "name": "Выключатель силовой",
+      "category": "switching",
+      "gost": "ГОСТ 2.755-87",
+      "gost_ref": "3.2.1",
+      "viewBox": "3 -2 34 104",
+      "default_width": 34,
+      "default_height": 100,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 10
+        },
+        {
+          "id": "t2",
+          "rx": 0,
+          "ry": 90
+        }
+      ],
+      "default_properties": {
+        "current_a": "1000",
+        "voltage_kv": "10",
+        "breaking_capacity_ka": "25",
+        "units": "А"
+      },
+      "svg": "<line x1=\"17\" y1=\"0\" x2=\"17\" y2=\"35\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"17\" y2=\"65\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"65\" x2=\"17\" y2=\"100\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"5\" y2=\"20\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"17\" cy=\"35\" r=\"2\" fill=\"black\"/><circle cx=\"17\" cy=\"65\" r=\"2\" fill=\"black\"/><rect x=\"10\" y=\"65\" width=\"14\" height=\"8\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"10\" y1=\"69\" x2=\"24\" y2=\"69\" stroke=\"black\" stroke-width=\"1.2\"/>",
+      "interactive": true,
+      "default_state": "closed",
+      "current_state": "closed",
+      "states": [
+        {
+          "id": "closed",
+          "name": "Включён",
+          "alternate_svg": "<line x1=\"17\" y1=\"0\" x2=\"17\" y2=\"35\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"17\" y2=\"65\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"65\" x2=\"17\" y2=\"100\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"5\" y2=\"20\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"17\" cy=\"35\" r=\"2\" fill=\"black\"/><circle cx=\"17\" cy=\"65\" r=\"2\" fill=\"black\"/><rect x=\"10\" y=\"65\" width=\"14\" height=\"8\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"10\" y1=\"69\" x2=\"24\" y2=\"69\" stroke=\"black\" stroke-width=\"1.2\"/>"
+        },
+        {
+          "id": "open",
+          "name": "Отключён",
+          "alternate_svg": "<line x1=\"17\" y1=\"0\" x2=\"17\" y2=\"35\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"30\" y2=\"50\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"65\" x2=\"17\" y2=\"100\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"5\" y2=\"20\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"17\" cy=\"35\" r=\"2\" fill=\"black\"/><circle cx=\"17\" cy=\"65\" r=\"2\" fill=\"black\"/><rect x=\"10\" y=\"65\" width=\"14\" height=\"8\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"10\" y1=\"69\" x2=\"24\" y2=\"69\" stroke=\"black\" stroke-width=\"1.2\"/>"
+        }
+      ]
+    },
+    {
+      "id": "disconnector",
+      "type": "switching",
+      "name": "Разъединитель",
+      "category": "switching",
+      "gost": "ГОСТ 2.755-87",
+      "gost_ref": "3.3.1",
+      "viewBox": "3 -2 34 104",
+      "default_width": 34,
+      "default_height": 100,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 10
+        },
+        {
+          "id": "t2",
+          "rx": 0,
+          "ry": 90
+        }
+      ],
+      "default_properties": {
+        "current_a": "630",
+        "voltage_kv": "10",
+        "units": "А"
+      },
+      "svg": "<line x1=\"17\" y1=\"0\" x2=\"17\" y2=\"35\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"17\" y2=\"65\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"65\" x2=\"17\" y2=\"100\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"5\" y2=\"20\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"17\" cy=\"35\" r=\"2\" fill=\"black\"/><circle cx=\"17\" cy=\"65\" r=\"2\" fill=\"black\"/><line x1=\"17\" y1=\"65\" x2=\"17\" y2=\"75\" stroke=\"black\" stroke-width=\"1.2\"/>",
+      "interactive": true,
+      "default_state": "closed",
+      "current_state": "closed",
+      "states": [
+        {
+          "id": "closed",
+          "name": "Включён",
+          "alternate_svg": "<line x1=\"17\" y1=\"0\" x2=\"17\" y2=\"35\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"17\" y2=\"65\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"65\" x2=\"17\" y2=\"100\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"5\" y2=\"20\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"17\" cy=\"35\" r=\"2\" fill=\"black\"/><circle cx=\"17\" cy=\"65\" r=\"2\" fill=\"black\"/><line x1=\"17\" y1=\"65\" x2=\"17\" y2=\"75\" stroke=\"black\" stroke-width=\"1.2\"/>"
+        },
+        {
+          "id": "open",
+          "name": "Отключён",
+          "alternate_svg": "<line x1=\"17\" y1=\"0\" x2=\"17\" y2=\"35\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"30\" y2=\"50\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"65\" x2=\"17\" y2=\"100\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"5\" y2=\"20\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"17\" cy=\"35\" r=\"2\" fill=\"black\"/><circle cx=\"17\" cy=\"65\" r=\"2\" fill=\"black\"/><line x1=\"17\" y1=\"65\" x2=\"17\" y2=\"75\" stroke=\"black\" stroke-width=\"1.2\"/>"
+        }
+      ]
+    },
+    {
+      "id": "isolator",
+      "type": "switching",
+      "name": "Отделитель",
+      "category": "switching",
+      "gost": "ГОСТ 2.755-87",
+      "gost_ref": "3.3.2",
+      "viewBox": "3 -2 34 104",
+      "default_width": 34,
+      "default_height": 100,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 10
+        },
+        {
+          "id": "t2",
+          "rx": 0,
+          "ry": 90
+        }
+      ],
+      "default_properties": {
+        "current_a": "630",
+        "voltage_kv": "10",
+        "units": "А"
+      },
+      "svg": "<line x1=\"17\" y1=\"0\" x2=\"17\" y2=\"35\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"17\" y2=\"65\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"65\" x2=\"17\" y2=\"100\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"5\" y2=\"20\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"17\" cy=\"35\" r=\"2\" fill=\"black\"/><circle cx=\"17\" cy=\"65\" r=\"2\" fill=\"black\"/><line x1=\"10\" y1=\"65\" x2=\"24\" y2=\"65\" stroke=\"black\" stroke-width=\"1.2\"/>",
+      "interactive": true,
+      "default_state": "closed",
+      "current_state": "closed",
+      "states": [
+        {
+          "id": "closed",
+          "name": "Включён",
+          "alternate_svg": "<line x1=\"17\" y1=\"0\" x2=\"17\" y2=\"35\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"17\" y2=\"65\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"65\" x2=\"17\" y2=\"100\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"5\" y2=\"20\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"17\" cy=\"35\" r=\"2\" fill=\"black\"/><circle cx=\"17\" cy=\"65\" r=\"2\" fill=\"black\"/><line x1=\"10\" y1=\"65\" x2=\"24\" y2=\"65\" stroke=\"black\" stroke-width=\"1.2\"/>"
+        },
+        {
+          "id": "open",
+          "name": "Отключён",
+          "alternate_svg": "<line x1=\"17\" y1=\"0\" x2=\"17\" y2=\"35\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"30\" y2=\"50\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"65\" x2=\"17\" y2=\"100\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"5\" y2=\"20\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"17\" cy=\"35\" r=\"2\" fill=\"black\"/><circle cx=\"17\" cy=\"65\" r=\"2\" fill=\"black\"/><line x1=\"10\" y1=\"65\" x2=\"24\" y2=\"65\" stroke=\"black\" stroke-width=\"1.2\"/>"
+        }
+      ]
+    },
+    {
+      "id": "short_circuiter",
+      "type": "switching",
+      "name": "Короткозамыкатель",
+      "category": "switching",
+      "gost": "ГОСТ 2.755-87",
+      "gost_ref": "3.4.1",
+      "viewBox": "3 -2 34 104",
+      "default_width": 34,
+      "default_height": 100,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 10
+        },
+        {
+          "id": "t2",
+          "rx": 0,
+          "ry": 90
+        }
+      ],
+      "default_properties": {
+        "current_a": "1000",
+        "voltage_kv": "10",
+        "units": "А"
+      },
+      "svg": "<line x1=\"17\" y1=\"0\" x2=\"17\" y2=\"35\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"17\" y2=\"65\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"65\" x2=\"17\" y2=\"100\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"5\" y2=\"20\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"17\" cy=\"35\" r=\"2\" fill=\"black\"/><circle cx=\"17\" cy=\"65\" r=\"2\" fill=\"black\"/><line x1=\"10\" y1=\"65\" x2=\"24\" y2=\"75\" stroke=\"black\" stroke-width=\"1.2\"/>",
+      "interactive": true,
+      "default_state": "closed",
+      "current_state": "closed",
+      "states": [
+        {
+          "id": "closed",
+          "name": "Включён",
+          "alternate_svg": "<line x1=\"17\" y1=\"0\" x2=\"17\" y2=\"35\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"17\" y2=\"65\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"65\" x2=\"17\" y2=\"100\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"5\" y2=\"20\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"17\" cy=\"35\" r=\"2\" fill=\"black\"/><circle cx=\"17\" cy=\"65\" r=\"2\" fill=\"black\"/><line x1=\"10\" y1=\"65\" x2=\"24\" y2=\"75\" stroke=\"black\" stroke-width=\"1.2\"/>"
+        },
+        {
+          "id": "open",
+          "name": "Отключён",
+          "alternate_svg": "<line x1=\"17\" y1=\"0\" x2=\"17\" y2=\"35\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"30\" y2=\"50\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"65\" x2=\"17\" y2=\"100\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"5\" y2=\"20\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"17\" cy=\"35\" r=\"2\" fill=\"black\"/><circle cx=\"17\" cy=\"65\" r=\"2\" fill=\"black\"/><line x1=\"10\" y1=\"65\" x2=\"24\" y2=\"75\" stroke=\"black\" stroke-width=\"1.2\"/>"
+        }
+      ]
+    },
+    {
+      "id": "earthing_switch",
+      "type": "switching",
+      "name": "Заземлитель",
+      "category": "switching",
+      "gost": "ГОСТ 2.755-87",
+      "gost_ref": "3.5.1",
+      "viewBox": "3 -2 34 104",
+      "default_width": 34,
+      "default_height": 100,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 10
+        },
+        {
+          "id": "t2",
+          "rx": 0,
+          "ry": 90
+        }
+      ],
+      "default_properties": {
+        "current_a": "630",
+        "voltage_kv": "10",
+        "units": "А"
+      },
+      "svg": "<line x1=\"17\" y1=\"0\" x2=\"17\" y2=\"35\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"17\" y2=\"65\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"65\" x2=\"17\" y2=\"100\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"5\" y2=\"20\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"17\" cy=\"35\" r=\"2\" fill=\"black\"/><circle cx=\"17\" cy=\"65\" r=\"2\" fill=\"black\"/><line x1=\"10\" y1=\"90\" x2=\"24\" y2=\"90\" stroke=\"black\" stroke-width=\"2\"/><line x1=\"12\" y1=\"94\" x2=\"22\" y2=\"94\" stroke=\"black\" stroke-width=\"1.5\"/><line x1=\"14\" y1=\"98\" x2=\"20\" y2=\"98\" stroke=\"black\" stroke-width=\"1\"/>",
+      "interactive": true,
+      "default_state": "closed",
+      "current_state": "closed",
+      "states": [
+        {
+          "id": "closed",
+          "name": "Включён",
+          "alternate_svg": "<line x1=\"17\" y1=\"0\" x2=\"17\" y2=\"35\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"17\" y2=\"65\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"65\" x2=\"17\" y2=\"100\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"5\" y2=\"20\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"17\" cy=\"35\" r=\"2\" fill=\"black\"/><circle cx=\"17\" cy=\"65\" r=\"2\" fill=\"black\"/><line x1=\"10\" y1=\"90\" x2=\"24\" y2=\"90\" stroke=\"black\" stroke-width=\"2\"/><line x1=\"12\" y1=\"94\" x2=\"22\" y2=\"94\" stroke=\"black\" stroke-width=\"1.5\"/><line x1=\"14\" y1=\"98\" x2=\"20\" y2=\"98\" stroke=\"black\" stroke-width=\"1\"/>"
+        },
+        {
+          "id": "open",
+          "name": "Отключён",
+          "alternate_svg": "<line x1=\"17\" y1=\"0\" x2=\"17\" y2=\"35\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"30\" y2=\"50\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"65\" x2=\"17\" y2=\"100\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"5\" y2=\"20\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"17\" cy=\"35\" r=\"2\" fill=\"black\"/><circle cx=\"17\" cy=\"65\" r=\"2\" fill=\"black\"/><line x1=\"10\" y1=\"90\" x2=\"24\" y2=\"90\" stroke=\"black\" stroke-width=\"2\"/><line x1=\"12\" y1=\"94\" x2=\"22\" y2=\"94\" stroke=\"black\" stroke-width=\"1.5\"/><line x1=\"14\" y1=\"98\" x2=\"20\" y2=\"98\" stroke=\"black\" stroke-width=\"1\"/>"
+        }
+      ]
+    },
+    {
+      "id": "contactor",
+      "type": "switching",
+      "name": "Контактор",
+      "category": "switching",
+      "gost": "ГОСТ 2.755-87",
+      "gost_ref": "3.6.1",
+      "viewBox": "3 -2 34 104",
+      "default_width": 34,
+      "default_height": 100,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 10
+        },
+        {
+          "id": "t2",
+          "rx": 0,
+          "ry": 90
+        }
+      ],
+      "default_properties": {
+        "current_a": "100",
+        "voltage_v": "380",
+        "units": "А"
+      },
+      "svg": "<line x1=\"17\" y1=\"0\" x2=\"17\" y2=\"35\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"17\" y2=\"65\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"65\" x2=\"17\" y2=\"100\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"5\" y2=\"20\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"17\" cy=\"35\" r=\"2\" fill=\"black\"/><circle cx=\"17\" cy=\"65\" r=\"2\" fill=\"black\"/><circle cx=\"17\" cy=\"80\" r=\"5\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/>",
+      "interactive": true,
+      "default_state": "closed",
+      "current_state": "closed",
+      "states": [
+        {
+          "id": "closed",
+          "name": "Включён",
+          "alternate_svg": "<line x1=\"17\" y1=\"0\" x2=\"17\" y2=\"35\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"17\" y2=\"65\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"65\" x2=\"17\" y2=\"100\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"5\" y2=\"20\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"17\" cy=\"35\" r=\"2\" fill=\"black\"/><circle cx=\"17\" cy=\"65\" r=\"2\" fill=\"black\"/><circle cx=\"17\" cy=\"80\" r=\"5\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/>"
+        },
+        {
+          "id": "open",
+          "name": "Отключён",
+          "alternate_svg": "<line x1=\"17\" y1=\"0\" x2=\"17\" y2=\"35\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"30\" y2=\"50\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"65\" x2=\"17\" y2=\"100\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"5\" y2=\"20\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"17\" cy=\"35\" r=\"2\" fill=\"black\"/><circle cx=\"17\" cy=\"65\" r=\"2\" fill=\"black\"/><circle cx=\"17\" cy=\"80\" r=\"5\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/>"
+        }
+      ]
+    },
+    {
+      "id": "cb_disconnector",
+      "type": "switching",
+      "name": "Выключатель-разъединитель",
+      "category": "switching",
+      "gost": "ГОСТ 2.755-87",
+      "gost_ref": "3.7.1",
+      "viewBox": "3 -2 34 104",
+      "default_width": 34,
+      "default_height": 100,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 10
+        },
+        {
+          "id": "t2",
+          "rx": 0,
+          "ry": 90
+        }
+      ],
+      "default_properties": {
+        "current_a": "630",
+        "voltage_kv": "10",
+        "units": "А"
+      },
+      "svg": "<line x1=\"17\" y1=\"0\" x2=\"17\" y2=\"35\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"17\" y2=\"65\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"65\" x2=\"17\" y2=\"100\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"5\" y2=\"20\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"17\" cy=\"35\" r=\"2\" fill=\"black\"/><circle cx=\"17\" cy=\"65\" r=\"2\" fill=\"black\"/><rect x=\"10\" y=\"65\" width=\"14\" height=\"8\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"65\" x2=\"17\" y2=\"75\" stroke=\"black\" stroke-width=\"1.2\"/>",
+      "interactive": true,
+      "default_state": "closed",
+      "current_state": "closed",
+      "states": [
+        {
+          "id": "closed",
+          "name": "Включён",
+          "alternate_svg": "<line x1=\"17\" y1=\"0\" x2=\"17\" y2=\"35\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"17\" y2=\"65\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"65\" x2=\"17\" y2=\"100\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"5\" y2=\"20\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"17\" cy=\"35\" r=\"2\" fill=\"black\"/><circle cx=\"17\" cy=\"65\" r=\"2\" fill=\"black\"/><rect x=\"10\" y=\"65\" width=\"14\" height=\"8\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"65\" x2=\"17\" y2=\"75\" stroke=\"black\" stroke-width=\"1.2\"/>"
+        },
+        {
+          "id": "open",
+          "name": "Отключён",
+          "alternate_svg": "<line x1=\"17\" y1=\"0\" x2=\"17\" y2=\"35\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"30\" y2=\"50\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"65\" x2=\"17\" y2=\"100\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"5\" y2=\"20\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"17\" cy=\"35\" r=\"2\" fill=\"black\"/><circle cx=\"17\" cy=\"65\" r=\"2\" fill=\"black\"/><rect x=\"10\" y=\"65\" width=\"14\" height=\"8\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"65\" x2=\"17\" y2=\"75\" stroke=\"black\" stroke-width=\"1.2\"/>"
+        }
+      ]
+    },
+    {
+      "id": "package_switch",
+      "type": "switching",
+      "name": "Переключатель пакетный",
+      "category": "switching",
+      "gost": "ГОСТ 2.755-87",
+      "gost_ref": "3.8.1",
+      "viewBox": "3 -2 34 104",
+      "default_width": 34,
+      "default_height": 100,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 10
+        },
+        {
+          "id": "t2",
+          "rx": 0,
+          "ry": 90
+        }
+      ],
+      "default_properties": {
+        "current_a": "100",
+        "voltage_v": "380",
+        "units": "А"
+      },
+      "svg": "<line x1=\"17\" y1=\"0\" x2=\"17\" y2=\"35\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"17\" y2=\"65\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"65\" x2=\"17\" y2=\"100\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"5\" y2=\"20\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"17\" cy=\"35\" r=\"2\" fill=\"black\"/><circle cx=\"17\" cy=\"65\" r=\"2\" fill=\"black\"/><rect x=\"8\" y=\"63\" width=\"18\" height=\"12\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/>",
+      "interactive": true,
+      "default_state": "closed",
+      "current_state": "closed",
+      "states": [
+        {
+          "id": "closed",
+          "name": "Включён",
+          "alternate_svg": "<line x1=\"17\" y1=\"0\" x2=\"17\" y2=\"35\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"17\" y2=\"65\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"65\" x2=\"17\" y2=\"100\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"5\" y2=\"20\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"17\" cy=\"35\" r=\"2\" fill=\"black\"/><circle cx=\"17\" cy=\"65\" r=\"2\" fill=\"black\"/><rect x=\"8\" y=\"63\" width=\"18\" height=\"12\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/>"
+        },
+        {
+          "id": "open",
+          "name": "Отключён",
+          "alternate_svg": "<line x1=\"17\" y1=\"0\" x2=\"17\" y2=\"35\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"30\" y2=\"50\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"65\" x2=\"17\" y2=\"100\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"5\" y2=\"20\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"17\" cy=\"35\" r=\"2\" fill=\"black\"/><circle cx=\"17\" cy=\"65\" r=\"2\" fill=\"black\"/><rect x=\"8\" y=\"63\" width=\"18\" height=\"12\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/>"
+        }
+      ]
+    },
+    {
+      "id": "load_break_switch",
+      "type": "switching",
+      "name": "Выключатель-разъединитель нагрузки",
+      "category": "switching",
+      "gost": "ГОСТ 2.755-87",
+      "gost_ref": "3.9.1",
+      "viewBox": "3 -2 34 104",
+      "default_width": 34,
+      "default_height": 100,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 10
+        },
+        {
+          "id": "t2",
+          "rx": 0,
+          "ry": 90
+        }
+      ],
+      "default_properties": {
+        "current_a": "630",
+        "voltage_kv": "10",
+        "units": "А"
+      },
+      "svg": "<line x1=\"17\" y1=\"0\" x2=\"17\" y2=\"35\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"17\" y2=\"65\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"65\" x2=\"17\" y2=\"100\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"5\" y2=\"20\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"17\" cy=\"35\" r=\"2\" fill=\"black\"/><circle cx=\"17\" cy=\"65\" r=\"2\" fill=\"black\"/><rect x=\"10\" y=\"65\" width=\"14\" height=\"8\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"10\" y1=\"69\" x2=\"24\" y2=\"69\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"65\" x2=\"17\" y2=\"75\" stroke=\"black\" stroke-width=\"1.2\"/>",
+      "interactive": true,
+      "default_state": "closed",
+      "current_state": "closed",
+      "states": [
+        {
+          "id": "closed",
+          "name": "Включён",
+          "alternate_svg": "<line x1=\"17\" y1=\"0\" x2=\"17\" y2=\"35\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"17\" y2=\"65\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"65\" x2=\"17\" y2=\"100\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"5\" y2=\"20\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"17\" cy=\"35\" r=\"2\" fill=\"black\"/><circle cx=\"17\" cy=\"65\" r=\"2\" fill=\"black\"/><rect x=\"10\" y=\"65\" width=\"14\" height=\"8\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"10\" y1=\"69\" x2=\"24\" y2=\"69\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"65\" x2=\"17\" y2=\"75\" stroke=\"black\" stroke-width=\"1.2\"/>"
+        },
+        {
+          "id": "open",
+          "name": "Отключён",
+          "alternate_svg": "<line x1=\"17\" y1=\"0\" x2=\"17\" y2=\"35\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"30\" y2=\"50\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"65\" x2=\"17\" y2=\"100\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"5\" y2=\"20\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"17\" cy=\"35\" r=\"2\" fill=\"black\"/><circle cx=\"17\" cy=\"65\" r=\"2\" fill=\"black\"/><rect x=\"10\" y=\"65\" width=\"14\" height=\"8\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"10\" y1=\"69\" x2=\"24\" y2=\"69\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"65\" x2=\"17\" y2=\"75\" stroke=\"black\" stroke-width=\"1.2\"/>"
+        }
+      ]
+    },
+    {
+      "id": "fuse",
+      "type": "protection",
+      "name": "Предохранитель",
+      "category": "protection",
+      "gost": "ГОСТ 2.727-68",
+      "gost_ref": "2.1.1",
+      "viewBox": "-2 6 104 20",
+      "default_width": 96,
+      "default_height": 20,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 10,
+          "ry": 0
+        },
+        {
+          "id": "t2",
+          "rx": 90,
+          "ry": 0
+        }
+      ],
+      "default_properties": {
+        "current_a": "16",
+        "voltage_v": "380",
+        "units": "А"
+      },
+      "svg": "<line x1=\"0\" y1=\"10\" x2=\"30\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><rect x=\"30\" y=\"4\" width=\"20\" height=\"12\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"50\" y1=\"10\" x2=\"80\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "fuse_switch",
+      "type": "protection",
+      "name": "Предохранитель-выключатель",
+      "category": "protection",
+      "gost": "ГОСТ 2.727-68",
+      "gost_ref": "2.1.2",
+      "viewBox": "3 -2 34 104",
+      "default_width": 34,
+      "default_height": 100,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 10
+        },
+        {
+          "id": "t2",
+          "rx": 0,
+          "ry": 90
+        }
+      ],
+      "default_properties": {
+        "current_a": "100",
+        "voltage_kv": "10",
+        "units": "А"
+      },
+      "svg": "<line x1=\"17\" y1=\"0\" x2=\"17\" y2=\"35\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"17\" y2=\"65\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"65\" x2=\"17\" y2=\"100\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"5\" y2=\"20\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"17\" cy=\"35\" r=\"2\" fill=\"black\"/><circle cx=\"17\" cy=\"65\" r=\"2\" fill=\"black\"/><rect x=\"10\" y=\"65\" width=\"14\" height=\"8\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/>",
+      "interactive": true,
+      "default_state": "closed",
+      "current_state": "closed",
+      "states": [
+        {
+          "id": "closed",
+          "name": "Включён",
+          "alternate_svg": "<line x1=\"17\" y1=\"0\" x2=\"17\" y2=\"35\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"17\" y2=\"65\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"65\" x2=\"17\" y2=\"100\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"5\" y2=\"20\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"17\" cy=\"35\" r=\"2\" fill=\"black\"/><circle cx=\"17\" cy=\"65\" r=\"2\" fill=\"black\"/><rect x=\"10\" y=\"65\" width=\"14\" height=\"8\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/>"
+        },
+        {
+          "id": "open",
+          "name": "Отключён",
+          "alternate_svg": "<line x1=\"17\" y1=\"0\" x2=\"17\" y2=\"35\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"30\" y2=\"50\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"65\" x2=\"17\" y2=\"100\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"17\" y1=\"35\" x2=\"5\" y2=\"20\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"17\" cy=\"35\" r=\"2\" fill=\"black\"/><circle cx=\"17\" cy=\"65\" r=\"2\" fill=\"black\"/><rect x=\"10\" y=\"65\" width=\"14\" height=\"8\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/>"
+        }
+      ]
+    },
+    {
+      "id": "arrester",
+      "type": "protection",
+      "name": "Ограничитель перенапряжения (ОПН)",
+      "category": "protection",
+      "gost": "ГОСТ 2.727-68",
+      "gost_ref": "3.1.1",
+      "viewBox": "-2 6 104 20",
+      "default_width": 96,
+      "default_height": 20,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 10,
+          "ry": 0
+        },
+        {
+          "id": "t2",
+          "rx": 90,
+          "ry": 0
+        }
+      ],
+      "default_properties": {
+        "voltage_kv": "10",
+        "discharge_ka": "10",
+        "units": "кВ"
+      },
+      "svg": "<line x1=\"0\" y1=\"10\" x2=\"30\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><polygon points=\"30,2 30,18 50,10\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"50\" y1=\"2\" x2=\"50\" y2=\"18\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"50\" y1=\"10\" x2=\"80\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "spark_gap",
+      "type": "protection",
+      "name": "Разрядник",
+      "category": "protection",
+      "gost": "ГОСТ 2.727-68",
+      "gost_ref": "3.2.1",
+      "viewBox": "-2 6 104 20",
+      "default_width": 96,
+      "default_height": 20,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 10,
+          "ry": 0
+        },
+        {
+          "id": "t2",
+          "rx": 90,
+          "ry": 0
+        }
+      ],
+      "default_properties": {
+        "voltage_kv": "10",
+        "units": "кВ"
+      },
+      "svg": "<line x1=\"0\" y1=\"10\" x2=\"35\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"35\" y1=\"5\" x2=\"35\" y2=\"15\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"45\" y1=\"5\" x2=\"45\" y2=\"15\" stroke=\"black\" stroke-width=\"1.2\"/><polygon points=\"35,10 40,5 45,10 40,15\" fill=\"none\" stroke=\"black\" stroke-width=\"1\"/><line x1=\"45\" y1=\"10\" x2=\"80\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "relay_overcurrent",
+      "type": "relay_protection",
+      "name": "Реле токовое (МТЗ, I>)",
+      "category": "relay_protection",
+      "gost": "ГОСТ 2.756-76",
+      "gost_ref": "2.1.1",
+      "viewBox": "-2 6 104 20",
+      "default_width": 96,
+      "default_height": 20,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 10,
+          "ry": 0
+        },
+        {
+          "id": "t2",
+          "rx": 90,
+          "ry": 0
+        }
+      ],
+      "default_properties": {
+        "pickup_a": "5",
+        "time_s": "0.5",
+        "curve": "SI",
+        "units": "А"
+      },
+      "svg": "<line x1=\"0\" y1=\"10\" x2=\"20\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><rect x=\"20\" y=\"2\" width=\"40\" height=\"16\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><text x=\"35\" y=\"14\" font-size=\"12\" font-family=\"Arial\" text-anchor=\"middle\" fill=\"black\">I&gt;</text><line x1=\"60\" y1=\"10\" x2=\"80\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "relay_undervoltage",
+      "type": "relay_protection",
+      "name": "Реле напряжения (U<)",
+      "category": "relay_protection",
+      "gost": "ГОСТ 2.756-76",
+      "gost_ref": "2.1.2",
+      "viewBox": "-2 6 104 20",
+      "default_width": 96,
+      "default_height": 20,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 10,
+          "ry": 0
+        },
+        {
+          "id": "t2",
+          "rx": 90,
+          "ry": 0
+        }
+      ],
+      "default_properties": {
+        "pickup_v": "100",
+        "time_s": "0.5",
+        "units": "В"
+      },
+      "svg": "<line x1=\"0\" y1=\"10\" x2=\"20\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><rect x=\"20\" y=\"2\" width=\"40\" height=\"16\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><text x=\"35\" y=\"14\" font-size=\"12\" font-family=\"Arial\" text-anchor=\"middle\" fill=\"black\">U&lt;</text><line x1=\"60\" y1=\"10\" x2=\"80\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "relay_bfp",
+      "type": "relay_protection",
+      "name": "УРОВ",
+      "category": "relay_protection",
+      "gost": "ГОСТ 2.756-76",
+      "gost_ref": "2.3.1",
+      "viewBox": "-2 6 104 20",
+      "default_width": 96,
+      "default_height": 20,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 10,
+          "ry": 0
+        },
+        {
+          "id": "t2",
+          "rx": 90,
+          "ry": 0
+        }
+      ],
+      "default_properties": {
+        "units": ""
+      },
+      "svg": "<line x1=\"0\" y1=\"10\" x2=\"20\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><rect x=\"20\" y=\"2\" width=\"40\" height=\"16\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><text x=\"35\" y=\"14\" font-size=\"12\" font-family=\"Arial\" text-anchor=\"middle\" fill=\"black\">&#x420;&#x41E;&#x412;</text><line x1=\"60\" y1=\"10\" x2=\"80\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "relay_ar",
+      "type": "relay_protection",
+      "name": "Реле АПВ",
+      "category": "relay_protection",
+      "gost": "ГОСТ 2.756-76",
+      "gost_ref": "2.4.1",
+      "viewBox": "-2 6 104 20",
+      "default_width": 96,
+      "default_height": 20,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 10,
+          "ry": 0
+        },
+        {
+          "id": "t2",
+          "rx": 90,
+          "ry": 0
+        }
+      ],
+      "default_properties": {
+        "time_s": "1.0",
+        "units": "&#x441;"
+      },
+      "svg": "<line x1=\"0\" y1=\"10\" x2=\"20\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><rect x=\"20\" y=\"2\" width=\"40\" height=\"16\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><text x=\"35\" y=\"14\" font-size=\"12\" font-family=\"Arial\" text-anchor=\"middle\" fill=\"black\">&#x410;&#x41F;&#x412;</text><line x1=\"60\" y1=\"10\" x2=\"80\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "relay_ats",
+      "type": "relay_protection",
+      "name": "Реле АВР",
+      "category": "relay_protection",
+      "gost": "ГОСТ 2.756-76",
+      "gost_ref": "2.4.2",
+      "viewBox": "-2 6 104 20",
+      "default_width": 96,
+      "default_height": 20,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 10,
+          "ry": 0
+        },
+        {
+          "id": "t2",
+          "rx": 90,
+          "ry": 0
+        }
+      ],
+      "default_properties": {
+        "time_s": "2.0",
+        "units": "&#x441;"
+      },
+      "svg": "<line x1=\"0\" y1=\"10\" x2=\"20\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><rect x=\"20\" y=\"2\" width=\"40\" height=\"16\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><text x=\"35\" y=\"14\" font-size=\"12\" font-family=\"Arial\" text-anchor=\"middle\" fill=\"black\">&#x410;&#x412;&#x420;</text><line x1=\"60\" y1=\"10\" x2=\"80\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "relay_distance",
+      "type": "relay_protection",
+      "name": "Реле дистанционное (ДЗ, Z<)",
+      "category": "relay_protection",
+      "gost": "ГОСТ 2.756-76",
+      "gost_ref": "2.5.1",
+      "viewBox": "-2 6 104 20",
+      "default_width": 96,
+      "default_height": 20,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 10,
+          "ry": 0
+        },
+        {
+          "id": "t2",
+          "rx": 90,
+          "ry": 0
+        }
+      ],
+      "default_properties": {
+        "pickup_ohm": "10",
+        "units": "&#x41E;&#x43C;"
+      },
+      "svg": "<line x1=\"0\" y1=\"10\" x2=\"20\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><rect x=\"20\" y=\"2\" width=\"40\" height=\"16\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><text x=\"35\" y=\"14\" font-size=\"12\" font-family=\"Arial\" text-anchor=\"middle\" fill=\"black\">Z&lt;</text><line x1=\"60\" y1=\"10\" x2=\"80\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "motor_ac",
+      "type": "machines",
+      "name": "Двигатель асинхронный",
+      "category": "machines",
+      "gost": "ГОСТ 2.722-68",
+      "gost_ref": "2.1.1",
+      "viewBox": "-2 6 104 30",
+      "default_width": 96,
+      "default_height": 30,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 10,
+          "ry": -8
+        },
+        {
+          "id": "t2",
+          "rx": 50,
+          "ry": -8
+        },
+        {
+          "id": "t3",
+          "rx": 90,
+          "ry": -8
+        }
+      ],
+      "default_properties": {
+        "power_kW": "15",
+        "voltage_v": "380",
+        "rpm": "1500",
+        "units": "кВт"
+      },
+      "svg": "<circle cx=\"50\" cy=\"15\" r=\"20\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><text x=\"50\" y=\"20\" font-size=\"14\" font-family=\"Arial\" text-anchor=\"middle\" fill=\"black\">M</text><text x=\"50\" y=\"30\" font-size=\"8\" font-family=\"Arial\" text-anchor=\"middle\" fill=\"black\">~</text><line x1=\"10\" y1=\"0\" x2=\"30\" y2=\"0\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"50\" y1=\"0\" x2=\"50\" y2=\"-5\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"70\" y1=\"0\" x2=\"90\" y2=\"0\" stroke=\"black\" stroke-width=\"1.2\"/>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "generator_ac",
+      "type": "machines",
+      "name": "Генератор синхронный",
+      "category": "machines",
+      "gost": "ГОСТ 2.722-68",
+      "gost_ref": "2.2.1",
+      "viewBox": "-2 6 104 30",
+      "default_width": 96,
+      "default_height": 30,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 10,
+          "ry": -8
+        },
+        {
+          "id": "t2",
+          "rx": 50,
+          "ry": -8
+        },
+        {
+          "id": "t3",
+          "rx": 90,
+          "ry": -8
+        }
+      ],
+      "default_properties": {
+        "power_kVA": "1000",
+        "voltage_kv": "10",
+        "rpm": "3000",
+        "units": "кВА"
+      },
+      "svg": "<circle cx=\"50\" cy=\"15\" r=\"20\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><text x=\"50\" y=\"20\" font-size=\"14\" font-family=\"Arial\" text-anchor=\"middle\" fill=\"black\">G</text><text x=\"50\" y=\"30\" font-size=\"8\" font-family=\"Arial\" text-anchor=\"middle\" fill=\"black\">~</text><line x1=\"10\" y1=\"0\" x2=\"30\" y2=\"0\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"50\" y1=\"0\" x2=\"50\" y2=\"-5\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"70\" y1=\"0\" x2=\"90\" y2=\"0\" stroke=\"black\" stroke-width=\"1.2\"/>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "generator_dc",
+      "type": "machines",
+      "name": "Генератор постоянного тока",
+      "category": "machines",
+      "gost": "ГОСТ 2.722-68",
+      "gost_ref": "2.2.2",
+      "viewBox": "-2 6 104 30",
+      "default_width": 96,
+      "default_height": 30,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 10,
+          "ry": -8
+        },
+        {
+          "id": "t2",
+          "rx": 90,
+          "ry": -8
+        }
+      ],
+      "default_properties": {
+        "power_kW": "100",
+        "voltage_v": "220",
+        "rpm": "1500",
+        "units": "кВт"
+      },
+      "svg": "<circle cx=\"50\" cy=\"15\" r=\"20\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><text x=\"50\" y=\"20\" font-size=\"14\" font-family=\"Arial\" text-anchor=\"middle\" fill=\"black\">G</text><line x1=\"10\" y1=\"0\" x2=\"30\" y2=\"0\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"70\" y1=\"0\" x2=\"90\" y2=\"0\" stroke=\"black\" stroke-width=\"1.2\"/>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "synchronous_compensator",
+      "type": "machines",
+      "name": "Компенсатор синхронный (СК)",
+      "category": "machines",
+      "gost": "ГОСТ 2.722-68",
+      "gost_ref": "2.3.1",
+      "viewBox": "-2 6 104 30",
+      "default_width": 96,
+      "default_height": 30,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 10,
+          "ry": -8
+        }
+      ],
+      "default_properties": {
+        "power_kvar": "5000",
+        "voltage_kv": "10",
+        "units": "квар"
+      },
+      "svg": "<circle cx=\"50\" cy=\"15\" r=\"20\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><text x=\"50\" y=\"20\" font-size=\"14\" font-family=\"Arial\" text-anchor=\"middle\" fill=\"black\">C</text><line x1=\"10\" y1=\"0\" x2=\"30\" y2=\"0\" stroke=\"black\" stroke-width=\"1.2\"/>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "ammeter",
+      "type": "instruments",
+      "name": "Амперметр (A)",
+      "category": "instruments",
+      "gost": "ГОСТ 2.729-68",
+      "gost_ref": "2.1.1",
+      "viewBox": "-2 6 104 30",
+      "default_width": 96,
+      "default_height": 30,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 10,
+          "ry": -8
+        },
+        {
+          "id": "t2",
+          "rx": 90,
+          "ry": -8
+        }
+      ],
+      "default_properties": {
+        "range_a": "5",
+        "accuracy": "1.5",
+        "units": "А"
+      },
+      "svg": "<line x1=\"0\" y1=\"10\" x2=\"20\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"50\" cy=\"15\" r=\"20\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><text x=\"50\" y=\"22\" font-size=\"18\" font-family=\"Arial\" text-anchor=\"middle\" fill=\"black\">A</text><line x1=\"80\" y1=\"10\" x2=\"90\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "voltmeter",
+      "type": "instruments",
+      "name": "Вольтметр (V)",
+      "category": "instruments",
+      "gost": "ГОСТ 2.729-68",
+      "gost_ref": "2.1.2",
+      "viewBox": "-2 6 104 30",
+      "default_width": 96,
+      "default_height": 30,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 10,
+          "ry": -8
+        },
+        {
+          "id": "t2",
+          "rx": 90,
+          "ry": -8
+        }
+      ],
+      "default_properties": {
+        "range_v": "100",
+        "accuracy": "1.5",
+        "units": "В"
+      },
+      "svg": "<line x1=\"0\" y1=\"10\" x2=\"20\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"50\" cy=\"15\" r=\"20\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><text x=\"50\" y=\"22\" font-size=\"18\" font-family=\"Arial\" text-anchor=\"middle\" fill=\"black\">V</text><line x1=\"80\" y1=\"10\" x2=\"90\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "wattmeter",
+      "type": "instruments",
+      "name": "Ваттметр (W)",
+      "category": "instruments",
+      "gost": "ГОСТ 2.729-68",
+      "gost_ref": "2.2.1",
+      "viewBox": "-2 6 104 30",
+      "default_width": 96,
+      "default_height": 30,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 10,
+          "ry": -8
+        },
+        {
+          "id": "t2",
+          "rx": 90,
+          "ry": -8
+        }
+      ],
+      "default_properties": {
+        "range_w": "1000",
+        "accuracy": "1.5",
+        "units": "Вт"
+      },
+      "svg": "<line x1=\"0\" y1=\"10\" x2=\"20\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"50\" cy=\"15\" r=\"20\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><text x=\"50\" y=\"22\" font-size=\"18\" font-family=\"Arial\" text-anchor=\"middle\" fill=\"black\">W</text><line x1=\"80\" y1=\"10\" x2=\"90\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "varmeter",
+      "type": "instruments",
+      "name": "Варметр (var)",
+      "category": "instruments",
+      "gost": "ГОСТ 2.729-68",
+      "gost_ref": "2.2.2",
+      "viewBox": "-2 6 104 30",
+      "default_width": 96,
+      "default_height": 30,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 10,
+          "ry": -8
+        },
+        {
+          "id": "t2",
+          "rx": 90,
+          "ry": -8
+        }
+      ],
+      "default_properties": {
+        "range_var": "1000",
+        "accuracy": "1.5",
+        "units": "вар"
+      },
+      "svg": "<line x1=\"0\" y1=\"10\" x2=\"20\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"50\" cy=\"15\" r=\"20\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><text x=\"50\" y=\"22\" font-size=\"18\" font-family=\"Arial\" text-anchor=\"middle\" fill=\"black\">var</text><line x1=\"80\" y1=\"10\" x2=\"90\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "ohmmeter",
+      "type": "instruments",
+      "name": "Омметр (Ω)",
+      "category": "instruments",
+      "gost": "ГОСТ 2.729-68",
+      "gost_ref": "2.3.1",
+      "viewBox": "-2 6 104 30",
+      "default_width": 96,
+      "default_height": 30,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 10,
+          "ry": -8
+        },
+        {
+          "id": "t2",
+          "rx": 90,
+          "ry": -8
+        }
+      ],
+      "default_properties": {
+        "range_ohm": "1000",
+        "units": "Ом"
+      },
+      "svg": "<line x1=\"0\" y1=\"10\" x2=\"20\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"50\" cy=\"15\" r=\"20\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><text x=\"50\" y=\"22\" font-size=\"18\" font-family=\"Arial\" text-anchor=\"middle\" fill=\"black\">&#x2126;</text><line x1=\"80\" y1=\"10\" x2=\"90\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "frequency_meter",
+      "type": "instruments",
+      "name": "Частотомер (Hz)",
+      "category": "instruments",
+      "gost": "ГОСТ 2.729-68",
+      "gost_ref": "2.4.1",
+      "viewBox": "-2 6 104 30",
+      "default_width": 96,
+      "default_height": 30,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 10,
+          "ry": -8
+        },
+        {
+          "id": "t2",
+          "rx": 90,
+          "ry": -8
+        }
+      ],
+      "default_properties": {
+        "range_hz": "45-55",
+        "accuracy": "0.1",
+        "units": "Гц"
+      },
+      "svg": "<line x1=\"0\" y1=\"10\" x2=\"20\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"50\" cy=\"15\" r=\"20\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><text x=\"50\" y=\"22\" font-size=\"18\" font-family=\"Arial\" text-anchor=\"middle\" fill=\"black\">Hz</text><line x1=\"80\" y1=\"10\" x2=\"90\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "energy_meter_active",
+      "type": "instruments",
+      "name": "Счётчик активной энергии (Wh)",
+      "category": "instruments",
+      "gost": "ГОСТ 2.729-68",
+      "gost_ref": "2.5.1",
+      "viewBox": "-2 6 104 30",
+      "default_width": 96,
+      "default_height": 30,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 10,
+          "ry": -8
+        },
+        {
+          "id": "t2",
+          "rx": 90,
+          "ry": -8
+        }
+      ],
+      "default_properties": {
+        "units": "кВт&#xb7;ч"
+      },
+      "svg": "<line x1=\"0\" y1=\"10\" x2=\"20\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"50\" cy=\"15\" r=\"20\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><text x=\"50\" y=\"22\" font-size=\"18\" font-family=\"Arial\" text-anchor=\"middle\" fill=\"black\">Wh</text><line x1=\"80\" y1=\"10\" x2=\"90\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "energy_meter_reactive",
+      "type": "instruments",
+      "name": "Счётчик реактивной энергии (varh)",
+      "category": "instruments",
+      "gost": "ГОСТ 2.729-68",
+      "gost_ref": "2.5.2",
+      "viewBox": "-2 6 104 30",
+      "default_width": 96,
+      "default_height": 30,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 10,
+          "ry": -8
+        },
+        {
+          "id": "t2",
+          "rx": 90,
+          "ry": -8
+        }
+      ],
+      "default_properties": {
+        "units": "вар&#xb7;ч"
+      },
+      "svg": "<line x1=\"0\" y1=\"10\" x2=\"20\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"50\" cy=\"15\" r=\"20\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><text x=\"50\" y=\"22\" font-size=\"18\" font-family=\"Arial\" text-anchor=\"middle\" fill=\"black\">varh</text><line x1=\"80\" y1=\"10\" x2=\"90\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "phase_meter",
+      "type": "instruments",
+      "name": "Фазометр (φ)",
+      "category": "instruments",
+      "gost": "ГОСТ 2.729-68",
+      "gost_ref": "2.6.1",
+      "viewBox": "-2 6 104 30",
+      "default_width": 96,
+      "default_height": 30,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 10,
+          "ry": -8
+        },
+        {
+          "id": "t2",
+          "rx": 90,
+          "ry": -8
+        }
+      ],
+      "default_properties": {
+        "units": "&#xb0;"
+      },
+      "svg": "<line x1=\"0\" y1=\"10\" x2=\"20\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"50\" cy=\"15\" r=\"20\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><text x=\"50\" y=\"22\" font-size=\"18\" font-family=\"Arial\" text-anchor=\"middle\" fill=\"black\">&#x3c6;</text><line x1=\"80\" y1=\"10\" x2=\"90\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "power_factor_meter",
+      "type": "instruments",
+      "name": "Косинусметр (cosφ)",
+      "category": "instruments",
+      "gost": "ГОСТ 2.729-68",
+      "gost_ref": "2.7.1",
+      "viewBox": "-2 6 104 30",
+      "default_width": 96,
+      "default_height": 30,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 10,
+          "ry": -8
+        },
+        {
+          "id": "t2",
+          "rx": 90,
+          "ry": -8
+        }
+      ],
+      "default_properties": {
+        "units": ""
+      },
+      "svg": "<line x1=\"0\" y1=\"10\" x2=\"20\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"50\" cy=\"15\" r=\"20\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><text x=\"50\" y=\"22\" font-size=\"18\" font-family=\"Arial\" text-anchor=\"middle\" fill=\"black\">cos&#x3c6;</text><line x1=\"80\" y1=\"10\" x2=\"90\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "busbar",
+      "type": "power_lines",
+      "name": "Шина сборная",
+      "category": "power_lines",
+      "gost": "ЕСКД",
+      "gost_ref": "-",
+      "viewBox": "-2 6 104 20",
+      "default_width": 96,
+      "default_height": 20,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 10,
+          "ry": 0
+        },
+        {
+          "id": "t2",
+          "rx": 90,
+          "ry": 0
+        }
+      ],
+      "default_properties": {
+        "voltage_kv": "10",
+        "material": "Cu",
+        "units": "кВ"
+      },
+      "svg": "<line x1=\"0\" y1=\"10\" x2=\"80\" y2=\"10\" stroke=\"black\" stroke-width=\"3\"/>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "overhead_line",
+      "type": "power_lines",
+      "name": "Линия воздушная (ВЛ)",
+      "category": "power_lines",
+      "gost": "ЕСКД",
+      "gost_ref": "-",
+      "viewBox": "-2 6 104 20",
+      "default_width": 96,
+      "default_height": 20,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 10,
+          "ry": 0
+        },
+        {
+          "id": "t2",
+          "rx": 90,
+          "ry": 0
+        }
+      ],
+      "default_properties": {
+        "voltage_kv": "10",
+        "length_km": "5",
+        "units": "км"
+      },
+      "svg": "<line x1=\"0\" y1=\"10\" x2=\"80\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"40\" cy=\"10\" r=\"3\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"40\" y1=\"7\" x2=\"40\" y2=\"2\" stroke=\"black\" stroke-width=\"1\"/><line x1=\"37\" y1=\"4\" x2=\"43\" y2=\"4\" stroke=\"black\" stroke-width=\"1\"/>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "cable_line",
+      "type": "power_lines",
+      "name": "Линия кабельная (КЛ)",
+      "category": "power_lines",
+      "gost": "ЕСКД",
+      "gost_ref": "-",
+      "viewBox": "-2 6 104 20",
+      "default_width": 96,
+      "default_height": 20,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 10,
+          "ry": 0
+        },
+        {
+          "id": "t2",
+          "rx": 90,
+          "ry": 0
+        }
+      ],
+      "default_properties": {
+        "voltage_kv": "10",
+        "length_km": "2",
+        "units": "км"
+      },
+      "svg": "<line x1=\"0\" y1=\"10\" x2=\"80\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"20\" y1=\"7\" x2=\"20\" y2=\"13\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"40\" y1=\"7\" x2=\"40\" y2=\"13\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"60\" y1=\"7\" x2=\"60\" y2=\"13\" stroke=\"black\" stroke-width=\"1.2\"/>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "capacitor_bank",
+      "type": "power_lines",
+      "name": "Бандажа конденсаторная (БСК)",
+      "category": "power_lines",
+      "gost": "ЕСКД",
+      "gost_ref": "-",
+      "viewBox": "-2 6 104 30",
+      "default_width": 96,
+      "default_height": 30,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 10,
+          "ry": -8
+        },
+        {
+          "id": "t2",
+          "rx": 10,
+          "ry": 110
+        }
+      ],
+      "default_properties": {
+        "power_kvar": "100",
+        "voltage_kv": "10",
+        "units": "квар"
+      },
+      "svg": "<line x1=\"10\" y1=\"10\" x2=\"30\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"30\" y1=\"2\" x2=\"30\" y2=\"18\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"40\" y1=\"2\" x2=\"40\" y2=\"18\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"50\" y1=\"2\" x2=\"50\" y2=\"18\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"50\" y1=\"10\" x2=\"70\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"10\" y1=\"30\" x2=\"30\" y2=\"30\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"30\" y1=\"10\" x2=\"30\" y2=\"30\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"70\" y1=\"10\" x2=\"70\" y2=\"30\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"70\" y1=\"30\" x2=\"90\" y2=\"30\" stroke=\"black\" stroke-width=\"1.2\"/>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "harmonic_filter",
+      "type": "power_lines",
+      "name": "Фильтр гармоник",
+      "category": "power_lines",
+      "gost": "ЕСКД",
+      "gost_ref": "-",
+      "viewBox": "-2 6 104 30",
+      "default_width": 96,
+      "default_height": 30,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 10,
+          "ry": -8
+        },
+        {
+          "id": "t2",
+          "rx": 10,
+          "ry": 110
+        }
+      ],
+      "default_properties": {
+        "harmonic": "5",
+        "power_kvar": "50",
+        "units": "квар"
+      },
+      "svg": "<line x1=\"10\" y1=\"10\" x2=\"25\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><path d=\"M25,10 q5,-8 10,0 q5,-8 10,0 q5,-8 10,0\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"55\" y1=\"10\" x2=\"70\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"10\" y1=\"30\" x2=\"30\" y2=\"30\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"30\" y1=\"22\" x2=\"30\" y2=\"38\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"40\" y1=\"22\" x2=\"40\" y2=\"38\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"40\" y1=\"30\" x2=\"70\" y2=\"30\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"70\" y1=\"10\" x2=\"70\" y2=\"30\" stroke=\"black\" stroke-width=\"1.2\"/>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "kru_cell",
+      "type": "switchgear",
+      "name": "Ячейка КРУ",
+      "category": "switchgear",
+      "gost": "ЕСКД/СТО",
+      "gost_ref": "-",
+      "viewBox": "-2 6 104 30",
+      "default_width": 96,
+      "default_height": 30,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 10,
+          "ry": -8
+        },
+        {
+          "id": "t2",
+          "rx": 90,
+          "ry": -8
+        }
+      ],
+      "default_properties": {
+        "voltage_kv": "10",
+        "current_a": "630",
+        "units": "кВ"
+      },
+      "svg": "<rect x=\"10\" y=\"5\" width=\"60\" height=\"30\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"10\" y1=\"20\" x2=\"70\" y2=\"20\" stroke=\"black\" stroke-width=\"1.2\"/><text x=\"40\" y=\"15\" font-size=\"8\" font-family=\"Arial\" text-anchor=\"middle\" fill=\"black\">КРУ</text>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "truck",
+      "type": "switchgear",
+      "name": "Тележка КРУ",
+      "category": "switchgear",
+      "gost": "ЕСКД/СТО",
+      "gost_ref": "-",
+      "viewBox": "-2 6 104 30",
+      "default_width": 96,
+      "default_height": 30,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 10,
+          "ry": -3
+        },
+        {
+          "id": "t2",
+          "rx": 90,
+          "ry": -3
+        },
+        {
+          "id": "t3",
+          "rx": 10,
+          "ry": 33
+        },
+        {
+          "id": "t4",
+          "rx": 90,
+          "ry": 33
+        }
+      ],
+      "default_properties": {
+        "type": "выдвижной",
+        "units": "-"
+      },
+      "svg": "<rect x=\"10\" y=\"5\" width=\"80\" height=\"20\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"10\" y1=\"5\" x2=\"10\" y2=\"25\" stroke=\"black\" stroke-width=\"1\"/><line x1=\"90\" y1=\"5\" x2=\"90\" y2=\"25\" stroke=\"black\" stroke-width=\"1\"/><circle cx=\"10\" cy=\"15\" r=\"2\" fill=\"black\"/><circle cx=\"90\" cy=\"15\" r=\"2\" fill=\"black\"/>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "bus_section_disconnector",
+      "type": "switchgear",
+      "name": "Разъединитель секционный",
+      "category": "switchgear",
+      "gost": "ЕСКД/СТО",
+      "gost_ref": "-",
+      "viewBox": "-2 6 104 30",
+      "default_width": 96,
+      "default_height": 30,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 5,
+          "ry": 15
+        },
+        {
+          "id": "t2",
+          "rx": 95,
+          "ry": 15
+        }
+      ],
+      "default_properties": {
+        "voltage_kv": "10",
+        "units": "кВ"
+      },
+      "svg": "<line x1=\"5\" y1=\"15\" x2=\"40\" y2=\"15\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"60\" y1=\"15\" x2=\"95\" y2=\"15\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"5\" cy=\"15\" r=\"3\" fill=\"black\"/><circle cx=\"95\" cy=\"15\" r=\"3\" fill=\"black\"/><line x1=\"40\" y1=\"15\" x2=\"48\" y2=\"5\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"50\" cy=\"20\" r=\"2\" fill=\"black\"/><line x1=\"52\" y1=\"20\" x2=\"58\" y2=\"20\" stroke=\"black\" stroke-width=\"1.2\"/><text x=\"48\" y=\"28\" font-size=\"7\" font-family=\"Arial\" text-anchor=\"middle\" fill=\"black\">секц</text>",
+      "interactive": true,
+      "default_state": "in_service",
+      "current_state": "in_service",
+      "states": [
+        {
+          "id": "in_service",
+          "name": "В работе",
+          "alternate_svg": "<line x1=\"5\" y1=\"15\" x2=\"40\" y2=\"15\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"60\" y1=\"15\" x2=\"95\" y2=\"15\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"5\" cy=\"15\" r=\"3\" fill=\"black\"/><circle cx=\"95\" cy=\"15\" r=\"3\" fill=\"black\"/><line x1=\"40\" y1=\"15\" x2=\"50\" y2=\"15\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"50\" y1=\"15\" x2=\"58\" y2=\"20\" stroke=\"black\" stroke-width=\"1.2\"/><text x=\"48\" y=\"28\" font-size=\"7\" font-family=\"Arial\" text-anchor=\"middle\" fill=\"black\">секц</text>"
+        },
+        {
+          "id": "bypass",
+          "name": "Шунтирован",
+          "alternate_svg": "<line x1=\"5\" y1=\"15\" x2=\"40\" y2=\"15\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"60\" y1=\"15\" x2=\"95\" y2=\"15\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"5\" cy=\"15\" r=\"3\" fill=\"black\"/><circle cx=\"95\" cy=\"15\" r=\"3\" fill=\"black\"/><line x1=\"40\" y1=\"15\" x2=\"50\" y2=\"15\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"50\" y1=\"15\" x2=\"58\" y2=\"8\" stroke=\"black\" stroke-width=\"1.2\"/><text x=\"48\" y=\"28\" font-size=\"7\" font-family=\"Arial\" text-anchor=\"middle\" fill=\"black\">секц</text>"
+        }
+      ]
+    },
+    {
+      "id": "bus_disconnector",
+      "type": "switchgear",
+      "name": "Шинный разъединитель",
+      "category": "switchgear",
+      "gost": "ЕСКД/СТО",
+      "gost_ref": "-",
+      "viewBox": "-2 6 104 30",
+      "default_width": 96,
+      "default_height": 30,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 5,
+          "ry": 15
+        },
+        {
+          "id": "t2",
+          "rx": 95,
+          "ry": 15
+        }
+      ],
+      "default_properties": {
+        "voltage_kv": "10",
+        "units": "кВ"
+      },
+      "svg": "<line x1=\"5\" y1=\"15\" x2=\"40\" y2=\"15\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"60\" y1=\"15\" x2=\"95\" y2=\"15\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"5\" cy=\"15\" r=\"3\" fill=\"black\"/><circle cx=\"95\" cy=\"15\" r=\"3\" fill=\"black\"/><line x1=\"40\" y1=\"15\" x2=\"48\" y2=\"5\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"50\" cy=\"20\" r=\"2\" fill=\"black\"/><line x1=\"52\" y1=\"20\" x2=\"58\" y2=\"20\" stroke=\"black\" stroke-width=\"1.2\"/><text x=\"48\" y=\"12\" font-size=\"7\" font-family=\"Arial\" text-anchor=\"middle\" fill=\"black\">шин</text>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "line_disconnector",
+      "type": "switchgear",
+      "name": "Линейный разъединитель",
+      "category": "switchgear",
+      "gost": "ЕСКД/СТО",
+      "gost_ref": "-",
+      "viewBox": "-2 6 104 30",
+      "default_width": 96,
+      "default_height": 30,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 50,
+          "ry": 0
+        },
+        {
+          "id": "t2",
+          "rx": 50,
+          "ry": 30
+        }
+      ],
+      "default_properties": {
+        "voltage_kv": "10",
+        "units": "кВ"
+      },
+      "svg": "<line x1=\"50\" y1=\"0\" x2=\"50\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"50\" y1=\"20\" x2=\"50\" y2=\"30\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"50\" cy=\"0\" r=\"3\" fill=\"black\"/><circle cx=\"50\" cy=\"30\" r=\"3\" fill=\"black\"/><line x1=\"50\" y1=\"10\" x2=\"42\" y2=\"15\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"50\" cy=\"20\" r=\"2\" fill=\"black\"/><line x1=\"50\" y1=\"20\" x2=\"44\" y2=\"22\" stroke=\"black\" stroke-width=\"1.2\"/>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "outgoing_protection",
+      "type": "switchgear",
+      "name": "Защита отходящей линии",
+      "category": "switchgear",
+      "gost": "ЕСКД/СТО",
+      "gost_ref": "-",
+      "viewBox": "-2 6 104 30",
+      "default_width": 96,
+      "default_height": 30,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 50,
+          "ry": 0
+        },
+        {
+          "id": "t2",
+          "rx": 50,
+          "ry": 30
+        }
+      ],
+      "default_properties": {
+        "voltage_kv": "10",
+        "current_a": "630",
+        "units": "кВ/А"
+      },
+      "svg": "<rect x=\"40\" y=\"5\" width=\"20\" height=\"20\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"50\" y1=\"0\" x2=\"50\" y2=\"5\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"50\" y1=\"25\" x2=\"50\" y2=\"30\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"50\" cy=\"0\" r=\"3\" fill=\"black\"/><circle cx=\"50\" cy=\"30\" r=\"3\" fill=\"black\"/><line x1=\"44\" y1=\"15\" x2=\"56\" y2=\"15\" stroke=\"black\" stroke-width=\"1\"/>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "switchgear_bus_tie",
+      "type": "switchgear",
+      "name": "Секционный АВ",
+      "category": "switchgear",
+      "gost": "ЕСКД/СТО",
+      "gost_ref": "-",
+      "viewBox": "-2 6 104 30",
+      "default_width": 96,
+      "default_height": 30,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 50,
+          "ry": 0
+        },
+        {
+          "id": "t2",
+          "rx": 50,
+          "ry": 30
+        }
+      ],
+      "default_properties": {
+        "voltage_kv": "10",
+        "current_a": "1000",
+        "units": "кВ/А"
+      },
+      "svg": "<rect x=\"40\" y=\"5\" width=\"20\" height=\"20\" rx=\"2\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"50\" y1=\"0\" x2=\"50\" y2=\"5\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"50\" y1=\"25\" x2=\"50\" y2=\"30\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"50\" cy=\"0\" r=\"3\" fill=\"black\"/><circle cx=\"50\" cy=\"30\" r=\"3\" fill=\"black\"/><text x=\"50\" y=\"18\" font-size=\"7\" font-family=\"Arial\" text-anchor=\"middle\" fill=\"black\">АВ</text>",
+      "interactive": true,
+      "default_state": "closed",
+      "current_state": "closed",
+      "states": [
+        {
+          "id": "closed",
+          "name": "Включён",
+          "alternate_svg": "<rect x=\"40\" y=\"5\" width=\"20\" height=\"20\" rx=\"2\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"50\" y1=\"0\" x2=\"50\" y2=\"5\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"50\" y1=\"25\" x2=\"50\" y2=\"30\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"50\" cy=\"0\" r=\"3\" fill=\"black\"/><circle cx=\"50\" cy=\"30\" r=\"3\" fill=\"black\"/><line x1=\"50\" y1=\"10\" x2=\"50\" y2=\"20\" stroke=\"black\" stroke-width=\"1.5\"/><text x=\"65\" y=\"18\" font-size=\"7\" font-family=\"Arial\" fill=\"black\">closed</text>"
+        },
+        {
+          "id": "open",
+          "name": "Отключён",
+          "alternate_svg": "<rect x=\"40\" y=\"5\" width=\"20\" height=\"20\" rx=\"2\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"50\" y1=\"0\" x2=\"50\" y2=\"5\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"50\" y1=\"25\" x2=\"50\" y2=\"30\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"50\" cy=\"0\" r=\"3\" fill=\"black\"/><circle cx=\"50\" cy=\"30\" r=\"3\" fill=\"black\"/><line x1=\"50\" y1=\"10\" x2=\"50\" y2=\"15\" stroke=\"black\" stroke-width=\"1.5\"/><line x1=\"50\" y1=\"15\" x2=\"44\" y2=\"20\" stroke=\"black\" stroke-width=\"1.2\"/><text x=\"65\" y=\"18\" font-size=\"7\" font-family=\"Arial\" fill=\"black\">open</text>"
+        },
+        {
+          "id": "test",
+          "name": "Тестовое положение",
+          "alternate_svg": "<rect x=\"40\" y=\"5\" width=\"20\" height=\"20\" rx=\"2\" fill=\"none\" stroke=\"gray\" stroke-width=\"1.2\" stroke-dasharray=\"2,1\"/><line x1=\"50\" y1=\"0\" x2=\"50\" y2=\"5\" stroke=\"gray\" stroke-width=\"1.2\"/><line x1=\"50\" y1=\"25\" x2=\"50\" y2=\"30\" stroke=\"gray\" stroke-width=\"1.2\"/><circle cx=\"50\" cy=\"0\" r=\"3\" fill=\"gray\"/><circle cx=\"50\" cy=\"30\" r=\"3\" fill=\"gray\"/><text x=\"65\" y=\"18\" font-size=\"7\" font-family=\"Arial\" fill=\"gray\">test</text>"
+        },
+        {
+          "id": "disconnected",
+          "name": "Отключено и выкачено",
+          "alternate_svg": "<rect x=\"40\" y=\"5\" width=\"20\" height=\"20\" rx=\"2\" fill=\"none\" stroke=\"gray\" stroke-width=\"1.2\" stroke-dasharray=\"1,1\"/><line x1=\"50\" y1=\"0\" x2=\"50\" y2=\"5\" stroke=\"gray\" stroke-width=\"1\"/><line x1=\"50\" y1=\"25\" x2=\"50\" y2=\"30\" stroke=\"gray\" stroke-width=\"1\"/><circle cx=\"50\" cy=\"0\" r=\"2\" fill=\"gray\"/><circle cx=\"50\" cy=\"30\" r=\"2\" fill=\"gray\"/><text x=\"65\" y=\"18\" font-size=\"7\" font-family=\"Arial\" fill=\"gray\">disc</text>"
+        }
+      ]
+    },
+    {
+      "id": "diode",
+      "type": "semiconductors",
+      "name": "Диод",
+      "category": "semiconductors",
+      "gost": "ГОСТ 2.730-73",
+      "gost_ref": "1.1",
+      "viewBox": "-2 6 104 30",
+      "default_width": 96,
+      "default_height": 30,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 15
+        },
+        {
+          "id": "t2",
+          "rx": 95,
+          "ry": 15
+        }
+      ],
+      "default_properties": {
+        "current_a": "100",
+        "voltage_v": "1000",
+        "series": "1N",
+        "units": "А/В"
+      },
+      "svg": "<line x1=\"0\" y1=\"15\" x2=\"35\" y2=\"15\" stroke=\"black\" stroke-width=\"1.2\"/><polygon points=\"35,8 35,22 55,15\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"55\" y1=\"8\" x2=\"55\" y2=\"22\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"55\" y1=\"15\" x2=\"95\" y2=\"15\" stroke=\"black\" stroke-width=\"1.2\"/>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "thyristor",
+      "type": "semiconductors",
+      "name": "Тиристор",
+      "category": "semiconductors",
+      "gost": "ГОСТ 2.730-73",
+      "gost_ref": "5.1",
+      "viewBox": "-2 6 104 30",
+      "default_width": 96,
+      "default_height": 30,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 15
+        },
+        {
+          "id": "t2",
+          "rx": 95,
+          "ry": 15
+        },
+        {
+          "id": "gate",
+          "rx": 50,
+          "ry": 25
+        }
+      ],
+      "default_properties": {
+        "current_a": "200",
+        "voltage_v": "1600",
+        "series": "T",
+        "units": "А/В"
+      },
+      "svg": "<line x1=\"0\" y1=\"15\" x2=\"35\" y2=\"15\" stroke=\"black\" stroke-width=\"1.2\"/><polygon points=\"35,8 35,22 55,15\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"55\" y1=\"8\" x2=\"55\" y2=\"22\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"48\" y1=\"22\" x2=\"62\" y2=\"22\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"48\" y1=\"22\" x2=\"48\" y2=\"30\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"55\" y1=\"15\" x2=\"95\" y2=\"15\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"48\" cy=\"30\" r=\"2\" fill=\"black\"/>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "varistor",
+      "type": "semiconductors",
+      "name": "Варистор",
+      "category": "semiconductors",
+      "gost": "ГОСТ 2.730-73",
+      "gost_ref": "3.3",
+      "viewBox": "-2 6 104 30",
+      "default_width": 96,
+      "default_height": 30,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 15
+        },
+        {
+          "id": "t2",
+          "rx": 95,
+          "ry": 15
+        }
+      ],
+      "default_properties": {
+        "voltage_v": "275",
+        "energy_j": "100",
+        "units": "В/Дж"
+      },
+      "svg": "<line x1=\"0\" y1=\"15\" x2=\"35\" y2=\"15\" stroke=\"black\" stroke-width=\"1.2\"/><rect x=\"35\" y=\"8\" width=\"20\" height=\"14\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"35\" y1=\"15\" x2=\"45\" y2=\"10\" stroke=\"black\" stroke-width=\"1\"/><line x1=\"55\" y1=\"15\" x2=\"45\" y2=\"20\" stroke=\"black\" stroke-width=\"1\"/><line x1=\"55\" y1=\"8\" x2=\"55\" y2=\"22\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"55\" y1=\"15\" x2=\"95\" y2=\"15\" stroke=\"black\" stroke-width=\"1.2\"/>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "ground",
+      "type": "general",
+      "name": "Заземление",
+      "category": "general",
+      "gost": "ГОСТ 2.721-74",
+      "gost_ref": "7.1.3.1",
+      "viewBox": "-2 -6 30 40",
+      "default_width": 24,
+      "default_height": 36,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 12,
+          "ry": 0
+        }
+      ],
+      "default_properties": {
+        "type": "protective",
+        "units": "-"
+      },
+      "svg": "<line x1=\"12\" y1=\"0\" x2=\"12\" y2=\"14\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"0\" y1=\"14\" x2=\"24\" y2=\"14\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"4\" y1=\"19\" x2=\"20\" y2=\"19\" stroke=\"black\" stroke-width=\"1\"/><line x1=\"8\" y1=\"24\" x2=\"16\" y2=\"24\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"10\" y1=\"29\" x2=\"14\" y2=\"29\" stroke=\"black\" stroke-width=\"0.7\"/>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "connection_point",
+      "type": "general",
+      "name": "Точка соединения",
+      "category": "general",
+      "gost": "ГОСТ 2.721-74",
+      "gost_ref": "4.1",
+      "viewBox": "-2 -2 12 12",
+      "default_width": 8,
+      "default_height": 8,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 6,
+          "ry": 6
+        }
+      ],
+      "default_properties": {
+        "units": "-"
+      },
+      "svg": "<circle cx=\"6\" cy=\"6\" r=\"3\" fill=\"black\"/>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "chassis_ground",
+      "type": "general",
+      "name": "Корпусное заземление",
+      "category": "general",
+      "gost": "ГОСТ 2.721-74",
+      "gost_ref": "7.1.3.3",
+      "viewBox": "-2 -6 36 40",
+      "default_width": 28,
+      "default_height": 36,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 14,
+          "ry": 0
+        }
+      ],
+      "default_properties": {
+        "type": "chassis",
+        "units": "-"
+      },
+      "svg": "<line x1=\"14\" y1=\"0\" x2=\"14\" y2=\"22\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"0\" y1=\"22\" x2=\"28\" y2=\"22\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"10\" y1=\"14\" x2=\"18\" y2=\"14\" stroke=\"black\" stroke-width=\"1\"/><line x1=\"12\" y1=\"10\" x2=\"16\" y2=\"10\" stroke=\"black\" stroke-width=\"0.8\"/><polygon points=\"25,14 25,22 28,18 22,18\" fill=\"black\"/>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "scheme_type_electric",
+      "type": "scheme_types",
+      "name": "Электрическая схема",
+      "category": "scheme_types",
+      "gost": "ГОСТ 2.701-2008",
+      "gost_ref": "Е",
+      "viewBox": "0 0 200 150",
+      "default_width": 200,
+      "default_height": 150,
+      "terminals": [],
+      "default_properties": {
+        "type": "diagram",
+        "code": "E",
+        "units": "-"
+      },
+      "svg": "<rect x=\"0\" y=\"0\" width=\"200\" height=\"150\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><text x=\"100\" y=\"75\" font-size=\"14\" font-family=\"Arial\" text-anchor=\"middle\" fill=\"black\">СХЕМА ЭЛЕКТРИЧЕСКАЯ (Е)</text>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "scheme_type_single_line",
+      "type": "scheme_types",
+      "name": "Однолинейная схема",
+      "category": "scheme_types",
+      "gost": "ГОСТ 2.701-2008",
+      "gost_ref": "0",
+      "viewBox": "0 0 200 150",
+      "default_width": 200,
+      "default_height": 150,
+      "terminals": [],
+      "default_properties": {
+        "type": "diagram",
+        "code": "0",
+        "units": "-"
+      },
+      "svg": "<rect x=\"0\" y=\"0\" width=\"200\" height=\"150\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><text x=\"100\" y=\"75\" font-size=\"14\" font-family=\"Arial\" text-anchor=\"middle\" fill=\"black\">СХЕМА ОДНОЛИНЕЙНАЯ (0)</text>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "scheme_type_multi_line",
+      "type": "scheme_types",
+      "name": "Многолинейная схема",
+      "category": "scheme_types",
+      "gost": "ГОСТ 2.701-2008",
+      "gost_ref": "1",
+      "viewBox": "0 0 200 150",
+      "default_width": 200,
+      "default_height": 150,
+      "terminals": [],
+      "default_properties": {
+        "type": "diagram",
+        "code": "1",
+        "units": "-"
+      },
+      "svg": "<rect x=\"0\" y=\"0\" width=\"200\" height=\"150\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><text x=\"100\" y=\"75\" font-size=\"14\" font-family=\"Arial\" text-anchor=\"middle\" fill=\"black\">СХЕМА МНОГОЛИНЕЙНАЯ (1)</text>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "fuse_vault",
+      "type": "protection",
+      "name": "Предохранитель-выключатель",
+      "category": "protection",
+      "gost": "ГОСТ 2.727-68",
+      "gost_ref": "3.11",
+      "viewBox": "-2 6 104 30",
+      "default_width": 96,
+      "default_height": 30,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 15
+        },
+        {
+          "id": "t2",
+          "rx": 95,
+          "ry": 15
+        }
+      ],
+      "default_properties": {
+        "voltage_kv": "10",
+        "current_a": "630",
+        "units": "кВ/А"
+      },
+      "svg": "<line x1=\"0\" y1=\"15\" x2=\"30\" y2=\"15\" stroke=\"black\" stroke-width=\"1.2\"/><rect x=\"30\" y=\"8\" width=\"35\" height=\"14\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"40\" y1=\"12\" x2=\"55\" y2=\"12\" stroke=\"black\" stroke-width=\"1\"/><line x1=\"40\" y1=\"18\" x2=\"55\" y2=\"18\" stroke=\"black\" stroke-width=\"1\"/><line x1=\"65\" y1=\"15\" x2=\"95\" y2=\"15\" stroke=\"black\" stroke-width=\"1.2\"/>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "reactor_air",
+      "type": "magnetic",
+      "name": "Реактор дугогасящий",
+      "category": "magnetic",
+      "gost": "ГОСТ 2.723-68",
+      "gost_ref": "3.1",
+      "viewBox": "-2 6 104 30",
+      "default_width": 96,
+      "default_height": 30,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 15
+        },
+        {
+          "id": "t2",
+          "rx": 95,
+          "ry": 15
+        }
+      ],
+      "default_properties": {
+        "voltage_kv": "10",
+        "current_a": "100",
+        "units": "кВ/А"
+      },
+      "svg": "<line x1=\"0\" y1=\"15\" x2=\"25\" y2=\"15\" stroke=\"black\" stroke-width=\"1.2\"/><path d=\"M25,15 q5,-10 10,0 q5,10 10,0 q5,-10 10,0 q5,10 10,0 q5,-10 10,0\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"75\" y1=\"15\" x2=\"95\" y2=\"15\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"50\" y1=\"25\" x2=\"50\" y2=\"30\" stroke=\"black\" stroke-width=\"1\"/><line x1=\"45\" y1=\"30\" x2=\"55\" y2=\"30\" stroke=\"black\" stroke-width=\"1\"/>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "ct_iron_core",
+      "type": "measuring_transformers",
+      "name": "ТТ с железным сердечником",
+      "category": "measuring_transformers",
+      "gost": "ГОСТ 2.723-68",
+      "gost_ref": "5.1",
+      "viewBox": "-2 6 104 30",
+      "default_width": 96,
+      "default_height": 30,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 10
+        },
+        {
+          "id": "t2",
+          "rx": 95,
+          "ry": 10
+        },
+        {
+          "id": "s1",
+          "rx": 0,
+          "ry": 22
+        },
+        {
+          "id": "s2",
+          "rx": 95,
+          "ry": 22
+        }
+      ],
+      "default_properties": {
+        "ratio": "100/5",
+        "class": "0.5",
+        "units": "А/А"
+      },
+      "svg": "<line x1=\"0\" y1=\"10\" x2=\"25\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"50\" cy=\"10\" r=\"22\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"75\" y1=\"10\" x2=\"95\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"0\" y1=\"22\" x2=\"25\" y2=\"22\" stroke=\"black\" stroke-width=\"1\"/><line x1=\"75\" y1=\"22\" x2=\"95\" y2=\"22\" stroke=\"black\" stroke-width=\"1\"/><text x=\"50\" y=\"14\" font-size=\"7\" font-family=\"Arial\" text-anchor=\"middle\" fill=\"black\">ТТ</text>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "vt_group",
+      "type": "measuring_transformers",
+      "name": "Группа напряжения",
+      "category": "measuring_transformers",
+      "gost": "ГОСТ 2.723-68",
+      "gost_ref": "5.2",
+      "viewBox": "-2 6 104 40",
+      "default_width": 96,
+      "default_height": 40,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 50,
+          "ry": 0
+        },
+        {
+          "id": "t2",
+          "rx": 50,
+          "ry": 40
+        },
+        {
+          "id": "s1",
+          "rx": 80,
+          "ry": 0
+        },
+        {
+          "id": "s2",
+          "rx": 80,
+          "ry": 40
+        }
+      ],
+      "default_properties": {
+        "ratio": "10000/100",
+        "class": "0.5",
+        "units": "В/В"
+      },
+      "svg": "<line x1=\"50\" y1=\"0\" x2=\"50\" y2=\"10\" stroke=\"black\" stroke-width=\"1.2\"/><circle cx=\"50\" cy=\"20\" r=\"10\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"50\" y1=\"30\" x2=\"50\" y2=\"40\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"80\" y1=\"0\" x2=\"80\" y2=\"10\" stroke=\"black\" stroke-width=\"1\"/><circle cx=\"80\" cy=\"20\" r=\"10\" fill=\"none\" stroke=\"black\" stroke-width=\"1\"/><line x1=\"80\" y1=\"30\" x2=\"80\" y2=\"40\" stroke=\"black\" stroke-width=\"1\"/><text x=\"50\" y=\"24\" font-size=\"6\" font-family=\"Arial\" text-anchor=\"middle\" fill=\"black\">ТН</text><text x=\"80\" y=\"24\" font-size=\"6\" font-family=\"Arial\" text-anchor=\"middle\" fill=\"black\">ТН</text>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "relay_differential",
+      "type": "relay_protection",
+      "name": "Реле дифференциальное",
+      "category": "relay_protection",
+      "gost": "ГОСТ 2.756-76",
+      "gost_ref": "3.1",
+      "viewBox": "-2 6 104 30",
+      "default_width": 96,
+      "default_height": 30,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 10
+        },
+        {
+          "id": "t2",
+          "rx": 95,
+          "ry": 10
+        },
+        {
+          "id": "s1",
+          "rx": 0,
+          "ry": 22
+        },
+        {
+          "id": "s2",
+          "rx": 95,
+          "ry": 22
+        }
+      ],
+      "default_properties": {
+        "type": "differential",
+        "units": "-"
+      },
+      "svg": "<rect x=\"25\" y=\"3\" width=\"45\" height=\"24\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"0\" y1=\"10\" x2=\"25\" y2=\"10\" stroke=\"black\" stroke-width=\"1\"/><line x1=\"70\" y1=\"10\" x2=\"95\" y2=\"10\" stroke=\"black\" stroke-width=\"1\"/><line x1=\"0\" y1=\"22\" x2=\"25\" y2=\"22\" stroke=\"black\" stroke-width=\"1\"/><line x1=\"70\" y1=\"22\" x2=\"95\" y2=\"22\" stroke=\"black\" stroke-width=\"1\"/><text x=\"47\" y=\"18\" font-size=\"7\" font-family=\"Arial\" text-anchor=\"middle\" fill=\"black\">I1-I2</text>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "relay_frequency",
+      "type": "relay_protection",
+      "name": "Реле частоты",
+      "category": "relay_protection",
+      "gost": "ГОСТ 2.756-76",
+      "gost_ref": "3.1",
+      "viewBox": "-2 6 104 30",
+      "default_width": 96,
+      "default_height": 30,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 15
+        },
+        {
+          "id": "t2",
+          "rx": 95,
+          "ry": 15
+        }
+      ],
+      "default_properties": {
+        "type": "frequency",
+        "units": "Гц"
+      },
+      "svg": "<rect x=\"25\" y=\"3\" width=\"45\" height=\"24\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"0\" y1=\"15\" x2=\"25\" y2=\"15\" stroke=\"black\" stroke-width=\"1\"/><line x1=\"70\" y1=\"15\" x2=\"95\" y2=\"15\" stroke=\"black\" stroke-width=\"1\"/><text x=\"47\" y=\"18\" font-size=\"8\" font-family=\"Arial\" text-anchor=\"middle\" fill=\"black\">Hz</text>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "motor_dc",
+      "type": "machines",
+      "name": "Двигатель постоянного тока",
+      "category": "machines",
+      "gost": "ГОСТ 2.722-68",
+      "gost_ref": "2.2",
+      "viewBox": "-2 6 104 30",
+      "default_width": 96,
+      "default_height": 30,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 50,
+          "ry": 0
+        },
+        {
+          "id": "t2",
+          "rx": 50,
+          "ry": 30
+        }
+      ],
+      "default_properties": {
+        "power_kw": "10",
+        "voltage_v": "220",
+        "units": "кВт/В"
+      },
+      "svg": "<circle cx=\"50\" cy=\"15\" r=\"14\" fill=\"none\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"50\" y1=\"1\" x2=\"50\" y2=\"5\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"50\" y1=\"25\" x2=\"50\" y2=\"29\" stroke=\"black\" stroke-width=\"1.2\"/><text x=\"50\" y=\"19\" font-size=\"10\" font-family=\"Arial\" text-anchor=\"middle\" fill=\"black\">M</text><text x=\"62\" y=\"22\" font-size=\"6\" font-family=\"Arial\" fill=\"black\">=</text>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    },
+    {
+      "id": "battery",
+      "type": "machines",
+      "name": "Аккумуляторная батарея",
+      "category": "machines",
+      "gost": "ГОСТ 2.728-74",
+      "gost_ref": "1.1",
+      "viewBox": "-2 6 104 30",
+      "default_width": 96,
+      "default_height": 30,
+      "terminals": [
+        {
+          "id": "t1",
+          "rx": 0,
+          "ry": 15
+        },
+        {
+          "id": "t2",
+          "rx": 95,
+          "ry": 15
+        }
+      ],
+      "default_properties": {
+        "voltage_v": "12",
+        "capacity_ah": "100",
+        "units": "В/Ач"
+      },
+      "svg": "<line x1=\"0\" y1=\"15\" x2=\"30\" y2=\"15\" stroke=\"black\" stroke-width=\"1.2\"/><line x1=\"30\" y1=\"8\" x2=\"30\" y2=\"22\" stroke=\"black\" stroke-width=\"1.5\"/><line x1=\"38\" y1=\"5\" x2=\"38\" y2=\"25\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"45\" y1=\"8\" x2=\"45\" y2=\"22\" stroke=\"black\" stroke-width=\"1.5\"/><line x1=\"53\" y1=\"5\" x2=\"53\" y2=\"25\" stroke=\"black\" stroke-width=\"0.8\"/><line x1=\"60\" y1=\"8\" x2=\"60\" y2=\"22\" stroke=\"black\" stroke-width=\"1.5\"/><line x1=\"60\" y1=\"15\" x2=\"95\" y2=\"15\" stroke=\"black\" stroke-width=\"1.2\"/><text x=\"34\" y=\"4\" font-size=\"8\" font-family=\"Arial\" fill=\"black\">+</text>",
+      "interactive": false,
+      "default_state": "normal",
+      "current_state": "normal",
+      "states": []
+    }
+  ],
+  "total_symbols": 82
+}
