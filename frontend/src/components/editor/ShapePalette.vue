@@ -1,5 +1,5 @@
 <template>
-  <aside class="shape-palette stencil-palette">
+  <aside class="shape-palette stencil-palette clean-stencil-palette">
     <header class="palette-header">
       <div>
         <h2>Фигуры</h2>
@@ -13,11 +13,14 @@
       <input v-model="query" type="search" placeholder="выключатель, ТН, автотрансформатор…" />
     </label>
 
-    <div class="palette-toolbar" aria-label="Режим иконок библиотеки">
-      <button type="button" :class="{ active: iconMode === 'library' }" @click="iconMode = 'library'">Библиотека</button>
-      <button type="button" :class="{ active: iconMode === 'smart' }" @click="iconMode = 'smart'">УГО</button>
-      <button type="button" :class="{ active: iconMode === 'none' }" @click="iconMode = 'none'">Без иконок</button>
-    </div>
+    <details class="palette-options">
+      <summary>Вид списка</summary>
+      <div class="palette-toolbar" aria-label="Режим иконок библиотеки">
+        <button type="button" :class="{ active: iconMode === 'none' }" @click="iconMode = 'none'">Список</button>
+        <button type="button" :class="{ active: iconMode === 'library' }" @click="iconMode = 'library'">Группы</button>
+        <button type="button" :class="{ active: iconMode === 'smart' }" @click="iconMode = 'smart'">УГО</button>
+      </div>
+    </details>
 
     <div class="palette-body">
       <section class="palette-section library-section">
@@ -54,9 +57,7 @@
           <span class="shape-text">
             <span class="shape-title-row">
               <span class="shape-title">{{ item.title }}</span>
-              <span v-if="item.status === 'planned'" class="planned-dot" title="Запланировано к точной отрисовке из VSDX"></span>
             </span>
-            <small v-if="shapeMeta(item)" class="shape-meta">{{ shapeMeta(item) }}</small>
           </span>
         </button>
       </section>
@@ -87,7 +88,7 @@ const emit = defineEmits<{
 
 const query = ref('')
 const activeCategoryId = ref<string | null>(null)
-const iconMode = ref<PaletteIconMode>('library')
+const iconMode = ref<PaletteIconMode>('none')
 const categories = shapeCatalogCategories
 const layers = createDefaultLayers()
 
@@ -110,11 +111,6 @@ function onDragStart(event: DragEvent, item: ShapeCatalogItem): void {
     event.dataTransfer.effectAllowed = 'copy'
     event.dataTransfer.dropEffect = 'copy'
   }
-}
-
-function shapeMeta(item: ShapeCatalogItem): string {
-  if (item.status === 'available') return item.sourceRef ? 'доступно' : ''
-  return item.libraryPageName ?? ''
 }
 
 function itemTooltip(item: ShapeCatalogItem): string {
@@ -148,27 +144,27 @@ function iconSvg(body: string): string {
 function iconForKind(kind: PaletteIconKind): string {
   switch (kind) {
     case 'library-transformers':
-      return iconSvg('<rect x="10" y="12" width="44" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="28" cy="20" r="6" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="36" cy="20" r="6" fill="none" stroke="currentColor" stroke-width="2"/>')
+      return iconSvg('<rect x="11" y="11" width="42" height="18" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="29" cy="20" r="6" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="35" cy="20" r="6" fill="none" stroke="currentColor" stroke-width="2"/>')
     case 'library-switching':
-      return iconSvg('<rect x="12" y="10" width="40" height="20" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20h24M32 6v8M32 26v8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>')
+      return iconSvg('<rect x="12" y="11" width="40" height="18" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20h24M32 6v8M32 26v8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>')
     case 'library-machines':
-      return iconSvg('<circle cx="32" cy="20" r="12" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 20h8M44 20h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><text x="32" y="25" text-anchor="middle" font-family="Arial" font-size="14" font-weight="700" fill="currentColor">M</text>')
+      return iconSvg('<circle cx="32" cy="20" r="12" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 20h8M44 20h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>')
     case 'library-lines':
       return iconSvg('<rect x="8" y="16" width="48" height="8" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="20" cy="20" r="2.5" fill="#fff" stroke="currentColor" stroke-width="1.6"/><circle cx="32" cy="20" r="2.5" fill="#fff" stroke="currentColor" stroke-width="1.6"/><circle cx="44" cy="20" r="2.5" fill="#fff" stroke="currentColor" stroke-width="1.6"/>')
     case 'library-protection':
-      return iconSvg('<path d="M32 5 48 12v8c0 9-6 14-16 16-10-2-16-7-16-16v-8L32 5z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M35 12 26 22h7l-4 8 10-11h-7l3-7z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>')
+      return iconSvg('<path d="M32 6 48 13v7c0 8-6 13-16 15-10-2-16-7-16-15v-7L32 6z" fill="none" stroke="currentColor" stroke-width="2"/>')
     case 'library-compensation':
       return iconSvg('<path d="M14 20c0-5 5-5 5 0s5 5 5 0 5-5 5 0 5 5 5 0 5-5 5 0 5 5 5 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>')
     case 'exact-circuit-breaker':
-      return iconSvg('<path d="M32 4v10M32 26v10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><rect x="19" y="14" width="26" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M24 22h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="32" cy="20" r="2.2" fill="currentColor"/>')
+      return iconSvg('<path d="M32 4v10M32 26v10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><rect x="19" y="14" width="26" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M24 22h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>')
     case 'exact-withdrawable-truck':
-      return iconSvg('<path d="M32 4v7M32 29v7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><rect x="14" y="11" width="36" height="18" rx="2.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 17h24M20 23h24" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="22" cy="31" r="2.2" fill="currentColor"/><circle cx="42" cy="31" r="2.2" fill="currentColor"/>')
+      return iconSvg('<rect x="14" y="11" width="36" height="18" rx="2.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 17h24M20 23h24" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="22" cy="31" r="2.2" fill="currentColor"/><circle cx="42" cy="31" r="2.2" fill="currentColor"/>')
     case 'exact-disconnector':
       return iconSvg('<path d="M32 4v9M32 27v9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="32" cy="15" r="2.4" fill="currentColor"/><circle cx="32" cy="25" r="2.4" fill="currentColor"/><path d="M31 24 45 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>')
     case 'exact-earthing-switch':
-      return iconSvg('<path d="M32 4v16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M22 20h20M25 26h14M28 31h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="32" cy="15" r="2.3" fill="currentColor"/>')
+      return iconSvg('<path d="M32 4v16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M22 20h20M25 26h14M28 31h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>')
     case 'exact-short-circuiter':
-      return iconSvg('<path d="M32 4v10M32 25v11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="32" cy="16" r="2.2" fill="currentColor"/><circle cx="32" cy="24" r="2.2" fill="currentColor"/><path d="M24 16h16M23 24h18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>')
+      return iconSvg('<path d="M32 4v10M32 25v11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M24 16h16M23 24h18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>')
     case 'exact-transformer':
       return iconSvg('<path d="M18 20h8M38 20h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="29" cy="20" r="7" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="35" cy="20" r="7" fill="none" stroke="currentColor" stroke-width="2"/>')
     case 'exact-machine-generator':
@@ -180,7 +176,7 @@ function iconForKind(kind: PaletteIconKind): string {
     case 'exact-arrester':
       return iconSvg('<path d="M32 4v8M32 28v8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M35 12 25 23h7l-3 9 10-12h-7l3-8z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>')
     case 'exact-fuse':
-      return iconSvg('<path d="M32 4v9M32 27v9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><rect x="22" y="13" width="20" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M26 23c4-8 8 8 12-1" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>')
+      return iconSvg('<path d="M32 4v9M32 27v9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><rect x="22" y="13" width="20" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="2"/>')
     case 'exact-reactor':
       return iconForKind('library-compensation')
     case 'exact-capacitor':
@@ -211,14 +207,14 @@ function machineIcon(letter: 'G' | 'M'): string {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 10px 7px;
+  padding: 8px 9px 6px;
   border-bottom: 1px solid #e2e8f0;
 }
 
 .palette-header h2 {
   margin: 0;
   color: #1d4ed8;
-  font-size: 15px;
+  font-size: 14px;
 }
 
 .palette-header small {
@@ -232,15 +228,15 @@ function machineIcon(letter: 'G' | 'M'): string {
   background: transparent;
   color: #64748b;
   cursor: pointer;
-  font-size: 20px;
+  font-size: 18px;
 }
 
 .search-box {
   display: grid;
-  gap: 5px;
-  padding: 8px 10px 6px;
+  gap: 4px;
+  padding: 7px 8px 6px;
   color: #475569;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 700;
 }
 
@@ -248,28 +244,54 @@ function machineIcon(letter: 'G' | 'M'): string {
   width: 100%;
   border: 1px solid #cbd5e1;
   border-radius: 7px;
-  padding: 7px 8px;
+  padding: 6px 8px;
   background: white;
+  font-size: 12px;
+}
+
+.palette-options {
+  padding: 0 8px 6px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.palette-options summary {
+  width: max-content;
+  color: #64748b;
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 800;
+  list-style: none;
+}
+
+.palette-options summary::-webkit-details-marker {
+  display: none;
+}
+
+.palette-options summary::after {
+  content: " ▾";
+}
+
+.palette-options[open] summary::after {
+  content: " ▴";
 }
 
 .palette-toolbar {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 4px;
-  padding: 0 8px 7px;
-  border-bottom: 1px solid #e2e8f0;
+  padding-top: 5px;
 }
 
 .palette-toolbar button {
   min-width: 0;
   border: 1px solid #d5e3f6;
-  border-radius: 7px;
+  border-radius: 6px;
   background: #fff;
   color: #45607f;
   cursor: pointer;
   font-size: 10px;
   font-weight: 800;
-  padding: 5px 4px;
+  padding: 4px 4px;
 }
 
 .palette-toolbar button.active {
@@ -281,19 +303,19 @@ function machineIcon(letter: 'G' | 'M'): string {
 .palette-body {
   min-height: 0;
   overflow: auto;
-  padding: 8px;
+  padding: 7px;
 }
 
 .palette-section {
   display: grid;
-  gap: 6px;
-  margin-bottom: 12px;
+  gap: 5px;
+  margin-bottom: 11px;
 }
 
 .palette-section h3 {
   margin: 0 0 3px;
   color: #64748b;
-  font-size: 11px;
+  font-size: 10px;
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
@@ -302,7 +324,7 @@ function machineIcon(letter: 'G' | 'M'): string {
 .shape-item,
 .layer-row {
   border: 1px solid #dbeafe;
-  border-radius: 8px;
+  border-radius: 7px;
   background: white;
   color: #0f172a;
   cursor: pointer;
@@ -311,14 +333,13 @@ function machineIcon(letter: 'G' | 'M'): string {
 
 .library-card {
   display: grid;
-  gap: 3px;
-  padding: 7px 8px;
+  gap: 2px;
+  padding: 6px 7px;
 }
 
 .library-card.active {
   border-color: #2563eb;
   background: #eff6ff;
-  box-shadow: 0 0 0 1px rgba(37, 99, 235, .1);
 }
 
 .library-card-title {
@@ -329,20 +350,22 @@ function machineIcon(letter: 'G' | 'M'): string {
 .library-card small {
   color: #64748b;
   font-size: 10px;
-  line-height: 1.16;
+  line-height: 1.14;
 }
 
 .shape-item {
   display: grid;
-  grid-template-columns: 34px minmax(0, 1fr);
+  grid-template-columns: 30px minmax(0, 1fr);
   align-items: center;
-  gap: 8px;
-  min-height: 42px;
-  padding: 6px 7px;
+  gap: 7px;
+  min-height: 32px;
+  padding: 5px 7px;
 }
 
 .shape-item.no-icon {
   grid-template-columns: minmax(0, 1fr);
+  min-height: 30px;
+  padding-left: 8px;
 }
 
 .shape-item:hover {
@@ -365,14 +388,18 @@ function machineIcon(letter: 'G' | 'M'): string {
 .preview {
   display: grid;
   place-items: center;
-  width: 32px;
-  height: 28px;
+  width: 28px;
+  height: 22px;
   border: 1px solid #d6e3f4;
   border-radius: 5px;
-  color: #6d0ad6;
+  color: #64748b;
   background: linear-gradient(180deg, #ffffff, #f8fbff);
   overflow: hidden;
   pointer-events: none;
+}
+
+.preview[data-icon-kind^='exact-'] {
+  color: #6d0ad6;
 }
 
 .preview :deep(svg) {
@@ -389,13 +416,11 @@ function machineIcon(letter: 'G' | 'M'): string {
 .shape-text {
   min-width: 0;
   display: grid;
-  gap: 2px;
 }
 
 .shape-title-row {
   display: flex;
   align-items: flex-start;
-  gap: 5px;
   min-width: 0;
 }
 
@@ -407,24 +432,6 @@ function machineIcon(letter: 'G' | 'M'): string {
   line-height: 1.14;
   white-space: normal;
   overflow-wrap: anywhere;
-}
-
-.shape-meta {
-  color: #64748b;
-  font-size: 10px;
-  line-height: 1.12;
-  white-space: normal;
-  overflow-wrap: anywhere;
-}
-
-.planned-dot {
-  flex: 0 0 auto;
-  width: 5px;
-  height: 5px;
-  margin-top: 5px;
-  border-radius: 999px;
-  background: #94a3b8;
-  opacity: .62;
 }
 
 .layer-row {

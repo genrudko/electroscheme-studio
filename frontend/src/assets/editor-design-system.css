@@ -777,3 +777,27 @@
 }
 
 /* Source VSDX micro-previews stay in generated metadata, but palette uses safe icon policy. */
+
+/* patch-042-clean-stencil-list-palette */
+.clean-stencil-palette .shape-meta,
+.clean-stencil-palette .planned-dot,
+.clean-stencil-palette .planned-icon,
+.clean-stencil-palette .preview-svg {
+  display: none !important;
+}
+
+.clean-stencil-palette .shape-item {
+  box-shadow: none !important;
+}
+
+.clean-stencil-palette .shape-item.no-icon .shape-title {
+  padding-left: 0 !important;
+}
+
+.clean-stencil-palette .palette-toolbar {
+  background: transparent !important;
+}
+
+.clean-stencil-palette .shape-item[aria-disabled='true'] {
+  opacity: 1 !important;
+}
