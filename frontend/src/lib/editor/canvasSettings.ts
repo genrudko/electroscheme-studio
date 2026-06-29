@@ -20,6 +20,9 @@ export type CanvasSettings = {
   pageFormat: IsoPageFormat
   pageOrientation: PageOrientation
   displayProfileId: DisplayProfileId
+  modularGridStepMm: number
+  ugoLineWidthMm: number
+  electricalConnectionLineWidthMm: number
 }
 
 export const defaultCanvasSettings: CanvasSettings = {
@@ -39,6 +42,9 @@ export const defaultCanvasSettings: CanvasSettings = {
   pageFormat: 'A3',
   pageOrientation: 'landscape',
   displayProfileId: 'gost_r_56303_2014',
+  modularGridStepMm: 2.5,
+  ugoLineWidthMm: 0.4,
+  electricalConnectionLineWidthMm: 0.4,
 }
 
 export const isoPageSizes: Record<IsoPageFormat, { width: number; height: number }> = {
@@ -56,5 +62,8 @@ export function normalizeCanvasSettings(settings: CanvasSettings): CanvasSetting
     gridStep: Math.min(Math.max(settings.gridStep, 2), 100),
     snapTolerance: Math.min(Math.max(settings.snapTolerance, 1), 50),
     displayProfileId: settings.displayProfileId ?? 'gost_r_56303_2014',
+    modularGridStepMm: Math.min(Math.max(settings.modularGridStepMm ?? 2.5, 0.5), 20),
+    ugoLineWidthMm: Math.min(Math.max(settings.ugoLineWidthMm ?? 0.4, 0.2), 1.0),
+    electricalConnectionLineWidthMm: Math.min(Math.max(settings.electricalConnectionLineWidthMm ?? 0.4, 0.2), 1.0),
   }
 }

@@ -220,3 +220,104 @@
 .selection-handle {
   stroke-width: 0.75 !important;
 }
+
+/* patch-037-ribbon-standards-vsdx-previews */
+:root {
+  --ess-ribbon-min-height: 138px;
+}
+
+.editor-shell {
+  grid-template-rows: minmax(var(--ess-ribbon-min-height), auto) 1fr 34px !important;
+}
+
+.ribbon-bar {
+  min-height: var(--ess-ribbon-min-height) !important;
+  grid-template-rows: 32px minmax(104px, auto) !important;
+  overflow: visible !important;
+}
+
+.ribbon-content {
+  min-height: 104px !important;
+  align-items: flex-start !important;
+  align-content: flex-start !important;
+  flex-wrap: wrap !important;
+  overflow: visible !important;
+}
+
+.ribbon-group {
+  min-height: 62px !important;
+}
+
+.ribbon-group.canvas-settings,
+.ribbon-group.snap-settings {
+  min-width: 0 !important;
+  flex: 1 1 520px !important;
+}
+
+.settings-grid {
+  grid-template-columns: repeat(auto-fit, minmax(118px, 1fr)) !important;
+  gap: 6px !important;
+}
+
+.settings-grid label {
+  min-width: 0 !important;
+}
+
+.settings-grid input,
+.settings-grid select {
+  min-height: 27px !important;
+}
+
+.shape-item .preview,
+.preview {
+  overflow: hidden !important;
+}
+
+.preview.has-svg-preview,
+.shape-item .preview.has-svg-preview {
+  padding: 1px !important;
+  background: linear-gradient(180deg, #ffffff, #f8fbff) !important;
+}
+
+.preview-svg {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  line-height: 0;
+}
+
+.preview-svg svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.shape-item .preview-svg svg * {
+  vector-effect: non-scaling-stroke;
+}
+
+.shape-item:hover .preview-svg svg {
+  filter: drop-shadow(0 1px 1px rgba(37, 99, 235, 0.18));
+}
+
+.properties-panel::before {
+  content: "Параметры";
+  display: block;
+  margin: -2px 0 10px;
+  color: #123a7a;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 1500px) {
+  :root {
+    --ess-ribbon-min-height: 154px;
+  }
+
+  .ribbon-content {
+    min-height: 120px !important;
+  }
+}

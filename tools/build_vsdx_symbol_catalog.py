@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import html
 import json
 import math
 import re
@@ -48,16 +49,22 @@ class VsdxSymbolDefinition:
     connectionPoints: list[SymbolConnectionPoint]
     dataFields: list[SymbolDataField]
     preview: str
+    svgPreview: str
     status: str
     sourcePath: str
 
 
-def qname(local: str) -> str:
-    return f"{{{NS['v']}}}{local}"
-
-
-def cell_value(shape: ET.Element, name: str) -> str | None:
+def cell_value(shape: ET.Element | None, name: str) -> str | None:
+    if shape is None:
+        return None
     for cell in shape.findall("v:Cell", NS):
+        if cell.attrib.get("N") == name:
+            return cell.attrib.get("V") or cell.attrib.get("F")
+    return None
+
+
+def row_cell_value(row: ET.Element, name: str) -> str | None:
+    for cell in row.findall("v:Cell", NS):
         if cell.attrib.get("N") == name:
             return cell.attrib.get("V") or cell.attrib.get("F")
     return None
@@ -66,8 +73,12 @@ def cell_value(shape: ET.Element, name: str) -> str | None:
 def to_float(value: str | None) -> float | None:
     if value is None:
         return None
+    text = str(value).strip()
+    # ShapeSheet formulas can appear here. For preview, ignore complex formulas.
+    if not re.fullmatch(r"[-+]?\d+([.,]\d+)?([eE][-+]?\d+)?", text):
+        return None
     try:
-        return float(str(value).replace(",", "."))
+        return float(text.replace(",", "."))
     except ValueError:
         return None
 
@@ -103,7 +114,8 @@ def get_master_rels(zf: zipfile.ZipFile) -> dict[str, str]:
         return {}
     root = read_xml(zf, rel_path)
     result: dict[str, str] = {}
-    for rel in root:
+    rel_ns = "http://schemas.openxmlformats.org/package/2006/relationships"
+    for rel in root.findall(f"{{{rel_ns}}}Relationship"):
         rid = rel.attrib.get("Id")
         target = rel.attrib.get("Target")
         if rid and target:
@@ -119,8 +131,7 @@ def find_master_root_shape(master_root: ET.Element) -> ET.Element | None:
     shapes = master_root.find(".//v:Shapes", NS)
     if shapes is None:
         return None
-    first = shapes.find("v:Shape", NS)
-    return first
+    return shapes.find("v:Shape", NS)
 
 
 def iter_sections(root: ET.Element, section_name: str) -> list[ET.Element]:
@@ -136,15 +147,8 @@ def collect_connection_points(root: ET.Element) -> list[SymbolConnectionPoint]:
     point_index = 1
     for section in iter_sections(root, "Connection"):
         for row in section.findall("v:Row", NS):
-            x = None
-            y = None
-            for cell in row.findall("v:Cell", NS):
-                name = cell.attrib.get("N")
-                value = to_float(cell.attrib.get("V"))
-                if name == "X":
-                    x = inches_to_mm(value) if value is not None else None
-                elif name == "Y":
-                    y = inches_to_mm(value) if value is not None else None
+            x = inches_to_mm(to_float(row_cell_value(row, "X")))
+            y = inches_to_mm(to_float(row_cell_value(row, "Y")))
             points.append(SymbolConnectionPoint(id=f"p{point_index}", x=x, y=y))
             point_index += 1
     return points
@@ -251,6 +255,82 @@ def semantic_fields(title: str, category: str) -> list[SymbolDataField]:
     return fields
 
 
+def geometry_row_to_cmd(row: ET.Element, height_mm: float) -> tuple[str, list[float]] | None:
+    row_type = row.attrib.get("T") or row.attrib.get("N") or ""
+    x = inches_to_mm(to_float(row_cell_value(row, "X")))
+    y_raw = inches_to_mm(to_float(row_cell_value(row, "Y")))
+    y = height_mm - y_raw
+
+    if row_type in {"MoveTo", "RelMoveTo"}:
+        return ("M", [x, y])
+    if row_type in {"LineTo", "RelLineTo"}:
+        return ("L", [x, y])
+    if row_type in {"ArcTo", "RelArcTo"}:
+        # Approximate arc as a line for compact preview; exact ArcTo renderer comes later.
+        return ("L", [x, y])
+    return None
+
+
+def collect_svg_paths(master_root: ET.Element, width_mm: float, height_mm: float, max_paths: int = 12) -> list[str]:
+    paths: list[str] = []
+    if width_mm <= 0 or height_mm <= 0:
+        return paths
+
+    for section in master_root.findall(".//v:Section", NS):
+        name = section.attrib.get("N") or ""
+        if not name.lower().startswith("geometry"):
+            continue
+
+        chunks: list[str] = []
+        for row in section.findall("v:Row", NS):
+            cmd = geometry_row_to_cmd(row, height_mm)
+            if cmd is None:
+                continue
+            command, values = cmd
+            chunks.append(f"{command}{values[0]:.3f},{values[1]:.3f}")
+
+        if len(chunks) >= 2:
+            paths.append(" ".join(chunks))
+            if len(paths) >= max_paths:
+                break
+
+    return paths
+
+
+def svg_preview(title: str, category: str, width_mm: float, height_mm: float, connection_points: list[SymbolConnectionPoint], paths: list[str]) -> str:
+    stroke = "#6d0ad6"
+    if width_mm <= 0 or height_mm <= 0:
+        return fallback_svg(preview_for(title, category), category)
+
+    pad = max(width_mm, height_mm) * 0.12
+    view_x = -pad
+    view_y = -pad
+    view_w = width_mm + 2 * pad
+    view_h = height_mm + 2 * pad
+
+    body: list[str] = []
+    if paths:
+        for path in paths[:10]:
+            body.append(f'<path d="{html.escape(path)}" fill="none" stroke="{stroke}" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>')
+    else:
+        body.append(f'<rect x="0" y="0" width="{width_mm:.3f}" height="{height_mm:.3f}" fill="none" stroke="{stroke}" stroke-width="0.8"/>')
+
+    for point in connection_points[:8]:
+        if point.x is None or point.y is None:
+            continue
+        body.append(f'<circle cx="{point.x:.3f}" cy="{height_mm - point.y:.3f}" r="{max(min(width_mm, height_mm) * 0.045, 0.35):.3f}" fill="#fff" stroke="{stroke}" stroke-width="0.55"/>')
+
+    label = html.escape(title)
+    return f'<svg viewBox="{view_x:.3f} {view_y:.3f} {view_w:.3f} {view_h:.3f}" aria-label="{label}" role="img">{"".join(body)}</svg>'
+
+
+def fallback_svg(symbol: str, category: str) -> str:
+    safe = html.escape(symbol)
+    if symbol == "▰":
+        return '<svg viewBox="0 0 64 32" aria-hidden="true"><rect x="7" y="12" width="50" height="8" rx="1.5" fill="#6d0ad6" stroke="#111827" stroke-width="1"/><circle cx="17" cy="16" r="3" fill="#fff" stroke="#111827" stroke-width="1"/><circle cx="32" cy="16" r="3" fill="#fff" stroke="#111827" stroke-width="1"/><circle cx="47" cy="16" r="3" fill="#fff" stroke="#111827" stroke-width="1"/></svg>'
+    return f'<svg viewBox="0 0 64 32" aria-hidden="true"><text x="32" y="22" text-anchor="middle" font-size="20" font-family="Arial" font-weight="700" fill="#6d0ad6">{safe}</text></svg>'
+
+
 def parse_vsdx(path: Path) -> list[VsdxSymbolDefinition]:
     with zipfile.ZipFile(path) as zf:
         masters_xml_path = "visio/masters/masters.xml"
@@ -278,6 +358,7 @@ def parse_vsdx(path: Path) -> list[VsdxSymbolDefinition]:
             user_cell_names = collect_section_names(master_root, "User")
             category = categorize(raw_title)
             safe = safe_id(raw_title, f"master_{master_id}")
+            paths = collect_svg_paths(master_root, width_mm, height_mm)
 
             result.append(
                 VsdxSymbolDefinition(
@@ -295,12 +376,37 @@ def parse_vsdx(path: Path) -> list[VsdxSymbolDefinition]:
                     connectionPoints=connections,
                     dataFields=semantic_fields(raw_title, category),
                     preview=preview_for(raw_title, category),
+                    svgPreview=svg_preview(raw_title, category, width_mm, height_mm, connections, paths),
                     status="planned",
                     sourcePath=master_path,
                 )
             )
 
         return result
+
+
+def fallback_defs() -> list[VsdxSymbolDefinition]:
+    return [
+        VsdxSymbolDefinition(
+            id="vsdx_fallback_circuit_breaker",
+            masterId="fallback",
+            title="Выключатель",
+            categoryId="switching",
+            widthMm=7.5,
+            heightMm=15.0,
+            connectionCount=2,
+            shapeCount=3,
+            geometrySectionCount=0,
+            propertyNames=[],
+            userCellNames=[],
+            connectionPoints=[SymbolConnectionPoint("p1", 3.75, 0), SymbolConnectionPoint("p2", 3.75, 15)],
+            dataFields=semantic_fields("Выключатель", "switching"),
+            preview="□",
+            svgPreview=fallback_svg("□", "switching"),
+            status="planned",
+            sourcePath="fallback",
+        )
+    ]
 
 
 def generated_ts(defs: list[VsdxSymbolDefinition], source_path: Path | None) -> str:
@@ -345,6 +451,7 @@ export type VsdxSymbolDefinition = {{
   connectionPoints: VsdxSymbolConnectionPoint[]
   dataFields: VsdxSymbolDataField[]
   preview: string
+  svgPreview: string
   status: 'planned'
   sourcePath: string
 }}
@@ -366,8 +473,8 @@ def generated_md(defs: list[VsdxSymbolDefinition], source_path: Path | None) -> 
         "",
         f"Symbol count: **{len(defs)}**",
         "",
-        "| Master | Title | Category | Size, mm | Ports | Shapes | Data fields |",
-        "|---:|---|---|---:|---:|---:|---|",
+        "| Master | Title | Category | Size, mm | Ports | Shapes | Data fields | SVG preview |",
+        "|---:|---|---|---:|---:|---:|---|---|",
     ]
     for item in defs:
         fields = ", ".join(field.label for field in item.dataFields[:4])
@@ -375,10 +482,10 @@ def generated_md(defs: list[VsdxSymbolDefinition], source_path: Path | None) -> 
             fields += ", …"
         lines.append(
             f"| {item.masterId} | {item.title} | {item.categoryId} | "
-            f"{item.widthMm:g} × {item.heightMm:g} | {item.connectionCount} | {item.shapeCount} | {fields} |"
+            f"{item.widthMm:g} × {item.heightMm:g} | {item.connectionCount} | {item.shapeCount} | {fields} | yes |"
         )
     lines.append("")
-    lines.append("These definitions are metadata only. Rendering the exact VSDX geometry is the next stage.")
+    lines.append("The SVG previews are compact library previews. Exact insertable master rendering is the next renderer stage.")
     return "\n".join(lines) + "\n"
 
 
@@ -386,7 +493,7 @@ def write_csv(defs: list[VsdxSymbolDefinition], path: Path) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", encoding="utf-8", newline="") as fp:
         writer = csv.writer(fp)
-        writer.writerow(["masterId", "title", "categoryId", "widthMm", "heightMm", "connectionCount", "shapeCount", "geometrySectionCount", "propertyNames", "userCellNames", "dataFields"])
+        writer.writerow(["masterId", "title", "categoryId", "widthMm", "heightMm", "connectionCount", "shapeCount", "geometrySectionCount", "propertyNames", "userCellNames", "dataFields", "hasSvgPreview"])
         for item in defs:
             writer.writerow([
                 item.masterId,
@@ -400,30 +507,8 @@ def write_csv(defs: list[VsdxSymbolDefinition], path: Path) -> None:
                 ";".join(item.propertyNames),
                 ";".join(item.userCellNames),
                 ";".join(field.id for field in item.dataFields),
+                bool(item.svgPreview),
             ])
-
-
-def fallback_defs() -> list[VsdxSymbolDefinition]:
-    return [
-        VsdxSymbolDefinition(
-            id="vsdx_fallback_circuit_breaker",
-            masterId="fallback",
-            title="Выключатель",
-            categoryId="switching",
-            widthMm=7.5,
-            heightMm=15.0,
-            connectionCount=2,
-            shapeCount=3,
-            geometrySectionCount=0,
-            propertyNames=[],
-            userCellNames=[],
-            connectionPoints=[SymbolConnectionPoint("p1", 3.75, 0), SymbolConnectionPoint("p2", 3.75, 15)],
-            dataFields=semantic_fields("Выключатель", "switching"),
-            preview="□",
-            status="planned",
-            sourcePath="fallback",
-        )
-    ]
 
 
 def main() -> int:
@@ -448,12 +533,13 @@ def main() -> int:
     write_csv(defs, args.csv_out)
 
     print(f"VSDX_SYMBOL_COUNT={len(defs)}")
+    print(f"VSDX_SVG_PREVIEW_COUNT={sum(1 for item in defs if item.svgPreview)}")
     if source:
         print(f"VSDX_SOURCE={source}")
     else:
         print("VSDX_SOURCE=fallback")
     for item in defs[:12]:
-        print(f"{item.masterId};{item.title};{item.categoryId};{item.widthMm:g}x{item.heightMm:g}mm;ports={item.connectionCount};props={len(item.propertyNames)};fields={len(item.dataFields)}")
+        print(f"{item.masterId};{item.title};{item.categoryId};{item.widthMm:g}x{item.heightMm:g}mm;ports={item.connectionCount};svg={bool(item.svgPreview)}")
     return 0
 
 

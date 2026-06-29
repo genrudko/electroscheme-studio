@@ -39,7 +39,10 @@
           @click="insertItem(item)"
           @dragstart="onDragStart($event, item)"
         >
-          <span class="preview">{{ item.preview }}</span>
+          <span class="preview" :class="{ 'has-svg-preview': Boolean(item.svgPreview) }">
+            <span v-if="item.svgPreview" class="preview-svg" v-html="item.svgPreview"></span>
+            <template v-else>{{ item.preview }}</template>
+          </span>
           <span>
             {{ item.title }}
             <small v-if="item.status === 'planned'">запланировано</small>

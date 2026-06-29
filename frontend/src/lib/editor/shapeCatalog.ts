@@ -11,6 +11,7 @@ export type ShapeCatalogItem = {
   status: ShapeCatalogStatus
   keywords: string[]
   preview: string
+  svgPreview?: string
   sourceRef?: string
   widthMm?: number
   heightMm?: number
@@ -50,6 +51,8 @@ const coreShapeCatalogItems: ShapeCatalogItem[] = [
     status: 'available',
     keywords: ['шина', 'секция', 'busbar', 'ошиновка'],
     preview: '▰',
+        svgPreview: '<svg viewBox="0 0 64 32" aria-hidden="true"><rect x="7" y="12" width="50" height="8" rx="1.5" fill="#6d0ad6" stroke="#111827" stroke-width="1"/><circle cx="17" cy="16" r="3" fill="#fff" stroke="#111827" stroke-width="1"/><circle cx="32" cy="16" r="3" fill="#fff" stroke="#111827" stroke-width="1"/><circle cx="47" cy="16" r="3" fill="#fff" stroke="#111827" stroke-width="1"/></svg>',
+        svgPreview: '<svg viewBox="0 0 64 32" aria-hidden="true"><text x="32" y="22" text-anchor="middle" font-size="22" font-family="Arial" font-weight="700" fill="#6d0ad6">A</text></svg>',
     sourceRef: 'Рабочая параметрическая шина. Цвет класса напряжения по ГОСТ, точки подключения белые.',
   },
   {
@@ -123,6 +126,10 @@ function vsdxToShapeCatalogItem(definition: VsdxSymbolDefinition): ShapeCatalogI
       ...definition.dataFields.map((field) => field.label),
     ],
     preview: definition.preview,
+    svgPreview: definition.svgPreview,
+        svgPreview: '<svg viewBox="0 0 64 32" aria-hidden="true"><rect x="14" y="8" width="36" height="18" fill="none" stroke="#6d0ad6" stroke-width="2"/></svg>',
+        svgPreview: '<svg viewBox="0 0 64 32" aria-hidden="true"><ellipse cx="32" cy="16" rx="17" ry="9" fill="none" stroke="#6d0ad6" stroke-width="2"/></svg>',
+        svgPreview: '<svg viewBox="0 0 64 32" aria-hidden="true"><path d="M14 25 L50 7" fill="none" stroke="#6d0ad6" stroke-width="2" stroke-linecap="round"/></svg>',
     sourceRef: sourceSummary(definition),
     widthMm: definition.widthMm,
     heightMm: definition.heightMm,

@@ -76,6 +76,10 @@
                 <option value="sto_fsk_placeholder">СТО ФСК (позже)</option>
               </select>
             </label>
+            <label>Модульная сетка, мм <input :value="settings.modularGridStepMm" type="number" min="0.5" max="20" step="0.5" @change="onNumberSetting('modularGridStepMm', $event)" /></label>
+            <label>Линия УГО, мм <input :value="settings.ugoLineWidthMm" type="number" min="0.2" max="1" step="0.1" @change="onNumberSetting('ugoLineWidthMm', $event)" /></label>
+            <label>Эл. связь, мм <input :value="settings.electricalConnectionLineWidthMm" type="number" min="0.2" max="1" step="0.1" @change="onNumberSetting('electricalConnectionLineWidthMm', $event)" /></label>
+
           </div>
         </section>
 

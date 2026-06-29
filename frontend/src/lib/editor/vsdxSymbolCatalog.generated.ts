@@ -30,6 +30,7 @@ export type VsdxSymbolDefinition = {
   connectionPoints: VsdxSymbolConnectionPoint[]
   dataFields: VsdxSymbolDataField[]
   preview: string
+  svgPreview: string
   status: 'planned'
   sourcePath: string
 }
@@ -85,6 +86,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "G",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">G</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master2.xml"
   },
@@ -125,6 +127,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master4.xml"
   },
@@ -178,6 +181,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "M",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">M</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master5.xml"
   },
@@ -236,6 +240,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "M",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">M</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master6.xml"
   },
@@ -294,6 +299,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "M",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">M</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master7.xml"
   },
@@ -358,6 +364,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "▰",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><rect x=\"7\" y=\"12\" width=\"50\" height=\"8\" rx=\"1.5\" fill=\"#6d0ad6\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"17\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"32\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"47\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master8.xml"
   },
@@ -428,6 +435,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "╱",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">╱</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master9.xml"
   },
@@ -492,6 +500,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "▰",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><rect x=\"7\" y=\"12\" width=\"50\" height=\"8\" rx=\"1.5\" fill=\"#6d0ad6\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"17\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"32\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"47\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master10.xml"
   },
@@ -557,6 +566,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "▰",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><rect x=\"7\" y=\"12\" width=\"50\" height=\"8\" rx=\"1.5\" fill=\"#6d0ad6\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"17\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"32\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"47\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master11.xml"
   },
@@ -622,6 +632,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "▰",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><rect x=\"7\" y=\"12\" width=\"50\" height=\"8\" rx=\"1.5\" fill=\"#6d0ad6\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"17\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"32\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"47\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master12.xml"
   },
@@ -687,6 +698,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "▰",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><rect x=\"7\" y=\"12\" width=\"50\" height=\"8\" rx=\"1.5\" fill=\"#6d0ad6\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"17\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"32\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"47\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master13.xml"
   },
@@ -758,6 +770,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "╱",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">╱</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master14.xml"
   },
@@ -823,6 +836,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "▰",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><rect x=\"7\" y=\"12\" width=\"50\" height=\"8\" rx=\"1.5\" fill=\"#6d0ad6\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"17\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"32\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"47\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master15.xml"
   },
@@ -888,6 +902,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "▰",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><rect x=\"7\" y=\"12\" width=\"50\" height=\"8\" rx=\"1.5\" fill=\"#6d0ad6\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"17\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"32\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"47\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master16.xml"
   },
@@ -947,6 +962,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "▰",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><rect x=\"7\" y=\"12\" width=\"50\" height=\"8\" rx=\"1.5\" fill=\"#6d0ad6\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"17\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"32\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"47\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master17.xml"
   },
@@ -1017,6 +1033,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "╱",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">╱</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master18.xml"
   },
@@ -1076,6 +1093,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "⏚",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">⏚</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master19.xml"
   },
@@ -1140,6 +1158,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "▰",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><rect x=\"7\" y=\"12\" width=\"50\" height=\"8\" rx=\"1.5\" fill=\"#6d0ad6\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"17\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"32\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"47\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master20.xml"
   },
@@ -1185,6 +1204,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master21.xml"
   },
@@ -1255,6 +1275,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "□",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">□</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master22.xml"
   },
@@ -1326,6 +1347,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "□",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">□</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master23.xml"
   },
@@ -1372,6 +1394,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master24.xml"
   },
@@ -1441,6 +1464,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "□",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">□</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master25.xml"
   },
@@ -1508,6 +1532,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "□",
+    "svgPreview": "<svg viewBox=\"-3.000 -3.000 21.000 31.000\" aria-label=\"Разъем выкатной тележки2\" role=\"img\"><path d=\"M0.000,25.000 L15.000,25.000 L15.000,0.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,25.000 L0.000,25.000 L0.000,25.000 L0.000,25.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,25.000 L0.000,25.000 L0.000,25.000 L0.000,25.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"25.000\" r=\"0.675\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"15.000\" cy=\"0.000\" r=\"0.675\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master26.xml"
   },
@@ -1550,6 +1575,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"-3.000 -3.000 31.000 31.000\" aria-label=\"Ошиновка1\" role=\"img\"><path d=\"M0.000,25.000 L0.000,0.000 L25.000,0.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,25.000 L0.000,25.000 L0.000,25.000 L0.000,25.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,25.000 L0.000,25.000 L0.000,25.000 L0.000,25.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"25.000\" r=\"1.125\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"25.000\" cy=\"0.000\" r=\"1.125\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master27.xml"
   },
@@ -1592,6 +1618,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"-3.600 -3.600 37.200 27.200\" aria-label=\"Ошиновка2\" role=\"img\"><path d=\"M0.000,20.000 L15.000,20.000 L15.000,0.000 L30.000,0.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,20.000 L0.000,20.000 L0.000,20.000 L0.000,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,20.000 L0.000,20.000 L0.000,20.000 L0.000,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"20.000\" r=\"0.900\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"30.000\" cy=\"0.000\" r=\"0.900\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master28.xml"
   },
@@ -1634,6 +1661,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"-4.200 -4.200 43.400 33.400\" aria-label=\"Ошиновка3\" role=\"img\"><path d=\"M0.000,25.000 L0.000,11.957 L35.000,11.957 L35.000,0.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,25.000 L0.000,25.000 L0.000,25.000 L0.000,25.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,25.000 L0.000,25.000 L0.000,25.000 L0.000,25.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"25.000\" r=\"1.125\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"35.000\" cy=\"0.000\" r=\"1.125\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master29.xml"
   },
@@ -1679,6 +1707,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master30.xml"
   },
@@ -1723,6 +1752,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master31.xml"
   },
@@ -1765,6 +1795,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"-3.000 -3.000 21.000 31.000\" aria-label=\"Пересечение\" role=\"img\"><path d=\"M0.000,25.000 L15.000,25.000 L15.000,0.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,25.000 L0.000,25.000 L0.000,25.000 L0.000,25.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,25.000 L0.000,25.000 L0.000,25.000 L0.000,25.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"25.000\" r=\"0.675\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"15.000\" cy=\"0.000\" r=\"0.675\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master32.xml"
   },
@@ -1807,6 +1838,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"-3.000 -3.000 26.000 31.000\" aria-label=\"ЛЭП1\" role=\"img\"><path d=\"M0.000,25.000 L0.000,0.000 L20.000,0.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,25.000 L0.000,25.000 L0.000,25.000 L0.000,25.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,25.000 L0.000,25.000 L0.000,25.000 L0.000,25.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"25.000\" r=\"0.900\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"20.000\" cy=\"0.000\" r=\"0.900\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master33.xml"
   },
@@ -1849,6 +1881,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"-4.800 -4.800 49.600 29.600\" aria-label=\"ЛЭП2\" role=\"img\"><path d=\"M0.000,20.000 L20.000,20.000 L20.000,0.000 L40.000,0.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,20.000 L0.000,20.000 L0.000,20.000 L0.000,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,20.000 L0.000,20.000 L0.000,20.000 L0.000,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"20.000\" r=\"0.900\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"40.000\" cy=\"0.000\" r=\"0.900\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master34.xml"
   },
@@ -1891,6 +1924,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"-3.600 -3.600 37.200 32.200\" aria-label=\"ЛЭП3\" role=\"img\"><path d=\"M0.000,25.000 L0.000,10.656 L30.000,10.656 L30.000,0.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,25.000 L0.000,25.000 L0.000,25.000 L0.000,25.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,25.000 L0.000,25.000 L0.000,25.000 L0.000,25.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"25.000\" r=\"1.125\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"30.000\" cy=\"0.000\" r=\"1.125\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master35.xml"
   },
@@ -1936,6 +1970,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master36.xml"
   },
@@ -1973,6 +2008,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master37.xml"
   },
@@ -2010,6 +2046,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master38.xml"
   },
@@ -2048,6 +2085,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master39.xml"
   },
@@ -2086,6 +2124,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master40.xml"
   },
@@ -2123,6 +2162,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"-1.200 -1.200 12.400 7.400\" aria-label=\"Связь с источником\" role=\"img\"><path d=\"M0.000,5.000 L10.000,5.000 L10.000,0.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M13.000,0.000 L7.000,0.000 M11.875,-1.500 L8.125,-1.500 M10.625,-3.000 L9.375,-3.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"5.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master41.xml"
   },
@@ -2163,6 +2203,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master42.xml"
   },
@@ -2227,6 +2268,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "⏚",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">⏚</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master43.xml"
   },
@@ -2291,6 +2333,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "⏚",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">⏚</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master44.xml"
   },
@@ -2349,6 +2392,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "⌁",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">⌁</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master45.xml"
   },
@@ -2407,6 +2451,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "⌁",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">⌁</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master46.xml"
   },
@@ -2466,6 +2511,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "⌁",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">⌁</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master47.xml"
   },
@@ -2525,6 +2571,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "⌁",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">⌁</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master48.xml"
   },
@@ -2596,6 +2643,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "□",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">□</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master49.xml"
   },
@@ -2666,6 +2714,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "□",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">□</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master50.xml"
   },
@@ -2737,6 +2786,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "□",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">□</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master51.xml"
   },
@@ -2807,6 +2857,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "╱",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">╱</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master52.xml"
   },
@@ -2877,6 +2928,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "╱",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">╱</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master53.xml"
   },
@@ -2935,6 +2987,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "⚡",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">⚡</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master54.xml"
   },
@@ -2993,6 +3046,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "⚡",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">⚡</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master55.xml"
   },
@@ -3051,6 +3105,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "⚡",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">⚡</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master56.xml"
   },
@@ -3109,6 +3164,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "⚡",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">⚡</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master57.xml"
   },
@@ -3154,6 +3210,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master58.xml"
   },
@@ -3212,6 +3269,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "⚡",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">⚡</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master59.xml"
   },
@@ -3265,6 +3323,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "⚡",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">⚡</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master60.xml"
   },
@@ -3318,6 +3377,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "⚡",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">⚡</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master61.xml"
   },
@@ -3377,6 +3437,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "⏚",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">⏚</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master62.xml"
   },
@@ -3436,6 +3497,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "⏚",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">⏚</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master63.xml"
   },
@@ -3495,6 +3557,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "⏚",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">⏚</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master64.xml"
   },
@@ -3554,6 +3617,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "⏚",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">⏚</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master65.xml"
   },
@@ -3613,6 +3677,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "⏚",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">⏚</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master66.xml"
   },
@@ -3677,6 +3742,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "⏚",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">⏚</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master67.xml"
   },
@@ -3754,6 +3820,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "⏚",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">⏚</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master68.xml"
   },
@@ -3841,6 +3908,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "⏚",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">⏚</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master69.xml"
   },
@@ -3919,6 +3987,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master70.xml"
   },
@@ -4007,6 +4076,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master71.xml"
   },
@@ -4060,6 +4130,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master72.xml"
   },
@@ -4123,6 +4194,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master73.xml"
   },
@@ -4196,6 +4268,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master74.xml"
   },
@@ -4254,6 +4327,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master75.xml"
   },
@@ -4322,6 +4396,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master76.xml"
   },
@@ -4370,6 +4445,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master77.xml"
   },
@@ -4412,6 +4488,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master78.xml"
   },
@@ -4497,6 +4574,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "◎",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◎</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master79.xml"
   },
@@ -4585,6 +4663,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "◎",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◎</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master80.xml"
   },
@@ -4673,6 +4752,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "◎",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◎</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master81.xml"
   },
@@ -4769,6 +4849,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "◎",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◎</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master82.xml"
   },
@@ -4857,6 +4938,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "◎",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◎</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master83.xml"
   },
@@ -4902,6 +4984,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master84.xml"
   },
@@ -4990,6 +5073,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "◎",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◎</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master85.xml"
   },
@@ -5083,6 +5167,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "◎",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◎</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master86.xml"
   },
@@ -5141,6 +5226,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "⌁",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">⌁</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master87.xml"
   },
@@ -5199,6 +5285,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "⌁",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">⌁</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master88.xml"
   },
@@ -5257,6 +5344,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "⌁",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">⌁</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master89.xml"
   },
@@ -5297,6 +5385,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master90.xml"
   },
@@ -5350,6 +5439,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "⌁",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">⌁</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master91.xml"
   },
@@ -5408,6 +5498,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "⌁",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">⌁</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master92.xml"
   },
@@ -5466,6 +5557,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "⌁",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">⌁</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master93.xml"
   },
@@ -5519,6 +5611,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "⌁",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">⌁</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master94.xml"
   },
@@ -5572,6 +5665,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "⌁",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">⌁</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master95.xml"
   },
@@ -5630,6 +5724,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "⌁",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">⌁</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master96.xml"
   },
@@ -5686,6 +5781,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "⌁",
+    "svgPreview": "<svg viewBox=\"-0.600 -0.600 6.200 6.200\" aria-label=\"Батарея статических конденсаторов\" role=\"img\"><path d=\"M0.000,5.000 L5.000,5.000 L5.000,0.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,5.000 L7.045,5.000 L7.045,0.000 L0.000,0.000 L0.000,5.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"5.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"5.000\" cy=\"0.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master97.xml"
   },
@@ -5745,6 +5841,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "⌁",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">⌁</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master98.xml"
   },
@@ -5801,6 +5898,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "⌁",
+    "svgPreview": "<svg viewBox=\"-0.600 -0.600 6.200 6.200\" aria-label=\"Фильтр\" role=\"img\"><path d=\"M0.000,5.000 L5.000,5.000 L5.000,0.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,5.000 L7.962,5.000 L7.962,0.000 L0.000,0.000 L0.000,5.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"5.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"5.000\" cy=\"0.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master99.xml"
   },
@@ -5860,6 +5958,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "⌁",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">⌁</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master100.xml"
   },
@@ -5911,6 +6010,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master101.xml"
   },
@@ -6005,6 +6105,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master102.xml"
   },
@@ -6168,6 +6269,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "▰",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><rect x=\"7\" y=\"12\" width=\"50\" height=\"8\" rx=\"1.5\" fill=\"#6d0ad6\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"17\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"32\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"47\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master103.xml"
   },
@@ -6431,6 +6533,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "▰",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><rect x=\"7\" y=\"12\" width=\"50\" height=\"8\" rx=\"1.5\" fill=\"#6d0ad6\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"17\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"32\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"47\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master104.xml"
   },
@@ -6794,6 +6897,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "▰",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><rect x=\"7\" y=\"12\" width=\"50\" height=\"8\" rx=\"1.5\" fill=\"#6d0ad6\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"17\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"32\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"47\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master105.xml"
   },
@@ -6833,6 +6937,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "▰",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><rect x=\"7\" y=\"12\" width=\"50\" height=\"8\" rx=\"1.5\" fill=\"#6d0ad6\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"17\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"32\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"47\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master106.xml"
   },
@@ -6896,6 +7001,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "▰",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><rect x=\"7\" y=\"12\" width=\"50\" height=\"8\" rx=\"1.5\" fill=\"#6d0ad6\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"17\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"32\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"47\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master107.xml"
   },
@@ -6950,6 +7056,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"-1.320 -1.320 7.440 13.640\" aria-label=\"Соединение для шин\" role=\"img\"><path d=\"M0.000,11.000 L4.800,11.000 L4.800,6.200 L0.000,6.200 L0.000,11.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,11.000 L3.000,11.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,11.000 L0.000,11.000 L0.000,11.000 L0.000,11.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,11.000 L0.000,11.000 L0.000,11.000 L0.000,11.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,11.000 L3.000,11.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,11.000 L0.000,11.000 L0.000,11.000 L0.000,11.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,11.000 L0.000,11.000 L0.000,11.000 L0.000,11.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"11.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"3.000\" cy=\"11.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"0.000\" cy=\"11.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"3.000\" cy=\"11.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master108.xml"
   },
@@ -7004,6 +7111,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"-1.260 -1.260 6.920 13.020\" aria-label=\"Шинный мост\" role=\"img\"><path d=\"M0.000,10.500 L3.000,10.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,10.500 L0.000,10.500 L0.000,10.500 L0.000,10.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,10.500 L0.000,10.500 L0.000,10.500 L0.000,10.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,10.500 L3.000,10.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,10.500 L0.000,10.500 L0.000,10.500 L0.000,10.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,10.500 L0.000,10.500 L0.000,10.500 L0.000,10.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"10.500\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"3.000\" cy=\"10.500\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"0.000\" cy=\"10.500\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"3.000\" cy=\"10.500\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master109.xml"
   },
@@ -7028,6 +7136,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"-0.540 -0.540 5.580 5.580\" aria-label=\"Опора 1\" role=\"img\"><rect x=\"0\" y=\"0\" width=\"4.500\" height=\"4.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\"/><circle cx=\"2.250\" cy=\"2.250\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master110.xml"
   },
@@ -7092,6 +7201,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"-1.920 -1.920 6.840 19.840\" aria-label=\"Опора 2\" role=\"img\"><path d=\"M0.000,16.000 L5.500,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,16.000 L0.000,16.000 L0.000,16.000 L0.000,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,16.000 L0.000,16.000 L0.000,16.000 L0.000,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,16.000 L5.500,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,16.000 L0.000,16.000 L0.000,16.000 L0.000,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,16.000 L0.000,16.000 L0.000,16.000 L0.000,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,16.000 L5.831,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,16.000 L0.000,16.000 L0.000,16.000 L0.000,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,16.000 L0.000,16.000 L0.000,16.000 L0.000,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,13.500 L0.000,16.000 L1.000,16.000 L1.000,15.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"16.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"5.500\" cy=\"16.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"0.000\" cy=\"16.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"5.500\" cy=\"16.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"0.000\" cy=\"16.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"5.831\" cy=\"16.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master111.xml"
   },
@@ -7146,6 +7256,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"-3.288 -3.288 16.576 33.976\" aria-label=\"Опора 3.35\" role=\"img\"><path d=\"M0.000,27.400 L10.000,27.400 L10.000,12.400 L0.000,12.400 L0.000,27.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.400 L10.000,27.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.400 L10.000,27.400 L10.000,16.400 L0.000,16.400 L0.000,27.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.400 L6.125,27.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.400 L0.000,27.400 L0.000,27.400 L0.000,27.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.400 L0.000,27.400 L0.000,27.400 L0.000,27.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.400 L6.220,27.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.400 L0.000,27.400 L0.000,27.400 L0.000,27.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.400 L0.000,27.400 L0.000,27.400 L0.000,27.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"27.400\" r=\"0.450\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"6.125\" cy=\"27.400\" r=\"0.450\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"0.000\" cy=\"27.400\" r=\"0.450\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"6.220\" cy=\"27.400\" r=\"0.450\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master112.xml"
   },
@@ -7194,6 +7305,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "▰",
+    "svgPreview": "<svg viewBox=\"-1.920 -1.920 8.840 19.840\" aria-label=\"Автомат (выкл)\" role=\"img\"><path d=\"M0.000,16.000 L4.550,16.000 L4.550,4.000 L0.000,4.000 L0.000,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M2.500,16.000 L2.500,32.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"2.500\" cy=\"0.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"2.500\" cy=\"16.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master113.xml"
   },
@@ -7212,6 +7324,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "connectionPoints": [],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master114.xml"
   },
@@ -7235,6 +7348,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "connectionPoints": [],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"-1.920 -1.920 10.340 19.840\" aria-label=\"Master 115\" role=\"img\"><path d=\"M-1.000,16.000 L-1.000,21.500 L-4.000,21.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M2.500,16.000 L2.500,21.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,16.000 L5.831,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master115.xml"
   },
@@ -7256,6 +7370,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "connectionPoints": [],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"-4.064 -4.064 41.995 33.528\" aria-label=\"Master 116\" role=\"img\"><path d=\"M0.000,25.400 L33.867,25.400 L33.867,0.000 L0.000,0.000 L0.000,25.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master116.xml"
   },
@@ -7309,6 +7424,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "▰",
+    "svgPreview": "<svg viewBox=\"-2.700 -2.700 25.400 27.900\" aria-label=\"Выключатель (вкл)\" role=\"img\"><path d=\"M2.500,22.500 L2.500,32.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,22.500 L5.000,22.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,22.500 L5.000,22.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M2.500,22.500 L2.500,32.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,22.500 L5.590,22.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M2.500,22.500 L2.500,15.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"17.500\" cy=\"0.000\" r=\"0.900\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"2.500\" cy=\"0.000\" r=\"0.900\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"10.000\" cy=\"22.400\" r=\"0.900\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master117.xml"
   },
@@ -7332,6 +7448,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "connectionPoints": [],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"-1.800 -1.800 8.600 18.600\" aria-label=\"Рисунок, связанный с данными.102\" role=\"img\"><path d=\"M2.500,15.000 L2.500,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M2.500,15.000 L2.500,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,15.000 L5.590,15.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master118.xml"
   },
@@ -7353,6 +7470,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "connectionPoints": [],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"-4.064 -4.064 41.995 33.528\" aria-label=\"Перекидной рубильник\" role=\"img\"><path d=\"M0.000,25.400 L33.867,25.400 L33.867,0.000 L0.000,0.000 L0.000,25.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master119.xml"
   },
@@ -7452,6 +7570,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "▰",
+    "svgPreview": "<svg viewBox=\"-3.288 -3.288 16.576 33.976\" aria-label=\"Выключатель (выкл)\" role=\"img\"><path d=\"M0.000,27.400 L10.000,27.400 L10.000,12.400 L0.000,12.400 L0.000,27.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.400 L10.000,27.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.400 L10.000,27.400 L10.000,16.400 L0.000,16.400 L0.000,27.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.400 L6.125,27.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.400 L0.000,27.400 L0.000,27.400 L0.000,27.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.400 L0.000,27.400 L0.000,27.400 L0.000,27.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.400 L6.220,27.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.400 L0.000,27.400 L0.000,27.400 L0.000,27.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.400 L0.000,27.400 L0.000,27.400 L0.000,27.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,26.900 L12.500,26.900 L12.500,21.960 L0.500,21.960 L0.500,26.900\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"27.400\" r=\"0.450\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"6.125\" cy=\"27.400\" r=\"0.450\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"0.000\" cy=\"27.400\" r=\"0.450\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"6.220\" cy=\"27.400\" r=\"0.450\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master120.xml"
   },
@@ -7505,6 +7624,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "connectionPoints": [],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"-4.064 -4.064 41.995 33.528\" aria-label=\"Рисунок, связанный с данными.105\" role=\"img\"><path d=\"M0.000,25.400 L33.867,25.400 L33.867,0.000 L0.000,0.000 L0.000,25.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,24.900 L33.367,24.900 L33.367,19.960 L0.500,19.960 L0.500,24.900\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,24.900 L33.367,24.900\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,24.900 L33.367,24.900 L33.367,19.960 L0.500,19.960 L0.500,24.900\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,24.900 L33.367,24.900\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,24.900 L33.367,24.900 L33.367,19.960 L0.500,19.960 L0.500,24.900\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,24.900 L33.367,24.900\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,24.900 L33.367,24.900 L33.367,19.960 L0.500,19.960 L0.500,24.900\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,24.900 L33.367,24.900\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,24.900 L33.367,24.900 L33.367,19.960 L0.500,19.960 L0.500,24.900\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master121.xml"
   },
@@ -7548,6 +7668,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "connectionPoints": [],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"-3.600 -3.600 37.200 12.293\" aria-label=\"Счётчик ПТ(Подпись)\" role=\"img\"><path d=\"M0.500,4.593 L29.500,4.593 L29.500,0.500 L0.500,0.500 L0.500,4.593\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,4.593 L29.500,4.593\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master122.xml"
   },
@@ -7619,6 +7740,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"-2.400 -2.400 21.550 24.800\" aria-label=\"Рисунок, связанный с данными.39\" role=\"img\"><path d=\"M0.000,20.000 L10.000,20.000 L10.000,5.000 L0.000,5.000 L0.000,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,20.000 L10.000,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,20.000 L10.000,20.000 L10.000,9.000 L0.000,9.000 L0.000,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,20.000 L20.000,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M4.675,16.250 L7.500,16.250\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M4.675,18.750 L7.500,18.750\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M4.675,16.250 L7.500,16.250\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M4.675,18.750 L7.500,18.750\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,19.500 L23.312,19.500 L23.312,14.983 L0.500,14.983 L0.500,19.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,19.500 L23.312,19.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"20.000\" r=\"0.754\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"20.000\" cy=\"20.000\" r=\"0.754\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master123.xml"
   },
@@ -7676,6 +7798,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "connectionPoints": [],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"-4.064 -4.064 41.995 33.528\" aria-label=\"Выноска с текстом\" role=\"img\"><path d=\"M0.000,25.400 L33.867,25.400 L33.867,0.000 L0.000,0.000 L0.000,25.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,24.900 L33.367,24.900 L33.367,21.653 L0.500,21.653 L0.500,24.900\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,24.900 L33.367,24.900\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,24.900 L33.367,24.900 L33.367,21.653 L0.500,21.653 L0.500,24.900\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,24.900 L33.367,24.900\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,24.900 L33.367,24.900 L33.367,21.653 L0.500,21.653 L0.500,24.900\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,24.900 L33.367,24.900\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,24.900 L33.367,24.900 L33.367,21.653 L0.500,21.653 L0.500,24.900\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,24.900 L33.367,24.900\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,24.900 L33.367,24.900 L33.367,21.653 L0.500,21.653 L0.500,24.900\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master124.xml"
   },
@@ -7784,6 +7907,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "◎",
+    "svgPreview": "<svg viewBox=\"-3.300 -3.300 24.100 34.100\" aria-label=\"Счётчик ТТ (Подпись)\" role=\"img\"><path d=\"M0.000,27.500 L10.000,27.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M4.675,23.750 L7.500,23.750\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M4.675,26.250 L7.500,26.250\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.500 L10.000,27.500 L10.000,12.500 L0.000,12.500 L0.000,27.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.500 L10.000,27.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.500 L10.000,27.500 L10.000,16.500 L0.000,16.500 L0.000,27.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.500 L8.750,27.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.500 L0.000,27.500 L0.000,27.500 L0.000,27.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.500 L0.000,27.500 L0.000,27.500 L0.000,27.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.500 L8.750,27.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"27.500\" r=\"0.787\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"10.000\" cy=\"27.500\" r=\"0.787\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"0.000\" cy=\"27.500\" r=\"0.787\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"8.750\" cy=\"27.500\" r=\"0.787\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"0.000\" cy=\"27.500\" r=\"0.787\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"8.750\" cy=\"27.500\" r=\"0.787\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master125.xml"
   },
@@ -7802,6 +7926,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "connectionPoints": [],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"-7.440 -7.440 72.880 76.880\" aria-label=\"Рисунок, связанный с данными.78\" role=\"img\"><path d=\"M0.000,62.000 L58.000,62.000 L58.000,0.000 L0.000,0.000 L0.000,62.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master126.xml"
   },
@@ -7863,6 +7988,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "◎",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◎</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master127.xml"
   },
@@ -7908,6 +8034,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"-2.400 -2.400 21.550 24.800\" aria-label=\"Зона ответственности\" role=\"img\"><path d=\"M0.000,20.000 L10.000,20.000 L10.000,5.000 L0.000,5.000 L0.000,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,20.000 L10.000,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,20.000 L10.000,20.000 L10.000,9.000 L0.000,9.000 L0.000,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,20.000 L20.000,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M4.675,16.250 L7.500,16.250\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M4.675,18.750 L7.500,18.750\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M4.675,16.250 L7.500,16.250\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M4.675,18.750 L7.500,18.750\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"20.000\" r=\"0.754\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"20.000\" cy=\"20.000\" r=\"0.754\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master128.xml"
   },
@@ -7926,6 +8053,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "connectionPoints": [],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master129.xml"
   },
@@ -7987,6 +8115,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "◎",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◎</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master130.xml"
   },
@@ -8032,6 +8161,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"-2.400 -2.400 21.550 24.800\" aria-label=\"Точка измерения 2\" role=\"img\"><path d=\"M0.000,20.000 L10.000,20.000 L10.000,5.000 L0.000,5.000 L0.000,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,20.000 L10.000,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,20.000 L10.000,20.000 L10.000,9.000 L0.000,9.000 L0.000,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,20.000 L20.000,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M4.675,16.250 L7.500,16.250\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M4.675,18.750 L7.500,18.750\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M4.675,16.250 L7.500,16.250\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M4.675,18.750 L7.500,18.750\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"20.000\" r=\"0.754\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"20.000\" cy=\"20.000\" r=\"0.754\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master131.xml"
   },
@@ -8050,6 +8180,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "connectionPoints": [],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master132.xml"
   },
@@ -8111,6 +8242,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "◎",
+    "svgPreview": "<svg viewBox=\"-2.700 -2.700 27.900 25.400\" aria-label=\"Счётчик (через ТТ2-2)\" role=\"img\"><path d=\"M0.000,0.000 L22.500,11.250 L11.300,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master133.xml"
   },
@@ -8184,6 +8316,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "▰",
+    "svgPreview": "<svg viewBox=\"-1.260 -1.260 10.520 13.020\" aria-label=\"Линия\" role=\"img\"><path d=\"M0.000,10.500 L3.700,10.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,10.500 L0.000,10.500 L0.000,10.500 L0.000,10.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,10.500 L0.000,10.500 L0.000,10.500 L0.000,10.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,10.500 L4.000,10.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,10.500 L0.000,10.500 L0.000,10.500 L0.000,10.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,10.500 L0.000,10.500 L0.000,10.500 L0.000,10.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"10.500\" r=\"0.360\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"3.700\" cy=\"10.500\" r=\"0.360\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"0.000\" cy=\"10.500\" r=\"0.360\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"4.000\" cy=\"10.500\" r=\"0.360\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master134.xml"
   },
@@ -8248,6 +8381,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"-1.920 -1.920 8.340 19.840\" aria-label=\"Граница 2\" role=\"img\"><path d=\"M0.000,16.000 L5.500,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,16.000 L0.000,16.000 L0.000,16.000 L0.000,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,16.000 L0.000,16.000 L0.000,16.000 L0.000,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,16.000 L5.500,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,16.000 L0.000,16.000 L0.000,16.000 L0.000,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,16.000 L0.000,16.000 L0.000,16.000 L0.000,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,16.000 L5.831,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,16.000 L0.000,16.000 L0.000,16.000 L0.000,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,16.000 L0.000,16.000 L0.000,16.000 L0.000,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,16.000 L3.000,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"16.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"5.500\" cy=\"16.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"0.000\" cy=\"16.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"5.500\" cy=\"16.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"0.000\" cy=\"16.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"5.831\" cy=\"16.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master135.xml"
   },
@@ -8266,6 +8400,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "connectionPoints": [],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"-5.703 -5.703 58.931 26.135\" aria-label=\"Опора 3\" role=\"img\"><path d=\"M0.000,14.729 L47.525,14.729 L47.525,0.000 L0.000,0.000 L0.000,14.729\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master136.xml"
   },
@@ -8303,6 +8438,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "▰",
+    "svgPreview": "<svg viewBox=\"-4.444 -4.444 45.926 23.618\" aria-label=\"Выключатель 2\" role=\"img\"><path d=\"M0.000,14.729 L37.037,14.729 L37.037,0.000 L0.000,0.000 L0.000,14.729\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master137.xml"
   },
@@ -8340,6 +8476,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "▰",
+    "svgPreview": "<svg viewBox=\"-6.600 -6.600 68.200 32.453\" aria-label=\"Текст 1(Точка учёта, точка подключения...)\" role=\"img\"><path d=\"M0.000,19.253 L55.000,19.253 L55.000,0.000 L0.000,0.000 L0.000,19.253\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master138.xml"
   },
@@ -8358,6 +8495,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "connectionPoints": [],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"-4.393 -4.393 45.398 18.856\" aria-label=\"Точка У/П/П\" role=\"img\"><path d=\"M0.000,10.069 L36.611,10.069 L36.611,0.000 L0.000,0.000 L0.000,10.069\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master139.xml"
   },
@@ -8376,6 +8514,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "connectionPoints": [],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"-3.876 -3.876 40.048 16.051\" aria-label=\"Граница текст\" role=\"img\"><path d=\"M0.000,8.300 L32.297,8.300 L32.297,0.000 L0.000,0.000 L0.000,8.300\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master140.xml"
   },
@@ -8394,6 +8533,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "connectionPoints": [],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"-3.876 -3.876 40.048 16.051\" aria-label=\"Измерение (зак.)\" role=\"img\"><path d=\"M0.000,8.300 L32.297,8.300 L32.297,0.000 L0.000,0.000 L0.000,8.300\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,8.300 L28.000,8.300\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master141.xml"
   },
@@ -8412,6 +8552,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "connectionPoints": [],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"-4.393 -4.393 45.398 18.856\" aria-label=\"Продажа ЭЭ\" role=\"img\"><path d=\"M0.000,10.069 L36.611,10.069 L36.611,0.000 L0.000,0.000 L0.000,10.069\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,10.069 L31.643,10.069\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master142.xml"
   },
@@ -8430,6 +8571,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "connectionPoints": [],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"-3.457 -3.457 35.726 14.415\" aria-label=\"Продажа ЭЭ (с линией)\" role=\"img\"><path d=\"M0.000,7.500 L28.811,7.500 L28.811,0.000 L0.000,0.000 L0.000,7.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master143.xml"
   },
@@ -8477,6 +8619,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "connectionPoints": [],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"-47.400 -47.400 489.800 381.800\" aria-label=\"Измерение (зак.) (стрелка)\" role=\"img\"><path d=\"M395.000,0.000 L0.000,0.000 L0.000,287.000 L395.000,287.000 L395.000,0.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,287.000 L60.000,287.000 L60.000,282.000 L0.000,282.000 L0.000,287.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,287.000 L15.000,287.000 L15.000,282.000 L0.000,282.000 L0.000,287.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,287.000 L10.000,287.000 L10.000,282.000 L0.000,282.000 L0.000,287.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,287.000 L115.000,287.000 L115.000,282.000 L0.000,282.000 L0.000,287.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,287.000 L60.000,287.000 L60.000,277.000 L0.000,277.000 L0.000,287.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,287.000 L15.000,287.000 L15.000,277.000 L0.000,277.000 L0.000,287.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,287.000 L30.000,287.000 L30.000,277.000 L0.000,277.000 L0.000,287.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,287.000 L10.000,287.000 L10.000,277.000 L0.000,277.000 L0.000,287.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,287.000 L30.000,287.000 L30.000,267.000 L0.000,267.000 L0.000,287.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master144.xml"
   },
@@ -8498,6 +8641,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "connectionPoints": [],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"-3.600 -3.600 37.200 27.200\" aria-label=\"Измерение ЭЭ\" role=\"img\"><path d=\"M0.000,20.000 L30.000,20.000 L30.000,0.000 L0.000,0.000 L0.000,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master145.xml"
   },
@@ -8519,6 +8663,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "connectionPoints": [],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"-3.600 -3.600 37.200 27.200\" aria-label=\"Основная надпись\" role=\"img\"><path d=\"M0.000,20.000 L15.000,20.000 L15.000,20.000 L30.000,20.000 L30.000,10.000 L30.000,10.000 L30.000,0.000 L15.000,0.000 L15.000,0.000 L0.000,0.000 L0.000,10.000 L0.000,10.000 L0.000,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master146.xml"
   },
@@ -8540,6 +8685,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "connectionPoints": [],
     "dataFields": [],
     "preview": "◇",
+    "svgPreview": "<svg viewBox=\"-2.112 -2.112 21.820 12.973\" aria-label=\"Прямоугольная облась\" role=\"img\"><path d=\"M0.000,8.750 L17.597,8.750 L17.597,0.000 L0.000,0.000 L0.000,8.750\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master147.xml"
   }
