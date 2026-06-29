@@ -1,6 +1,6 @@
 {
   "schema_version": "symbol-review-status-0.1",
-  "updated_at": "2026-06-29T14:38:51+00:00",
+  "updated_at": "2026-06-29T14:39:53+00:00",
   "allowed_statuses": [
     "needs_review",
     "accepted",
