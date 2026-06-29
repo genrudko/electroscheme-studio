@@ -102,6 +102,7 @@ function updateCanvasSettings(next: CanvasSettings): void {
   canvasSettings.pageVisible = normalized.pageVisible
   canvasSettings.pageFormat = normalized.pageFormat
   canvasSettings.pageOrientation = normalized.pageOrientation
+  canvasSettings.displayProfileId = normalized.displayProfileId
   editorDocument.settings = { ...normalized }
 }
 

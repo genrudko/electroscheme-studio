@@ -70,6 +70,11 @@
               <select :value="settings.pageOrientation" @change="onTextSetting('pageOrientation', $event)">
                 <option value="landscape">Альбомная</option><option value="portrait">Книжная</option>
               </select>
+            </label>            <label>Профиль
+              <select :value="settings.displayProfileId" @change="onTextSetting('displayProfileId', $event)">
+                <option value="gost_r_56303_2014">ГОСТ Р 56303-2014</option>
+                <option value="sto_fsk_placeholder">СТО ФСК (позже)</option>
+              </select>
             </label>
           </div>
         </section>
@@ -244,7 +249,7 @@ function onTextSetting(key: keyof CanvasSettings, event: Event): void {
 }
 
 .ribbon-group.wide { min-width: 320px; }
-.ribbon-group.canvas-settings { min-width: 330px; }
+.ribbon-group.canvas-settings { min-width: 470px; }
 .ribbon-group.snap-settings { min-width: 520px; }
 .ribbon-group.placeholder { min-width: 380px; }
 
@@ -286,7 +291,7 @@ function onTextSetting(key: keyof CanvasSettings, event: Event): void {
 
 .settings-grid {
   display: grid;
-  grid-template-columns: 74px 74px 78px 92px;
+  grid-template-columns: 74px 74px 78px 92px 132px;
   gap: 8px;
   align-items: end;
 }

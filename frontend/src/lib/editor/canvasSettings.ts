@@ -1,3 +1,5 @@
+import type { DisplayProfileId } from './schemaStyleProfile'
+
 export type IsoPageFormat = 'A4' | 'A3' | 'A2' | 'A1' | 'A0'
 export type PageOrientation = 'portrait' | 'landscape'
 
@@ -17,6 +19,7 @@ export type CanvasSettings = {
   pageVisible: boolean
   pageFormat: IsoPageFormat
   pageOrientation: PageOrientation
+  displayProfileId: DisplayProfileId
 }
 
 export const defaultCanvasSettings: CanvasSettings = {
@@ -35,6 +38,7 @@ export const defaultCanvasSettings: CanvasSettings = {
   pageVisible: true,
   pageFormat: 'A3',
   pageOrientation: 'landscape',
+  displayProfileId: 'gost_r_56303_2014',
 }
 
 export const isoPageSizes: Record<IsoPageFormat, { width: number; height: number }> = {
@@ -51,5 +55,6 @@ export function normalizeCanvasSettings(settings: CanvasSettings): CanvasSetting
     zoom: Math.min(Math.max(settings.zoom, 0.20), 6),
     gridStep: Math.min(Math.max(settings.gridStep, 2), 100),
     snapTolerance: Math.min(Math.max(settings.snapTolerance, 1), 50),
+    displayProfileId: settings.displayProfileId ?? 'gost_r_56303_2014',
   }
 }

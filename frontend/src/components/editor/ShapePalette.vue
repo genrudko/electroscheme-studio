@@ -7,7 +7,7 @@
 
     <label class="search-box">
       <span>Поиск фигур</span>
-      <input v-model="query" type="search" placeholder="шина, линия, текст…" />
+      <input v-model="query" type="search" placeholder="шина, выключатель, ТН…" />
     </label>
 
     <div class="palette-body">
@@ -32,12 +32,18 @@
           :key="item.id"
           type="button"
           class="shape-item"
-          draggable="true"
-          @click="$emit('insertShape', item.command)"
-          @dragstart="onDragStart($event, item.command)"
+          :class="{ planned: item.status === 'planned' }"
+          :draggable="Boolean(item.command)"
+          :disabled="!item.command"
+          :title="item.sourceRef"
+          @click="insertItem(item)"
+          @dragstart="onDragStart($event, item)"
         >
           <span class="preview">{{ item.preview }}</span>
-          <span>{{ item.title }}</span>
+          <span>
+            {{ item.title }}
+            <small v-if="item.status === 'planned'">запланировано</small>
+          </span>
         </button>
       </section>
 
@@ -57,10 +63,10 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import type { EditorCommand } from '../../lib/editor/interactionModes'
-import { filterShapeCatalog, shapeCatalogCategories } from '../../lib/editor/shapeCatalog'
+import { filterShapeCatalog, shapeCatalogCategories, type ShapeCatalogItem } from '../../lib/editor/shapeCatalog'
 import { createDefaultLayers } from '../../lib/editor/editorDocument'
 
-defineEmits<{
+const emit = defineEmits<{
   insertShape: [command: EditorCommand]
 }>()
 
@@ -71,9 +77,19 @@ const layers = createDefaultLayers()
 
 const filteredItems = computed(() => filterShapeCatalog(query.value, activeCategoryId.value))
 
-function onDragStart(event: DragEvent, command: EditorCommand): void {
-  event.dataTransfer?.setData('application/x-electroscheme-command', command)
-  event.dataTransfer?.setData('text/plain', command)
+function insertItem(item: ShapeCatalogItem): void {
+  if (!item.command) return
+  emit('insertShape', item.command)
+}
+
+function onDragStart(event: DragEvent, item: ShapeCatalogItem): void {
+  if (!item.command) {
+    event.preventDefault()
+    return
+  }
+
+  event.dataTransfer?.setData('application/x-electroscheme-command', item.command)
+  event.dataTransfer?.setData('text/plain', item.command)
   if (event.dataTransfer) event.dataTransfer.effectAllowed = 'copy'
 }
 </script>
@@ -180,6 +196,15 @@ function onDragStart(event: DragEvent, command: EditorCommand): void {
 
 .shape-item {
   grid-template-columns: 28px 1fr !important;
+}
+
+.shape-item.planned {
+  opacity: 0.68;
+  cursor: default;
+}
+
+.shape-item:disabled {
+  cursor: default;
 }
 
 .preview {
