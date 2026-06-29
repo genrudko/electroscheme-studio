@@ -1,3 +1,4 @@
+from app.api import imported_symbols
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -18,7 +19,9 @@ app.add_middleware(
 )
 
 app.include_router(project_router)
+app.include_router(imported_symbols.router)
 app.include_router(symbol_router)
+app.include_router(imported_symbols.router)
 
 
 @app.get("/api/health")
