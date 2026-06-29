@@ -17,7 +17,7 @@
         </template>
       </div>
 
-      <div ref="canvasSurfaceRef" class="canvas-surface" @dragover.prevent @drop.prevent="onPaletteDrop" @wheel.prevent="onWheelZoom">
+      <div ref="canvasSurfaceRef" class="canvas-surface" @dragover.prevent @drop.prevent="onPaletteDrop" @wheel.prevent="onWheelZoom" @pointerup.capture="onPalettePointerDrop">
         <svg
           ref="svgRef"
           class="editor-canvas"
@@ -258,6 +258,7 @@ import type { EditorCommand, EditorInteractionMode } from '../../lib/editor/inte
 import { formatPoint, rectsIntersect, snapPoint, type Point, type SnapCandidate, type SnapKind } from '../../lib/editor/snapService'
 import { createReferenceClipboard, placeItemAtReferencePoint, type ReferenceClipboardPayload, type TextClipboardItem } from '../../lib/editor/referenceClipboard'
 import { voltageClassColors, voltageColorById, voltageKvById, type VoltageClassId } from '../../lib/editor/voltageClasses'
+import { clearPaletteDragPayload, getPaletteDragPayload, readPaletteDragPayloadFromEvent } from '../../lib/editor/paletteDragTransfer'
 
 type PaletteVsdxDropPayload = {
   id: string
@@ -1172,16 +1173,12 @@ watch(() => props.command, (command) => {
 
 setStatus(null, null, '')
 function readPaletteVsdxDropPayload(event: DragEvent): PaletteVsdxDropPayload | null {
-  const raw = event.dataTransfer?.getData('application/x-electroscheme-shape-catalog-item')
-  if (!raw) return null
-
-  try {
-    const parsed = JSON.parse(raw) as PaletteVsdxDropPayload
-    if (!parsed || typeof parsed.title !== 'string' || parsed.title.trim().length === 0) return null
-    return parsed
-  } catch {
-    return null
+  const transferred = readPaletteDragPayloadFromEvent(event)
+  if (transferred && typeof transferred.title === 'string' && transferred.title.trim().length > 0) {
+    return transferred as PaletteVsdxDropPayload
   }
+
+  return null
 }
 
 function isPlannedVsdxDropPayload(payload: PaletteVsdxDropPayload | null): payload is PaletteVsdxDropPayload {
@@ -1213,6 +1210,17 @@ function createVsdxPlaceholderSymbol(payload: PaletteVsdxDropPayload, point: Poi
   symbolObjects.value.push(obj)
   selectSingle('symbol', obj.id)
   emitStatus(snapped, snapped.kind, payload.title)
+}
+
+function onPalettePointerDrop(event: PointerEvent): void {
+  const payload = getPaletteDragPayload()
+  if (!payload || payload.status !== 'planned') return
+
+  const p = worldPointFromClient(event.clientX, event.clientY)
+  if (!p) return
+
+  createVsdxPlaceholderSymbol(payload as PaletteVsdxDropPayload, p)
+  clearPaletteDragPayload()
 }
 
 function onPaletteDrop(event: DragEvent): void {

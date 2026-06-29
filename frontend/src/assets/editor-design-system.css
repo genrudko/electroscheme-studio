@@ -970,3 +970,14 @@ svg .user-guide-hit-line {
   stroke-dasharray: 4 4 !important;
   vector-effect: non-scaling-stroke !important;
 }
+
+/* patch-046-pointer-fallback-palette-drag */
+.clean-stencil-palette .shape-item.planned,
+.stencil-palette .shape-item.planned {
+  cursor: grab !important;
+}
+
+.clean-stencil-palette .shape-item.planned:active,
+.stencil-palette .shape-item.planned:active {
+  cursor: grabbing !important;
+}

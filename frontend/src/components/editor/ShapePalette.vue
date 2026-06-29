@@ -50,7 +50,9 @@
           :aria-disabled="!isDraggableItem(item)"
           :title="itemTooltip(item)"
           @click="insertItem(item)"
+          @pointerdown="onPointerDown($event, item)"
           @dragstart="onDragStart($event, item)"
+          @dragend="onDragEnd"
         >
           <span v-if="iconMode !== 'none'" class="preview stencil-icon" :data-icon-kind="paletteIconKind(item)" v-html="paletteIconSvg(item)"></span>
 
@@ -80,6 +82,7 @@ import { computed, ref } from 'vue'
 import type { EditorCommand } from '../../lib/editor/interactionModes'
 import { filterShapeCatalog, shapeCatalogCategories, type ShapeCatalogItem } from '../../lib/editor/shapeCatalog'
 import { createDefaultLayers } from '../../lib/editor/editorDocument'
+import { clearPaletteDragPayload, PALETTE_SHAPE_MIME, serializePaletteDragPayload, setPaletteDragPayload, type PaletteDragPayload } from '../../lib/editor/paletteDragTransfer'
 import { getLibraryIconKind, getSmartIconKind, type PaletteIconKind, type PaletteIconMode } from '../../lib/editor/paletteIconPolicy'
 
 const emit = defineEmits<{
@@ -112,6 +115,22 @@ function vsdxDropPayload(item: ShapeCatalogItem): string {
   })
 }
 
+function onPointerDown(event: PointerEvent, item: ShapeCatalogItem): void {
+  if (!isDraggableItem(item) || event.button !== 0) return
+
+  const payload = typeof shapeCatalogDropPayloadObject === 'function'
+    ? shapeCatalogDropPayloadObject(item)
+    : JSON.parse(shapeCatalogDropPayload(item)) as PaletteDragPayload
+  setPaletteDragPayload(payload)
+  window.setTimeout(() => {
+    if (getSelection()?.type !== 'Range') clearPaletteDragPayload()
+  }, 6000)
+}
+
+function onDragEnd(): void {
+  window.setTimeout(() => clearPaletteDragPayload(), 0)
+}
+
 function insertItem(item: ShapeCatalogItem): void {
   if (!item.command) return
   emit('insertShape', item.command)
@@ -123,7 +142,12 @@ function onDragStart(event: DragEvent, item: ShapeCatalogItem): void {
     return
   }
 
-  event.dataTransfer?.setData('application/x-electroscheme-shape-catalog-item', shapeCatalogDropPayload(item))
+  const payload = typeof shapeCatalogDropPayloadObject === 'function'
+    ? shapeCatalogDropPayloadObject(item)
+    : JSON.parse(shapeCatalogDropPayload(item)) as PaletteDragPayload
+
+  setPaletteDragPayload(payload)
+  event.dataTransfer?.setData(PALETTE_SHAPE_MIME, serializePaletteDragPayload(payload))
 
   if (item.command) {
     event.dataTransfer?.setData('application/x-electroscheme-command', item.command)
