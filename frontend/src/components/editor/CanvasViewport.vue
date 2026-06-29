@@ -258,7 +258,7 @@ import type { EditorCommand, EditorInteractionMode } from '../../lib/editor/inte
 import { formatPoint, rectsIntersect, snapPoint, type Point, type SnapCandidate, type SnapKind } from '../../lib/editor/snapService'
 import { createReferenceClipboard, placeItemAtReferencePoint, type ReferenceClipboardPayload, type TextClipboardItem } from '../../lib/editor/referenceClipboard'
 import { voltageClassColors, voltageColorById, voltageKvById, type VoltageClassId } from '../../lib/editor/voltageClasses'
-import { clearPaletteDragPayload, getPaletteDragPayload, readPaletteDragPayloadFromEvent } from '../../lib/editor/paletteDragTransfer'
+import { clearPaletteDragPayload, getPaletteDragPayload, readPaletteDragPayloadFromEvent, PALETTE_POINTER_DROP_EVENT, type PalettePointerDropDetail } from '../../lib/editor/paletteDragTransfer'
 
 type PaletteVsdxDropPayload = {
   id: string
@@ -474,7 +474,37 @@ const ghostText = computed<CanvasTextObject | null>(() => {
   return placeItemAtReferencePoint(referenceClipboard.value.items[0], referenceClipboard.value, virtualPoint.value) as CanvasTextObject
 })
 
+function placePalettePayload(payload: PaletteVsdxDropPayload, clientX: number, clientY: number): boolean {
+  const p = worldPointFromClient(clientX, clientY)
+  if (!p) {
+    clearPaletteDragPayload()
+    return false
+  }
+
+  if (payload.status === 'planned') {
+    createVsdxPlaceholderSymbol(payload, p)
+    clearPaletteDragPayload()
+    return true
+  }
+
+  if (payload.command) {
+    handleCommandAtPoint(payload.command as EditorCommand, snapCanvasPoint(p))
+    clearPaletteDragPayload()
+    return true
+  }
+
+  clearPaletteDragPayload()
+  return false
+}
+
+function onPaletteCustomPointerDrop(event: Event): void {
+  const detail = (event as CustomEvent<PalettePointerDropDetail>).detail
+  if (!detail?.payload) return
+  placePalettePayload(detail.payload as PaletteVsdxDropPayload, detail.clientX, detail.clientY)
+}
+
 onMounted(() => {
+  window.addEventListener(PALETTE_POINTER_DROP_EVENT, onPaletteCustomPointerDrop as EventListener)
   if (!canvasSurfaceRef.value) return
   resizeObserver = new ResizeObserver((entries) => {
     const entry = entries[0]
@@ -1284,6 +1314,7 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
+  window.removeEventListener(PALETTE_POINTER_DROP_EVENT, onPaletteCustomPointerDrop as EventListener)
   window.removeEventListener('pointermove', onGlobalPalettePointerMove, true)
   window.removeEventListener('pointerup', onGlobalPalettePointerUp, true)
   window.removeEventListener('dragover', onGlobalPaletteDragOver, true)

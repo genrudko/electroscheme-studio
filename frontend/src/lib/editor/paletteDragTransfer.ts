@@ -49,3 +49,12 @@ export function readPaletteDragPayloadFromEvent(event: DragEvent): PaletteDragPa
   const nativePayload = parsePaletteDragPayload(event.dataTransfer?.getData(PALETTE_SHAPE_MIME))
   return nativePayload ?? currentPaletteDragPayload
 }
+
+
+export const PALETTE_POINTER_DROP_EVENT = 'electroscheme:palette-pointer-drop'
+
+export type PalettePointerDropDetail = {
+  clientX: number
+  clientY: number
+  payload: PaletteDragPayload
+}

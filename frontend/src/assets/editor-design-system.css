@@ -981,3 +981,14 @@ svg .user-guide-hit-line {
 .stencil-palette .shape-item.planned:active {
   cursor: grabbing !important;
 }
+
+/* patch-049-custom-pointer-dragdrop-bridge */
+body.palette-pointer-dragging,
+body.palette-pointer-dragging * {
+  cursor: grabbing !important;
+}
+
+.clean-stencil-palette .shape-item.planned,
+.stencil-palette .shape-item.planned {
+  cursor: grab !important;
+}

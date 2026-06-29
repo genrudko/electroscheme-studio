@@ -82,7 +82,7 @@ import { computed, ref } from 'vue'
 import type { EditorCommand } from '../../lib/editor/interactionModes'
 import { filterShapeCatalog, shapeCatalogCategories, type ShapeCatalogItem } from '../../lib/editor/shapeCatalog'
 import { createDefaultLayers } from '../../lib/editor/editorDocument'
-import { clearPaletteDragPayload, PALETTE_SHAPE_MIME, serializePaletteDragPayload, setPaletteDragPayload, type PaletteDragPayload } from '../../lib/editor/paletteDragTransfer'
+import { clearPaletteDragPayload, PALETTE_SHAPE_MIME, serializePaletteDragPayload, setPaletteDragPayload, type PaletteDragPayload, PALETTE_POINTER_DROP_EVENT, type PalettePointerDropDetail } from '../../lib/editor/paletteDragTransfer'
 import { getLibraryIconKind, getSmartIconKind, type PaletteIconKind, type PaletteIconMode } from '../../lib/editor/paletteIconPolicy'
 
 const emit = defineEmits<{
@@ -96,6 +96,57 @@ const categories = shapeCatalogCategories
 const layers = createDefaultLayers()
 
 const filteredItems = computed(() => filterShapeCatalog(query.value, activeCategoryId.value))
+
+let activePalettePointerDrag: {
+  pointerId: number
+  startX: number
+  startY: number
+  payload: PaletteDragPayload
+  moved: boolean
+} | null = null
+
+function cleanupPalettePointerDrag(): void {
+  window.removeEventListener('pointermove', onPaletteWindowPointerMove, true)
+  window.removeEventListener('pointerup', onPaletteWindowPointerUp, true)
+  window.removeEventListener('pointercancel', onPaletteWindowPointerCancel, true)
+  activePalettePointerDrag = null
+  document.body.classList.remove('palette-pointer-dragging')
+}
+
+function onPaletteWindowPointerMove(event: PointerEvent): void {
+  if (!activePalettePointerDrag || event.pointerId !== activePalettePointerDrag.pointerId) return
+
+  const dx = event.clientX - activePalettePointerDrag.startX
+  const dy = event.clientY - activePalettePointerDrag.startY
+  if (Math.hypot(dx, dy) >= 4) {
+    activePalettePointerDrag.moved = true
+    document.body.classList.add('palette-pointer-dragging')
+  }
+}
+
+function onPaletteWindowPointerUp(event: PointerEvent): void {
+  if (!activePalettePointerDrag || event.pointerId !== activePalettePointerDrag.pointerId) return
+
+  const drag = activePalettePointerDrag
+  const shouldDrop = drag.moved
+  cleanupPalettePointerDrag()
+
+  if (!shouldDrop) return
+
+  const detail: PalettePointerDropDetail = {
+    clientX: event.clientX,
+    clientY: event.clientY,
+    payload: drag.payload,
+  }
+
+  window.dispatchEvent(new CustomEvent(PALETTE_POINTER_DROP_EVENT, { detail }))
+}
+
+function onPaletteWindowPointerCancel(event: PointerEvent): void {
+  if (!activePalettePointerDrag || event.pointerId !== activePalettePointerDrag.pointerId) return
+  cleanupPalettePointerDrag()
+  window.setTimeout(() => clearPaletteDragPayload(), 0)
+}
 
 function isDraggableItem(item: ShapeCatalogItem): boolean {
   return Boolean(item.command) || item.status === 'planned'
@@ -118,17 +169,26 @@ function vsdxDropPayload(item: ShapeCatalogItem): string {
 function onPointerDown(event: PointerEvent, item: ShapeCatalogItem): void {
   if (!isDraggableItem(item) || event.button !== 0) return
 
-  const payload = typeof shapeCatalogDropPayloadObject === 'function'
-    ? shapeCatalogDropPayloadObject(item)
-    : JSON.parse(shapeCatalogDropPayload(item)) as PaletteDragPayload
+  const payload = shapeCatalogDropPayloadObject(item)
   setPaletteDragPayload(payload)
-  window.setTimeout(() => {
-    if (getSelection()?.type !== 'Range') clearPaletteDragPayload()
-  }, 6000)
+
+  activePalettePointerDrag = {
+    pointerId: event.pointerId,
+    startX: event.clientX,
+    startY: event.clientY,
+    payload,
+    moved: false,
+  }
+
+  window.addEventListener('pointermove', onPaletteWindowPointerMove, true)
+  window.addEventListener('pointerup', onPaletteWindowPointerUp, true)
+  window.addEventListener('pointercancel', onPaletteWindowPointerCancel, true)
 }
 
 function onDragEnd(): void {
-  window.setTimeout(() => clearPaletteDragPayload(), 0)
+  window.setTimeout(() => {
+    if (!activePalettePointerDrag) clearPaletteDragPayload()
+  }, 0)
 }
 
 function insertItem(item: ShapeCatalogItem): void {
