@@ -1,5 +1,9 @@
 import type { EditorCommand } from './interactionModes'
-import { vsdxSymbolDefinitions, type VsdxSymbolDefinition } from './vsdxSymbolCatalog.generated'
+import {
+  vsdxLibraryCategories,
+  vsdxSymbolDefinitions,
+  type VsdxSymbolDefinition,
+} from './vsdxSymbolCatalog.generated'
 
 export type ShapeCatalogStatus = 'available' | 'planned'
 
@@ -19,6 +23,8 @@ export type ShapeCatalogItem = {
   propertyNames?: string[]
   dataFieldIds?: string[]
   vsdxMasterId?: string
+  libraryPageName?: string
+  semanticCategoryId?: string
 }
 
 export type ShapeCatalogCategory = {
@@ -26,21 +32,26 @@ export type ShapeCatalogCategory = {
   title: string
   description: string
   sourceRef?: string
+  order: number
 }
 
-export const shapeCatalogCategories: ShapeCatalogCategory[] = [
-  { id: 'busbars_lines_grounding', title: 'Линии / шины / заземление', description: 'Линии связи, кабели, шины, ответвления, заземление', sourceRef: 'VSDX + ГОСТ Р 56303-2014' },
-  { id: 'switching', title: 'Коммутационные аппараты', description: 'Выключатели, разъединители, тележки, ЗН, отделители', sourceRef: 'VSDX masters' },
-  { id: 'transformers', title: 'Трансформаторы', description: 'Силовые трансформаторы, ТН, ТТ; свойства обмоток и соединений', sourceRef: 'VSDX masters + semantic data fields' },
-  { id: 'compensation_filters', title: 'Компенсация / фильтры', description: 'Реакторы, ДГР, конденсаторы, фильтры, компенсаторы', sourceRef: 'VSDX masters' },
-  { id: 'surge_arresters', title: 'Разрядники / ОПН', description: 'Разрядники, искровые промежутки, ОПН', sourceRef: 'VSDX masters' },
-  { id: 'generators_motors', title: 'Генераторы / двигатели', description: 'Генераторы, ДЭС, синхронные и асинхронные двигатели', sourceRef: 'VSDX masters' },
-  { id: 'fuses', title: 'Предохранители', description: 'Плавкие, инерционные, пробивные, на тележке', sourceRef: 'VSDX masters' },
-  { id: 'vsdx_symbols', title: 'Прочие VSDX-фигуры', description: 'Фигуры из Visio-библиотеки, не попавшие в базовые группы', sourceRef: 'VSDX masters' },
-  { id: 'primitives', title: 'Графика', description: 'Базовые графические примитивы' },
-  { id: 'text', title: 'Текст и размеры', description: 'Надписи, подписи, размеры' },
-  { id: 'images', title: 'Изображения', description: 'Подложки, сканы, растровые вставки' },
+const coreCategories: ShapeCatalogCategory[] = [
+  { id: 'busbars_lines_grounding', title: 'Линии / шины / заземление', description: 'Рабочие линии, шины, заземление и связи редактора', sourceRef: 'editor-core', order: -30 },
+  { id: 'primitives', title: 'Графика', description: 'Базовые графические примитивы', sourceRef: 'editor-core', order: -20 },
+  { id: 'text', title: 'Текст и размеры', description: 'Надписи, подписи, размеры', sourceRef: 'editor-core', order: -10 },
 ]
+
+export const shapeCatalogCategories: ShapeCatalogCategory[] = [
+  ...coreCategories,
+  ...vsdxLibraryCategories.map((category) => ({
+    id: category.id,
+    title: category.title,
+    description: category.description,
+    sourceRef: category.source,
+    order: category.order,
+  })),
+].filter((category, index, all) => all.findIndex((candidate) => candidate.id === category.id) === index)
+  .sort((a, b) => a.order - b.order || a.title.localeCompare(b.title, 'ru'))
 
 const availableShapeCatalogItems: ShapeCatalogItem[] = [
   {
@@ -96,12 +107,6 @@ const availableShapeCatalogItems: ShapeCatalogItem[] = [
   },
 ]
 
-function knownCategory(categoryId: string): string {
-  return shapeCatalogCategories.some((category) => category.id === categoryId)
-    ? categoryId
-    : 'vsdx_symbols'
-}
-
 function sourceSummary(definition: VsdxSymbolDefinition): string {
   const size = definition.widthMm > 0 && definition.heightMm > 0
     ? `${definition.widthMm} × ${definition.heightMm} мм`
@@ -110,17 +115,18 @@ function sourceSummary(definition: VsdxSymbolDefinition): string {
     ? `; поля: ${definition.dataFields.map((field) => field.label).slice(0, 4).join(', ')}`
     : ''
   const rawProps = definition.propertyNames.length ? `; ShapeSheet Prop=${definition.propertyNames.length}` : ''
-  return `VSDX master ${definition.masterId}: ${size}; ports=${definition.connectionCount}; shapes=${definition.shapeCount}${rawProps}${fields}`
+  return `VSDX master ${definition.masterId}; библиотека: ${definition.libraryPageName}; ${size}; ports=${definition.connectionCount}; shapes=${definition.shapeCount}${rawProps}${fields}`
 }
 
 function vsdxToShapeCatalogItem(definition: VsdxSymbolDefinition): ShapeCatalogItem {
   return {
     id: definition.id,
     title: definition.title,
-    categoryId: knownCategory(definition.categoryId),
+    categoryId: definition.libraryPageId,
     status: 'planned',
     keywords: [
       definition.title,
+      definition.libraryPageName,
       definition.categoryId,
       `master ${definition.masterId}`,
       'vsdx',
@@ -137,10 +143,15 @@ function vsdxToShapeCatalogItem(definition: VsdxSymbolDefinition): ShapeCatalogI
     propertyNames: definition.propertyNames,
     dataFieldIds: definition.dataFields.map((field) => field.id),
     vsdxMasterId: definition.masterId,
+    libraryPageName: definition.libraryPageName,
+    semanticCategoryId: definition.categoryId,
   }
 }
 
-export const vsdxShapeCatalogItems: ShapeCatalogItem[] = vsdxSymbolDefinitions.map(vsdxToShapeCatalogItem)
+export const vsdxShapeCatalogItems: ShapeCatalogItem[] = vsdxSymbolDefinitions
+  .slice()
+  .sort((a, b) => a.libraryOrder - b.libraryOrder || a.title.localeCompare(b.title, 'ru'))
+  .map(vsdxToShapeCatalogItem)
 
 export const shapeCatalogItems: ShapeCatalogItem[] = [
   ...availableShapeCatalogItems,
@@ -157,5 +168,6 @@ export function filterShapeCatalog(query: string, categoryId: string | null): Sh
       || item.keywords.some((keyword) => keyword.toLowerCase().includes(normalized))
       || item.sourceRef?.toLowerCase().includes(normalized)
       || item.vsdxMasterId?.toLowerCase().includes(normalized)
+      || item.libraryPageName?.toLowerCase().includes(normalized)
   })
 }

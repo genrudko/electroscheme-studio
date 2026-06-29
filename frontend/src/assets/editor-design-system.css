@@ -585,3 +585,113 @@
   stroke: var(--ess-guide-color-hover) !important;
   stroke-width: 0.7 !important;
 }
+
+/* patch-039-vsdx-page-libraries-ui-foundation */
+.shape-palette {
+  --ess-library-card-icon-size: 30px;
+}
+
+.palette-section h3 {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.palette-section h3::before {
+  content: "";
+  width: 3px;
+  height: 13px;
+  border-radius: 999px;
+  background: #2563eb;
+  opacity: .72;
+}
+
+.shape-item {
+  grid-template-columns: var(--ess-library-card-icon-size) minmax(0, 1fr) !important;
+  border-color: #d5e3f6 !important;
+}
+
+.shape-item .preview {
+  width: var(--ess-library-card-icon-size) !important;
+  height: 26px !important;
+}
+
+.shape-title-row {
+  align-items: flex-start !important;
+}
+
+.shape-title {
+  font-weight: 650;
+  color: #142033;
+}
+
+.shape-item.planned .shape-title {
+  color: #26374f;
+}
+
+.planned-icon {
+  font-size: 0 !important;
+  position: relative;
+  background: #e9eff8 !important;
+  color: #64748b !important;
+}
+
+.planned-icon::before {
+  content: "";
+  width: 9px;
+  height: 9px;
+  border: 1.5px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 999px;
+  display: block;
+}
+
+.properties-panel {
+  padding: 12px 13px !important;
+}
+
+.properties-panel label {
+  display: grid !important;
+  grid-template-columns: 1fr;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.properties-panel .button-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px;
+}
+
+.ribbon-bar {
+  border-bottom-color: #c9d8eb !important;
+}
+
+.ribbon-tabs {
+  background: linear-gradient(180deg, #ffffff, #f3f7fc) !important;
+}
+
+.ribbon-tabs button {
+  border-radius: 7px 7px 0 0 !important;
+}
+
+.ribbon-tabs button.active {
+  box-shadow: inset 0 -2px 0 #2563eb;
+}
+
+.ribbon-group {
+  position: relative;
+}
+
+.ribbon-group h3 {
+  text-transform: uppercase;
+  letter-spacing: .045em;
+}
+
+/* Placeholder class used by the next patch when RibbonBar is converted to the declarative model. */
+.visio-ribbon-command {
+  display: inline-grid;
+  grid-template-columns: 18px auto;
+  align-items: center;
+  gap: 5px;
+}

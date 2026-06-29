@@ -15,11 +15,23 @@ export type VsdxSymbolConnectionPoint = {
   y: number | null
 }
 
+export type VsdxLibraryCategory = {
+  id: string
+  title: string
+  description: string
+  source: string
+  order: number
+  symbolCount: number
+}
+
 export type VsdxSymbolDefinition = {
   id: string
   masterId: string
   title: string
   categoryId: string
+  libraryPageId: string
+  libraryPageName: string
+  libraryOrder: number
   widthMm: number
   heightMm: number
   connectionCount: number
@@ -35,17 +47,111 @@ export type VsdxSymbolDefinition = {
   sourcePath: string
 }
 
+export const vsdxLibraryCategories: VsdxLibraryCategory[] = [
+  {
+    "id": "vsdx_page_генераторы_двигатели",
+    "title": "Генераторы, двигатели",
+    "description": "VSDX лист/библиотека #1: Генераторы, двигатели",
+    "source": "vsdx_page",
+    "order": 1,
+    "symbolCount": 5
+  },
+  {
+    "id": "vsdx_page_коммутационные_аппараты",
+    "title": "Коммутационные аппараты",
+    "description": "VSDX лист/библиотека #2: Коммутационные аппараты",
+    "source": "vsdx_page",
+    "order": 2,
+    "symbolCount": 19
+  },
+  {
+    "id": "vsdx_page_линии_заземление",
+    "title": "Линии, заземление",
+    "description": "VSDX лист/библиотека #3: Линии, заземление",
+    "source": "vsdx_page",
+    "order": 3,
+    "symbolCount": 18
+  },
+  {
+    "id": "vsdx_page_предохранители",
+    "title": "Предохранители",
+    "description": "VSDX лист/библиотека #4: Предохранители",
+    "source": "vsdx_page",
+    "order": 4,
+    "symbolCount": 9
+  },
+  {
+    "id": "vsdx_page_разрядники_и_опн",
+    "title": "Разрядники и ОПН",
+    "description": "VSDX лист/библиотека #5: Разрядники и ОПН",
+    "source": "vsdx_page",
+    "order": 5,
+    "symbolCount": 16
+  },
+  {
+    "id": "vsdx_page_трансформаторы",
+    "title": "Трансформаторы",
+    "description": "VSDX лист/библиотека #6: Трансформаторы",
+    "source": "vsdx_page",
+    "order": 6,
+    "symbolCount": 17
+  },
+  {
+    "id": "vsdx_page_укрм_фильтры",
+    "title": "УКРМ, фильтры",
+    "description": "VSDX лист/библиотека #7: УКРМ, фильтры",
+    "source": "vsdx_page",
+    "order": 7,
+    "symbolCount": 16
+  },
+  {
+    "id": "vsdx_page_шины",
+    "title": "Шины",
+    "description": "VSDX лист/библиотека #8: Шины",
+    "source": "vsdx_page",
+    "order": 8,
+    "symbolCount": 7
+  },
+  {
+    "id": "vsdx_page_доп_элементы",
+    "title": "Доп.элементы",
+    "description": "VSDX лист/библиотека #9: Доп.элементы",
+    "source": "vsdx_page",
+    "order": 9,
+    "symbolCount": 31
+  },
+  {
+    "id": "vsdx_page_штамп_рамки_текст",
+    "title": "Штамп, рамки, текст",
+    "description": "VSDX лист/библиотека #10: Штамп, рамки, текст",
+    "source": "vsdx_page",
+    "order": 10,
+    "symbolCount": 4
+  },
+  {
+    "id": "vsdx_symbols",
+    "title": "Прочие VSDX-фигуры",
+    "description": "Семантический fallback: Прочие VSDX-фигуры",
+    "source": "semantic_fallback",
+    "order": 1000,
+    "symbolCount": 5
+  }
+]
+
 export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
   {
     "id": "vsdx_генератор_2",
     "masterId": "2",
     "title": "Генератор",
     "categoryId": "generators_motors",
+    "libraryPageId": "vsdx_page_генераторы_двигатели",
+    "libraryPageName": "Генераторы, двигатели",
+    "libraryOrder": 1,
     "widthMm": 15.0,
     "heightMm": 0.0,
     "connectionCount": 1,
     "shapeCount": 3,
-    "geometrySectionCount": 2,
+    "geometrySectionCount": 3,
     "propertyNames": [],
     "userCellNames": [
       "EndX",
@@ -88,13 +194,117 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "preview": "G",
     "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">G</text></svg>",
     "status": "planned",
-    "sourcePath": "visio/masters/master2.xml"
+    "sourcePath": "visio/masters/master1.xml"
   },
   {
     "id": "vsdx_дизельная_электростанция_4",
     "masterId": "4",
     "title": "Дизельная электростанция",
     "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_page_генераторы_двигатели",
+    "libraryPageName": "Генераторы, двигатели",
+    "libraryOrder": 1,
+    "widthMm": 15.0,
+    "heightMm": 0.0,
+    "connectionCount": 1,
+    "shapeCount": 3,
+    "geometrySectionCount": 2,
+    "propertyNames": [],
+    "userCellNames": [
+      "EndX",
+      "EndY",
+      "i",
+      "k",
+      "k_exp",
+      "k_p",
+      "l",
+      "n",
+      "n_exp",
+      "n_p",
+      "name",
+      "np",
+      "r",
+      "r_u",
+      "text"
+    ],
+    "connectionPoints": [
+      {
+        "id": "p1",
+        "x": 15.0,
+        "y": 0.0
+      }
+    ],
+    "dataFields": [],
+    "preview": "◇",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
+    "status": "planned",
+    "sourcePath": "visio/masters/master2.xml"
+  },
+  {
+    "id": "vsdx_двигатель_5",
+    "masterId": "5",
+    "title": "Двигатель",
+    "categoryId": "generators_motors",
+    "libraryPageId": "vsdx_page_генераторы_двигатели",
+    "libraryPageName": "Генераторы, двигатели",
+    "libraryOrder": 1,
+    "widthMm": 15.0,
+    "heightMm": 0.0,
+    "connectionCount": 1,
+    "shapeCount": 3,
+    "geometrySectionCount": 2,
+    "propertyNames": [],
+    "userCellNames": [
+      "EndX",
+      "EndY",
+      "i",
+      "k",
+      "k_exp",
+      "k_p",
+      "l",
+      "n",
+      "n_exp",
+      "n_p",
+      "name",
+      "np",
+      "r",
+      "r_u",
+      "text"
+    ],
+    "connectionPoints": [
+      {
+        "id": "p1",
+        "x": 0.0,
+        "y": 0.0
+      }
+    ],
+    "dataFields": [
+      {
+        "id": "rated_power_mw",
+        "label": "Номинальная мощность",
+        "type": "number",
+        "source": "semantic_scaffold"
+      },
+      {
+        "id": "rated_voltage_kv",
+        "label": "Номинальное напряжение, кВ",
+        "type": "number",
+        "source": "semantic_scaffold"
+      }
+    ],
+    "preview": "M",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">M</text></svg>",
+    "status": "planned",
+    "sourcePath": "visio/masters/master3.xml"
+  },
+  {
+    "id": "vsdx_двигатель_синхронный_6",
+    "masterId": "6",
+    "title": "Двигатель синхронный",
+    "categoryId": "generators_motors",
+    "libraryPageId": "vsdx_page_генераторы_двигатели",
+    "libraryPageName": "Генераторы, двигатели",
+    "libraryOrder": 1,
     "widthMm": 15.0,
     "heightMm": 0.0,
     "connectionCount": 1,
@@ -125,17 +335,33 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
         "y": 0.0
       }
     ],
-    "dataFields": [],
-    "preview": "◇",
-    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
+    "dataFields": [
+      {
+        "id": "rated_power_mw",
+        "label": "Номинальная мощность",
+        "type": "number",
+        "source": "semantic_scaffold"
+      },
+      {
+        "id": "rated_voltage_kv",
+        "label": "Номинальное напряжение, кВ",
+        "type": "number",
+        "source": "semantic_scaffold"
+      }
+    ],
+    "preview": "M",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">M</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master4.xml"
   },
   {
-    "id": "vsdx_двигатель_5",
-    "masterId": "5",
-    "title": "Двигатель",
+    "id": "vsdx_двигатель_асинхронный_7",
+    "masterId": "7",
+    "title": "Двигатель асинхронный",
     "categoryId": "generators_motors",
+    "libraryPageId": "vsdx_page_генераторы_двигатели",
+    "libraryPageName": "Генераторы, двигатели",
+    "libraryOrder": 1,
     "widthMm": 15.0,
     "heightMm": 0.0,
     "connectionCount": 1,
@@ -186,10 +412,13 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "sourcePath": "visio/masters/master5.xml"
   },
   {
-    "id": "vsdx_двигатель_синхронный_6",
-    "masterId": "6",
-    "title": "Двигатель синхронный",
-    "categoryId": "generators_motors",
+    "id": "vsdx_выключатель_8",
+    "masterId": "8",
+    "title": "Выключатель",
+    "categoryId": "busbars_lines_grounding",
+    "libraryPageId": "vsdx_page_коммутационные_аппараты",
+    "libraryPageName": "Коммутационные аппараты",
+    "libraryOrder": 2,
     "widthMm": 15.0,
     "heightMm": 0.0,
     "connectionCount": 2,
@@ -227,28 +456,37 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [
       {
-        "id": "rated_power_mw",
-        "label": "Номинальная мощность",
+        "id": "voltage_class_id",
+        "label": "Класс напряжения",
+        "type": "voltageClass",
+        "source": "semantic_scaffold"
+      },
+      {
+        "id": "connection_point_count",
+        "label": "Количество точек подключения",
         "type": "number",
         "source": "semantic_scaffold"
       },
       {
-        "id": "rated_voltage_kv",
-        "label": "Номинальное напряжение, кВ",
-        "type": "number",
+        "id": "line_type",
+        "label": "Тип линии/шины",
+        "type": "enum",
         "source": "semantic_scaffold"
       }
     ],
-    "preview": "M",
-    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">M</text></svg>",
+    "preview": "▰",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><rect x=\"7\" y=\"12\" width=\"50\" height=\"8\" rx=\"1.5\" fill=\"#6d0ad6\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"17\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"32\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"47\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master6.xml"
   },
   {
-    "id": "vsdx_двигатель_асинхронный_7",
-    "masterId": "7",
-    "title": "Двигатель асинхронный",
-    "categoryId": "generators_motors",
+    "id": "vsdx_разъединитель_9",
+    "masterId": "9",
+    "title": "Разъединитель",
+    "categoryId": "switching",
+    "libraryPageId": "vsdx_page_коммутационные_аппараты",
+    "libraryPageName": "Коммутационные аппараты",
+    "libraryOrder": 2,
     "widthMm": 15.0,
     "heightMm": 0.0,
     "connectionCount": 2,
@@ -286,28 +524,43 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [
       {
-        "id": "rated_power_mw",
-        "label": "Номинальная мощность",
-        "type": "number",
+        "id": "switch_state",
+        "label": "Положение",
+        "type": "enum",
         "source": "semantic_scaffold"
       },
       {
-        "id": "rated_voltage_kv",
-        "label": "Номинальное напряжение, кВ",
-        "type": "number",
+        "id": "truck_position",
+        "label": "Положение тележки",
+        "type": "enum",
+        "source": "semantic_scaffold"
+      },
+      {
+        "id": "control_mode",
+        "label": "Режим управления",
+        "type": "enum",
+        "source": "semantic_scaffold"
+      },
+      {
+        "id": "connection_control_enabled",
+        "label": "Контроль соединений",
+        "type": "boolean",
         "source": "semantic_scaffold"
       }
     ],
-    "preview": "M",
-    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">M</text></svg>",
+    "preview": "╱",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">╱</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master7.xml"
   },
   {
-    "id": "vsdx_выключатель_8",
-    "masterId": "8",
-    "title": "Выключатель",
+    "id": "vsdx_выключатель_нагрузки_10",
+    "masterId": "10",
+    "title": "Выключатель нагрузки",
     "categoryId": "busbars_lines_grounding",
+    "libraryPageId": "vsdx_page_коммутационные_аппараты",
+    "libraryPageName": "Коммутационные аппараты",
+    "libraryOrder": 2,
     "widthMm": 15.0,
     "heightMm": 0.0,
     "connectionCount": 2,
@@ -369,10 +622,13 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "sourcePath": "visio/masters/master8.xml"
   },
   {
-    "id": "vsdx_разъединитель_9",
-    "masterId": "9",
-    "title": "Разъединитель",
-    "categoryId": "switching",
+    "id": "vsdx_выключатель_нагрузки_1_11",
+    "masterId": "11",
+    "title": "Выключатель нагрузки 1",
+    "categoryId": "busbars_lines_grounding",
+    "libraryPageId": "vsdx_page_коммутационные_аппараты",
+    "libraryPageName": "Коммутационные аппараты",
+    "libraryOrder": 2,
     "widthMm": 15.0,
     "heightMm": 0.0,
     "connectionCount": 2,
@@ -410,40 +666,37 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [
       {
-        "id": "switch_state",
-        "label": "Положение",
-        "type": "enum",
+        "id": "voltage_class_id",
+        "label": "Класс напряжения",
+        "type": "voltageClass",
         "source": "semantic_scaffold"
       },
       {
-        "id": "truck_position",
-        "label": "Положение тележки",
-        "type": "enum",
+        "id": "connection_point_count",
+        "label": "Количество точек подключения",
+        "type": "number",
         "source": "semantic_scaffold"
       },
       {
-        "id": "control_mode",
-        "label": "Режим управления",
+        "id": "line_type",
+        "label": "Тип линии/шины",
         "type": "enum",
-        "source": "semantic_scaffold"
-      },
-      {
-        "id": "connection_control_enabled",
-        "label": "Контроль соединений",
-        "type": "boolean",
         "source": "semantic_scaffold"
       }
     ],
-    "preview": "╱",
-    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">╱</text></svg>",
+    "preview": "▰",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><rect x=\"7\" y=\"12\" width=\"50\" height=\"8\" rx=\"1.5\" fill=\"#6d0ad6\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"17\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"32\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"47\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master9.xml"
   },
   {
-    "id": "vsdx_выключатель_нагрузки_10",
-    "masterId": "10",
-    "title": "Выключатель нагрузки",
+    "id": "vsdx_автоматический_выключатель_12",
+    "masterId": "12",
+    "title": "Автоматический выключатель",
     "categoryId": "busbars_lines_grounding",
+    "libraryPageId": "vsdx_page_коммутационные_аппараты",
+    "libraryPageName": "Коммутационные аппараты",
+    "libraryOrder": 2,
     "widthMm": 15.0,
     "heightMm": 0.0,
     "connectionCount": 2,
@@ -505,10 +758,13 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "sourcePath": "visio/masters/master10.xml"
   },
   {
-    "id": "vsdx_выключатель_нагрузки_1_11",
-    "masterId": "11",
-    "title": "Выключатель нагрузки 1",
+    "id": "vsdx_выкатная_тележка_выключателя_13",
+    "masterId": "13",
+    "title": "Выкатная тележка выключателя",
     "categoryId": "busbars_lines_grounding",
+    "libraryPageId": "vsdx_page_коммутационные_аппараты",
+    "libraryPageName": "Коммутационные аппараты",
+    "libraryOrder": 2,
     "widthMm": 25.0,
     "heightMm": 0.0,
     "connectionCount": 2,
@@ -571,10 +827,13 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "sourcePath": "visio/masters/master11.xml"
   },
   {
-    "id": "vsdx_автоматический_выключатель_12",
-    "masterId": "12",
-    "title": "Автоматический выключатель",
-    "categoryId": "busbars_lines_grounding",
+    "id": "vsdx_разъединитель_выдвижной_14",
+    "masterId": "14",
+    "title": "Разъединитель выдвижной",
+    "categoryId": "switching",
+    "libraryPageId": "vsdx_page_коммутационные_аппараты",
+    "libraryPageName": "Коммутационные аппараты",
+    "libraryOrder": 2,
     "widthMm": 25.0,
     "heightMm": 0.0,
     "connectionCount": 2,
@@ -613,34 +872,43 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [
       {
-        "id": "voltage_class_id",
-        "label": "Класс напряжения",
-        "type": "voltageClass",
-        "source": "semantic_scaffold"
-      },
-      {
-        "id": "connection_point_count",
-        "label": "Количество точек подключения",
-        "type": "number",
-        "source": "semantic_scaffold"
-      },
-      {
-        "id": "line_type",
-        "label": "Тип линии/шины",
+        "id": "switch_state",
+        "label": "Положение",
         "type": "enum",
+        "source": "semantic_scaffold"
+      },
+      {
+        "id": "truck_position",
+        "label": "Положение тележки",
+        "type": "enum",
+        "source": "semantic_scaffold"
+      },
+      {
+        "id": "control_mode",
+        "label": "Режим управления",
+        "type": "enum",
+        "source": "semantic_scaffold"
+      },
+      {
+        "id": "connection_control_enabled",
+        "label": "Контроль соединений",
+        "type": "boolean",
         "source": "semantic_scaffold"
       }
     ],
-    "preview": "▰",
-    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><rect x=\"7\" y=\"12\" width=\"50\" height=\"8\" rx=\"1.5\" fill=\"#6d0ad6\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"17\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"32\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"47\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/></svg>",
+    "preview": "╱",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">╱</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master12.xml"
   },
   {
-    "id": "vsdx_выкатная_тележка_выключателя_13",
-    "masterId": "13",
-    "title": "Выкатная тележка выключателя",
+    "id": "vsdx_выкатная_тележка_выключателя_нагрузки_15",
+    "masterId": "15",
+    "title": "Выкатная тележка выключателя нагрузки",
     "categoryId": "busbars_lines_grounding",
+    "libraryPageId": "vsdx_page_коммутационные_аппараты",
+    "libraryPageName": "Коммутационные аппараты",
+    "libraryOrder": 2,
     "widthMm": 25.0,
     "heightMm": 0.0,
     "connectionCount": 2,
@@ -703,10 +971,13 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "sourcePath": "visio/masters/master13.xml"
   },
   {
-    "id": "vsdx_разъединитель_выдвижной_14",
-    "masterId": "14",
-    "title": "Разъединитель выдвижной",
-    "categoryId": "switching",
+    "id": "vsdx_выкатная_тележка_выключателя_нагрузки_2_16",
+    "masterId": "16",
+    "title": "Выкатная тележка выключателя нагрузки 2",
+    "categoryId": "busbars_lines_grounding",
+    "libraryPageId": "vsdx_page_коммутационные_аппараты",
+    "libraryPageName": "Коммутационные аппараты",
+    "libraryOrder": 2,
     "widthMm": 25.0,
     "heightMm": 0.0,
     "connectionCount": 2,
@@ -745,40 +1016,37 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [
       {
-        "id": "switch_state",
-        "label": "Положение",
-        "type": "enum",
+        "id": "voltage_class_id",
+        "label": "Класс напряжения",
+        "type": "voltageClass",
         "source": "semantic_scaffold"
       },
       {
-        "id": "truck_position",
-        "label": "Положение тележки",
-        "type": "enum",
+        "id": "connection_point_count",
+        "label": "Количество точек подключения",
+        "type": "number",
         "source": "semantic_scaffold"
       },
       {
-        "id": "control_mode",
-        "label": "Режим управления",
+        "id": "line_type",
+        "label": "Тип линии/шины",
         "type": "enum",
-        "source": "semantic_scaffold"
-      },
-      {
-        "id": "connection_control_enabled",
-        "label": "Контроль соединений",
-        "type": "boolean",
         "source": "semantic_scaffold"
       }
     ],
-    "preview": "╱",
-    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">╱</text></svg>",
+    "preview": "▰",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><rect x=\"7\" y=\"12\" width=\"50\" height=\"8\" rx=\"1.5\" fill=\"#6d0ad6\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"17\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"32\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"47\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master14.xml"
   },
   {
-    "id": "vsdx_выкатная_тележка_выключателя_нагрузки_15",
-    "masterId": "15",
-    "title": "Выкатная тележка выключателя нагрузки",
+    "id": "vsdx_выкатная_тележка_автоматического_выключателя_17",
+    "masterId": "17",
+    "title": "Выкатная тележка автоматического выключателя",
     "categoryId": "busbars_lines_grounding",
+    "libraryPageId": "vsdx_page_коммутационные_аппараты",
+    "libraryPageName": "Коммутационные аппараты",
+    "libraryOrder": 2,
     "widthMm": 25.0,
     "heightMm": 0.0,
     "connectionCount": 2,
@@ -841,10 +1109,13 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "sourcePath": "visio/masters/master15.xml"
   },
   {
-    "id": "vsdx_выкатная_тележка_выключателя_нагрузки_2_16",
-    "masterId": "16",
-    "title": "Выкатная тележка выключателя нагрузки 2",
-    "categoryId": "busbars_lines_grounding",
+    "id": "vsdx_выкатная_тележка_разъединителя_18",
+    "masterId": "18",
+    "title": "Выкатная тележка разъединителя",
+    "categoryId": "switching",
+    "libraryPageId": "vsdx_page_коммутационные_аппараты",
+    "libraryPageName": "Коммутационные аппараты",
+    "libraryOrder": 2,
     "widthMm": 25.0,
     "heightMm": 0.0,
     "connectionCount": 2,
@@ -883,131 +1154,6 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [
       {
-        "id": "voltage_class_id",
-        "label": "Класс напряжения",
-        "type": "voltageClass",
-        "source": "semantic_scaffold"
-      },
-      {
-        "id": "connection_point_count",
-        "label": "Количество точек подключения",
-        "type": "number",
-        "source": "semantic_scaffold"
-      },
-      {
-        "id": "line_type",
-        "label": "Тип линии/шины",
-        "type": "enum",
-        "source": "semantic_scaffold"
-      }
-    ],
-    "preview": "▰",
-    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><rect x=\"7\" y=\"12\" width=\"50\" height=\"8\" rx=\"1.5\" fill=\"#6d0ad6\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"17\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"32\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"47\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/></svg>",
-    "status": "planned",
-    "sourcePath": "visio/masters/master16.xml"
-  },
-  {
-    "id": "vsdx_выкатная_тележка_автоматического_выключателя_17",
-    "masterId": "17",
-    "title": "Выкатная тележка автоматического выключателя",
-    "categoryId": "busbars_lines_grounding",
-    "widthMm": 15.0,
-    "heightMm": 0.0,
-    "connectionCount": 1,
-    "shapeCount": 2,
-    "geometrySectionCount": 7,
-    "propertyNames": [],
-    "userCellNames": [
-      "EndX",
-      "EndY",
-      "i",
-      "k",
-      "k_exp",
-      "k_p",
-      "l",
-      "n",
-      "n_exp",
-      "n_p",
-      "name",
-      "np",
-      "r",
-      "r_u",
-      "text"
-    ],
-    "connectionPoints": [
-      {
-        "id": "p1",
-        "x": 0.0,
-        "y": 0.0
-      }
-    ],
-    "dataFields": [
-      {
-        "id": "voltage_class_id",
-        "label": "Класс напряжения",
-        "type": "voltageClass",
-        "source": "semantic_scaffold"
-      },
-      {
-        "id": "connection_point_count",
-        "label": "Количество точек подключения",
-        "type": "number",
-        "source": "semantic_scaffold"
-      },
-      {
-        "id": "line_type",
-        "label": "Тип линии/шины",
-        "type": "enum",
-        "source": "semantic_scaffold"
-      }
-    ],
-    "preview": "▰",
-    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><rect x=\"7\" y=\"12\" width=\"50\" height=\"8\" rx=\"1.5\" fill=\"#6d0ad6\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"17\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"32\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"47\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/></svg>",
-    "status": "planned",
-    "sourcePath": "visio/masters/master17.xml"
-  },
-  {
-    "id": "vsdx_выкатная_тележка_разъединителя_18",
-    "masterId": "18",
-    "title": "Выкатная тележка разъединителя",
-    "categoryId": "switching",
-    "widthMm": 15.0,
-    "heightMm": 0.0,
-    "connectionCount": 2,
-    "shapeCount": 3,
-    "geometrySectionCount": 6,
-    "propertyNames": [],
-    "userCellNames": [
-      "EndX",
-      "EndY",
-      "i",
-      "k",
-      "k_exp",
-      "k_p",
-      "l",
-      "n",
-      "n_exp",
-      "n_p",
-      "name",
-      "np",
-      "r",
-      "r_u",
-      "text"
-    ],
-    "connectionPoints": [
-      {
-        "id": "p1",
-        "x": 0.0,
-        "y": 0.0
-      },
-      {
-        "id": "p2",
-        "x": 15.0,
-        "y": 0.0
-      }
-    ],
-    "dataFields": [
-      {
         "id": "switch_state",
         "label": "Положение",
         "type": "enum",
@@ -1035,18 +1181,21 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "preview": "╱",
     "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">╱</text></svg>",
     "status": "planned",
-    "sourcePath": "visio/masters/master18.xml"
+    "sourcePath": "visio/masters/master16.xml"
   },
   {
     "id": "vsdx_заземляющий_разъединитель_19",
     "masterId": "19",
     "title": "Заземляющий разъединитель",
     "categoryId": "busbars_lines_grounding",
+    "libraryPageId": "vsdx_page_коммутационные_аппараты",
+    "libraryPageName": "Коммутационные аппараты",
+    "libraryOrder": 2,
     "widthMm": 15.0,
     "heightMm": 0.0,
     "connectionCount": 1,
-    "shapeCount": 3,
-    "geometrySectionCount": 9,
+    "shapeCount": 2,
+    "geometrySectionCount": 7,
     "propertyNames": [],
     "userCellNames": [
       "EndX",
@@ -1095,13 +1244,16 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "preview": "⏚",
     "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">⏚</text></svg>",
     "status": "planned",
-    "sourcePath": "visio/masters/master19.xml"
+    "sourcePath": "visio/masters/master17.xml"
   },
   {
     "id": "vsdx_короткозамыкатель_без_земли_20",
     "masterId": "20",
     "title": "Короткозамыкатель без земли",
     "categoryId": "busbars_lines_grounding",
+    "libraryPageId": "vsdx_page_коммутационные_аппараты",
+    "libraryPageName": "Коммутационные аппараты",
+    "libraryOrder": 2,
     "widthMm": 15.0,
     "heightMm": 0.0,
     "connectionCount": 2,
@@ -1160,18 +1312,21 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "preview": "▰",
     "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><rect x=\"7\" y=\"12\" width=\"50\" height=\"8\" rx=\"1.5\" fill=\"#6d0ad6\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"17\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"32\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"47\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/></svg>",
     "status": "planned",
-    "sourcePath": "visio/masters/master20.xml"
+    "sourcePath": "visio/masters/master18.xml"
   },
   {
     "id": "vsdx_короткозамыкатель_21",
     "masterId": "21",
     "title": "Короткозамыкатель",
     "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_page_коммутационные_аппараты",
+    "libraryPageName": "Коммутационные аппараты",
+    "libraryOrder": 2,
     "widthMm": 15.0,
     "heightMm": 0.0,
-    "connectionCount": 2,
+    "connectionCount": 1,
     "shapeCount": 3,
-    "geometrySectionCount": 7,
+    "geometrySectionCount": 9,
     "propertyNames": [],
     "userCellNames": [
       "EndX",
@@ -1195,28 +1350,26 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
         "id": "p1",
         "x": 0.0,
         "y": 0.0
-      },
-      {
-        "id": "p2",
-        "x": 15.0,
-        "y": 0.0
       }
     ],
     "dataFields": [],
     "preview": "◇",
     "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
     "status": "planned",
-    "sourcePath": "visio/masters/master21.xml"
+    "sourcePath": "visio/masters/master19.xml"
   },
   {
     "id": "vsdx_отделитель_22",
     "masterId": "22",
     "title": "Отделитель",
     "categoryId": "switching",
+    "libraryPageId": "vsdx_page_коммутационные_аппараты",
+    "libraryPageName": "Коммутационные аппараты",
+    "libraryOrder": 2,
     "widthMm": 15.0,
     "heightMm": 0.0,
     "connectionCount": 2,
-    "shapeCount": 2,
+    "shapeCount": 3,
     "geometrySectionCount": 6,
     "propertyNames": [],
     "userCellNames": [
@@ -1232,9 +1385,9 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       "n_p",
       "name",
       "np",
-      "p",
       "r",
-      "r_u"
+      "r_u",
+      "text"
     ],
     "connectionPoints": [
       {
@@ -1277,13 +1430,139 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "preview": "□",
     "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">□</text></svg>",
     "status": "planned",
-    "sourcePath": "visio/masters/master22.xml"
+    "sourcePath": "visio/masters/master20.xml"
   },
   {
     "id": "vsdx_отделитель_двухстороннего_действия_23",
     "masterId": "23",
     "title": "Отделитель двухстороннего действия",
     "categoryId": "switching",
+    "libraryPageId": "vsdx_page_коммутационные_аппараты",
+    "libraryPageName": "Коммутационные аппараты",
+    "libraryOrder": 2,
+    "widthMm": 15.0,
+    "heightMm": 0.0,
+    "connectionCount": 2,
+    "shapeCount": 3,
+    "geometrySectionCount": 7,
+    "propertyNames": [],
+    "userCellNames": [
+      "EndX",
+      "EndY",
+      "i",
+      "k",
+      "k_exp",
+      "k_p",
+      "l",
+      "n",
+      "n_exp",
+      "n_p",
+      "name",
+      "np",
+      "r",
+      "r_u",
+      "text"
+    ],
+    "connectionPoints": [
+      {
+        "id": "p1",
+        "x": 0.0,
+        "y": 0.0
+      },
+      {
+        "id": "p2",
+        "x": 15.0,
+        "y": 0.0
+      }
+    ],
+    "dataFields": [
+      {
+        "id": "switch_state",
+        "label": "Положение",
+        "type": "enum",
+        "source": "semantic_scaffold"
+      },
+      {
+        "id": "truck_position",
+        "label": "Положение тележки",
+        "type": "enum",
+        "source": "semantic_scaffold"
+      },
+      {
+        "id": "control_mode",
+        "label": "Режим управления",
+        "type": "enum",
+        "source": "semantic_scaffold"
+      },
+      {
+        "id": "connection_control_enabled",
+        "label": "Контроль соединений",
+        "type": "boolean",
+        "source": "semantic_scaffold"
+      }
+    ],
+    "preview": "□",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">□</text></svg>",
+    "status": "planned",
+    "sourcePath": "visio/masters/master21.xml"
+  },
+  {
+    "id": "vsdx_ка3_24",
+    "masterId": "24",
+    "title": "КА3",
+    "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_page_коммутационные_аппараты",
+    "libraryPageName": "Коммутационные аппараты",
+    "libraryOrder": 2,
+    "widthMm": 15.0,
+    "heightMm": 0.0,
+    "connectionCount": 2,
+    "shapeCount": 2,
+    "geometrySectionCount": 6,
+    "propertyNames": [],
+    "userCellNames": [
+      "EndX",
+      "EndY",
+      "i",
+      "k",
+      "k_exp",
+      "k_p",
+      "l",
+      "n",
+      "n_exp",
+      "n_p",
+      "name",
+      "np",
+      "p",
+      "r",
+      "r_u"
+    ],
+    "connectionPoints": [
+      {
+        "id": "p1",
+        "x": 0.0,
+        "y": 0.0
+      },
+      {
+        "id": "p2",
+        "x": 15.0,
+        "y": 0.0
+      }
+    ],
+    "dataFields": [],
+    "preview": "◇",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
+    "status": "planned",
+    "sourcePath": "visio/masters/master22.xml"
+  },
+  {
+    "id": "vsdx_разъем_выкатной_тележки_25",
+    "masterId": "25",
+    "title": "Разъем выкатной тележки",
+    "categoryId": "switching",
+    "libraryPageId": "vsdx_page_коммутационные_аппараты",
+    "libraryPageName": "Коммутационные аппараты",
+    "libraryOrder": 2,
     "widthMm": 10.0,
     "heightMm": 0.0,
     "connectionCount": 2,
@@ -1352,10 +1631,13 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "sourcePath": "visio/masters/master23.xml"
   },
   {
-    "id": "vsdx_ка3_24",
-    "masterId": "24",
-    "title": "КА3",
-    "categoryId": "vsdx_symbols",
+    "id": "vsdx_разъем_выкатной_тележки2_26",
+    "masterId": "26",
+    "title": "Разъем выкатной тележки2",
+    "categoryId": "switching",
+    "libraryPageId": "vsdx_page_коммутационные_аппараты",
+    "libraryPageName": "Коммутационные аппараты",
+    "libraryOrder": 2,
     "widthMm": 5.0,
     "heightMm": 0.0,
     "connectionCount": 2,
@@ -1392,17 +1674,45 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
         "y": 0.0
       }
     ],
-    "dataFields": [],
-    "preview": "◇",
-    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
+    "dataFields": [
+      {
+        "id": "switch_state",
+        "label": "Положение",
+        "type": "enum",
+        "source": "semantic_scaffold"
+      },
+      {
+        "id": "truck_position",
+        "label": "Положение тележки",
+        "type": "enum",
+        "source": "semantic_scaffold"
+      },
+      {
+        "id": "control_mode",
+        "label": "Режим управления",
+        "type": "enum",
+        "source": "semantic_scaffold"
+      },
+      {
+        "id": "connection_control_enabled",
+        "label": "Контроль соединений",
+        "type": "boolean",
+        "source": "semantic_scaffold"
+      }
+    ],
+    "preview": "□",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">□</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master24.xml"
   },
   {
-    "id": "vsdx_разъем_выкатной_тележки_25",
-    "masterId": "25",
-    "title": "Разъем выкатной тележки",
-    "categoryId": "switching",
+    "id": "vsdx_ошиновка1_27",
+    "masterId": "27",
+    "title": "Ошиновка1",
+    "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_page_линии_заземление",
+    "libraryPageName": "Линии, заземление",
+    "libraryOrder": 3,
     "widthMm": 20.0,
     "heightMm": 0.0,
     "connectionCount": 2,
@@ -1437,42 +1747,20 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
         "y": 0.0
       }
     ],
-    "dataFields": [
-      {
-        "id": "switch_state",
-        "label": "Положение",
-        "type": "enum",
-        "source": "semantic_scaffold"
-      },
-      {
-        "id": "truck_position",
-        "label": "Положение тележки",
-        "type": "enum",
-        "source": "semantic_scaffold"
-      },
-      {
-        "id": "control_mode",
-        "label": "Режим управления",
-        "type": "enum",
-        "source": "semantic_scaffold"
-      },
-      {
-        "id": "connection_control_enabled",
-        "label": "Контроль соединений",
-        "type": "boolean",
-        "source": "semantic_scaffold"
-      }
-    ],
-    "preview": "□",
-    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">□</text></svg>",
+    "dataFields": [],
+    "preview": "◇",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master25.xml"
   },
   {
-    "id": "vsdx_разъем_выкатной_тележки2_26",
-    "masterId": "26",
-    "title": "Разъем выкатной тележки2",
-    "categoryId": "switching",
+    "id": "vsdx_ошиновка2_28",
+    "masterId": "28",
+    "title": "Ошиновка2",
+    "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_page_линии_заземление",
+    "libraryPageName": "Линии, заземление",
+    "libraryOrder": 3,
     "widthMm": 15.0,
     "heightMm": 25.0,
     "connectionCount": 2,
@@ -1505,42 +1793,20 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
         "y": 25.0
       }
     ],
-    "dataFields": [
-      {
-        "id": "switch_state",
-        "label": "Положение",
-        "type": "enum",
-        "source": "semantic_scaffold"
-      },
-      {
-        "id": "truck_position",
-        "label": "Положение тележки",
-        "type": "enum",
-        "source": "semantic_scaffold"
-      },
-      {
-        "id": "control_mode",
-        "label": "Режим управления",
-        "type": "enum",
-        "source": "semantic_scaffold"
-      },
-      {
-        "id": "connection_control_enabled",
-        "label": "Контроль соединений",
-        "type": "boolean",
-        "source": "semantic_scaffold"
-      }
-    ],
-    "preview": "□",
-    "svgPreview": "<svg viewBox=\"-3.000 -3.000 21.000 31.000\" aria-label=\"Разъем выкатной тележки2\" role=\"img\"><path d=\"M0.000,25.000 L15.000,25.000 L15.000,0.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,25.000 L0.000,25.000 L0.000,25.000 L0.000,25.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,25.000 L0.000,25.000 L0.000,25.000 L0.000,25.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"25.000\" r=\"0.675\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"15.000\" cy=\"0.000\" r=\"0.675\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
+    "dataFields": [],
+    "preview": "◇",
+    "svgPreview": "<svg viewBox=\"-3.000 -3.000 21.000 31.000\" aria-label=\"Ошиновка2\" role=\"img\"><path d=\"M0.000,25.000 L15.000,25.000 L15.000,0.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,25.000 L0.000,25.000 L0.000,25.000 L0.000,25.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,25.000 L0.000,25.000 L0.000,25.000 L0.000,25.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"25.000\" r=\"0.675\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"15.000\" cy=\"0.000\" r=\"0.675\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master26.xml"
   },
   {
-    "id": "vsdx_ошиновка1_27",
-    "masterId": "27",
-    "title": "Ошиновка1",
+    "id": "vsdx_ошиновка3_29",
+    "masterId": "29",
+    "title": "Ошиновка3",
     "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_page_линии_заземление",
+    "libraryPageName": "Линии, заземление",
+    "libraryOrder": 3,
     "widthMm": 25.0,
     "heightMm": 25.0,
     "connectionCount": 2,
@@ -1575,15 +1841,18 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [],
     "preview": "◇",
-    "svgPreview": "<svg viewBox=\"-3.000 -3.000 31.000 31.000\" aria-label=\"Ошиновка1\" role=\"img\"><path d=\"M0.000,25.000 L0.000,0.000 L25.000,0.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,25.000 L0.000,25.000 L0.000,25.000 L0.000,25.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,25.000 L0.000,25.000 L0.000,25.000 L0.000,25.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"25.000\" r=\"1.125\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"25.000\" cy=\"0.000\" r=\"1.125\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
+    "svgPreview": "<svg viewBox=\"-3.000 -3.000 31.000 31.000\" aria-label=\"Ошиновка3\" role=\"img\"><path d=\"M0.000,25.000 L0.000,0.000 L25.000,0.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,25.000 L0.000,25.000 L0.000,25.000 L0.000,25.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,25.000 L0.000,25.000 L0.000,25.000 L0.000,25.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"25.000\" r=\"1.125\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"25.000\" cy=\"0.000\" r=\"1.125\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master27.xml"
   },
   {
-    "id": "vsdx_ошиновка2_28",
-    "masterId": "28",
-    "title": "Ошиновка2",
+    "id": "vsdx_ошиновка4_30",
+    "masterId": "30",
+    "title": "Ошиновка4",
     "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_page_линии_заземление",
+    "libraryPageName": "Линии, заземление",
+    "libraryOrder": 3,
     "widthMm": 30.0,
     "heightMm": 20.0,
     "connectionCount": 2,
@@ -1618,15 +1887,18 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [],
     "preview": "◇",
-    "svgPreview": "<svg viewBox=\"-3.600 -3.600 37.200 27.200\" aria-label=\"Ошиновка2\" role=\"img\"><path d=\"M0.000,20.000 L15.000,20.000 L15.000,0.000 L30.000,0.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,20.000 L0.000,20.000 L0.000,20.000 L0.000,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,20.000 L0.000,20.000 L0.000,20.000 L0.000,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"20.000\" r=\"0.900\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"30.000\" cy=\"0.000\" r=\"0.900\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
+    "svgPreview": "<svg viewBox=\"-3.600 -3.600 37.200 27.200\" aria-label=\"Ошиновка4\" role=\"img\"><path d=\"M0.000,20.000 L15.000,20.000 L15.000,0.000 L30.000,0.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,20.000 L0.000,20.000 L0.000,20.000 L0.000,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,20.000 L0.000,20.000 L0.000,20.000 L0.000,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"20.000\" r=\"0.900\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"30.000\" cy=\"0.000\" r=\"0.900\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master28.xml"
   },
   {
-    "id": "vsdx_ошиновка3_29",
-    "masterId": "29",
-    "title": "Ошиновка3",
+    "id": "vsdx_ошиновка5_31",
+    "masterId": "31",
+    "title": "Ошиновка5",
     "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_page_линии_заземление",
+    "libraryPageName": "Линии, заземление",
+    "libraryOrder": 3,
     "widthMm": 35.0,
     "heightMm": 25.0,
     "connectionCount": 2,
@@ -1661,15 +1933,18 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [],
     "preview": "◇",
-    "svgPreview": "<svg viewBox=\"-4.200 -4.200 43.400 33.400\" aria-label=\"Ошиновка3\" role=\"img\"><path d=\"M0.000,25.000 L0.000,11.957 L35.000,11.957 L35.000,0.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,25.000 L0.000,25.000 L0.000,25.000 L0.000,25.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,25.000 L0.000,25.000 L0.000,25.000 L0.000,25.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"25.000\" r=\"1.125\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"35.000\" cy=\"0.000\" r=\"1.125\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
+    "svgPreview": "<svg viewBox=\"-4.200 -4.200 43.400 33.400\" aria-label=\"Ошиновка5\" role=\"img\"><path d=\"M0.000,25.000 L0.000,11.957 L35.000,11.957 L35.000,0.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,25.000 L0.000,25.000 L0.000,25.000 L0.000,25.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,25.000 L0.000,25.000 L0.000,25.000 L0.000,25.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"25.000\" r=\"1.125\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"35.000\" cy=\"0.000\" r=\"1.125\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master29.xml"
   },
   {
-    "id": "vsdx_ошиновка4_30",
-    "masterId": "30",
-    "title": "Ошиновка4",
+    "id": "vsdx_пересечение_32",
+    "masterId": "32",
+    "title": "Пересечение",
     "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_page_линии_заземление",
+    "libraryPageName": "Линии, заземление",
+    "libraryOrder": 3,
     "widthMm": 10.0,
     "heightMm": 0.0,
     "connectionCount": 2,
@@ -1712,10 +1987,13 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "sourcePath": "visio/masters/master30.xml"
   },
   {
-    "id": "vsdx_ошиновка5_31",
-    "masterId": "31",
-    "title": "Ошиновка5",
+    "id": "vsdx_лэп1_33",
+    "masterId": "33",
+    "title": "ЛЭП1",
     "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_page_линии_заземление",
+    "libraryPageName": "Линии, заземление",
+    "libraryOrder": 3,
     "widthMm": 20.0,
     "heightMm": 0.0,
     "connectionCount": 2,
@@ -1757,10 +2035,13 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "sourcePath": "visio/masters/master31.xml"
   },
   {
-    "id": "vsdx_пересечение_32",
-    "masterId": "32",
-    "title": "Пересечение",
+    "id": "vsdx_лэп2_34",
+    "masterId": "34",
+    "title": "ЛЭП2",
     "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_page_линии_заземление",
+    "libraryPageName": "Линии, заземление",
+    "libraryOrder": 3,
     "widthMm": 15.0,
     "heightMm": 25.0,
     "connectionCount": 2,
@@ -1795,15 +2076,18 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [],
     "preview": "◇",
-    "svgPreview": "<svg viewBox=\"-3.000 -3.000 21.000 31.000\" aria-label=\"Пересечение\" role=\"img\"><path d=\"M0.000,25.000 L15.000,25.000 L15.000,0.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,25.000 L0.000,25.000 L0.000,25.000 L0.000,25.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,25.000 L0.000,25.000 L0.000,25.000 L0.000,25.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"25.000\" r=\"0.675\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"15.000\" cy=\"0.000\" r=\"0.675\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
+    "svgPreview": "<svg viewBox=\"-3.000 -3.000 21.000 31.000\" aria-label=\"ЛЭП2\" role=\"img\"><path d=\"M0.000,25.000 L15.000,25.000 L15.000,0.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,25.000 L0.000,25.000 L0.000,25.000 L0.000,25.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,25.000 L0.000,25.000 L0.000,25.000 L0.000,25.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"25.000\" r=\"0.675\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"15.000\" cy=\"0.000\" r=\"0.675\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master32.xml"
   },
   {
-    "id": "vsdx_лэп1_33",
-    "masterId": "33",
-    "title": "ЛЭП1",
+    "id": "vsdx_лэп3_35",
+    "masterId": "35",
+    "title": "ЛЭП3",
     "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_page_линии_заземление",
+    "libraryPageName": "Линии, заземление",
+    "libraryOrder": 3,
     "widthMm": 20.0,
     "heightMm": 25.0,
     "connectionCount": 2,
@@ -1838,15 +2122,18 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [],
     "preview": "◇",
-    "svgPreview": "<svg viewBox=\"-3.000 -3.000 26.000 31.000\" aria-label=\"ЛЭП1\" role=\"img\"><path d=\"M0.000,25.000 L0.000,0.000 L20.000,0.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,25.000 L0.000,25.000 L0.000,25.000 L0.000,25.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,25.000 L0.000,25.000 L0.000,25.000 L0.000,25.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"25.000\" r=\"0.900\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"20.000\" cy=\"0.000\" r=\"0.900\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
+    "svgPreview": "<svg viewBox=\"-3.000 -3.000 26.000 31.000\" aria-label=\"ЛЭП3\" role=\"img\"><path d=\"M0.000,25.000 L0.000,0.000 L20.000,0.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,25.000 L0.000,25.000 L0.000,25.000 L0.000,25.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,25.000 L0.000,25.000 L0.000,25.000 L0.000,25.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"25.000\" r=\"0.900\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"20.000\" cy=\"0.000\" r=\"0.900\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master33.xml"
   },
   {
-    "id": "vsdx_лэп2_34",
-    "masterId": "34",
-    "title": "ЛЭП2",
+    "id": "vsdx_лэп4_36",
+    "masterId": "36",
+    "title": "ЛЭП4",
     "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_page_линии_заземление",
+    "libraryPageName": "Линии, заземление",
+    "libraryOrder": 3,
     "widthMm": 40.0,
     "heightMm": 20.0,
     "connectionCount": 2,
@@ -1881,15 +2168,18 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [],
     "preview": "◇",
-    "svgPreview": "<svg viewBox=\"-4.800 -4.800 49.600 29.600\" aria-label=\"ЛЭП2\" role=\"img\"><path d=\"M0.000,20.000 L20.000,20.000 L20.000,0.000 L40.000,0.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,20.000 L0.000,20.000 L0.000,20.000 L0.000,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,20.000 L0.000,20.000 L0.000,20.000 L0.000,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"20.000\" r=\"0.900\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"40.000\" cy=\"0.000\" r=\"0.900\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
+    "svgPreview": "<svg viewBox=\"-4.800 -4.800 49.600 29.600\" aria-label=\"ЛЭП4\" role=\"img\"><path d=\"M0.000,20.000 L20.000,20.000 L20.000,0.000 L40.000,0.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,20.000 L0.000,20.000 L0.000,20.000 L0.000,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,20.000 L0.000,20.000 L0.000,20.000 L0.000,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"20.000\" r=\"0.900\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"40.000\" cy=\"0.000\" r=\"0.900\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master34.xml"
   },
   {
-    "id": "vsdx_лэп3_35",
-    "masterId": "35",
-    "title": "ЛЭП3",
+    "id": "vsdx_лэп5_37",
+    "masterId": "37",
+    "title": "ЛЭП5",
     "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_page_линии_заземление",
+    "libraryPageName": "Линии, заземление",
+    "libraryOrder": 3,
     "widthMm": 30.0,
     "heightMm": 25.0,
     "connectionCount": 2,
@@ -1924,15 +2214,18 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [],
     "preview": "◇",
-    "svgPreview": "<svg viewBox=\"-3.600 -3.600 37.200 32.200\" aria-label=\"ЛЭП3\" role=\"img\"><path d=\"M0.000,25.000 L0.000,10.656 L30.000,10.656 L30.000,0.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,25.000 L0.000,25.000 L0.000,25.000 L0.000,25.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,25.000 L0.000,25.000 L0.000,25.000 L0.000,25.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"25.000\" r=\"1.125\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"30.000\" cy=\"0.000\" r=\"1.125\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
+    "svgPreview": "<svg viewBox=\"-3.600 -3.600 37.200 32.200\" aria-label=\"ЛЭП5\" role=\"img\"><path d=\"M0.000,25.000 L0.000,10.656 L30.000,10.656 L30.000,0.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,25.000 L0.000,25.000 L0.000,25.000 L0.000,25.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,25.000 L0.000,25.000 L0.000,25.000 L0.000,25.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"25.000\" r=\"1.125\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"30.000\" cy=\"0.000\" r=\"1.125\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master35.xml"
   },
   {
-    "id": "vsdx_лэп4_36",
-    "masterId": "36",
-    "title": "ЛЭП4",
+    "id": "vsdx_пересечение_лэп_38",
+    "masterId": "38",
+    "title": "Пересечение ЛЭП",
     "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_page_линии_заземление",
+    "libraryPageName": "Линии, заземление",
+    "libraryOrder": 3,
     "widthMm": 10.0,
     "heightMm": 0.0,
     "connectionCount": 2,
@@ -1975,10 +2268,13 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "sourcePath": "visio/masters/master36.xml"
   },
   {
-    "id": "vsdx_лэп5_37",
-    "masterId": "37",
-    "title": "ЛЭП5",
+    "id": "vsdx_соединение_неразборное_39",
+    "masterId": "39",
+    "title": "Соединение неразборное",
     "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_page_линии_заземление",
+    "libraryPageName": "Линии, заземление",
+    "libraryOrder": 3,
     "widthMm": 0.0,
     "heightMm": 0.0,
     "connectionCount": 1,
@@ -2013,10 +2309,13 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "sourcePath": "visio/masters/master37.xml"
   },
   {
-    "id": "vsdx_пересечение_лэп_38",
-    "masterId": "38",
-    "title": "Пересечение ЛЭП",
+    "id": "vsdx_соединение_разборное_40",
+    "masterId": "40",
+    "title": "Соединение разборное",
     "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_page_линии_заземление",
+    "libraryPageName": "Линии, заземление",
+    "libraryOrder": 3,
     "widthMm": 0.0,
     "heightMm": 0.0,
     "connectionCount": 1,
@@ -2051,10 +2350,13 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "sourcePath": "visio/masters/master38.xml"
   },
   {
-    "id": "vsdx_соединение_неразборное_39",
-    "masterId": "39",
-    "title": "Соединение неразборное",
+    "id": "vsdx_связь_с_источником_41",
+    "masterId": "41",
+    "title": "Связь с источником",
     "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_page_линии_заземление",
+    "libraryPageName": "Линии, заземление",
+    "libraryOrder": 3,
     "widthMm": 0.0,
     "heightMm": 15.0,
     "connectionCount": 1,
@@ -2090,10 +2392,13 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "sourcePath": "visio/masters/master39.xml"
   },
   {
-    "id": "vsdx_соединение_разборное_40",
-    "masterId": "40",
-    "title": "Соединение разборное",
+    "id": "vsdx_связь_с_объектом2_42",
+    "masterId": "42",
+    "title": "Связь с объектом2",
     "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_page_линии_заземление",
+    "libraryPageName": "Линии, заземление",
+    "libraryOrder": 3,
     "widthMm": 0.0,
     "heightMm": 15.0,
     "connectionCount": 1,
@@ -2129,10 +2434,13 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "sourcePath": "visio/masters/master40.xml"
   },
   {
-    "id": "vsdx_связь_с_источником_41",
-    "masterId": "41",
-    "title": "Связь с источником",
-    "categoryId": "vsdx_symbols",
+    "id": "vsdx_заземление_43",
+    "masterId": "43",
+    "title": "Заземление",
+    "categoryId": "busbars_lines_grounding",
+    "libraryPageId": "vsdx_page_линии_заземление",
+    "libraryPageName": "Линии, заземление",
+    "libraryOrder": 3,
     "widthMm": 10.0,
     "heightMm": 5.0,
     "connectionCount": 1,
@@ -2160,17 +2468,39 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
         "y": 0.0
       }
     ],
-    "dataFields": [],
-    "preview": "◇",
-    "svgPreview": "<svg viewBox=\"-1.200 -1.200 12.400 7.400\" aria-label=\"Связь с источником\" role=\"img\"><path d=\"M0.000,5.000 L10.000,5.000 L10.000,0.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M13.000,0.000 L7.000,0.000 M11.875,-1.500 L8.125,-1.500 M10.625,-3.000 L9.375,-3.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"5.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
+    "dataFields": [
+      {
+        "id": "voltage_class_id",
+        "label": "Класс напряжения",
+        "type": "voltageClass",
+        "source": "semantic_scaffold"
+      },
+      {
+        "id": "connection_point_count",
+        "label": "Количество точек подключения",
+        "type": "number",
+        "source": "semantic_scaffold"
+      },
+      {
+        "id": "line_type",
+        "label": "Тип линии/шины",
+        "type": "enum",
+        "source": "semantic_scaffold"
+      }
+    ],
+    "preview": "⏚",
+    "svgPreview": "<svg viewBox=\"-1.200 -1.200 12.400 7.400\" aria-label=\"Заземление\" role=\"img\"><path d=\"M0.000,5.000 L10.000,5.000 L10.000,0.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M13.000,0.000 L7.000,0.000 M11.875,-1.500 L8.125,-1.500 M10.625,-3.000 L9.375,-3.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"5.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master41.xml"
   },
   {
-    "id": "vsdx_связь_с_объектом2_42",
-    "masterId": "42",
-    "title": "Связь с объектом2",
-    "categoryId": "vsdx_symbols",
+    "id": "vsdx_заземление1_44",
+    "masterId": "44",
+    "title": "Заземление1",
+    "categoryId": "busbars_lines_grounding",
+    "libraryPageId": "vsdx_page_линии_заземление",
+    "libraryPageName": "Линии, заземление",
+    "libraryOrder": 3,
     "widthMm": 2.5,
     "heightMm": 0.0,
     "connectionCount": 1,
@@ -2201,147 +2531,163 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
         "y": 0.0
       }
     ],
-    "dataFields": [],
-    "preview": "◇",
-    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
+    "dataFields": [
+      {
+        "id": "voltage_class_id",
+        "label": "Класс напряжения",
+        "type": "voltageClass",
+        "source": "semantic_scaffold"
+      },
+      {
+        "id": "connection_point_count",
+        "label": "Количество точек подключения",
+        "type": "number",
+        "source": "semantic_scaffold"
+      },
+      {
+        "id": "line_type",
+        "label": "Тип линии/шины",
+        "type": "enum",
+        "source": "semantic_scaffold"
+      }
+    ],
+    "preview": "⏚",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">⏚</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master42.xml"
-  },
-  {
-    "id": "vsdx_заземление_43",
-    "masterId": "43",
-    "title": "Заземление",
-    "categoryId": "busbars_lines_grounding",
-    "widthMm": 10.0,
-    "heightMm": 0.0,
-    "connectionCount": 2,
-    "shapeCount": 2,
-    "geometrySectionCount": 3,
-    "propertyNames": [],
-    "userCellNames": [
-      "EndX",
-      "EndY",
-      "i",
-      "k",
-      "k_exp",
-      "k_p",
-      "l",
-      "n",
-      "n_exp",
-      "n_p",
-      "name",
-      "np",
-      "r",
-      "r_u",
-      "text"
-    ],
-    "connectionPoints": [
-      {
-        "id": "p1",
-        "x": 0.0,
-        "y": 0.0
-      },
-      {
-        "id": "p2",
-        "x": 10.0,
-        "y": 0.0
-      }
-    ],
-    "dataFields": [
-      {
-        "id": "voltage_class_id",
-        "label": "Класс напряжения",
-        "type": "voltageClass",
-        "source": "semantic_scaffold"
-      },
-      {
-        "id": "connection_point_count",
-        "label": "Количество точек подключения",
-        "type": "number",
-        "source": "semantic_scaffold"
-      },
-      {
-        "id": "line_type",
-        "label": "Тип линии/шины",
-        "type": "enum",
-        "source": "semantic_scaffold"
-      }
-    ],
-    "preview": "⏚",
-    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">⏚</text></svg>",
-    "status": "planned",
-    "sourcePath": "visio/masters/master43.xml"
-  },
-  {
-    "id": "vsdx_заземление1_44",
-    "masterId": "44",
-    "title": "Заземление1",
-    "categoryId": "busbars_lines_grounding",
-    "widthMm": 10.0,
-    "heightMm": 0.0,
-    "connectionCount": 2,
-    "shapeCount": 2,
-    "geometrySectionCount": 3,
-    "propertyNames": [],
-    "userCellNames": [
-      "EndX",
-      "EndY",
-      "i",
-      "k",
-      "k_exp",
-      "k_p",
-      "l",
-      "n",
-      "n_exp",
-      "n_p",
-      "name",
-      "np",
-      "r",
-      "r_u",
-      "text"
-    ],
-    "connectionPoints": [
-      {
-        "id": "p1",
-        "x": 0.0,
-        "y": 0.0
-      },
-      {
-        "id": "p2",
-        "x": 10.0,
-        "y": 0.0
-      }
-    ],
-    "dataFields": [
-      {
-        "id": "voltage_class_id",
-        "label": "Класс напряжения",
-        "type": "voltageClass",
-        "source": "semantic_scaffold"
-      },
-      {
-        "id": "connection_point_count",
-        "label": "Количество точек подключения",
-        "type": "number",
-        "source": "semantic_scaffold"
-      },
-      {
-        "id": "line_type",
-        "label": "Тип линии/шины",
-        "type": "enum",
-        "source": "semantic_scaffold"
-      }
-    ],
-    "preview": "⏚",
-    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">⏚</text></svg>",
-    "status": "planned",
-    "sourcePath": "visio/masters/master44.xml"
   },
   {
     "id": "vsdx_предохранитель_плавкий_45",
     "masterId": "45",
     "title": "Предохранитель плавкий",
     "categoryId": "fuses",
+    "libraryPageId": "vsdx_page_предохранители",
+    "libraryPageName": "Предохранители",
+    "libraryOrder": 4,
+    "widthMm": 10.0,
+    "heightMm": 0.0,
+    "connectionCount": 2,
+    "shapeCount": 2,
+    "geometrySectionCount": 3,
+    "propertyNames": [],
+    "userCellNames": [
+      "EndX",
+      "EndY",
+      "i",
+      "k",
+      "k_exp",
+      "k_p",
+      "l",
+      "n",
+      "n_exp",
+      "n_p",
+      "name",
+      "np",
+      "r",
+      "r_u",
+      "text"
+    ],
+    "connectionPoints": [
+      {
+        "id": "p1",
+        "x": 0.0,
+        "y": 0.0
+      },
+      {
+        "id": "p2",
+        "x": 10.0,
+        "y": 0.0
+      }
+    ],
+    "dataFields": [
+      {
+        "id": "rated_current_a",
+        "label": "Номинальный ток, А",
+        "type": "number",
+        "source": "semantic_scaffold"
+      },
+      {
+        "id": "fuse_type",
+        "label": "Тип предохранителя",
+        "type": "enum",
+        "source": "semantic_scaffold"
+      }
+    ],
+    "preview": "⌁",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">⌁</text></svg>",
+    "status": "planned",
+    "sourcePath": "visio/masters/master43.xml"
+  },
+  {
+    "id": "vsdx_предохранитель_46",
+    "masterId": "46",
+    "title": "Предохранитель",
+    "categoryId": "fuses",
+    "libraryPageId": "vsdx_page_предохранители",
+    "libraryPageName": "Предохранители",
+    "libraryOrder": 4,
+    "widthMm": 10.0,
+    "heightMm": 0.0,
+    "connectionCount": 2,
+    "shapeCount": 2,
+    "geometrySectionCount": 3,
+    "propertyNames": [],
+    "userCellNames": [
+      "EndX",
+      "EndY",
+      "i",
+      "k",
+      "k_exp",
+      "k_p",
+      "l",
+      "n",
+      "n_exp",
+      "n_p",
+      "name",
+      "np",
+      "r",
+      "r_u",
+      "text"
+    ],
+    "connectionPoints": [
+      {
+        "id": "p1",
+        "x": 0.0,
+        "y": 0.0
+      },
+      {
+        "id": "p2",
+        "x": 10.0,
+        "y": 0.0
+      }
+    ],
+    "dataFields": [
+      {
+        "id": "rated_current_a",
+        "label": "Номинальный ток, А",
+        "type": "number",
+        "source": "semantic_scaffold"
+      },
+      {
+        "id": "fuse_type",
+        "label": "Тип предохранителя",
+        "type": "enum",
+        "source": "semantic_scaffold"
+      }
+    ],
+    "preview": "⌁",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">⌁</text></svg>",
+    "status": "planned",
+    "sourcePath": "visio/masters/master44.xml"
+  },
+  {
+    "id": "vsdx_предохранитель_инерционно_плавкий_47",
+    "masterId": "47",
+    "title": "Предохранитель инерционно_плавкий",
+    "categoryId": "fuses",
+    "libraryPageId": "vsdx_page_предохранители",
+    "libraryPageName": "Предохранители",
+    "libraryOrder": 4,
     "widthMm": 10.0,
     "heightMm": 0.0,
     "connectionCount": 2,
@@ -2397,10 +2743,13 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "sourcePath": "visio/masters/master45.xml"
   },
   {
-    "id": "vsdx_предохранитель_46",
-    "masterId": "46",
-    "title": "Предохранитель",
+    "id": "vsdx_предохранитель_пробивной_48",
+    "masterId": "48",
+    "title": "Предохранитель пробивной",
     "categoryId": "fuses",
+    "libraryPageId": "vsdx_page_предохранители",
+    "libraryPageName": "Предохранители",
+    "libraryOrder": 4,
     "widthMm": 10.0,
     "heightMm": 0.0,
     "connectionCount": 2,
@@ -2456,130 +2805,163 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "sourcePath": "visio/masters/master46.xml"
   },
   {
-    "id": "vsdx_предохранитель_инерционно_плавкий_47",
-    "masterId": "47",
-    "title": "Предохранитель инерционно_плавкий",
-    "categoryId": "fuses",
-    "widthMm": 25.0,
-    "heightMm": 0.0,
-    "connectionCount": 2,
-    "shapeCount": 3,
-    "geometrySectionCount": 7,
-    "propertyNames": [],
-    "userCellNames": [
-      "EndX",
-      "EndY",
-      "i",
-      "k",
-      "k_exp",
-      "k_p",
-      "l",
-      "n",
-      "n_exp",
-      "n_p",
-      "name",
-      "np",
-      "p",
-      "r",
-      "r_u",
-      "text"
-    ],
-    "connectionPoints": [
-      {
-        "id": "p1",
-        "x": 0.0,
-        "y": 0.0
-      },
-      {
-        "id": "p2",
-        "x": 25.0,
-        "y": 0.0
-      }
-    ],
-    "dataFields": [
-      {
-        "id": "rated_current_a",
-        "label": "Номинальный ток, А",
-        "type": "number",
-        "source": "semantic_scaffold"
-      },
-      {
-        "id": "fuse_type",
-        "label": "Тип предохранителя",
-        "type": "enum",
-        "source": "semantic_scaffold"
-      }
-    ],
-    "preview": "⌁",
-    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">⌁</text></svg>",
-    "status": "planned",
-    "sourcePath": "visio/masters/master47.xml"
-  },
-  {
-    "id": "vsdx_предохранитель_пробивной_48",
-    "masterId": "48",
-    "title": "Предохранитель пробивной",
-    "categoryId": "fuses",
-    "widthMm": 25.0,
-    "heightMm": 0.0,
-    "connectionCount": 2,
-    "shapeCount": 3,
-    "geometrySectionCount": 7,
-    "propertyNames": [],
-    "userCellNames": [
-      "EndX",
-      "EndY",
-      "i",
-      "k",
-      "k_exp",
-      "k_p",
-      "l",
-      "n",
-      "n_exp",
-      "n_p",
-      "name",
-      "np",
-      "p",
-      "r",
-      "r_u",
-      "text"
-    ],
-    "connectionPoints": [
-      {
-        "id": "p1",
-        "x": 0.0,
-        "y": 0.0
-      },
-      {
-        "id": "p2",
-        "x": 25.0,
-        "y": 0.0
-      }
-    ],
-    "dataFields": [
-      {
-        "id": "rated_current_a",
-        "label": "Номинальный ток, А",
-        "type": "number",
-        "source": "semantic_scaffold"
-      },
-      {
-        "id": "fuse_type",
-        "label": "Тип предохранителя",
-        "type": "enum",
-        "source": "semantic_scaffold"
-      }
-    ],
-    "preview": "⌁",
-    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">⌁</text></svg>",
-    "status": "planned",
-    "sourcePath": "visio/masters/master48.xml"
-  },
-  {
     "id": "vsdx_предохранитель_плавкий_на_тележке_49",
     "masterId": "49",
     "title": "Предохранитель плавкий на тележке",
     "categoryId": "switching",
+    "libraryPageId": "vsdx_page_предохранители",
+    "libraryPageName": "Предохранители",
+    "libraryOrder": 4,
+    "widthMm": 25.0,
+    "heightMm": 0.0,
+    "connectionCount": 2,
+    "shapeCount": 3,
+    "geometrySectionCount": 7,
+    "propertyNames": [],
+    "userCellNames": [
+      "EndX",
+      "EndY",
+      "i",
+      "k",
+      "k_exp",
+      "k_p",
+      "l",
+      "n",
+      "n_exp",
+      "n_p",
+      "name",
+      "np",
+      "p",
+      "r",
+      "r_u",
+      "text"
+    ],
+    "connectionPoints": [
+      {
+        "id": "p1",
+        "x": 0.0,
+        "y": 0.0
+      },
+      {
+        "id": "p2",
+        "x": 25.0,
+        "y": 0.0
+      }
+    ],
+    "dataFields": [
+      {
+        "id": "switch_state",
+        "label": "Положение",
+        "type": "enum",
+        "source": "semantic_scaffold"
+      },
+      {
+        "id": "truck_position",
+        "label": "Положение тележки",
+        "type": "enum",
+        "source": "semantic_scaffold"
+      },
+      {
+        "id": "control_mode",
+        "label": "Режим управления",
+        "type": "enum",
+        "source": "semantic_scaffold"
+      },
+      {
+        "id": "connection_control_enabled",
+        "label": "Контроль соединений",
+        "type": "boolean",
+        "source": "semantic_scaffold"
+      }
+    ],
+    "preview": "□",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">□</text></svg>",
+    "status": "planned",
+    "sourcePath": "visio/masters/master47.xml"
+  },
+  {
+    "id": "vsdx_предохранитель_на_тележке_50",
+    "masterId": "50",
+    "title": "Предохранитель на тележке",
+    "categoryId": "switching",
+    "libraryPageId": "vsdx_page_предохранители",
+    "libraryPageName": "Предохранители",
+    "libraryOrder": 4,
+    "widthMm": 25.0,
+    "heightMm": 0.0,
+    "connectionCount": 2,
+    "shapeCount": 3,
+    "geometrySectionCount": 7,
+    "propertyNames": [],
+    "userCellNames": [
+      "EndX",
+      "EndY",
+      "i",
+      "k",
+      "k_exp",
+      "k_p",
+      "l",
+      "n",
+      "n_exp",
+      "n_p",
+      "name",
+      "np",
+      "p",
+      "r",
+      "r_u",
+      "text"
+    ],
+    "connectionPoints": [
+      {
+        "id": "p1",
+        "x": 0.0,
+        "y": 0.0
+      },
+      {
+        "id": "p2",
+        "x": 25.0,
+        "y": 0.0
+      }
+    ],
+    "dataFields": [
+      {
+        "id": "switch_state",
+        "label": "Положение",
+        "type": "enum",
+        "source": "semantic_scaffold"
+      },
+      {
+        "id": "truck_position",
+        "label": "Положение тележки",
+        "type": "enum",
+        "source": "semantic_scaffold"
+      },
+      {
+        "id": "control_mode",
+        "label": "Режим управления",
+        "type": "enum",
+        "source": "semantic_scaffold"
+      },
+      {
+        "id": "connection_control_enabled",
+        "label": "Контроль соединений",
+        "type": "boolean",
+        "source": "semantic_scaffold"
+      }
+    ],
+    "preview": "□",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">□</text></svg>",
+    "status": "planned",
+    "sourcePath": "visio/masters/master48.xml"
+  },
+  {
+    "id": "vsdx_предохранитель_инерционно_плавкий_на_тележке_51",
+    "masterId": "51",
+    "title": "Предохранитель инерционно_плавкий на тележке",
+    "categoryId": "switching",
+    "libraryPageId": "vsdx_page_предохранители",
+    "libraryPageName": "Предохранители",
+    "libraryOrder": 4,
     "widthMm": 25.0,
     "heightMm": 0.0,
     "connectionCount": 2,
@@ -2648,10 +3030,13 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "sourcePath": "visio/masters/master49.xml"
   },
   {
-    "id": "vsdx_предохранитель_на_тележке_50",
-    "masterId": "50",
-    "title": "Предохранитель на тележке",
+    "id": "vsdx_разъединитель_предохранитель_52",
+    "masterId": "52",
+    "title": "Разъединитель_предохранитель",
     "categoryId": "switching",
+    "libraryPageId": "vsdx_page_предохранители",
+    "libraryPageName": "Предохранители",
+    "libraryOrder": 4,
     "widthMm": 15.0,
     "heightMm": 0.0,
     "connectionCount": 2,
@@ -2713,16 +3098,19 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
         "source": "semantic_scaffold"
       }
     ],
-    "preview": "□",
-    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">□</text></svg>",
+    "preview": "╱",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">╱</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master50.xml"
   },
   {
-    "id": "vsdx_предохранитель_инерционно_плавкий_на_тележке_51",
-    "masterId": "51",
-    "title": "Предохранитель инерционно_плавкий на тележке",
+    "id": "vsdx_выкатная_тележка_разъединителя_предохранителя_53",
+    "masterId": "53",
+    "title": "Выкатная тележка разъединителя_предохранителя",
     "categoryId": "switching",
+    "libraryPageId": "vsdx_page_предохранители",
+    "libraryPageName": "Предохранители",
+    "libraryOrder": 4,
     "widthMm": 25.0,
     "heightMm": 0.0,
     "connectionCount": 2,
@@ -2785,16 +3173,19 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
         "source": "semantic_scaffold"
       }
     ],
-    "preview": "□",
-    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">□</text></svg>",
+    "preview": "╱",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">╱</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master51.xml"
   },
   {
-    "id": "vsdx_разъединитель_предохранитель_52",
-    "masterId": "52",
-    "title": "Разъединитель_предохранитель",
-    "categoryId": "switching",
+    "id": "vsdx_разрядник_54",
+    "masterId": "54",
+    "title": "Разрядник",
+    "categoryId": "surge_arresters",
+    "libraryPageId": "vsdx_page_разрядники_и_опн",
+    "libraryPageName": "Разрядники и ОПН",
+    "libraryOrder": 5,
     "widthMm": 10.0,
     "heightMm": 0.0,
     "connectionCount": 2,
@@ -2832,40 +3223,31 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [
       {
-        "id": "switch_state",
-        "label": "Положение",
-        "type": "enum",
+        "id": "rated_voltage_kv",
+        "label": "Номинальное напряжение, кВ",
+        "type": "number",
         "source": "semantic_scaffold"
       },
       {
-        "id": "truck_position",
-        "label": "Положение тележки",
+        "id": "arrester_type",
+        "label": "Тип ОПН/разрядника",
         "type": "enum",
-        "source": "semantic_scaffold"
-      },
-      {
-        "id": "control_mode",
-        "label": "Режим управления",
-        "type": "enum",
-        "source": "semantic_scaffold"
-      },
-      {
-        "id": "connection_control_enabled",
-        "label": "Контроль соединений",
-        "type": "boolean",
         "source": "semantic_scaffold"
       }
     ],
-    "preview": "╱",
-    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">╱</text></svg>",
+    "preview": "⚡",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">⚡</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master52.xml"
   },
   {
-    "id": "vsdx_выкатная_тележка_разъединителя_предохранителя_53",
-    "masterId": "53",
-    "title": "Выкатная тележка разъединителя_предохранителя",
-    "categoryId": "switching",
+    "id": "vsdx_разрядник_трубчатый_55",
+    "masterId": "55",
+    "title": "Разрядник трубчатый",
+    "categoryId": "surge_arresters",
+    "libraryPageId": "vsdx_page_разрядники_и_опн",
+    "libraryPageName": "Разрядники и ОПН",
+    "libraryOrder": 5,
     "widthMm": 10.0,
     "heightMm": 0.0,
     "connectionCount": 2,
@@ -2903,40 +3285,31 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [
       {
-        "id": "switch_state",
-        "label": "Положение",
-        "type": "enum",
+        "id": "rated_voltage_kv",
+        "label": "Номинальное напряжение, кВ",
+        "type": "number",
         "source": "semantic_scaffold"
       },
       {
-        "id": "truck_position",
-        "label": "Положение тележки",
+        "id": "arrester_type",
+        "label": "Тип ОПН/разрядника",
         "type": "enum",
-        "source": "semantic_scaffold"
-      },
-      {
-        "id": "control_mode",
-        "label": "Режим управления",
-        "type": "enum",
-        "source": "semantic_scaffold"
-      },
-      {
-        "id": "connection_control_enabled",
-        "label": "Контроль соединений",
-        "type": "boolean",
         "source": "semantic_scaffold"
       }
     ],
-    "preview": "╱",
-    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">╱</text></svg>",
+    "preview": "⚡",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">⚡</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master53.xml"
   },
   {
-    "id": "vsdx_разрядник_54",
-    "masterId": "54",
-    "title": "Разрядник",
+    "id": "vsdx_разрядник_шаровой_56",
+    "masterId": "56",
+    "title": "Разрядник шаровой",
     "categoryId": "surge_arresters",
+    "libraryPageId": "vsdx_page_разрядники_и_опн",
+    "libraryPageName": "Разрядники и ОПН",
+    "libraryOrder": 5,
     "widthMm": 10.0,
     "heightMm": 0.0,
     "connectionCount": 2,
@@ -2992,10 +3365,13 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "sourcePath": "visio/masters/master54.xml"
   },
   {
-    "id": "vsdx_разрядник_трубчатый_55",
-    "masterId": "55",
-    "title": "Разрядник трубчатый",
+    "id": "vsdx_разрядник_роговой_57",
+    "masterId": "57",
+    "title": "Разрядник роговой",
     "categoryId": "surge_arresters",
+    "libraryPageId": "vsdx_page_разрядники_и_опн",
+    "libraryPageName": "Разрядники и ОПН",
+    "libraryOrder": 5,
     "widthMm": 10.0,
     "heightMm": 0.0,
     "connectionCount": 2,
@@ -3051,10 +3427,13 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "sourcePath": "visio/masters/master55.xml"
   },
   {
-    "id": "vsdx_разрядник_шаровой_56",
-    "masterId": "56",
-    "title": "Разрядник шаровой",
-    "categoryId": "surge_arresters",
+    "id": "vsdx_искровой_промежуток_58",
+    "masterId": "58",
+    "title": "Искровой промежуток",
+    "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_page_разрядники_и_опн",
+    "libraryPageName": "Разрядники и ОПН",
+    "libraryOrder": 5,
     "widthMm": 10.0,
     "heightMm": 0.0,
     "connectionCount": 2,
@@ -3090,30 +3469,20 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
         "y": 0.0
       }
     ],
-    "dataFields": [
-      {
-        "id": "rated_voltage_kv",
-        "label": "Номинальное напряжение, кВ",
-        "type": "number",
-        "source": "semantic_scaffold"
-      },
-      {
-        "id": "arrester_type",
-        "label": "Тип ОПН/разрядника",
-        "type": "enum",
-        "source": "semantic_scaffold"
-      }
-    ],
-    "preview": "⚡",
-    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">⚡</text></svg>",
+    "dataFields": [],
+    "preview": "◇",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master56.xml"
   },
   {
-    "id": "vsdx_разрядник_роговой_57",
-    "masterId": "57",
-    "title": "Разрядник роговой",
+    "id": "vsdx_разрядник_вентильный_и_магнитовентильный_59",
+    "masterId": "59",
+    "title": "Разрядник вентильный и магнитовентильный",
     "categoryId": "surge_arresters",
+    "libraryPageId": "vsdx_page_разрядники_и_опн",
+    "libraryPageName": "Разрядники и ОПН",
+    "libraryOrder": 5,
     "widthMm": 10.0,
     "heightMm": 0.0,
     "connectionCount": 2,
@@ -3169,10 +3538,13 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "sourcePath": "visio/masters/master57.xml"
   },
   {
-    "id": "vsdx_искровой_промежуток_58",
-    "masterId": "58",
-    "title": "Искровой промежуток",
-    "categoryId": "vsdx_symbols",
+    "id": "vsdx_разрядник_вентильный_60",
+    "masterId": "60",
+    "title": "Разрядник вентильный",
+    "categoryId": "surge_arresters",
+    "libraryPageId": "vsdx_page_разрядники_и_опн",
+    "libraryPageName": "Разрядники и ОПН",
+    "libraryOrder": 5,
     "widthMm": 10.0,
     "heightMm": 0.0,
     "connectionCount": 2,
@@ -3208,17 +3580,33 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
         "y": 0.0
       }
     ],
-    "dataFields": [],
-    "preview": "◇",
-    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
+    "dataFields": [
+      {
+        "id": "rated_voltage_kv",
+        "label": "Номинальное напряжение, кВ",
+        "type": "number",
+        "source": "semantic_scaffold"
+      },
+      {
+        "id": "arrester_type",
+        "label": "Тип ОПН/разрядника",
+        "type": "enum",
+        "source": "semantic_scaffold"
+      }
+    ],
+    "preview": "⚡",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">⚡</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master58.xml"
   },
   {
-    "id": "vsdx_разрядник_вентильный_и_магнитовентильный_59",
-    "masterId": "59",
-    "title": "Разрядник вентильный и магнитовентильный",
+    "id": "vsdx_опн_61",
+    "masterId": "61",
+    "title": "ОПН",
     "categoryId": "surge_arresters",
+    "libraryPageId": "vsdx_page_разрядники_и_опн",
+    "libraryPageName": "Разрядники и ОПН",
+    "libraryOrder": 5,
     "widthMm": 10.0,
     "heightMm": 0.0,
     "connectionCount": 2,
@@ -3274,10 +3662,13 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "sourcePath": "visio/masters/master59.xml"
   },
   {
-    "id": "vsdx_разрядник_вентильный_60",
-    "masterId": "60",
-    "title": "Разрядник вентильный",
-    "categoryId": "surge_arresters",
+    "id": "vsdx_разрядник_с_заземлением_62",
+    "masterId": "62",
+    "title": "Разрядник с заземлением",
+    "categoryId": "busbars_lines_grounding",
+    "libraryPageId": "vsdx_page_разрядники_и_опн",
+    "libraryPageName": "Разрядники и ОПН",
+    "libraryOrder": 5,
     "widthMm": 12.5,
     "heightMm": 0.0,
     "connectionCount": 1,
@@ -3310,28 +3701,37 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [
       {
-        "id": "rated_voltage_kv",
-        "label": "Номинальное напряжение, кВ",
+        "id": "voltage_class_id",
+        "label": "Класс напряжения",
+        "type": "voltageClass",
+        "source": "semantic_scaffold"
+      },
+      {
+        "id": "connection_point_count",
+        "label": "Количество точек подключения",
         "type": "number",
         "source": "semantic_scaffold"
       },
       {
-        "id": "arrester_type",
-        "label": "Тип ОПН/разрядника",
+        "id": "line_type",
+        "label": "Тип линии/шины",
         "type": "enum",
         "source": "semantic_scaffold"
       }
     ],
-    "preview": "⚡",
-    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">⚡</text></svg>",
+    "preview": "⏚",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">⏚</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master60.xml"
   },
   {
-    "id": "vsdx_опн_61",
-    "masterId": "61",
-    "title": "ОПН",
-    "categoryId": "surge_arresters",
+    "id": "vsdx_разрядник_трубчатый_с_заземлением_63",
+    "masterId": "63",
+    "title": "Разрядник трубчатый с заземлением",
+    "categoryId": "busbars_lines_grounding",
+    "libraryPageId": "vsdx_page_разрядники_и_опн",
+    "libraryPageName": "Разрядники и ОПН",
+    "libraryOrder": 5,
     "widthMm": 12.5,
     "heightMm": 0.0,
     "connectionCount": 1,
@@ -3364,28 +3764,37 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [
       {
-        "id": "rated_voltage_kv",
-        "label": "Номинальное напряжение, кВ",
+        "id": "voltage_class_id",
+        "label": "Класс напряжения",
+        "type": "voltageClass",
+        "source": "semantic_scaffold"
+      },
+      {
+        "id": "connection_point_count",
+        "label": "Количество точек подключения",
         "type": "number",
         "source": "semantic_scaffold"
       },
       {
-        "id": "arrester_type",
-        "label": "Тип ОПН/разрядника",
+        "id": "line_type",
+        "label": "Тип линии/шины",
         "type": "enum",
         "source": "semantic_scaffold"
       }
     ],
-    "preview": "⚡",
-    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">⚡</text></svg>",
+    "preview": "⏚",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">⏚</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master61.xml"
   },
   {
-    "id": "vsdx_разрядник_с_заземлением_62",
-    "masterId": "62",
-    "title": "Разрядник с заземлением",
+    "id": "vsdx_разрядник_шаровой_с_заземлением_64",
+    "masterId": "64",
+    "title": "Разрядник шаровой с заземлением",
     "categoryId": "busbars_lines_grounding",
+    "libraryPageId": "vsdx_page_разрядники_и_опн",
+    "libraryPageName": "Разрядники и ОПН",
+    "libraryOrder": 5,
     "widthMm": 12.5,
     "heightMm": 0.0,
     "connectionCount": 1,
@@ -3442,10 +3851,13 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "sourcePath": "visio/masters/master62.xml"
   },
   {
-    "id": "vsdx_разрядник_трубчатый_с_заземлением_63",
-    "masterId": "63",
-    "title": "Разрядник трубчатый с заземлением",
+    "id": "vsdx_разрядник_роговой_с_заземлением_65",
+    "masterId": "65",
+    "title": "Разрядник роговой с заземлением",
     "categoryId": "busbars_lines_grounding",
+    "libraryPageId": "vsdx_page_разрядники_и_опн",
+    "libraryPageName": "Разрядники и ОПН",
+    "libraryOrder": 5,
     "widthMm": 12.5,
     "heightMm": 0.0,
     "connectionCount": 1,
@@ -3502,10 +3914,13 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "sourcePath": "visio/masters/master63.xml"
   },
   {
-    "id": "vsdx_разрядник_шаровой_с_заземлением_64",
-    "masterId": "64",
-    "title": "Разрядник шаровой с заземлением",
+    "id": "vsdx_искровой_промежуток_с_заземлением_66",
+    "masterId": "66",
+    "title": "Искровой промежуток с заземлением",
     "categoryId": "busbars_lines_grounding",
+    "libraryPageId": "vsdx_page_разрядники_и_опн",
+    "libraryPageName": "Разрядники и ОПН",
+    "libraryOrder": 5,
     "widthMm": 12.5,
     "heightMm": 0.0,
     "connectionCount": 1,
@@ -3562,10 +3977,13 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "sourcePath": "visio/masters/master64.xml"
   },
   {
-    "id": "vsdx_разрядник_роговой_с_заземлением_65",
-    "masterId": "65",
-    "title": "Разрядник роговой с заземлением",
+    "id": "vsdx_разрядник_вентильный_и_магнитовентильный_с_заземлением_67",
+    "masterId": "67",
+    "title": "Разрядник вентильный и магнитовентильный с заземлением",
     "categoryId": "busbars_lines_grounding",
+    "libraryPageId": "vsdx_page_разрядники_и_опн",
+    "libraryPageName": "Разрядники и ОПН",
+    "libraryOrder": 5,
     "widthMm": 12.5,
     "heightMm": 0.0,
     "connectionCount": 1,
@@ -3622,10 +4040,13 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "sourcePath": "visio/masters/master65.xml"
   },
   {
-    "id": "vsdx_искровой_промежуток_с_заземлением_66",
-    "masterId": "66",
-    "title": "Искровой промежуток с заземлением",
+    "id": "vsdx_разрядник_вентильный_с_заземлением_68",
+    "masterId": "68",
+    "title": "Разрядник вентильный с заземлением",
     "categoryId": "busbars_lines_grounding",
+    "libraryPageId": "vsdx_page_разрядники_и_опн",
+    "libraryPageName": "Разрядники и ОПН",
+    "libraryOrder": 5,
     "widthMm": 12.5,
     "heightMm": 0.0,
     "connectionCount": 1,
@@ -3682,10 +4103,13 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "sourcePath": "visio/masters/master66.xml"
   },
   {
-    "id": "vsdx_разрядник_вентильный_и_магнитовентильный_с_заземлением_67",
-    "masterId": "67",
-    "title": "Разрядник вентильный и магнитовентильный с заземлением",
+    "id": "vsdx_опн_с_заземлением_69",
+    "masterId": "69",
+    "title": "ОПН  с заземлением",
     "categoryId": "busbars_lines_grounding",
+    "libraryPageId": "vsdx_page_разрядники_и_опн",
+    "libraryPageName": "Разрядники и ОПН",
+    "libraryOrder": 5,
     "widthMm": 15.0,
     "heightMm": 0.0,
     "connectionCount": 2,
@@ -3747,10 +4171,13 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "sourcePath": "visio/masters/master67.xml"
   },
   {
-    "id": "vsdx_разрядник_вентильный_с_заземлением_68",
-    "masterId": "68",
-    "title": "Разрядник вентильный с заземлением",
-    "categoryId": "busbars_lines_grounding",
+    "id": "vsdx_т2_70",
+    "masterId": "70",
+    "title": "Т2",
+    "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_page_трансформаторы",
+    "libraryPageName": "Трансформаторы",
+    "libraryOrder": 6,
     "widthMm": 30.0,
     "heightMm": 0.0,
     "connectionCount": 4,
@@ -3799,36 +4226,20 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
         "y": 2.886
       }
     ],
-    "dataFields": [
-      {
-        "id": "voltage_class_id",
-        "label": "Класс напряжения",
-        "type": "voltageClass",
-        "source": "semantic_scaffold"
-      },
-      {
-        "id": "connection_point_count",
-        "label": "Количество точек подключения",
-        "type": "number",
-        "source": "semantic_scaffold"
-      },
-      {
-        "id": "line_type",
-        "label": "Тип линии/шины",
-        "type": "enum",
-        "source": "semantic_scaffold"
-      }
-    ],
-    "preview": "⏚",
-    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">⏚</text></svg>",
+    "dataFields": [],
+    "preview": "◇",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master68.xml"
   },
   {
-    "id": "vsdx_опн_с_заземлением_69",
-    "masterId": "69",
-    "title": "ОПН  с заземлением",
-    "categoryId": "busbars_lines_grounding",
+    "id": "vsdx_т3_71",
+    "masterId": "71",
+    "title": "Т3",
+    "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_page_трансформаторы",
+    "libraryPageName": "Трансформаторы",
+    "libraryOrder": 6,
     "widthMm": 30.0,
     "heightMm": 0.0,
     "connectionCount": 6,
@@ -3887,36 +4298,20 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
         "y": 2.886
       }
     ],
-    "dataFields": [
-      {
-        "id": "voltage_class_id",
-        "label": "Класс напряжения",
-        "type": "voltageClass",
-        "source": "semantic_scaffold"
-      },
-      {
-        "id": "connection_point_count",
-        "label": "Количество точек подключения",
-        "type": "number",
-        "source": "semantic_scaffold"
-      },
-      {
-        "id": "line_type",
-        "label": "Тип линии/шины",
-        "type": "enum",
-        "source": "semantic_scaffold"
-      }
-    ],
-    "preview": "⏚",
-    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">⏚</text></svg>",
+    "dataFields": [],
+    "preview": "◇",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master69.xml"
   },
   {
-    "id": "vsdx_т2_70",
-    "masterId": "70",
-    "title": "Т2",
+    "id": "vsdx_т4_72",
+    "masterId": "72",
+    "title": "Т4",
     "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_page_трансформаторы",
+    "libraryPageName": "Трансформаторы",
+    "libraryOrder": 6,
     "widthMm": 30.0,
     "heightMm": 0.0,
     "connectionCount": 8,
@@ -3992,10 +4387,13 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "sourcePath": "visio/masters/master70.xml"
   },
   {
-    "id": "vsdx_т3_71",
-    "masterId": "71",
-    "title": "Т3",
+    "id": "vsdx_т5_73",
+    "masterId": "73",
+    "title": "Т5",
     "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_page_трансформаторы",
+    "libraryPageName": "Трансформаторы",
+    "libraryOrder": 6,
     "widthMm": 30.0,
     "heightMm": 0.0,
     "connectionCount": 10,
@@ -4081,10 +4479,13 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "sourcePath": "visio/masters/master71.xml"
   },
   {
-    "id": "vsdx_т4_72",
-    "masterId": "72",
-    "title": "Т4",
+    "id": "vsdx_ат2_74",
+    "masterId": "74",
+    "title": "АТ2",
     "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_page_трансформаторы",
+    "libraryPageName": "Трансформаторы",
+    "libraryOrder": 6,
     "widthMm": 25.0,
     "heightMm": 0.0,
     "connectionCount": 3,
@@ -4135,10 +4536,13 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "sourcePath": "visio/masters/master72.xml"
   },
   {
-    "id": "vsdx_т5_73",
-    "masterId": "73",
-    "title": "Т5",
+    "id": "vsdx_ат3_75",
+    "masterId": "75",
+    "title": "АТ3",
     "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_page_трансформаторы",
+    "libraryPageName": "Трансформаторы",
+    "libraryOrder": 6,
     "widthMm": 35.0,
     "heightMm": 0.0,
     "connectionCount": 5,
@@ -4199,10 +4603,13 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "sourcePath": "visio/masters/master73.xml"
   },
   {
-    "id": "vsdx_ат2_74",
-    "masterId": "74",
-    "title": "АТ2",
+    "id": "vsdx_ат4_76",
+    "masterId": "76",
+    "title": "АТ4",
     "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_page_трансформаторы",
+    "libraryPageName": "Трансформаторы",
+    "libraryOrder": 6,
     "widthMm": 35.0,
     "heightMm": 0.0,
     "connectionCount": 7,
@@ -4273,10 +4680,13 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "sourcePath": "visio/masters/master74.xml"
   },
   {
-    "id": "vsdx_ат3_75",
-    "masterId": "75",
-    "title": "АТ3",
+    "id": "vsdx_тсн2_77",
+    "masterId": "77",
+    "title": "ТСН2",
     "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_page_трансформаторы",
+    "libraryPageName": "Трансформаторы",
+    "libraryOrder": 6,
     "widthMm": 15.0,
     "heightMm": 0.0,
     "connectionCount": 4,
@@ -4332,10 +4742,13 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "sourcePath": "visio/masters/master75.xml"
   },
   {
-    "id": "vsdx_ат4_76",
-    "masterId": "76",
-    "title": "АТ4",
+    "id": "vsdx_тсн3_78",
+    "masterId": "78",
+    "title": "ТСН3",
     "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_page_трансформаторы",
+    "libraryPageName": "Трансформаторы",
+    "libraryOrder": 6,
     "widthMm": 15.0,
     "heightMm": 0.0,
     "connectionCount": 6,
@@ -4401,10 +4814,13 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "sourcePath": "visio/masters/master76.xml"
   },
   {
-    "id": "vsdx_тсн2_77",
-    "masterId": "77",
-    "title": "ТСН2",
-    "categoryId": "vsdx_symbols",
+    "id": "vsdx_тн2_79",
+    "masterId": "79",
+    "title": "ТН2",
+    "categoryId": "transformers",
+    "libraryPageId": "vsdx_page_трансформаторы",
+    "libraryPageName": "Трансформаторы",
+    "libraryOrder": 6,
     "widthMm": 15.0,
     "heightMm": 0.0,
     "connectionCount": 2,
@@ -4443,17 +4859,63 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
         "y": 1.443
       }
     ],
-    "dataFields": [],
-    "preview": "◇",
-    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
+    "dataFields": [
+      {
+        "id": "winding_count",
+        "label": "Количество обмоток",
+        "type": "number",
+        "source": "semantic_scaffold"
+      },
+      {
+        "id": "primary_voltage_kv",
+        "label": "Напряжение ВН, кВ",
+        "type": "number",
+        "source": "semantic_scaffold"
+      },
+      {
+        "id": "secondary_voltage_kv",
+        "label": "Напряжение НН/СН, кВ",
+        "type": "number",
+        "source": "semantic_scaffold"
+      },
+      {
+        "id": "winding_connection_group",
+        "label": "Схема/группа соединения обмоток",
+        "type": "enum",
+        "source": "semantic_scaffold"
+      },
+      {
+        "id": "neutral_grounding",
+        "label": "Режим нейтрали",
+        "type": "enum",
+        "source": "semantic_scaffold"
+      },
+      {
+        "id": "tap_changer",
+        "label": "РПН/ПБВ",
+        "type": "enum",
+        "source": "semantic_scaffold"
+      },
+      {
+        "id": "metering_secondary",
+        "label": "Измерительная вторичная цепь",
+        "type": "boolean",
+        "source": "semantic_scaffold"
+      }
+    ],
+    "preview": "◎",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◎</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master77.xml"
   },
   {
-    "id": "vsdx_тсн3_78",
-    "masterId": "78",
-    "title": "ТСН3",
-    "categoryId": "vsdx_symbols",
+    "id": "vsdx_тн3_80",
+    "masterId": "80",
+    "title": "ТН3",
+    "categoryId": "transformers",
+    "libraryPageId": "vsdx_page_трансформаторы",
+    "libraryPageName": "Трансформаторы",
+    "libraryOrder": 6,
     "widthMm": 15.0,
     "heightMm": 0.0,
     "connectionCount": 1,
@@ -4486,17 +4948,63 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
         "y": 0.0
       }
     ],
-    "dataFields": [],
-    "preview": "◇",
-    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
+    "dataFields": [
+      {
+        "id": "winding_count",
+        "label": "Количество обмоток",
+        "type": "number",
+        "source": "semantic_scaffold"
+      },
+      {
+        "id": "primary_voltage_kv",
+        "label": "Напряжение ВН, кВ",
+        "type": "number",
+        "source": "semantic_scaffold"
+      },
+      {
+        "id": "secondary_voltage_kv",
+        "label": "Напряжение НН/СН, кВ",
+        "type": "number",
+        "source": "semantic_scaffold"
+      },
+      {
+        "id": "winding_connection_group",
+        "label": "Схема/группа соединения обмоток",
+        "type": "enum",
+        "source": "semantic_scaffold"
+      },
+      {
+        "id": "neutral_grounding",
+        "label": "Режим нейтрали",
+        "type": "enum",
+        "source": "semantic_scaffold"
+      },
+      {
+        "id": "tap_changer",
+        "label": "РПН/ПБВ",
+        "type": "enum",
+        "source": "semantic_scaffold"
+      },
+      {
+        "id": "metering_secondary",
+        "label": "Измерительная вторичная цепь",
+        "type": "boolean",
+        "source": "semantic_scaffold"
+      }
+    ],
+    "preview": "◎",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◎</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master78.xml"
   },
   {
-    "id": "vsdx_тн2_79",
-    "masterId": "79",
-    "title": "ТН2",
+    "id": "vsdx_тн4_81",
+    "masterId": "81",
+    "title": "ТН4",
     "categoryId": "transformers",
+    "libraryPageId": "vsdx_page_трансформаторы",
+    "libraryPageName": "Трансформаторы",
+    "libraryOrder": 6,
     "widthMm": 15.0,
     "heightMm": 0.0,
     "connectionCount": 1,
@@ -4579,10 +5087,13 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "sourcePath": "visio/masters/master79.xml"
   },
   {
-    "id": "vsdx_тн3_80",
-    "masterId": "80",
-    "title": "ТН3",
+    "id": "vsdx_тт_82",
+    "masterId": "82",
+    "title": "ТТ",
     "categoryId": "transformers",
+    "libraryPageId": "vsdx_page_трансформаторы",
+    "libraryPageName": "Трансформаторы",
+    "libraryOrder": 6,
     "widthMm": 10.0,
     "heightMm": 0.0,
     "connectionCount": 2,
@@ -4656,9 +5167,9 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
         "source": "semantic_scaffold"
       },
       {
-        "id": "metering_secondary",
-        "label": "Измерительная вторичная цепь",
-        "type": "boolean",
+        "id": "ratio",
+        "label": "Коэффициент трансформации",
+        "type": "string",
         "source": "semantic_scaffold"
       }
     ],
@@ -4668,10 +5179,13 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "sourcePath": "visio/masters/master80.xml"
   },
   {
-    "id": "vsdx_тн4_81",
-    "masterId": "81",
-    "title": "ТН4",
+    "id": "vsdx_тт2_83",
+    "masterId": "83",
+    "title": "ТТ2",
     "categoryId": "transformers",
+    "libraryPageId": "vsdx_page_трансформаторы",
+    "libraryPageName": "Трансформаторы",
+    "libraryOrder": 6,
     "widthMm": 20.0,
     "heightMm": 0.0,
     "connectionCount": 2,
@@ -4745,9 +5259,9 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
         "source": "semantic_scaffold"
       },
       {
-        "id": "metering_secondary",
-        "label": "Измерительная вторичная цепь",
-        "type": "boolean",
+        "id": "ratio",
+        "label": "Коэффициент трансформации",
+        "type": "string",
         "source": "semantic_scaffold"
       }
     ],
@@ -4757,10 +5271,13 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "sourcePath": "visio/masters/master81.xml"
   },
   {
-    "id": "vsdx_тт_82",
-    "masterId": "82",
-    "title": "ТТ",
-    "categoryId": "transformers",
+    "id": "vsdx_бустер_84",
+    "masterId": "84",
+    "title": "Бустер",
+    "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_page_трансформаторы",
+    "libraryPageName": "Трансформаторы",
+    "libraryOrder": 6,
     "widthMm": 10.0,
     "heightMm": 0.0,
     "connectionCount": 3,
@@ -4804,60 +5321,20 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
         "y": 1.443
       }
     ],
-    "dataFields": [
-      {
-        "id": "winding_count",
-        "label": "Количество обмоток",
-        "type": "number",
-        "source": "semantic_scaffold"
-      },
-      {
-        "id": "primary_voltage_kv",
-        "label": "Напряжение ВН, кВ",
-        "type": "number",
-        "source": "semantic_scaffold"
-      },
-      {
-        "id": "secondary_voltage_kv",
-        "label": "Напряжение НН/СН, кВ",
-        "type": "number",
-        "source": "semantic_scaffold"
-      },
-      {
-        "id": "winding_connection_group",
-        "label": "Схема/группа соединения обмоток",
-        "type": "enum",
-        "source": "semantic_scaffold"
-      },
-      {
-        "id": "neutral_grounding",
-        "label": "Режим нейтрали",
-        "type": "enum",
-        "source": "semantic_scaffold"
-      },
-      {
-        "id": "tap_changer",
-        "label": "РПН/ПБВ",
-        "type": "enum",
-        "source": "semantic_scaffold"
-      },
-      {
-        "id": "ratio",
-        "label": "Коэффициент трансформации",
-        "type": "string",
-        "source": "semantic_scaffold"
-      }
-    ],
-    "preview": "◎",
-    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◎</text></svg>",
+    "dataFields": [],
+    "preview": "◇",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master82.xml"
   },
   {
-    "id": "vsdx_тт2_83",
-    "masterId": "83",
-    "title": "ТТ2",
+    "id": "vsdx_тт_для_лэп_85",
+    "masterId": "85",
+    "title": "ТТ для ЛЭП",
     "categoryId": "transformers",
+    "libraryPageId": "vsdx_page_трансформаторы",
+    "libraryPageName": "Трансформаторы",
+    "libraryOrder": 6,
     "widthMm": 10.0,
     "heightMm": 0.0,
     "connectionCount": 2,
@@ -4943,61 +5420,18 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "sourcePath": "visio/masters/master83.xml"
   },
   {
-    "id": "vsdx_бустер_84",
-    "masterId": "84",
-    "title": "Бустер",
-    "categoryId": "vsdx_symbols",
+    "id": "vsdx_тт2_для_лэп_86",
+    "masterId": "86",
+    "title": "ТТ2 для ЛЭП",
+    "categoryId": "transformers",
+    "libraryPageId": "vsdx_page_трансформаторы",
+    "libraryPageName": "Трансформаторы",
+    "libraryOrder": 6,
     "widthMm": 20.0,
     "heightMm": 0.0,
     "connectionCount": 2,
     "shapeCount": 3,
     "geometrySectionCount": 7,
-    "propertyNames": [],
-    "userCellNames": [
-      "EndX",
-      "EndY",
-      "i",
-      "k",
-      "k_exp",
-      "k_p",
-      "l",
-      "n",
-      "n_exp",
-      "n_p",
-      "name",
-      "np",
-      "r",
-      "r_u",
-      "text"
-    ],
-    "connectionPoints": [
-      {
-        "id": "p1",
-        "x": 0.0,
-        "y": 0.0
-      },
-      {
-        "id": "p2",
-        "x": 20.0,
-        "y": 0.0
-      }
-    ],
-    "dataFields": [],
-    "preview": "◇",
-    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
-    "status": "planned",
-    "sourcePath": "visio/masters/master84.xml"
-  },
-  {
-    "id": "vsdx_тт_для_лэп_85",
-    "masterId": "85",
-    "title": "ТТ для ЛЭП",
-    "categoryId": "transformers",
-    "widthMm": 20.0,
-    "heightMm": 0.0,
-    "connectionCount": 2,
-    "shapeCount": 3,
-    "geometrySectionCount": 4,
     "propertyNames": [],
     "userCellNames": [
       "EndX",
@@ -5075,13 +5509,78 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "preview": "◎",
     "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◎</text></svg>",
     "status": "planned",
+    "sourcePath": "visio/masters/master84.xml"
+  },
+  {
+    "id": "vsdx_реактор_токоограничивающий_одинарный_87",
+    "masterId": "87",
+    "title": "Реактор токоограничивающий одинарный",
+    "categoryId": "compensation_filters",
+    "libraryPageId": "vsdx_page_укрм_фильтры",
+    "libraryPageName": "УКРМ, фильтры",
+    "libraryOrder": 7,
+    "widthMm": 20.0,
+    "heightMm": 0.0,
+    "connectionCount": 2,
+    "shapeCount": 3,
+    "geometrySectionCount": 4,
+    "propertyNames": [],
+    "userCellNames": [
+      "EndX",
+      "EndY",
+      "i",
+      "k",
+      "k_exp",
+      "k_p",
+      "l",
+      "n",
+      "n_exp",
+      "n_p",
+      "name",
+      "np",
+      "r",
+      "r_u",
+      "text"
+    ],
+    "connectionPoints": [
+      {
+        "id": "p1",
+        "x": 0.0,
+        "y": 0.0
+      },
+      {
+        "id": "p2",
+        "x": 20.0,
+        "y": 0.0
+      }
+    ],
+    "dataFields": [
+      {
+        "id": "rated_reactive_power",
+        "label": "Номинальная реактивная мощность",
+        "type": "number",
+        "source": "semantic_scaffold"
+      },
+      {
+        "id": "rated_voltage_kv",
+        "label": "Номинальное напряжение, кВ",
+        "type": "number",
+        "source": "semantic_scaffold"
+      }
+    ],
+    "preview": "◇",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
+    "status": "planned",
     "sourcePath": "visio/masters/master85.xml"
   },
   {
-    "id": "vsdx_тт2_для_лэп_86",
-    "masterId": "86",
-    "title": "ТТ2 для ЛЭП",
-    "categoryId": "transformers",
+    "id": "vsdx_реактор_токоограничивающий_сдвоенный_88",
+    "masterId": "88",
+    "title": "Реактор токоограничивающий сдвоенный",
+    "categoryId": "compensation_filters",
+    "libraryPageId": "vsdx_page_укрм_фильтры",
+    "libraryPageName": "УКРМ, фильтры",
+    "libraryOrder": 7,
     "widthMm": 15.0,
     "heightMm": 0.0,
     "connectionCount": 3,
@@ -5124,58 +5623,31 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [
       {
-        "id": "winding_count",
-        "label": "Количество обмоток",
+        "id": "rated_reactive_power",
+        "label": "Номинальная реактивная мощность",
         "type": "number",
         "source": "semantic_scaffold"
       },
       {
-        "id": "primary_voltage_kv",
-        "label": "Напряжение ВН, кВ",
+        "id": "rated_voltage_kv",
+        "label": "Номинальное напряжение, кВ",
         "type": "number",
-        "source": "semantic_scaffold"
-      },
-      {
-        "id": "secondary_voltage_kv",
-        "label": "Напряжение НН/СН, кВ",
-        "type": "number",
-        "source": "semantic_scaffold"
-      },
-      {
-        "id": "winding_connection_group",
-        "label": "Схема/группа соединения обмоток",
-        "type": "enum",
-        "source": "semantic_scaffold"
-      },
-      {
-        "id": "neutral_grounding",
-        "label": "Режим нейтрали",
-        "type": "enum",
-        "source": "semantic_scaffold"
-      },
-      {
-        "id": "tap_changer",
-        "label": "РПН/ПБВ",
-        "type": "enum",
-        "source": "semantic_scaffold"
-      },
-      {
-        "id": "ratio",
-        "label": "Коэффициент трансформации",
-        "type": "string",
         "source": "semantic_scaffold"
       }
     ],
-    "preview": "◎",
-    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◎</text></svg>",
+    "preview": "◇",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master86.xml"
   },
   {
-    "id": "vsdx_реактор_токоограничивающий_одинарный_87",
-    "masterId": "87",
-    "title": "Реактор токоограничивающий одинарный",
+    "id": "vsdx_реактор_токоограничивающий_89",
+    "masterId": "89",
+    "title": "Реактор токоограничивающий",
     "categoryId": "compensation_filters",
+    "libraryPageId": "vsdx_page_укрм_фильтры",
+    "libraryPageName": "УКРМ, фильтры",
+    "libraryOrder": 7,
     "widthMm": 20.0,
     "heightMm": 0.0,
     "connectionCount": 2,
@@ -5225,16 +5697,19 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
         "source": "semantic_scaffold"
       }
     ],
-    "preview": "⌁",
-    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">⌁</text></svg>",
+    "preview": "◇",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master87.xml"
   },
   {
-    "id": "vsdx_реактор_токоограничивающий_сдвоенный_88",
-    "masterId": "88",
-    "title": "Реактор токоограничивающий сдвоенный",
-    "categoryId": "compensation_filters",
+    "id": "vsdx_дроссельная_катушка_90",
+    "masterId": "90",
+    "title": "Дроссельная катушка",
+    "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_page_укрм_фильтры",
+    "libraryPageName": "УКРМ, фильтры",
+    "libraryOrder": 7,
     "widthMm": 15.0,
     "heightMm": 0.0,
     "connectionCount": 2,
@@ -5270,30 +5745,20 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
         "y": 0.0
       }
     ],
-    "dataFields": [
-      {
-        "id": "rated_reactive_power",
-        "label": "Номинальная реактивная мощность",
-        "type": "number",
-        "source": "semantic_scaffold"
-      },
-      {
-        "id": "rated_voltage_kv",
-        "label": "Номинальное напряжение, кВ",
-        "type": "number",
-        "source": "semantic_scaffold"
-      }
-    ],
-    "preview": "⌁",
-    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">⌁</text></svg>",
+    "dataFields": [],
+    "preview": "◇",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master88.xml"
   },
   {
-    "id": "vsdx_реактор_токоограничивающий_89",
-    "masterId": "89",
-    "title": "Реактор токоограничивающий",
+    "id": "vsdx_дугогасящий_реактор_91",
+    "masterId": "91",
+    "title": "Дугогасящий реактор",
     "categoryId": "compensation_filters",
+    "libraryPageId": "vsdx_page_укрм_фильтры",
+    "libraryPageName": "УКРМ, фильтры",
+    "libraryOrder": 7,
     "widthMm": 15.0,
     "heightMm": 0.0,
     "connectionCount": 2,
@@ -5343,16 +5808,19 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
         "source": "semantic_scaffold"
       }
     ],
-    "preview": "⌁",
-    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">⌁</text></svg>",
+    "preview": "◇",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master89.xml"
   },
   {
-    "id": "vsdx_дроссельная_катушка_90",
-    "masterId": "90",
-    "title": "Дроссельная катушка",
-    "categoryId": "vsdx_symbols",
+    "id": "vsdx_синхронный_компенсатор_92",
+    "masterId": "92",
+    "title": "Синхронный компенсатор",
+    "categoryId": "compensation_filters",
+    "libraryPageId": "vsdx_page_укрм_фильтры",
+    "libraryPageName": "УКРМ, фильтры",
+    "libraryOrder": 7,
     "widthMm": 15.0,
     "heightMm": 0.0,
     "connectionCount": 1,
@@ -5383,17 +5851,33 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
         "y": 0.0
       }
     ],
-    "dataFields": [],
+    "dataFields": [
+      {
+        "id": "rated_reactive_power",
+        "label": "Номинальная реактивная мощность",
+        "type": "number",
+        "source": "semantic_scaffold"
+      },
+      {
+        "id": "rated_voltage_kv",
+        "label": "Номинальное напряжение, кВ",
+        "type": "number",
+        "source": "semantic_scaffold"
+      }
+    ],
     "preview": "◇",
     "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master90.xml"
   },
   {
-    "id": "vsdx_дугогасящий_реактор_91",
-    "masterId": "91",
-    "title": "Дугогасящий реактор",
+    "id": "vsdx_асинхронизированный_синхронный_компенсатор_93",
+    "masterId": "93",
+    "title": "Асинхронизированный синхронный компенсатор",
     "categoryId": "compensation_filters",
+    "libraryPageId": "vsdx_page_укрм_фильтры",
+    "libraryPageName": "УКРМ, фильтры",
+    "libraryOrder": 7,
     "widthMm": 15.0,
     "heightMm": 0.0,
     "connectionCount": 1,
@@ -5438,16 +5922,19 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
         "source": "semantic_scaffold"
       }
     ],
-    "preview": "⌁",
-    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">⌁</text></svg>",
+    "preview": "◇",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master91.xml"
   },
   {
-    "id": "vsdx_синхронный_компенсатор_92",
-    "masterId": "92",
-    "title": "Синхронный компенсатор",
+    "id": "vsdx_заградительный_фильтр_94",
+    "masterId": "94",
+    "title": "Заградительный фильтр",
     "categoryId": "compensation_filters",
+    "libraryPageId": "vsdx_page_укрм_фильтры",
+    "libraryPageName": "УКРМ, фильтры",
+    "libraryOrder": 7,
     "widthMm": 10.0,
     "heightMm": 0.0,
     "connectionCount": 2,
@@ -5497,16 +5984,19 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
         "source": "semantic_scaffold"
       }
     ],
-    "preview": "⌁",
-    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">⌁</text></svg>",
+    "preview": "◇",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master92.xml"
   },
   {
-    "id": "vsdx_асинхронизированный_синхронный_компенсатор_93",
-    "masterId": "93",
-    "title": "Асинхронизированный синхронный компенсатор",
+    "id": "vsdx_конденсатор_95",
+    "masterId": "95",
+    "title": "Конденсатор",
     "categoryId": "compensation_filters",
+    "libraryPageId": "vsdx_page_укрм_фильтры",
+    "libraryPageName": "УКРМ, фильтры",
+    "libraryOrder": 7,
     "widthMm": 10.0,
     "heightMm": 0.0,
     "connectionCount": 2,
@@ -5556,16 +6046,19 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
         "source": "semantic_scaffold"
       }
     ],
-    "preview": "⌁",
-    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">⌁</text></svg>",
+    "preview": "◇",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master93.xml"
   },
   {
-    "id": "vsdx_заградительный_фильтр_94",
-    "masterId": "94",
-    "title": "Заградительный фильтр",
+    "id": "vsdx_конденсаторная_батарея_96",
+    "masterId": "96",
+    "title": "Конденсаторная батарея",
     "categoryId": "compensation_filters",
+    "libraryPageId": "vsdx_page_укрм_фильтры",
+    "libraryPageName": "УКРМ, фильтры",
+    "libraryOrder": 7,
     "widthMm": 15.0,
     "heightMm": 0.0,
     "connectionCount": 1,
@@ -5610,16 +6103,19 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
         "source": "semantic_scaffold"
       }
     ],
-    "preview": "⌁",
-    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">⌁</text></svg>",
+    "preview": "◇",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master94.xml"
   },
   {
-    "id": "vsdx_конденсатор_95",
-    "masterId": "95",
-    "title": "Конденсатор",
+    "id": "vsdx_батарея_статических_конденсаторов_97",
+    "masterId": "97",
+    "title": "Батарея статических конденсаторов",
     "categoryId": "compensation_filters",
+    "libraryPageId": "vsdx_page_укрм_фильтры",
+    "libraryPageName": "УКРМ, фильтры",
+    "libraryOrder": 7,
     "widthMm": 12.5,
     "heightMm": 0.0,
     "connectionCount": 1,
@@ -5664,16 +6160,19 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
         "source": "semantic_scaffold"
       }
     ],
-    "preview": "⌁",
-    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">⌁</text></svg>",
+    "preview": "◇",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master95.xml"
   },
   {
-    "id": "vsdx_конденсаторная_батарея_96",
-    "masterId": "96",
-    "title": "Конденсаторная батарея",
+    "id": "vsdx_устройство_продольной_компенсации_98",
+    "masterId": "98",
+    "title": "Устройство продольной компенсации",
     "categoryId": "compensation_filters",
+    "libraryPageId": "vsdx_page_укрм_фильтры",
+    "libraryPageName": "УКРМ, фильтры",
+    "libraryOrder": 7,
     "widthMm": 15.0,
     "heightMm": 0.0,
     "connectionCount": 2,
@@ -5723,133 +6222,19 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
         "source": "semantic_scaffold"
       }
     ],
-    "preview": "⌁",
-    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">⌁</text></svg>",
+    "preview": "◇",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master96.xml"
-  },
-  {
-    "id": "vsdx_батарея_статических_конденсаторов_97",
-    "masterId": "97",
-    "title": "Батарея статических конденсаторов",
-    "categoryId": "compensation_filters",
-    "widthMm": 5.0,
-    "heightMm": 5.0,
-    "connectionCount": 2,
-    "shapeCount": 2,
-    "geometrySectionCount": 2,
-    "propertyNames": [],
-    "userCellNames": [
-      "b",
-      "i",
-      "k",
-      "k_exp",
-      "k_p",
-      "n",
-      "n_exp",
-      "n_p",
-      "name",
-      "np",
-      "r",
-      "r_u",
-      "text"
-    ],
-    "connectionPoints": [
-      {
-        "id": "p1",
-        "x": 0.0,
-        "y": 0.0
-      },
-      {
-        "id": "p2",
-        "x": 5.0,
-        "y": 5.0
-      }
-    ],
-    "dataFields": [
-      {
-        "id": "rated_reactive_power",
-        "label": "Номинальная реактивная мощность",
-        "type": "number",
-        "source": "semantic_scaffold"
-      },
-      {
-        "id": "rated_voltage_kv",
-        "label": "Номинальное напряжение, кВ",
-        "type": "number",
-        "source": "semantic_scaffold"
-      }
-    ],
-    "preview": "⌁",
-    "svgPreview": "<svg viewBox=\"-0.600 -0.600 6.200 6.200\" aria-label=\"Батарея статических конденсаторов\" role=\"img\"><path d=\"M0.000,5.000 L5.000,5.000 L5.000,0.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,5.000 L7.045,5.000 L7.045,0.000 L0.000,0.000 L0.000,5.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"5.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"5.000\" cy=\"0.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
-    "status": "planned",
-    "sourcePath": "visio/masters/master97.xml"
-  },
-  {
-    "id": "vsdx_устройство_продольной_компенсации_98",
-    "masterId": "98",
-    "title": "Устройство продольной компенсации",
-    "categoryId": "compensation_filters",
-    "widthMm": 10.0,
-    "heightMm": 0.0,
-    "connectionCount": 2,
-    "shapeCount": 3,
-    "geometrySectionCount": 3,
-    "propertyNames": [],
-    "userCellNames": [
-      "EndX",
-      "EndY",
-      "b",
-      "i",
-      "k",
-      "k_exp",
-      "k_p",
-      "l",
-      "n",
-      "n_exp",
-      "n_p",
-      "name",
-      "np",
-      "r",
-      "r_u",
-      "text"
-    ],
-    "connectionPoints": [
-      {
-        "id": "p1",
-        "x": 0.0,
-        "y": 0.0
-      },
-      {
-        "id": "p2",
-        "x": 10.0,
-        "y": 0.0
-      }
-    ],
-    "dataFields": [
-      {
-        "id": "rated_reactive_power",
-        "label": "Номинальная реактивная мощность",
-        "type": "number",
-        "source": "semantic_scaffold"
-      },
-      {
-        "id": "rated_voltage_kv",
-        "label": "Номинальное напряжение, кВ",
-        "type": "number",
-        "source": "semantic_scaffold"
-      }
-    ],
-    "preview": "⌁",
-    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">⌁</text></svg>",
-    "status": "planned",
-    "sourcePath": "visio/masters/master98.xml"
   },
   {
     "id": "vsdx_фильтр_99",
     "masterId": "99",
     "title": "Фильтр",
     "categoryId": "compensation_filters",
+    "libraryPageId": "vsdx_page_укрм_фильтры",
+    "libraryPageName": "УКРМ, фильтры",
+    "libraryOrder": 7,
     "widthMm": 5.0,
     "heightMm": 5.0,
     "connectionCount": 2,
@@ -5897,16 +6282,19 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
         "source": "semantic_scaffold"
       }
     ],
-    "preview": "⌁",
-    "svgPreview": "<svg viewBox=\"-0.600 -0.600 6.200 6.200\" aria-label=\"Фильтр\" role=\"img\"><path d=\"M0.000,5.000 L5.000,5.000 L5.000,0.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,5.000 L7.962,5.000 L7.962,0.000 L0.000,0.000 L0.000,5.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"5.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"5.000\" cy=\"0.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
+    "preview": "◇",
+    "svgPreview": "<svg viewBox=\"-0.600 -0.600 6.200 6.200\" aria-label=\"Фильтр\" role=\"img\"><path d=\"M0.000,5.000 L5.000,5.000 L5.000,0.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,5.000 L7.045,5.000 L7.045,0.000 L0.000,0.000 L0.000,5.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"5.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"5.000\" cy=\"0.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
     "status": "planned",
-    "sourcePath": "visio/masters/master99.xml"
+    "sourcePath": "visio/masters/master97.xml"
   },
   {
     "id": "vsdx_фильтр1_100",
     "masterId": "100",
     "title": "Фильтр1",
     "categoryId": "compensation_filters",
+    "libraryPageId": "vsdx_page_укрм_фильтры",
+    "libraryPageName": "УКРМ, фильтры",
+    "libraryOrder": 7,
     "widthMm": 10.0,
     "heightMm": 0.0,
     "connectionCount": 2,
@@ -5957,16 +6345,116 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
         "source": "semantic_scaffold"
       }
     ],
-    "preview": "⌁",
-    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">⌁</text></svg>",
+    "preview": "◇",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
     "status": "planned",
-    "sourcePath": "visio/masters/master100.xml"
+    "sourcePath": "visio/masters/master98.xml"
   },
   {
     "id": "vsdx_устройство_101",
     "masterId": "101",
     "title": "Устройство",
     "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_page_укрм_фильтры",
+    "libraryPageName": "УКРМ, фильтры",
+    "libraryOrder": 7,
+    "widthMm": 5.0,
+    "heightMm": 5.0,
+    "connectionCount": 2,
+    "shapeCount": 2,
+    "geometrySectionCount": 2,
+    "propertyNames": [],
+    "userCellNames": [
+      "b",
+      "i",
+      "k",
+      "k_exp",
+      "k_p",
+      "n",
+      "n_exp",
+      "n_p",
+      "name",
+      "np",
+      "r",
+      "r_u",
+      "text"
+    ],
+    "connectionPoints": [
+      {
+        "id": "p1",
+        "x": 0.0,
+        "y": 0.0
+      },
+      {
+        "id": "p2",
+        "x": 5.0,
+        "y": 5.0
+      }
+    ],
+    "dataFields": [],
+    "preview": "◇",
+    "svgPreview": "<svg viewBox=\"-0.600 -0.600 6.200 6.200\" aria-label=\"Устройство\" role=\"img\"><path d=\"M0.000,5.000 L5.000,5.000 L5.000,0.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,5.000 L7.962,5.000 L7.962,0.000 L0.000,0.000 L0.000,5.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"5.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"5.000\" cy=\"0.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
+    "status": "planned",
+    "sourcePath": "visio/masters/master99.xml"
+  },
+  {
+    "id": "vsdx_устройство1_102",
+    "masterId": "102",
+    "title": "Устройство1",
+    "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_page_укрм_фильтры",
+    "libraryPageName": "УКРМ, фильтры",
+    "libraryOrder": 7,
+    "widthMm": 10.0,
+    "heightMm": 0.0,
+    "connectionCount": 2,
+    "shapeCount": 3,
+    "geometrySectionCount": 3,
+    "propertyNames": [],
+    "userCellNames": [
+      "EndX",
+      "EndY",
+      "b",
+      "i",
+      "k",
+      "k_exp",
+      "k_p",
+      "l",
+      "n",
+      "n_exp",
+      "n_p",
+      "name",
+      "np",
+      "r",
+      "r_u",
+      "text"
+    ],
+    "connectionPoints": [
+      {
+        "id": "p1",
+        "x": 0.0,
+        "y": 0.0
+      },
+      {
+        "id": "p2",
+        "x": 10.0,
+        "y": 0.0
+      }
+    ],
+    "dataFields": [],
+    "preview": "◇",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
+    "status": "planned",
+    "sourcePath": "visio/masters/master100.xml"
+  },
+  {
+    "id": "vsdx_шина1_103",
+    "masterId": "103",
+    "title": "Шина1",
+    "categoryId": "busbars_lines_grounding",
+    "libraryPageId": "vsdx_page_шины",
+    "libraryPageName": "Шины",
+    "libraryOrder": 8,
     "widthMm": 10.0,
     "heightMm": 0.0,
     "connectionCount": 4,
@@ -6008,17 +6496,39 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
         "y": 0.0
       }
     ],
-    "dataFields": [],
-    "preview": "◇",
-    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
+    "dataFields": [
+      {
+        "id": "voltage_class_id",
+        "label": "Класс напряжения",
+        "type": "voltageClass",
+        "source": "semantic_scaffold"
+      },
+      {
+        "id": "connection_point_count",
+        "label": "Количество точек подключения",
+        "type": "number",
+        "source": "semantic_scaffold"
+      },
+      {
+        "id": "line_type",
+        "label": "Тип линии/шины",
+        "type": "enum",
+        "source": "semantic_scaffold"
+      }
+    ],
+    "preview": "▰",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><rect x=\"7\" y=\"12\" width=\"50\" height=\"8\" rx=\"1.5\" fill=\"#6d0ad6\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"17\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"32\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"47\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master101.xml"
   },
   {
-    "id": "vsdx_устройство1_102",
-    "masterId": "102",
-    "title": "Устройство1",
-    "categoryId": "vsdx_symbols",
+    "id": "vsdx_шина5_104",
+    "masterId": "104",
+    "title": "Шина5",
+    "categoryId": "busbars_lines_grounding",
+    "libraryPageId": "vsdx_page_шины",
+    "libraryPageName": "Шины",
+    "libraryOrder": 8,
     "widthMm": 25.0,
     "heightMm": 0.0,
     "connectionCount": 12,
@@ -6103,17 +6613,39 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
         "y": 0.0
       }
     ],
-    "dataFields": [],
-    "preview": "◇",
-    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
+    "dataFields": [
+      {
+        "id": "voltage_class_id",
+        "label": "Класс напряжения",
+        "type": "voltageClass",
+        "source": "semantic_scaffold"
+      },
+      {
+        "id": "connection_point_count",
+        "label": "Количество точек подключения",
+        "type": "number",
+        "source": "semantic_scaffold"
+      },
+      {
+        "id": "line_type",
+        "label": "Тип линии/шины",
+        "type": "enum",
+        "source": "semantic_scaffold"
+      }
+    ],
+    "preview": "▰",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><rect x=\"7\" y=\"12\" width=\"50\" height=\"8\" rx=\"1.5\" fill=\"#6d0ad6\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"17\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"32\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"47\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master102.xml"
   },
   {
-    "id": "vsdx_шина1_103",
-    "masterId": "103",
-    "title": "Шина1",
+    "id": "vsdx_шина10_105",
+    "masterId": "105",
+    "title": "Шина10",
     "categoryId": "busbars_lines_grounding",
+    "libraryPageId": "vsdx_page_шины",
+    "libraryPageName": "Шины",
+    "libraryOrder": 8,
     "widthMm": 55.0,
     "heightMm": 0.0,
     "connectionCount": 22,
@@ -6274,10 +6806,13 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "sourcePath": "visio/masters/master103.xml"
   },
   {
-    "id": "vsdx_шина5_104",
-    "masterId": "104",
-    "title": "Шина5",
+    "id": "vsdx_шина20_106",
+    "masterId": "106",
+    "title": "Шина20",
     "categoryId": "busbars_lines_grounding",
+    "libraryPageId": "vsdx_page_шины",
+    "libraryPageName": "Шины",
+    "libraryOrder": 8,
     "widthMm": 80.0,
     "heightMm": 0.0,
     "connectionCount": 42,
@@ -6538,10 +7073,13 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "sourcePath": "visio/masters/master104.xml"
   },
   {
-    "id": "vsdx_шина10_105",
-    "masterId": "105",
-    "title": "Шина10",
+    "id": "vsdx_шина30_107",
+    "masterId": "107",
+    "title": "Шина30",
     "categoryId": "busbars_lines_grounding",
+    "libraryPageId": "vsdx_page_шины",
+    "libraryPageName": "Шины",
+    "libraryOrder": 8,
     "widthMm": 100.0,
     "heightMm": 0.0,
     "connectionCount": 62,
@@ -6902,10 +7440,13 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "sourcePath": "visio/masters/master105.xml"
   },
   {
-    "id": "vsdx_шина20_106",
-    "masterId": "106",
-    "title": "Шина20",
-    "categoryId": "busbars_lines_grounding",
+    "id": "vsdx_соединение_для_шин_108",
+    "masterId": "108",
+    "title": "Соединение для шин",
+    "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_page_шины",
+    "libraryPageName": "Шины",
+    "libraryOrder": 8,
     "widthMm": 0.0,
     "heightMm": 0.0,
     "connectionCount": 0,
@@ -6916,36 +7457,20 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       "r"
     ],
     "connectionPoints": [],
-    "dataFields": [
-      {
-        "id": "voltage_class_id",
-        "label": "Класс напряжения",
-        "type": "voltageClass",
-        "source": "semantic_scaffold"
-      },
-      {
-        "id": "connection_point_count",
-        "label": "Количество точек подключения",
-        "type": "number",
-        "source": "semantic_scaffold"
-      },
-      {
-        "id": "line_type",
-        "label": "Тип линии/шины",
-        "type": "enum",
-        "source": "semantic_scaffold"
-      }
-    ],
-    "preview": "▰",
-    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><rect x=\"7\" y=\"12\" width=\"50\" height=\"8\" rx=\"1.5\" fill=\"#6d0ad6\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"17\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"32\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"47\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/></svg>",
+    "dataFields": [],
+    "preview": "◇",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master106.xml"
   },
   {
-    "id": "vsdx_шина30_107",
-    "masterId": "107",
-    "title": "Шина30",
-    "categoryId": "busbars_lines_grounding",
+    "id": "vsdx_шинный_мост_109",
+    "masterId": "109",
+    "title": "Шинный мост",
+    "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_page_шины",
+    "libraryPageName": "Шины",
+    "libraryOrder": 8,
     "widthMm": 15.0,
     "heightMm": 0.0,
     "connectionCount": 2,
@@ -6980,36 +7505,20 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
         "y": 0.0
       }
     ],
-    "dataFields": [
-      {
-        "id": "voltage_class_id",
-        "label": "Класс напряжения",
-        "type": "voltageClass",
-        "source": "semantic_scaffold"
-      },
-      {
-        "id": "connection_point_count",
-        "label": "Количество точек подключения",
-        "type": "number",
-        "source": "semantic_scaffold"
-      },
-      {
-        "id": "line_type",
-        "label": "Тип линии/шины",
-        "type": "enum",
-        "source": "semantic_scaffold"
-      }
-    ],
-    "preview": "▰",
-    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><rect x=\"7\" y=\"12\" width=\"50\" height=\"8\" rx=\"1.5\" fill=\"#6d0ad6\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"17\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"32\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"47\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/></svg>",
+    "dataFields": [],
+    "preview": "◇",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master107.xml"
   },
   {
-    "id": "vsdx_соединение_для_шин_108",
-    "masterId": "108",
-    "title": "Соединение для шин",
+    "id": "vsdx_опора_1_110",
+    "masterId": "110",
+    "title": "Опора 1",
     "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_page_доп_элементы",
+    "libraryPageName": "Доп.элементы",
+    "libraryOrder": 9,
     "widthMm": 4.8,
     "heightMm": 11.0,
     "connectionCount": 4,
@@ -7056,15 +7565,18 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [],
     "preview": "◇",
-    "svgPreview": "<svg viewBox=\"-1.320 -1.320 7.440 13.640\" aria-label=\"Соединение для шин\" role=\"img\"><path d=\"M0.000,11.000 L4.800,11.000 L4.800,6.200 L0.000,6.200 L0.000,11.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,11.000 L3.000,11.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,11.000 L0.000,11.000 L0.000,11.000 L0.000,11.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,11.000 L0.000,11.000 L0.000,11.000 L0.000,11.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,11.000 L3.000,11.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,11.000 L0.000,11.000 L0.000,11.000 L0.000,11.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,11.000 L0.000,11.000 L0.000,11.000 L0.000,11.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"11.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"3.000\" cy=\"11.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"0.000\" cy=\"11.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"3.000\" cy=\"11.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
+    "svgPreview": "<svg viewBox=\"-1.320 -1.320 7.440 13.640\" aria-label=\"Опора 1\" role=\"img\"><path d=\"M0.000,11.000 L4.800,11.000 L4.800,6.200 L0.000,6.200 L0.000,11.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,11.000 L3.000,11.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,11.000 L0.000,11.000 L0.000,11.000 L0.000,11.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,11.000 L0.000,11.000 L0.000,11.000 L0.000,11.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,11.000 L3.000,11.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,11.000 L0.000,11.000 L0.000,11.000 L0.000,11.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,11.000 L0.000,11.000 L0.000,11.000 L0.000,11.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"11.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"3.000\" cy=\"11.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"0.000\" cy=\"11.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"3.000\" cy=\"11.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master108.xml"
   },
   {
-    "id": "vsdx_шинный_мост_109",
-    "masterId": "109",
-    "title": "Шинный мост",
+    "id": "vsdx_опора_2_111",
+    "masterId": "111",
+    "title": "Опора 2",
     "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_page_доп_элементы",
+    "libraryPageName": "Доп.элементы",
+    "libraryOrder": 9,
     "widthMm": 4.4,
     "heightMm": 10.5,
     "connectionCount": 4,
@@ -7111,15 +7623,18 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [],
     "preview": "◇",
-    "svgPreview": "<svg viewBox=\"-1.260 -1.260 6.920 13.020\" aria-label=\"Шинный мост\" role=\"img\"><path d=\"M0.000,10.500 L3.000,10.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,10.500 L0.000,10.500 L0.000,10.500 L0.000,10.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,10.500 L0.000,10.500 L0.000,10.500 L0.000,10.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,10.500 L3.000,10.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,10.500 L0.000,10.500 L0.000,10.500 L0.000,10.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,10.500 L0.000,10.500 L0.000,10.500 L0.000,10.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"10.500\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"3.000\" cy=\"10.500\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"0.000\" cy=\"10.500\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"3.000\" cy=\"10.500\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
+    "svgPreview": "<svg viewBox=\"-1.260 -1.260 6.920 13.020\" aria-label=\"Опора 2\" role=\"img\"><path d=\"M0.000,10.500 L3.000,10.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,10.500 L0.000,10.500 L0.000,10.500 L0.000,10.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,10.500 L0.000,10.500 L0.000,10.500 L0.000,10.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,10.500 L3.000,10.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,10.500 L0.000,10.500 L0.000,10.500 L0.000,10.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,10.500 L0.000,10.500 L0.000,10.500 L0.000,10.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"10.500\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"3.000\" cy=\"10.500\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"0.000\" cy=\"10.500\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"3.000\" cy=\"10.500\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master109.xml"
   },
   {
-    "id": "vsdx_опора_1_110",
-    "masterId": "110",
-    "title": "Опора 1",
+    "id": "vsdx_опора_3_35_112",
+    "masterId": "112",
+    "title": "Опора 3.35",
     "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_page_доп_элементы",
+    "libraryPageName": "Доп.элементы",
+    "libraryOrder": 9,
     "widthMm": 4.5,
     "heightMm": 4.5,
     "connectionCount": 1,
@@ -7136,15 +7651,18 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [],
     "preview": "◇",
-    "svgPreview": "<svg viewBox=\"-0.540 -0.540 5.580 5.580\" aria-label=\"Опора 1\" role=\"img\"><rect x=\"0\" y=\"0\" width=\"4.500\" height=\"4.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\"/><circle cx=\"2.250\" cy=\"2.250\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
+    "svgPreview": "<svg viewBox=\"-0.540 -0.540 5.580 5.580\" aria-label=\"Опора 3.35\" role=\"img\"><rect x=\"0\" y=\"0\" width=\"4.500\" height=\"4.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\"/><circle cx=\"2.250\" cy=\"2.250\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master110.xml"
   },
   {
-    "id": "vsdx_опора_2_111",
-    "masterId": "111",
-    "title": "Опора 2",
-    "categoryId": "vsdx_symbols",
+    "id": "vsdx_автомат_выкл_113",
+    "masterId": "113",
+    "title": "Автомат (выкл)",
+    "categoryId": "busbars_lines_grounding",
+    "libraryPageId": "vsdx_page_доп_элементы",
+    "libraryPageName": "Доп.элементы",
+    "libraryOrder": 9,
     "widthMm": 3.0,
     "heightMm": 16.0,
     "connectionCount": 6,
@@ -7199,17 +7717,39 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
         "y": 0.0
       }
     ],
-    "dataFields": [],
-    "preview": "◇",
-    "svgPreview": "<svg viewBox=\"-1.920 -1.920 6.840 19.840\" aria-label=\"Опора 2\" role=\"img\"><path d=\"M0.000,16.000 L5.500,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,16.000 L0.000,16.000 L0.000,16.000 L0.000,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,16.000 L0.000,16.000 L0.000,16.000 L0.000,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,16.000 L5.500,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,16.000 L0.000,16.000 L0.000,16.000 L0.000,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,16.000 L0.000,16.000 L0.000,16.000 L0.000,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,16.000 L5.831,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,16.000 L0.000,16.000 L0.000,16.000 L0.000,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,16.000 L0.000,16.000 L0.000,16.000 L0.000,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,13.500 L0.000,16.000 L1.000,16.000 L1.000,15.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"16.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"5.500\" cy=\"16.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"0.000\" cy=\"16.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"5.500\" cy=\"16.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"0.000\" cy=\"16.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"5.831\" cy=\"16.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
+    "dataFields": [
+      {
+        "id": "voltage_class_id",
+        "label": "Класс напряжения",
+        "type": "voltageClass",
+        "source": "semantic_scaffold"
+      },
+      {
+        "id": "connection_point_count",
+        "label": "Количество точек подключения",
+        "type": "number",
+        "source": "semantic_scaffold"
+      },
+      {
+        "id": "line_type",
+        "label": "Тип линии/шины",
+        "type": "enum",
+        "source": "semantic_scaffold"
+      }
+    ],
+    "preview": "▰",
+    "svgPreview": "<svg viewBox=\"-1.920 -1.920 6.840 19.840\" aria-label=\"Автомат (выкл)\" role=\"img\"><path d=\"M0.000,16.000 L5.500,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,16.000 L0.000,16.000 L0.000,16.000 L0.000,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,16.000 L0.000,16.000 L0.000,16.000 L0.000,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,16.000 L5.500,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,16.000 L0.000,16.000 L0.000,16.000 L0.000,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,16.000 L0.000,16.000 L0.000,16.000 L0.000,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,16.000 L5.831,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,16.000 L0.000,16.000 L0.000,16.000 L0.000,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,16.000 L0.000,16.000 L0.000,16.000 L0.000,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,13.500 L0.000,16.000 L1.000,16.000 L1.000,15.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"16.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"5.500\" cy=\"16.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"0.000\" cy=\"16.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"5.500\" cy=\"16.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"0.000\" cy=\"16.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"5.831\" cy=\"16.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master111.xml"
   },
   {
-    "id": "vsdx_опора_3_35_112",
-    "masterId": "112",
-    "title": "Опора 3.35",
+    "id": "vsdx_счетчик_прямоточный_114",
+    "masterId": "114",
+    "title": "Счётчик прямоточный",
     "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_page_доп_элементы",
+    "libraryPageName": "Доп.элементы",
+    "libraryOrder": 9,
     "widthMm": 10.0,
     "heightMm": 27.4,
     "connectionCount": 4,
@@ -7256,15 +7796,18 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     ],
     "dataFields": [],
     "preview": "◇",
-    "svgPreview": "<svg viewBox=\"-3.288 -3.288 16.576 33.976\" aria-label=\"Опора 3.35\" role=\"img\"><path d=\"M0.000,27.400 L10.000,27.400 L10.000,12.400 L0.000,12.400 L0.000,27.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.400 L10.000,27.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.400 L10.000,27.400 L10.000,16.400 L0.000,16.400 L0.000,27.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.400 L6.125,27.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.400 L0.000,27.400 L0.000,27.400 L0.000,27.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.400 L0.000,27.400 L0.000,27.400 L0.000,27.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.400 L6.220,27.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.400 L0.000,27.400 L0.000,27.400 L0.000,27.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.400 L0.000,27.400 L0.000,27.400 L0.000,27.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"27.400\" r=\"0.450\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"6.125\" cy=\"27.400\" r=\"0.450\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"0.000\" cy=\"27.400\" r=\"0.450\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"6.220\" cy=\"27.400\" r=\"0.450\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
+    "svgPreview": "<svg viewBox=\"-3.288 -3.288 16.576 33.976\" aria-label=\"Счётчик прямоточный\" role=\"img\"><path d=\"M0.000,27.400 L10.000,27.400 L10.000,12.400 L0.000,12.400 L0.000,27.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.400 L10.000,27.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.400 L10.000,27.400 L10.000,16.400 L0.000,16.400 L0.000,27.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.400 L6.125,27.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.400 L0.000,27.400 L0.000,27.400 L0.000,27.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.400 L0.000,27.400 L0.000,27.400 L0.000,27.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.400 L6.220,27.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.400 L0.000,27.400 L0.000,27.400 L0.000,27.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.400 L0.000,27.400 L0.000,27.400 L0.000,27.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"27.400\" r=\"0.450\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"6.125\" cy=\"27.400\" r=\"0.450\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"0.000\" cy=\"27.400\" r=\"0.450\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"6.220\" cy=\"27.400\" r=\"0.450\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master112.xml"
   },
   {
-    "id": "vsdx_автомат_выкл_113",
-    "masterId": "113",
-    "title": "Автомат (выкл)",
-    "categoryId": "busbars_lines_grounding",
+    "id": "vsdx_master_115_115",
+    "masterId": "115",
+    "title": "Master 115",
+    "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_page_доп_элементы",
+    "libraryPageName": "Доп.элементы",
+    "libraryOrder": 9,
     "widthMm": 5.0,
     "heightMm": 16.0,
     "connectionCount": 2,
@@ -7284,6 +7827,55 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
         "y": -0.0
       }
     ],
+    "dataFields": [],
+    "preview": "◇",
+    "svgPreview": "<svg viewBox=\"-1.920 -1.920 8.840 19.840\" aria-label=\"Master 115\" role=\"img\"><path d=\"M0.000,16.000 L4.550,16.000 L4.550,4.000 L0.000,4.000 L0.000,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M2.500,16.000 L2.500,32.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"2.500\" cy=\"0.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"2.500\" cy=\"16.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
+    "status": "planned",
+    "sourcePath": "visio/masters/master113.xml"
+  },
+  {
+    "id": "vsdx_master_116_116",
+    "masterId": "116",
+    "title": "Master 116",
+    "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_page_доп_элементы",
+    "libraryPageName": "Доп.элементы",
+    "libraryOrder": 9,
+    "widthMm": 2.0,
+    "heightMm": 0.0,
+    "connectionCount": 0,
+    "shapeCount": 5,
+    "geometrySectionCount": 5,
+    "propertyNames": [],
+    "userCellNames": [],
+    "connectionPoints": [],
+    "dataFields": [],
+    "preview": "◇",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
+    "status": "planned",
+    "sourcePath": "visio/masters/master114.xml"
+  },
+  {
+    "id": "vsdx_выключатель_вкл_117",
+    "masterId": "117",
+    "title": "Выключатель (вкл)",
+    "categoryId": "busbars_lines_grounding",
+    "libraryPageId": "vsdx_page_доп_элементы",
+    "libraryPageName": "Доп.элементы",
+    "libraryOrder": 9,
+    "widthMm": 6.5,
+    "heightMm": 16.0,
+    "connectionCount": 0,
+    "shapeCount": 4,
+    "geometrySectionCount": 3,
+    "propertyNames": [],
+    "userCellNames": [
+      "msvLayoutIncludeSubshapes",
+      "visDGCBVFill",
+      "visDGDisplayFormat",
+      "visDGOldColors"
+    ],
+    "connectionPoints": [],
     "dataFields": [
       {
         "id": "voltage_class_id",
@@ -7305,58 +7897,18 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "▰",
-    "svgPreview": "<svg viewBox=\"-1.920 -1.920 8.840 19.840\" aria-label=\"Автомат (выкл)\" role=\"img\"><path d=\"M0.000,16.000 L4.550,16.000 L4.550,4.000 L0.000,4.000 L0.000,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M2.500,16.000 L2.500,32.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"2.500\" cy=\"0.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"2.500\" cy=\"16.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
-    "status": "planned",
-    "sourcePath": "visio/masters/master113.xml"
-  },
-  {
-    "id": "vsdx_счетчик_прямоточный_114",
-    "masterId": "114",
-    "title": "Счётчик прямоточный",
-    "categoryId": "vsdx_symbols",
-    "widthMm": 2.0,
-    "heightMm": 0.0,
-    "connectionCount": 0,
-    "shapeCount": 5,
-    "geometrySectionCount": 5,
-    "propertyNames": [],
-    "userCellNames": [],
-    "connectionPoints": [],
-    "dataFields": [],
-    "preview": "◇",
-    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
-    "status": "planned",
-    "sourcePath": "visio/masters/master114.xml"
-  },
-  {
-    "id": "vsdx_master_115_115",
-    "masterId": "115",
-    "title": "Master 115",
-    "categoryId": "vsdx_symbols",
-    "widthMm": 6.5,
-    "heightMm": 16.0,
-    "connectionCount": 0,
-    "shapeCount": 4,
-    "geometrySectionCount": 3,
-    "propertyNames": [],
-    "userCellNames": [
-      "msvLayoutIncludeSubshapes",
-      "visDGCBVFill",
-      "visDGDisplayFormat",
-      "visDGOldColors"
-    ],
-    "connectionPoints": [],
-    "dataFields": [],
-    "preview": "◇",
-    "svgPreview": "<svg viewBox=\"-1.920 -1.920 10.340 19.840\" aria-label=\"Master 115\" role=\"img\"><path d=\"M-1.000,16.000 L-1.000,21.500 L-4.000,21.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M2.500,16.000 L2.500,21.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,16.000 L5.831,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
+    "svgPreview": "<svg viewBox=\"-1.920 -1.920 10.340 19.840\" aria-label=\"Выключатель (вкл)\" role=\"img\"><path d=\"M-1.000,16.000 L-1.000,21.500 L-4.000,21.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M2.500,16.000 L2.500,21.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,16.000 L5.831,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master115.xml"
   },
   {
-    "id": "vsdx_master_116_116",
-    "masterId": "116",
-    "title": "Master 116",
+    "id": "vsdx_рисунок_связанный_с_данными_102_118",
+    "masterId": "118",
+    "title": "Рисунок, связанный с данными.102",
     "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_symbols",
+    "libraryPageName": "Прочие VSDX-фигуры",
+    "libraryOrder": 1000,
     "widthMm": 33.867,
     "heightMm": 25.4,
     "connectionCount": 0,
@@ -7370,15 +7922,18 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "connectionPoints": [],
     "dataFields": [],
     "preview": "◇",
-    "svgPreview": "<svg viewBox=\"-4.064 -4.064 41.995 33.528\" aria-label=\"Master 116\" role=\"img\"><path d=\"M0.000,25.400 L33.867,25.400 L33.867,0.000 L0.000,0.000 L0.000,25.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
+    "svgPreview": "<svg viewBox=\"-4.064 -4.064 41.995 33.528\" aria-label=\"Рисунок, связанный с данными.102\" role=\"img\"><path d=\"M0.000,25.400 L33.867,25.400 L33.867,0.000 L0.000,0.000 L0.000,25.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master116.xml"
   },
   {
-    "id": "vsdx_выключатель_вкл_117",
-    "masterId": "117",
-    "title": "Выключатель (вкл)",
-    "categoryId": "busbars_lines_grounding",
+    "id": "vsdx_перекидной_рубильник_119",
+    "masterId": "119",
+    "title": "Перекидной рубильник",
+    "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_page_доп_элементы",
+    "libraryPageName": "Доп.элементы",
+    "libraryOrder": 9,
     "widthMm": 20.0,
     "heightMm": 22.5,
     "connectionCount": 3,
@@ -7403,6 +7958,33 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
         "y": 0.1
       }
     ],
+    "dataFields": [],
+    "preview": "◇",
+    "svgPreview": "<svg viewBox=\"-2.700 -2.700 25.400 27.900\" aria-label=\"Перекидной рубильник\" role=\"img\"><path d=\"M2.500,22.500 L2.500,32.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,22.500 L5.000,22.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,22.500 L5.000,22.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M2.500,22.500 L2.500,32.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,22.500 L5.590,22.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M2.500,22.500 L2.500,15.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"17.500\" cy=\"0.000\" r=\"0.900\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"2.500\" cy=\"0.000\" r=\"0.900\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"10.000\" cy=\"22.400\" r=\"0.900\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
+    "status": "planned",
+    "sourcePath": "visio/masters/master117.xml"
+  },
+  {
+    "id": "vsdx_выключатель_выкл_120",
+    "masterId": "120",
+    "title": "Выключатель (выкл)",
+    "categoryId": "busbars_lines_grounding",
+    "libraryPageId": "vsdx_page_доп_элементы",
+    "libraryPageName": "Доп.элементы",
+    "libraryOrder": 9,
+    "widthMm": 5.0,
+    "heightMm": 15.0,
+    "connectionCount": 0,
+    "shapeCount": 4,
+    "geometrySectionCount": 3,
+    "propertyNames": [],
+    "userCellNames": [
+      "msvLayoutIncludeSubshapes",
+      "visDGCBVFill",
+      "visDGDisplayFormat",
+      "visDGOldColors"
+    ],
+    "connectionPoints": [],
     "dataFields": [
       {
         "id": "voltage_class_id",
@@ -7424,39 +8006,18 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "▰",
-    "svgPreview": "<svg viewBox=\"-2.700 -2.700 25.400 27.900\" aria-label=\"Выключатель (вкл)\" role=\"img\"><path d=\"M2.500,22.500 L2.500,32.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,22.500 L5.000,22.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,22.500 L5.000,22.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M2.500,22.500 L2.500,32.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,22.500 L5.590,22.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M2.500,22.500 L2.500,15.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"17.500\" cy=\"0.000\" r=\"0.900\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"2.500\" cy=\"0.000\" r=\"0.900\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"10.000\" cy=\"22.400\" r=\"0.900\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
-    "status": "planned",
-    "sourcePath": "visio/masters/master117.xml"
-  },
-  {
-    "id": "vsdx_рисунок_связанный_с_данными_102_118",
-    "masterId": "118",
-    "title": "Рисунок, связанный с данными.102",
-    "categoryId": "vsdx_symbols",
-    "widthMm": 5.0,
-    "heightMm": 15.0,
-    "connectionCount": 0,
-    "shapeCount": 4,
-    "geometrySectionCount": 3,
-    "propertyNames": [],
-    "userCellNames": [
-      "msvLayoutIncludeSubshapes",
-      "visDGCBVFill",
-      "visDGDisplayFormat",
-      "visDGOldColors"
-    ],
-    "connectionPoints": [],
-    "dataFields": [],
-    "preview": "◇",
-    "svgPreview": "<svg viewBox=\"-1.800 -1.800 8.600 18.600\" aria-label=\"Рисунок, связанный с данными.102\" role=\"img\"><path d=\"M2.500,15.000 L2.500,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M2.500,15.000 L2.500,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,15.000 L5.590,15.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
+    "svgPreview": "<svg viewBox=\"-1.800 -1.800 8.600 18.600\" aria-label=\"Выключатель (выкл)\" role=\"img\"><path d=\"M2.500,15.000 L2.500,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M2.500,15.000 L2.500,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,15.000 L5.590,15.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master118.xml"
   },
   {
-    "id": "vsdx_перекидной_рубильник_119",
-    "masterId": "119",
-    "title": "Перекидной рубильник",
+    "id": "vsdx_рисунок_связанный_с_данными_105_121",
+    "masterId": "121",
+    "title": "Рисунок, связанный с данными.105",
     "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_symbols",
+    "libraryPageName": "Прочие VSDX-фигуры",
+    "libraryOrder": 1000,
     "widthMm": 33.867,
     "heightMm": 25.4,
     "connectionCount": 0,
@@ -7470,15 +8031,18 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "connectionPoints": [],
     "dataFields": [],
     "preview": "◇",
-    "svgPreview": "<svg viewBox=\"-4.064 -4.064 41.995 33.528\" aria-label=\"Перекидной рубильник\" role=\"img\"><path d=\"M0.000,25.400 L33.867,25.400 L33.867,0.000 L0.000,0.000 L0.000,25.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
+    "svgPreview": "<svg viewBox=\"-4.064 -4.064 41.995 33.528\" aria-label=\"Рисунок, связанный с данными.105\" role=\"img\"><path d=\"M0.000,25.400 L33.867,25.400 L33.867,0.000 L0.000,0.000 L0.000,25.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master119.xml"
   },
   {
-    "id": "vsdx_выключатель_выкл_120",
-    "masterId": "120",
-    "title": "Выключатель (выкл)",
-    "categoryId": "busbars_lines_grounding",
+    "id": "vsdx_счетчик_пт_подпись_122",
+    "masterId": "122",
+    "title": "Счётчик ПТ(Подпись)",
+    "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_page_доп_элементы",
+    "libraryPageName": "Доп.элементы",
+    "libraryOrder": 9,
     "widthMm": 10.0,
     "heightMm": 27.4,
     "connectionCount": 4,
@@ -7549,36 +8113,20 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
         "y": 0.0
       }
     ],
-    "dataFields": [
-      {
-        "id": "voltage_class_id",
-        "label": "Класс напряжения",
-        "type": "voltageClass",
-        "source": "semantic_scaffold"
-      },
-      {
-        "id": "connection_point_count",
-        "label": "Количество точек подключения",
-        "type": "number",
-        "source": "semantic_scaffold"
-      },
-      {
-        "id": "line_type",
-        "label": "Тип линии/шины",
-        "type": "enum",
-        "source": "semantic_scaffold"
-      }
-    ],
-    "preview": "▰",
-    "svgPreview": "<svg viewBox=\"-3.288 -3.288 16.576 33.976\" aria-label=\"Выключатель (выкл)\" role=\"img\"><path d=\"M0.000,27.400 L10.000,27.400 L10.000,12.400 L0.000,12.400 L0.000,27.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.400 L10.000,27.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.400 L10.000,27.400 L10.000,16.400 L0.000,16.400 L0.000,27.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.400 L6.125,27.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.400 L0.000,27.400 L0.000,27.400 L0.000,27.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.400 L0.000,27.400 L0.000,27.400 L0.000,27.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.400 L6.220,27.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.400 L0.000,27.400 L0.000,27.400 L0.000,27.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.400 L0.000,27.400 L0.000,27.400 L0.000,27.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,26.900 L12.500,26.900 L12.500,21.960 L0.500,21.960 L0.500,26.900\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"27.400\" r=\"0.450\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"6.125\" cy=\"27.400\" r=\"0.450\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"0.000\" cy=\"27.400\" r=\"0.450\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"6.220\" cy=\"27.400\" r=\"0.450\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
+    "dataFields": [],
+    "preview": "◇",
+    "svgPreview": "<svg viewBox=\"-3.288 -3.288 16.576 33.976\" aria-label=\"Счётчик ПТ(Подпись)\" role=\"img\"><path d=\"M0.000,27.400 L10.000,27.400 L10.000,12.400 L0.000,12.400 L0.000,27.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.400 L10.000,27.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.400 L10.000,27.400 L10.000,16.400 L0.000,16.400 L0.000,27.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.400 L6.125,27.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.400 L0.000,27.400 L0.000,27.400 L0.000,27.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.400 L0.000,27.400 L0.000,27.400 L0.000,27.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.400 L6.220,27.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.400 L0.000,27.400 L0.000,27.400 L0.000,27.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.400 L0.000,27.400 L0.000,27.400 L0.000,27.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,26.900 L12.500,26.900 L12.500,21.960 L0.500,21.960 L0.500,26.900\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"27.400\" r=\"0.450\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"6.125\" cy=\"27.400\" r=\"0.450\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"0.000\" cy=\"27.400\" r=\"0.450\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"6.220\" cy=\"27.400\" r=\"0.450\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master120.xml"
   },
   {
-    "id": "vsdx_рисунок_связанный_с_данными_105_121",
-    "masterId": "121",
-    "title": "Рисунок, связанный с данными.105",
+    "id": "vsdx_рисунок_связанный_с_данными_39_123",
+    "masterId": "123",
+    "title": "Рисунок, связанный с данными.39",
     "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_symbols",
+    "libraryPageName": "Прочие VSDX-фигуры",
+    "libraryOrder": 1000,
     "widthMm": 33.867,
     "heightMm": 25.4,
     "connectionCount": 0,
@@ -7624,15 +8172,18 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "connectionPoints": [],
     "dataFields": [],
     "preview": "◇",
-    "svgPreview": "<svg viewBox=\"-4.064 -4.064 41.995 33.528\" aria-label=\"Рисунок, связанный с данными.105\" role=\"img\"><path d=\"M0.000,25.400 L33.867,25.400 L33.867,0.000 L0.000,0.000 L0.000,25.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,24.900 L33.367,24.900 L33.367,19.960 L0.500,19.960 L0.500,24.900\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,24.900 L33.367,24.900\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,24.900 L33.367,24.900 L33.367,19.960 L0.500,19.960 L0.500,24.900\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,24.900 L33.367,24.900\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,24.900 L33.367,24.900 L33.367,19.960 L0.500,19.960 L0.500,24.900\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,24.900 L33.367,24.900\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,24.900 L33.367,24.900 L33.367,19.960 L0.500,19.960 L0.500,24.900\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,24.900 L33.367,24.900\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,24.900 L33.367,24.900 L33.367,19.960 L0.500,19.960 L0.500,24.900\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
+    "svgPreview": "<svg viewBox=\"-4.064 -4.064 41.995 33.528\" aria-label=\"Рисунок, связанный с данными.39\" role=\"img\"><path d=\"M0.000,25.400 L33.867,25.400 L33.867,0.000 L0.000,0.000 L0.000,25.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,24.900 L33.367,24.900 L33.367,19.960 L0.500,19.960 L0.500,24.900\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,24.900 L33.367,24.900\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,24.900 L33.367,24.900 L33.367,19.960 L0.500,19.960 L0.500,24.900\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,24.900 L33.367,24.900\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,24.900 L33.367,24.900 L33.367,19.960 L0.500,19.960 L0.500,24.900\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,24.900 L33.367,24.900\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,24.900 L33.367,24.900 L33.367,19.960 L0.500,19.960 L0.500,24.900\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,24.900 L33.367,24.900\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,24.900 L33.367,24.900 L33.367,19.960 L0.500,19.960 L0.500,24.900\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master121.xml"
   },
   {
-    "id": "vsdx_счетчик_птподпись_122",
-    "masterId": "122",
-    "title": "Счётчик ПТ(Подпись)",
+    "id": "vsdx_выноска_с_текстом_124",
+    "masterId": "124",
+    "title": "Выноска с текстом",
     "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_symbols",
+    "libraryPageName": "Прочие VSDX-фигуры",
+    "libraryOrder": 1000,
     "widthMm": 30.0,
     "heightMm": 5.093,
     "connectionCount": 0,
@@ -7668,15 +8219,18 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "connectionPoints": [],
     "dataFields": [],
     "preview": "◇",
-    "svgPreview": "<svg viewBox=\"-3.600 -3.600 37.200 12.293\" aria-label=\"Счётчик ПТ(Подпись)\" role=\"img\"><path d=\"M0.500,4.593 L29.500,4.593 L29.500,0.500 L0.500,0.500 L0.500,4.593\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,4.593 L29.500,4.593\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
+    "svgPreview": "<svg viewBox=\"-3.600 -3.600 37.200 12.293\" aria-label=\"Выноска с текстом\" role=\"img\"><path d=\"M0.500,4.593 L29.500,4.593 L29.500,0.500 L0.500,0.500 L0.500,4.593\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,4.593 L29.500,4.593\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master122.xml"
   },
   {
-    "id": "vsdx_рисунок_связанный_с_данными_39_123",
-    "masterId": "123",
-    "title": "Рисунок, связанный с данными.39",
-    "categoryId": "vsdx_symbols",
+    "id": "vsdx_счетчик_тт_подпись_125",
+    "masterId": "125",
+    "title": "Счётчик ТТ (Подпись)",
+    "categoryId": "transformers",
+    "libraryPageId": "vsdx_page_доп_элементы",
+    "libraryPageName": "Доп.элементы",
+    "libraryOrder": 9,
     "widthMm": 16.75,
     "heightMm": 20.0,
     "connectionCount": 2,
@@ -7738,17 +8292,63 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
         "y": 0.0
       }
     ],
-    "dataFields": [],
-    "preview": "◇",
-    "svgPreview": "<svg viewBox=\"-2.400 -2.400 21.550 24.800\" aria-label=\"Рисунок, связанный с данными.39\" role=\"img\"><path d=\"M0.000,20.000 L10.000,20.000 L10.000,5.000 L0.000,5.000 L0.000,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,20.000 L10.000,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,20.000 L10.000,20.000 L10.000,9.000 L0.000,9.000 L0.000,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,20.000 L20.000,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M4.675,16.250 L7.500,16.250\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M4.675,18.750 L7.500,18.750\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M4.675,16.250 L7.500,16.250\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M4.675,18.750 L7.500,18.750\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,19.500 L23.312,19.500 L23.312,14.983 L0.500,14.983 L0.500,19.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,19.500 L23.312,19.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"20.000\" r=\"0.754\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"20.000\" cy=\"20.000\" r=\"0.754\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
+    "dataFields": [
+      {
+        "id": "winding_count",
+        "label": "Количество обмоток",
+        "type": "number",
+        "source": "semantic_scaffold"
+      },
+      {
+        "id": "primary_voltage_kv",
+        "label": "Напряжение ВН, кВ",
+        "type": "number",
+        "source": "semantic_scaffold"
+      },
+      {
+        "id": "secondary_voltage_kv",
+        "label": "Напряжение НН/СН, кВ",
+        "type": "number",
+        "source": "semantic_scaffold"
+      },
+      {
+        "id": "winding_connection_group",
+        "label": "Схема/группа соединения обмоток",
+        "type": "enum",
+        "source": "semantic_scaffold"
+      },
+      {
+        "id": "neutral_grounding",
+        "label": "Режим нейтрали",
+        "type": "enum",
+        "source": "semantic_scaffold"
+      },
+      {
+        "id": "tap_changer",
+        "label": "РПН/ПБВ",
+        "type": "enum",
+        "source": "semantic_scaffold"
+      },
+      {
+        "id": "ratio",
+        "label": "Коэффициент трансформации",
+        "type": "string",
+        "source": "semantic_scaffold"
+      }
+    ],
+    "preview": "◎",
+    "svgPreview": "<svg viewBox=\"-2.400 -2.400 21.550 24.800\" aria-label=\"Счётчик ТТ (Подпись)\" role=\"img\"><path d=\"M0.000,20.000 L10.000,20.000 L10.000,5.000 L0.000,5.000 L0.000,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,20.000 L10.000,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,20.000 L10.000,20.000 L10.000,9.000 L0.000,9.000 L0.000,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,20.000 L20.000,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M4.675,16.250 L7.500,16.250\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M4.675,18.750 L7.500,18.750\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M4.675,16.250 L7.500,16.250\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M4.675,18.750 L7.500,18.750\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,19.500 L23.312,19.500 L23.312,14.983 L0.500,14.983 L0.500,19.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,19.500 L23.312,19.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"20.000\" r=\"0.754\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"20.000\" cy=\"20.000\" r=\"0.754\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master123.xml"
   },
   {
-    "id": "vsdx_выноска_с_текстом_124",
-    "masterId": "124",
-    "title": "Выноска с текстом",
+    "id": "vsdx_рисунок_связанный_с_данными_78_126",
+    "masterId": "126",
+    "title": "Рисунок, связанный с данными.78",
     "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_symbols",
+    "libraryPageName": "Прочие VSDX-фигуры",
+    "libraryOrder": 1000,
     "widthMm": 33.867,
     "heightMm": 25.4,
     "connectionCount": 0,
@@ -7798,15 +8398,18 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "connectionPoints": [],
     "dataFields": [],
     "preview": "◇",
-    "svgPreview": "<svg viewBox=\"-4.064 -4.064 41.995 33.528\" aria-label=\"Выноска с текстом\" role=\"img\"><path d=\"M0.000,25.400 L33.867,25.400 L33.867,0.000 L0.000,0.000 L0.000,25.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,24.900 L33.367,24.900 L33.367,21.653 L0.500,21.653 L0.500,24.900\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,24.900 L33.367,24.900\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,24.900 L33.367,24.900 L33.367,21.653 L0.500,21.653 L0.500,24.900\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,24.900 L33.367,24.900\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,24.900 L33.367,24.900 L33.367,21.653 L0.500,21.653 L0.500,24.900\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,24.900 L33.367,24.900\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,24.900 L33.367,24.900 L33.367,21.653 L0.500,21.653 L0.500,24.900\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,24.900 L33.367,24.900\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,24.900 L33.367,24.900 L33.367,21.653 L0.500,21.653 L0.500,24.900\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
+    "svgPreview": "<svg viewBox=\"-4.064 -4.064 41.995 33.528\" aria-label=\"Рисунок, связанный с данными.78\" role=\"img\"><path d=\"M0.000,25.400 L33.867,25.400 L33.867,0.000 L0.000,0.000 L0.000,25.400\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,24.900 L33.367,24.900 L33.367,21.653 L0.500,21.653 L0.500,24.900\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,24.900 L33.367,24.900\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,24.900 L33.367,24.900 L33.367,21.653 L0.500,21.653 L0.500,24.900\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,24.900 L33.367,24.900\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,24.900 L33.367,24.900 L33.367,21.653 L0.500,21.653 L0.500,24.900\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,24.900 L33.367,24.900\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,24.900 L33.367,24.900 L33.367,21.653 L0.500,21.653 L0.500,24.900\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,24.900 L33.367,24.900\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.500,24.900 L33.367,24.900 L33.367,21.653 L0.500,21.653 L0.500,24.900\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master124.xml"
   },
   {
-    "id": "vsdx_счетчик_тт_подпись_125",
-    "masterId": "125",
-    "title": "Счётчик ТТ (Подпись)",
+    "id": "vsdx_счетчик_через_тт_127",
+    "masterId": "127",
+    "title": "Счётчик (через ТТ)",
     "categoryId": "transformers",
+    "libraryPageId": "vsdx_page_доп_элементы",
+    "libraryPageName": "Доп.элементы",
+    "libraryOrder": 9,
     "widthMm": 17.5,
     "heightMm": 27.5,
     "connectionCount": 6,
@@ -7907,15 +8510,18 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "◎",
-    "svgPreview": "<svg viewBox=\"-3.300 -3.300 24.100 34.100\" aria-label=\"Счётчик ТТ (Подпись)\" role=\"img\"><path d=\"M0.000,27.500 L10.000,27.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M4.675,23.750 L7.500,23.750\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M4.675,26.250 L7.500,26.250\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.500 L10.000,27.500 L10.000,12.500 L0.000,12.500 L0.000,27.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.500 L10.000,27.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.500 L10.000,27.500 L10.000,16.500 L0.000,16.500 L0.000,27.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.500 L8.750,27.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.500 L0.000,27.500 L0.000,27.500 L0.000,27.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.500 L0.000,27.500 L0.000,27.500 L0.000,27.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.500 L8.750,27.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"27.500\" r=\"0.787\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"10.000\" cy=\"27.500\" r=\"0.787\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"0.000\" cy=\"27.500\" r=\"0.787\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"8.750\" cy=\"27.500\" r=\"0.787\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"0.000\" cy=\"27.500\" r=\"0.787\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"8.750\" cy=\"27.500\" r=\"0.787\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
+    "svgPreview": "<svg viewBox=\"-3.300 -3.300 24.100 34.100\" aria-label=\"Счётчик (через ТТ)\" role=\"img\"><path d=\"M0.000,27.500 L10.000,27.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M4.675,23.750 L7.500,23.750\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M4.675,26.250 L7.500,26.250\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.500 L10.000,27.500 L10.000,12.500 L0.000,12.500 L0.000,27.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.500 L10.000,27.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.500 L10.000,27.500 L10.000,16.500 L0.000,16.500 L0.000,27.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.500 L8.750,27.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.500 L0.000,27.500 L0.000,27.500 L0.000,27.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.500 L0.000,27.500 L0.000,27.500 L0.000,27.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,27.500 L8.750,27.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"27.500\" r=\"0.787\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"10.000\" cy=\"27.500\" r=\"0.787\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"0.000\" cy=\"27.500\" r=\"0.787\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"8.750\" cy=\"27.500\" r=\"0.787\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"0.000\" cy=\"27.500\" r=\"0.787\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"8.750\" cy=\"27.500\" r=\"0.787\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master125.xml"
   },
   {
-    "id": "vsdx_рисунок_связанный_с_данными_78_126",
-    "masterId": "126",
-    "title": "Рисунок, связанный с данными.78",
+    "id": "vsdx_зона_ответственности_128",
+    "masterId": "128",
+    "title": "Зона ответственности",
     "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_page_доп_элементы",
+    "libraryPageName": "Доп.элементы",
+    "libraryOrder": 9,
     "widthMm": 58.0,
     "heightMm": 62.0,
     "connectionCount": 0,
@@ -7926,15 +8532,18 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "connectionPoints": [],
     "dataFields": [],
     "preview": "◇",
-    "svgPreview": "<svg viewBox=\"-7.440 -7.440 72.880 76.880\" aria-label=\"Рисунок, связанный с данными.78\" role=\"img\"><path d=\"M0.000,62.000 L58.000,62.000 L58.000,0.000 L0.000,0.000 L0.000,62.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
+    "svgPreview": "<svg viewBox=\"-7.440 -7.440 72.880 76.880\" aria-label=\"Зона ответственности\" role=\"img\"><path d=\"M0.000,62.000 L58.000,62.000 L58.000,0.000 L0.000,0.000 L0.000,62.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master126.xml"
   },
   {
-    "id": "vsdx_счетчик_через_тт_127",
-    "masterId": "127",
-    "title": "Счётчик (через ТТ)",
-    "categoryId": "transformers",
+    "id": "vsdx_граница_балансовой_принадлежности_129",
+    "masterId": "129",
+    "title": "Граница балансовой принадлежности",
+    "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_page_доп_элементы",
+    "libraryPageName": "Доп.элементы",
+    "libraryOrder": 9,
     "widthMm": 90.0,
     "heightMm": 0.0,
     "connectionCount": 0,
@@ -7943,6 +8552,55 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "propertyNames": [],
     "userCellNames": [],
     "connectionPoints": [],
+    "dataFields": [],
+    "preview": "◇",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
+    "status": "planned",
+    "sourcePath": "visio/masters/master127.xml"
+  },
+  {
+    "id": "vsdx_счетчик_через_тт2_130",
+    "masterId": "130",
+    "title": "Счётчик (через ТТ2)",
+    "categoryId": "transformers",
+    "libraryPageId": "vsdx_page_доп_элементы",
+    "libraryPageName": "Доп.элементы",
+    "libraryOrder": 9,
+    "widthMm": 16.75,
+    "heightMm": 20.0,
+    "connectionCount": 2,
+    "shapeCount": 7,
+    "geometrySectionCount": 10,
+    "propertyNames": [],
+    "userCellNames": [
+      "EndX",
+      "EndY",
+      "i",
+      "k",
+      "k_exp",
+      "k_p",
+      "l",
+      "n",
+      "n_exp",
+      "n_p",
+      "name",
+      "np",
+      "r",
+      "r_u",
+      "text"
+    ],
+    "connectionPoints": [
+      {
+        "id": "p1",
+        "x": 0.0,
+        "y": 0.0
+      },
+      {
+        "id": "p2",
+        "x": 20.0,
+        "y": 0.0
+      }
+    ],
     "dataFields": [
       {
         "id": "winding_count",
@@ -7988,61 +8646,18 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "◎",
-    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◎</text></svg>",
-    "status": "planned",
-    "sourcePath": "visio/masters/master127.xml"
-  },
-  {
-    "id": "vsdx_зона_ответственности_128",
-    "masterId": "128",
-    "title": "Зона ответственности",
-    "categoryId": "vsdx_symbols",
-    "widthMm": 16.75,
-    "heightMm": 20.0,
-    "connectionCount": 2,
-    "shapeCount": 7,
-    "geometrySectionCount": 10,
-    "propertyNames": [],
-    "userCellNames": [
-      "EndX",
-      "EndY",
-      "i",
-      "k",
-      "k_exp",
-      "k_p",
-      "l",
-      "n",
-      "n_exp",
-      "n_p",
-      "name",
-      "np",
-      "r",
-      "r_u",
-      "text"
-    ],
-    "connectionPoints": [
-      {
-        "id": "p1",
-        "x": 0.0,
-        "y": 0.0
-      },
-      {
-        "id": "p2",
-        "x": 20.0,
-        "y": 0.0
-      }
-    ],
-    "dataFields": [],
-    "preview": "◇",
-    "svgPreview": "<svg viewBox=\"-2.400 -2.400 21.550 24.800\" aria-label=\"Зона ответственности\" role=\"img\"><path d=\"M0.000,20.000 L10.000,20.000 L10.000,5.000 L0.000,5.000 L0.000,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,20.000 L10.000,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,20.000 L10.000,20.000 L10.000,9.000 L0.000,9.000 L0.000,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,20.000 L20.000,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M4.675,16.250 L7.500,16.250\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M4.675,18.750 L7.500,18.750\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M4.675,16.250 L7.500,16.250\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M4.675,18.750 L7.500,18.750\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"20.000\" r=\"0.754\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"20.000\" cy=\"20.000\" r=\"0.754\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
+    "svgPreview": "<svg viewBox=\"-2.400 -2.400 21.550 24.800\" aria-label=\"Счётчик (через ТТ2)\" role=\"img\"><path d=\"M0.000,20.000 L10.000,20.000 L10.000,5.000 L0.000,5.000 L0.000,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,20.000 L10.000,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,20.000 L10.000,20.000 L10.000,9.000 L0.000,9.000 L0.000,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,20.000 L20.000,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M4.675,16.250 L7.500,16.250\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M4.675,18.750 L7.500,18.750\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M4.675,16.250 L7.500,16.250\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M4.675,18.750 L7.500,18.750\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"20.000\" r=\"0.754\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"20.000\" cy=\"20.000\" r=\"0.754\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master128.xml"
   },
   {
-    "id": "vsdx_граница_балансовой_принадлежности_129",
-    "masterId": "129",
-    "title": "Граница балансовой принадлежности",
+    "id": "vsdx_точка_измерения_2_131",
+    "masterId": "131",
+    "title": "Точка измерения 2",
     "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_page_доп_элементы",
+    "libraryPageName": "Доп.элементы",
+    "libraryOrder": 9,
     "widthMm": 28.0,
     "heightMm": 0.0,
     "connectionCount": 0,
@@ -8058,10 +8673,13 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "sourcePath": "visio/masters/master129.xml"
   },
   {
-    "id": "vsdx_счетчик_через_тт2_130",
-    "masterId": "130",
-    "title": "Счётчик (через ТТ2)",
-    "categoryId": "transformers",
+    "id": "vsdx_стрелочка_132",
+    "masterId": "132",
+    "title": "Стрелочка",
+    "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_page_доп_элементы",
+    "libraryPageName": "Доп.элементы",
+    "libraryOrder": 9,
     "widthMm": 38.0,
     "heightMm": 0.0,
     "connectionCount": 0,
@@ -8070,60 +8688,20 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "propertyNames": [],
     "userCellNames": [],
     "connectionPoints": [],
-    "dataFields": [
-      {
-        "id": "winding_count",
-        "label": "Количество обмоток",
-        "type": "number",
-        "source": "semantic_scaffold"
-      },
-      {
-        "id": "primary_voltage_kv",
-        "label": "Напряжение ВН, кВ",
-        "type": "number",
-        "source": "semantic_scaffold"
-      },
-      {
-        "id": "secondary_voltage_kv",
-        "label": "Напряжение НН/СН, кВ",
-        "type": "number",
-        "source": "semantic_scaffold"
-      },
-      {
-        "id": "winding_connection_group",
-        "label": "Схема/группа соединения обмоток",
-        "type": "enum",
-        "source": "semantic_scaffold"
-      },
-      {
-        "id": "neutral_grounding",
-        "label": "Режим нейтрали",
-        "type": "enum",
-        "source": "semantic_scaffold"
-      },
-      {
-        "id": "tap_changer",
-        "label": "РПН/ПБВ",
-        "type": "enum",
-        "source": "semantic_scaffold"
-      },
-      {
-        "id": "ratio",
-        "label": "Коэффициент трансформации",
-        "type": "string",
-        "source": "semantic_scaffold"
-      }
-    ],
-    "preview": "◎",
-    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◎</text></svg>",
+    "dataFields": [],
+    "preview": "◇",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master130.xml"
   },
   {
-    "id": "vsdx_точка_измерения_2_131",
-    "masterId": "131",
-    "title": "Точка измерения 2",
-    "categoryId": "vsdx_symbols",
+    "id": "vsdx_счетчик_через_тт2_2_133",
+    "masterId": "133",
+    "title": "Счётчик (через ТТ2-2)",
+    "categoryId": "transformers",
+    "libraryPageId": "vsdx_page_доп_элементы",
+    "libraryPageName": "Доп.элементы",
+    "libraryOrder": 9,
     "widthMm": 16.75,
     "heightMm": 20.0,
     "connectionCount": 2,
@@ -8159,44 +8737,6 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
         "y": 0.0
       }
     ],
-    "dataFields": [],
-    "preview": "◇",
-    "svgPreview": "<svg viewBox=\"-2.400 -2.400 21.550 24.800\" aria-label=\"Точка измерения 2\" role=\"img\"><path d=\"M0.000,20.000 L10.000,20.000 L10.000,5.000 L0.000,5.000 L0.000,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,20.000 L10.000,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,20.000 L10.000,20.000 L10.000,9.000 L0.000,9.000 L0.000,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,20.000 L20.000,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M4.675,16.250 L7.500,16.250\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M4.675,18.750 L7.500,18.750\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M4.675,16.250 L7.500,16.250\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M4.675,18.750 L7.500,18.750\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"20.000\" r=\"0.754\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"20.000\" cy=\"20.000\" r=\"0.754\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
-    "status": "planned",
-    "sourcePath": "visio/masters/master131.xml"
-  },
-  {
-    "id": "vsdx_стрелочка_132",
-    "masterId": "132",
-    "title": "Стрелочка",
-    "categoryId": "vsdx_symbols",
-    "widthMm": 28.0,
-    "heightMm": 0.0,
-    "connectionCount": 0,
-    "shapeCount": 1,
-    "geometrySectionCount": 1,
-    "propertyNames": [],
-    "userCellNames": [],
-    "connectionPoints": [],
-    "dataFields": [],
-    "preview": "◇",
-    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><text x=\"32\" y=\"22\" text-anchor=\"middle\" font-size=\"20\" font-family=\"Arial\" font-weight=\"700\" fill=\"#6d0ad6\">◇</text></svg>",
-    "status": "planned",
-    "sourcePath": "visio/masters/master132.xml"
-  },
-  {
-    "id": "vsdx_счетчик_через_тт2_2_133",
-    "masterId": "133",
-    "title": "Счётчик (через ТТ2-2)",
-    "categoryId": "transformers",
-    "widthMm": 22.5,
-    "heightMm": 20.0,
-    "connectionCount": 0,
-    "shapeCount": 1,
-    "geometrySectionCount": 1,
-    "propertyNames": [],
-    "userCellNames": [],
-    "connectionPoints": [],
     "dataFields": [
       {
         "id": "winding_count",
@@ -8242,15 +8782,81 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
       }
     ],
     "preview": "◎",
-    "svgPreview": "<svg viewBox=\"-2.700 -2.700 27.900 25.400\" aria-label=\"Счётчик (через ТТ2-2)\" role=\"img\"><path d=\"M0.000,0.000 L22.500,11.250 L11.300,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
+    "svgPreview": "<svg viewBox=\"-2.400 -2.400 21.550 24.800\" aria-label=\"Счётчик (через ТТ2-2)\" role=\"img\"><path d=\"M0.000,20.000 L10.000,20.000 L10.000,5.000 L0.000,5.000 L0.000,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,20.000 L10.000,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,20.000 L10.000,20.000 L10.000,9.000 L0.000,9.000 L0.000,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,20.000 L20.000,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M4.675,16.250 L7.500,16.250\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M4.675,18.750 L7.500,18.750\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M4.675,16.250 L7.500,16.250\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M4.675,18.750 L7.500,18.750\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"20.000\" r=\"0.754\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"20.000\" cy=\"20.000\" r=\"0.754\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
     "status": "planned",
-    "sourcePath": "visio/masters/master133.xml"
+    "sourcePath": "visio/masters/master131.xml"
   },
   {
     "id": "vsdx_линия_134",
     "masterId": "134",
     "title": "Линия",
     "categoryId": "busbars_lines_grounding",
+    "libraryPageId": "vsdx_page_доп_элементы",
+    "libraryPageName": "Доп.элементы",
+    "libraryOrder": 9,
+    "widthMm": 28.0,
+    "heightMm": 0.0,
+    "connectionCount": 0,
+    "shapeCount": 1,
+    "geometrySectionCount": 1,
+    "propertyNames": [],
+    "userCellNames": [],
+    "connectionPoints": [],
+    "dataFields": [
+      {
+        "id": "voltage_class_id",
+        "label": "Класс напряжения",
+        "type": "voltageClass",
+        "source": "semantic_scaffold"
+      },
+      {
+        "id": "connection_point_count",
+        "label": "Количество точек подключения",
+        "type": "number",
+        "source": "semantic_scaffold"
+      },
+      {
+        "id": "line_type",
+        "label": "Тип линии/шины",
+        "type": "enum",
+        "source": "semantic_scaffold"
+      }
+    ],
+    "preview": "▰",
+    "svgPreview": "<svg viewBox=\"0 0 64 32\" aria-hidden=\"true\"><rect x=\"7\" y=\"12\" width=\"50\" height=\"8\" rx=\"1.5\" fill=\"#6d0ad6\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"17\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"32\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/><circle cx=\"47\" cy=\"16\" r=\"3\" fill=\"#fff\" stroke=\"#111827\" stroke-width=\"1\"/></svg>",
+    "status": "planned",
+    "sourcePath": "visio/masters/master132.xml"
+  },
+  {
+    "id": "vsdx_граница_2_135",
+    "masterId": "135",
+    "title": "Граница 2",
+    "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_page_доп_элементы",
+    "libraryPageName": "Доп.элементы",
+    "libraryOrder": 9,
+    "widthMm": 22.5,
+    "heightMm": 20.0,
+    "connectionCount": 0,
+    "shapeCount": 1,
+    "geometrySectionCount": 1,
+    "propertyNames": [],
+    "userCellNames": [],
+    "connectionPoints": [],
+    "dataFields": [],
+    "preview": "◇",
+    "svgPreview": "<svg viewBox=\"-2.700 -2.700 27.900 25.400\" aria-label=\"Граница 2\" role=\"img\"><path d=\"M0.000,0.000 L22.500,11.250 L11.300,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
+    "status": "planned",
+    "sourcePath": "visio/masters/master133.xml"
+  },
+  {
+    "id": "vsdx_опора_3_136",
+    "masterId": "136",
+    "title": "Опора 3",
+    "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_page_доп_элементы",
+    "libraryPageName": "Доп.элементы",
+    "libraryOrder": 9,
     "widthMm": 8.0,
     "heightMm": 10.5,
     "connectionCount": 4,
@@ -8295,36 +8901,20 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
         "y": 0.0
       }
     ],
-    "dataFields": [
-      {
-        "id": "voltage_class_id",
-        "label": "Класс напряжения",
-        "type": "voltageClass",
-        "source": "semantic_scaffold"
-      },
-      {
-        "id": "connection_point_count",
-        "label": "Количество точек подключения",
-        "type": "number",
-        "source": "semantic_scaffold"
-      },
-      {
-        "id": "line_type",
-        "label": "Тип линии/шины",
-        "type": "enum",
-        "source": "semantic_scaffold"
-      }
-    ],
-    "preview": "▰",
-    "svgPreview": "<svg viewBox=\"-1.260 -1.260 10.520 13.020\" aria-label=\"Линия\" role=\"img\"><path d=\"M0.000,10.500 L3.700,10.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,10.500 L0.000,10.500 L0.000,10.500 L0.000,10.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,10.500 L0.000,10.500 L0.000,10.500 L0.000,10.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,10.500 L4.000,10.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,10.500 L0.000,10.500 L0.000,10.500 L0.000,10.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,10.500 L0.000,10.500 L0.000,10.500 L0.000,10.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"10.500\" r=\"0.360\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"3.700\" cy=\"10.500\" r=\"0.360\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"0.000\" cy=\"10.500\" r=\"0.360\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"4.000\" cy=\"10.500\" r=\"0.360\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
+    "dataFields": [],
+    "preview": "◇",
+    "svgPreview": "<svg viewBox=\"-1.260 -1.260 10.520 13.020\" aria-label=\"Опора 3\" role=\"img\"><path d=\"M0.000,10.500 L3.700,10.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,10.500 L0.000,10.500 L0.000,10.500 L0.000,10.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,10.500 L0.000,10.500 L0.000,10.500 L0.000,10.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,10.500 L4.000,10.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,10.500 L0.000,10.500 L0.000,10.500 L0.000,10.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,10.500 L0.000,10.500 L0.000,10.500 L0.000,10.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"10.500\" r=\"0.360\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"3.700\" cy=\"10.500\" r=\"0.360\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"0.000\" cy=\"10.500\" r=\"0.360\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"4.000\" cy=\"10.500\" r=\"0.360\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master134.xml"
   },
   {
-    "id": "vsdx_граница_2_135",
-    "masterId": "135",
-    "title": "Граница 2",
-    "categoryId": "vsdx_symbols",
+    "id": "vsdx_выключатель_2_137",
+    "masterId": "137",
+    "title": "Выключатель 2",
+    "categoryId": "busbars_lines_grounding",
+    "libraryPageId": "vsdx_page_доп_элементы",
+    "libraryPageName": "Доп.элементы",
+    "libraryOrder": 9,
     "widthMm": 4.5,
     "heightMm": 16.0,
     "connectionCount": 6,
@@ -8379,17 +8969,39 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
         "y": 0.0
       }
     ],
-    "dataFields": [],
-    "preview": "◇",
-    "svgPreview": "<svg viewBox=\"-1.920 -1.920 8.340 19.840\" aria-label=\"Граница 2\" role=\"img\"><path d=\"M0.000,16.000 L5.500,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,16.000 L0.000,16.000 L0.000,16.000 L0.000,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,16.000 L0.000,16.000 L0.000,16.000 L0.000,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,16.000 L5.500,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,16.000 L0.000,16.000 L0.000,16.000 L0.000,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,16.000 L0.000,16.000 L0.000,16.000 L0.000,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,16.000 L5.831,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,16.000 L0.000,16.000 L0.000,16.000 L0.000,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,16.000 L0.000,16.000 L0.000,16.000 L0.000,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,16.000 L3.000,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"16.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"5.500\" cy=\"16.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"0.000\" cy=\"16.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"5.500\" cy=\"16.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"0.000\" cy=\"16.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"5.831\" cy=\"16.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
+    "dataFields": [
+      {
+        "id": "voltage_class_id",
+        "label": "Класс напряжения",
+        "type": "voltageClass",
+        "source": "semantic_scaffold"
+      },
+      {
+        "id": "connection_point_count",
+        "label": "Количество точек подключения",
+        "type": "number",
+        "source": "semantic_scaffold"
+      },
+      {
+        "id": "line_type",
+        "label": "Тип линии/шины",
+        "type": "enum",
+        "source": "semantic_scaffold"
+      }
+    ],
+    "preview": "▰",
+    "svgPreview": "<svg viewBox=\"-1.920 -1.920 8.340 19.840\" aria-label=\"Выключатель 2\" role=\"img\"><path d=\"M0.000,16.000 L5.500,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,16.000 L0.000,16.000 L0.000,16.000 L0.000,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,16.000 L0.000,16.000 L0.000,16.000 L0.000,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,16.000 L5.500,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,16.000 L0.000,16.000 L0.000,16.000 L0.000,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,16.000 L0.000,16.000 L0.000,16.000 L0.000,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,16.000 L5.831,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,16.000 L0.000,16.000 L0.000,16.000 L0.000,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,16.000 L0.000,16.000 L0.000,16.000 L0.000,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,16.000 L3.000,16.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"0.000\" cy=\"16.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"5.500\" cy=\"16.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"0.000\" cy=\"16.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"5.500\" cy=\"16.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"0.000\" cy=\"16.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/><circle cx=\"5.831\" cy=\"16.000\" r=\"0.350\" fill=\"#fff\" stroke=\"#6d0ad6\" stroke-width=\"0.55\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master135.xml"
   },
   {
-    "id": "vsdx_опора_3_136",
-    "masterId": "136",
-    "title": "Опора 3",
-    "categoryId": "vsdx_symbols",
+    "id": "vsdx_текст_1_точка_учета_точка_подключения_138",
+    "masterId": "138",
+    "title": "Текст 1(Точка учёта, точка подключения...)",
+    "categoryId": "busbars_lines_grounding",
+    "libraryPageId": "vsdx_page_доп_элементы",
+    "libraryPageName": "Доп.элементы",
+    "libraryOrder": 9,
     "widthMm": 47.525,
     "heightMm": 14.729,
     "connectionCount": 0,
@@ -8398,17 +9010,39 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "propertyNames": [],
     "userCellNames": [],
     "connectionPoints": [],
-    "dataFields": [],
-    "preview": "◇",
-    "svgPreview": "<svg viewBox=\"-5.703 -5.703 58.931 26.135\" aria-label=\"Опора 3\" role=\"img\"><path d=\"M0.000,14.729 L47.525,14.729 L47.525,0.000 L0.000,0.000 L0.000,14.729\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
+    "dataFields": [
+      {
+        "id": "voltage_class_id",
+        "label": "Класс напряжения",
+        "type": "voltageClass",
+        "source": "semantic_scaffold"
+      },
+      {
+        "id": "connection_point_count",
+        "label": "Количество точек подключения",
+        "type": "number",
+        "source": "semantic_scaffold"
+      },
+      {
+        "id": "line_type",
+        "label": "Тип линии/шины",
+        "type": "enum",
+        "source": "semantic_scaffold"
+      }
+    ],
+    "preview": "▰",
+    "svgPreview": "<svg viewBox=\"-5.703 -5.703 58.931 26.135\" aria-label=\"Текст 1(Точка учёта, точка подключения...)\" role=\"img\"><path d=\"M0.000,14.729 L47.525,14.729 L47.525,0.000 L0.000,0.000 L0.000,14.729\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master136.xml"
   },
   {
-    "id": "vsdx_выключатель_2_137",
-    "masterId": "137",
-    "title": "Выключатель 2",
-    "categoryId": "busbars_lines_grounding",
+    "id": "vsdx_точка_у_п_п_139",
+    "masterId": "139",
+    "title": "Точка У/П/П",
+    "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_page_доп_элементы",
+    "libraryPageName": "Доп.элементы",
+    "libraryOrder": 9,
     "widthMm": 37.037,
     "heightMm": 14.729,
     "connectionCount": 0,
@@ -8417,36 +9051,20 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "propertyNames": [],
     "userCellNames": [],
     "connectionPoints": [],
-    "dataFields": [
-      {
-        "id": "voltage_class_id",
-        "label": "Класс напряжения",
-        "type": "voltageClass",
-        "source": "semantic_scaffold"
-      },
-      {
-        "id": "connection_point_count",
-        "label": "Количество точек подключения",
-        "type": "number",
-        "source": "semantic_scaffold"
-      },
-      {
-        "id": "line_type",
-        "label": "Тип линии/шины",
-        "type": "enum",
-        "source": "semantic_scaffold"
-      }
-    ],
-    "preview": "▰",
-    "svgPreview": "<svg viewBox=\"-4.444 -4.444 45.926 23.618\" aria-label=\"Выключатель 2\" role=\"img\"><path d=\"M0.000,14.729 L37.037,14.729 L37.037,0.000 L0.000,0.000 L0.000,14.729\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
+    "dataFields": [],
+    "preview": "◇",
+    "svgPreview": "<svg viewBox=\"-4.444 -4.444 45.926 23.618\" aria-label=\"Точка У/П/П\" role=\"img\"><path d=\"M0.000,14.729 L37.037,14.729 L37.037,0.000 L0.000,0.000 L0.000,14.729\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master137.xml"
   },
   {
-    "id": "vsdx_текст_1точка_учета_точка_подключения_138",
-    "masterId": "138",
-    "title": "Текст 1(Точка учёта, точка подключения...)",
-    "categoryId": "busbars_lines_grounding",
+    "id": "vsdx_граница_текст_140",
+    "masterId": "140",
+    "title": "Граница текст",
+    "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_page_доп_элементы",
+    "libraryPageName": "Доп.элементы",
+    "libraryOrder": 9,
     "widthMm": 55.0,
     "heightMm": 19.253,
     "connectionCount": 0,
@@ -8455,74 +9073,64 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "propertyNames": [],
     "userCellNames": [],
     "connectionPoints": [],
-    "dataFields": [
-      {
-        "id": "voltage_class_id",
-        "label": "Класс напряжения",
-        "type": "voltageClass",
-        "source": "semantic_scaffold"
-      },
-      {
-        "id": "connection_point_count",
-        "label": "Количество точек подключения",
-        "type": "number",
-        "source": "semantic_scaffold"
-      },
-      {
-        "id": "line_type",
-        "label": "Тип линии/шины",
-        "type": "enum",
-        "source": "semantic_scaffold"
-      }
-    ],
-    "preview": "▰",
-    "svgPreview": "<svg viewBox=\"-6.600 -6.600 68.200 32.453\" aria-label=\"Текст 1(Точка учёта, точка подключения...)\" role=\"img\"><path d=\"M0.000,19.253 L55.000,19.253 L55.000,0.000 L0.000,0.000 L0.000,19.253\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
+    "dataFields": [],
+    "preview": "◇",
+    "svgPreview": "<svg viewBox=\"-6.600 -6.600 68.200 32.453\" aria-label=\"Граница текст\" role=\"img\"><path d=\"M0.000,19.253 L55.000,19.253 L55.000,0.000 L0.000,0.000 L0.000,19.253\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master138.xml"
-  },
-  {
-    "id": "vsdx_точка_у_п_п_139",
-    "masterId": "139",
-    "title": "Точка У/П/П",
-    "categoryId": "vsdx_symbols",
-    "widthMm": 36.611,
-    "heightMm": 10.069,
-    "connectionCount": 0,
-    "shapeCount": 1,
-    "geometrySectionCount": 1,
-    "propertyNames": [],
-    "userCellNames": [],
-    "connectionPoints": [],
-    "dataFields": [],
-    "preview": "◇",
-    "svgPreview": "<svg viewBox=\"-4.393 -4.393 45.398 18.856\" aria-label=\"Точка У/П/П\" role=\"img\"><path d=\"M0.000,10.069 L36.611,10.069 L36.611,0.000 L0.000,0.000 L0.000,10.069\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
-    "status": "planned",
-    "sourcePath": "visio/masters/master139.xml"
-  },
-  {
-    "id": "vsdx_граница_текст_140",
-    "masterId": "140",
-    "title": "Граница текст",
-    "categoryId": "vsdx_symbols",
-    "widthMm": 32.297,
-    "heightMm": 8.3,
-    "connectionCount": 0,
-    "shapeCount": 1,
-    "geometrySectionCount": 1,
-    "propertyNames": [],
-    "userCellNames": [],
-    "connectionPoints": [],
-    "dataFields": [],
-    "preview": "◇",
-    "svgPreview": "<svg viewBox=\"-3.876 -3.876 40.048 16.051\" aria-label=\"Граница текст\" role=\"img\"><path d=\"M0.000,8.300 L32.297,8.300 L32.297,0.000 L0.000,0.000 L0.000,8.300\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
-    "status": "planned",
-    "sourcePath": "visio/masters/master140.xml"
   },
   {
     "id": "vsdx_измерение_зак_141",
     "masterId": "141",
     "title": "Измерение (зак.)",
     "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_page_доп_элементы",
+    "libraryPageName": "Доп.элементы",
+    "libraryOrder": 9,
+    "widthMm": 36.611,
+    "heightMm": 10.069,
+    "connectionCount": 0,
+    "shapeCount": 1,
+    "geometrySectionCount": 1,
+    "propertyNames": [],
+    "userCellNames": [],
+    "connectionPoints": [],
+    "dataFields": [],
+    "preview": "◇",
+    "svgPreview": "<svg viewBox=\"-4.393 -4.393 45.398 18.856\" aria-label=\"Измерение (зак.)\" role=\"img\"><path d=\"M0.000,10.069 L36.611,10.069 L36.611,0.000 L0.000,0.000 L0.000,10.069\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
+    "status": "planned",
+    "sourcePath": "visio/masters/master139.xml"
+  },
+  {
+    "id": "vsdx_продажа_ээ_142",
+    "masterId": "142",
+    "title": "Продажа ЭЭ",
+    "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_page_доп_элементы",
+    "libraryPageName": "Доп.элементы",
+    "libraryOrder": 9,
+    "widthMm": 32.297,
+    "heightMm": 8.3,
+    "connectionCount": 0,
+    "shapeCount": 1,
+    "geometrySectionCount": 1,
+    "propertyNames": [],
+    "userCellNames": [],
+    "connectionPoints": [],
+    "dataFields": [],
+    "preview": "◇",
+    "svgPreview": "<svg viewBox=\"-3.876 -3.876 40.048 16.051\" aria-label=\"Продажа ЭЭ\" role=\"img\"><path d=\"M0.000,8.300 L32.297,8.300 L32.297,0.000 L0.000,0.000 L0.000,8.300\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
+    "status": "planned",
+    "sourcePath": "visio/masters/master140.xml"
+  },
+  {
+    "id": "vsdx_продажа_ээ_с_линией_143",
+    "masterId": "143",
+    "title": "Продажа ЭЭ (с линией)",
+    "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_page_доп_элементы",
+    "libraryPageName": "Доп.элементы",
+    "libraryOrder": 9,
     "widthMm": 32.297,
     "heightMm": 8.3,
     "connectionCount": 0,
@@ -8533,15 +9141,18 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "connectionPoints": [],
     "dataFields": [],
     "preview": "◇",
-    "svgPreview": "<svg viewBox=\"-3.876 -3.876 40.048 16.051\" aria-label=\"Измерение (зак.)\" role=\"img\"><path d=\"M0.000,8.300 L32.297,8.300 L32.297,0.000 L0.000,0.000 L0.000,8.300\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,8.300 L28.000,8.300\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
+    "svgPreview": "<svg viewBox=\"-3.876 -3.876 40.048 16.051\" aria-label=\"Продажа ЭЭ (с линией)\" role=\"img\"><path d=\"M0.000,8.300 L32.297,8.300 L32.297,0.000 L0.000,0.000 L0.000,8.300\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,8.300 L28.000,8.300\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master141.xml"
   },
   {
-    "id": "vsdx_продажа_ээ_142",
-    "masterId": "142",
-    "title": "Продажа ЭЭ",
+    "id": "vsdx_измерение_зак_стрелка_144",
+    "masterId": "144",
+    "title": "Измерение (зак.) (стрелка)",
     "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_page_доп_элементы",
+    "libraryPageName": "Доп.элементы",
+    "libraryOrder": 9,
     "widthMm": 36.611,
     "heightMm": 10.069,
     "connectionCount": 0,
@@ -8552,15 +9163,18 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "connectionPoints": [],
     "dataFields": [],
     "preview": "◇",
-    "svgPreview": "<svg viewBox=\"-4.393 -4.393 45.398 18.856\" aria-label=\"Продажа ЭЭ\" role=\"img\"><path d=\"M0.000,10.069 L36.611,10.069 L36.611,0.000 L0.000,0.000 L0.000,10.069\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,10.069 L31.643,10.069\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
+    "svgPreview": "<svg viewBox=\"-4.393 -4.393 45.398 18.856\" aria-label=\"Измерение (зак.) (стрелка)\" role=\"img\"><path d=\"M0.000,10.069 L36.611,10.069 L36.611,0.000 L0.000,0.000 L0.000,10.069\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,10.069 L31.643,10.069\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master142.xml"
   },
   {
-    "id": "vsdx_продажа_ээ_с_линией_143",
-    "masterId": "143",
-    "title": "Продажа ЭЭ (с линией)",
+    "id": "vsdx_измерение_ээ_145",
+    "masterId": "145",
+    "title": "Измерение ЭЭ",
     "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_page_доп_элементы",
+    "libraryPageName": "Доп.элементы",
+    "libraryOrder": 9,
     "widthMm": 28.811,
     "heightMm": 7.5,
     "connectionCount": 0,
@@ -8571,15 +9185,18 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "connectionPoints": [],
     "dataFields": [],
     "preview": "◇",
-    "svgPreview": "<svg viewBox=\"-3.457 -3.457 35.726 14.415\" aria-label=\"Продажа ЭЭ (с линией)\" role=\"img\"><path d=\"M0.000,7.500 L28.811,7.500 L28.811,0.000 L0.000,0.000 L0.000,7.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
+    "svgPreview": "<svg viewBox=\"-3.457 -3.457 35.726 14.415\" aria-label=\"Измерение ЭЭ\" role=\"img\"><path d=\"M0.000,7.500 L28.811,7.500 L28.811,0.000 L0.000,0.000 L0.000,7.500\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master143.xml"
   },
   {
-    "id": "vsdx_измерение_зак_стрелка_144",
-    "masterId": "144",
-    "title": "Измерение (зак.) (стрелка)",
+    "id": "vsdx_основная_надпись_146",
+    "masterId": "146",
+    "title": "Основная надпись",
     "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_page_штамп_рамки_текст",
+    "libraryPageName": "Штамп, рамки, текст",
+    "libraryOrder": 10,
     "widthMm": 395.0,
     "heightMm": 287.0,
     "connectionCount": 0,
@@ -8619,59 +9236,68 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "connectionPoints": [],
     "dataFields": [],
     "preview": "◇",
-    "svgPreview": "<svg viewBox=\"-47.400 -47.400 489.800 381.800\" aria-label=\"Измерение (зак.) (стрелка)\" role=\"img\"><path d=\"M395.000,0.000 L0.000,0.000 L0.000,287.000 L395.000,287.000 L395.000,0.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,287.000 L60.000,287.000 L60.000,282.000 L0.000,282.000 L0.000,287.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,287.000 L15.000,287.000 L15.000,282.000 L0.000,282.000 L0.000,287.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,287.000 L10.000,287.000 L10.000,282.000 L0.000,282.000 L0.000,287.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,287.000 L115.000,287.000 L115.000,282.000 L0.000,282.000 L0.000,287.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,287.000 L60.000,287.000 L60.000,277.000 L0.000,277.000 L0.000,287.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,287.000 L15.000,287.000 L15.000,277.000 L0.000,277.000 L0.000,287.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,287.000 L30.000,287.000 L30.000,277.000 L0.000,277.000 L0.000,287.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,287.000 L10.000,287.000 L10.000,277.000 L0.000,277.000 L0.000,287.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,287.000 L30.000,287.000 L30.000,267.000 L0.000,267.000 L0.000,287.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
+    "svgPreview": "<svg viewBox=\"-47.400 -47.400 489.800 381.800\" aria-label=\"Основная надпись\" role=\"img\"><path d=\"M395.000,0.000 L0.000,0.000 L0.000,287.000 L395.000,287.000 L395.000,0.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,287.000 L60.000,287.000 L60.000,282.000 L0.000,282.000 L0.000,287.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,287.000 L15.000,287.000 L15.000,282.000 L0.000,282.000 L0.000,287.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,287.000 L10.000,287.000 L10.000,282.000 L0.000,282.000 L0.000,287.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,287.000 L115.000,287.000 L115.000,282.000 L0.000,282.000 L0.000,287.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,287.000 L60.000,287.000 L60.000,277.000 L0.000,277.000 L0.000,287.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,287.000 L15.000,287.000 L15.000,277.000 L0.000,277.000 L0.000,287.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,287.000 L30.000,287.000 L30.000,277.000 L0.000,277.000 L0.000,287.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,287.000 L10.000,287.000 L10.000,277.000 L0.000,277.000 L0.000,287.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M0.000,287.000 L30.000,287.000 L30.000,267.000 L0.000,267.000 L0.000,287.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master144.xml"
-  },
-  {
-    "id": "vsdx_измерение_ээ_145",
-    "masterId": "145",
-    "title": "Измерение ЭЭ",
-    "categoryId": "vsdx_symbols",
-    "widthMm": 30.0,
-    "heightMm": 20.0,
-    "connectionCount": 0,
-    "shapeCount": 1,
-    "geometrySectionCount": 1,
-    "propertyNames": [],
-    "userCellNames": [
-      "i",
-      "r_u"
-    ],
-    "connectionPoints": [],
-    "dataFields": [],
-    "preview": "◇",
-    "svgPreview": "<svg viewBox=\"-3.600 -3.600 37.200 27.200\" aria-label=\"Измерение ЭЭ\" role=\"img\"><path d=\"M0.000,20.000 L30.000,20.000 L30.000,0.000 L0.000,0.000 L0.000,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
-    "status": "planned",
-    "sourcePath": "visio/masters/master145.xml"
-  },
-  {
-    "id": "vsdx_основная_надпись_146",
-    "masterId": "146",
-    "title": "Основная надпись",
-    "categoryId": "vsdx_symbols",
-    "widthMm": 30.0,
-    "heightMm": 20.0,
-    "connectionCount": 0,
-    "shapeCount": 1,
-    "geometrySectionCount": 1,
-    "propertyNames": [],
-    "userCellNames": [
-      "i",
-      "r_u"
-    ],
-    "connectionPoints": [],
-    "dataFields": [],
-    "preview": "◇",
-    "svgPreview": "<svg viewBox=\"-3.600 -3.600 37.200 27.200\" aria-label=\"Основная надпись\" role=\"img\"><path d=\"M0.000,20.000 L15.000,20.000 L15.000,20.000 L30.000,20.000 L30.000,10.000 L30.000,10.000 L30.000,0.000 L15.000,0.000 L15.000,0.000 L0.000,0.000 L0.000,10.000 L0.000,10.000 L0.000,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
-    "status": "planned",
-    "sourcePath": "visio/masters/master146.xml"
   },
   {
     "id": "vsdx_прямоугольная_облась_147",
     "masterId": "147",
     "title": "Прямоугольная облась",
     "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_page_штамп_рамки_текст",
+    "libraryPageName": "Штамп, рамки, текст",
+    "libraryOrder": 10,
+    "widthMm": 30.0,
+    "heightMm": 20.0,
+    "connectionCount": 0,
+    "shapeCount": 1,
+    "geometrySectionCount": 1,
+    "propertyNames": [],
+    "userCellNames": [
+      "i",
+      "r_u"
+    ],
+    "connectionPoints": [],
+    "dataFields": [],
+    "preview": "◇",
+    "svgPreview": "<svg viewBox=\"-3.600 -3.600 37.200 27.200\" aria-label=\"Прямоугольная облась\" role=\"img\"><path d=\"M0.000,20.000 L30.000,20.000 L30.000,0.000 L0.000,0.000 L0.000,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
+    "status": "planned",
+    "sourcePath": "visio/masters/master145.xml"
+  },
+  {
+    "id": "vsdx_область_произвольной_формы_148",
+    "masterId": "148",
+    "title": "Область произвольной формы",
+    "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_page_штамп_рамки_текст",
+    "libraryPageName": "Штамп, рамки, текст",
+    "libraryOrder": 10,
+    "widthMm": 30.0,
+    "heightMm": 20.0,
+    "connectionCount": 0,
+    "shapeCount": 1,
+    "geometrySectionCount": 1,
+    "propertyNames": [],
+    "userCellNames": [
+      "i",
+      "r_u"
+    ],
+    "connectionPoints": [],
+    "dataFields": [],
+    "preview": "◇",
+    "svgPreview": "<svg viewBox=\"-3.600 -3.600 37.200 27.200\" aria-label=\"Область произвольной формы\" role=\"img\"><path d=\"M0.000,20.000 L15.000,20.000 L15.000,20.000 L30.000,20.000 L30.000,10.000 L30.000,10.000 L30.000,0.000 L15.000,0.000 L15.000,0.000 L0.000,0.000 L0.000,10.000 L0.000,10.000 L0.000,20.000\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
+    "status": "planned",
+    "sourcePath": "visio/masters/master146.xml"
+  },
+  {
+    "id": "vsdx_текстовый_блок_149",
+    "masterId": "149",
+    "title": "Текстовый блок",
+    "categoryId": "vsdx_symbols",
+    "libraryPageId": "vsdx_page_штамп_рамки_текст",
+    "libraryPageName": "Штамп, рамки, текст",
+    "libraryOrder": 10,
     "widthMm": 17.597,
     "heightMm": 8.75,
     "connectionCount": 0,
@@ -8685,7 +9311,7 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
     "connectionPoints": [],
     "dataFields": [],
     "preview": "◇",
-    "svgPreview": "<svg viewBox=\"-2.112 -2.112 21.820 12.973\" aria-label=\"Прямоугольная облась\" role=\"img\"><path d=\"M0.000,8.750 L17.597,8.750 L17.597,0.000 L0.000,0.000 L0.000,8.750\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
+    "svgPreview": "<svg viewBox=\"-2.112 -2.112 21.820 12.973\" aria-label=\"Текстовый блок\" role=\"img\"><path d=\"M0.000,8.750 L17.597,8.750 L17.597,0.000 L0.000,0.000 L0.000,8.750\" fill=\"none\" stroke=\"#6d0ad6\" stroke-width=\"0.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
     "status": "planned",
     "sourcePath": "visio/masters/master147.xml"
   }
@@ -8694,4 +9320,5 @@ export const vsdxSymbolDefinitions: VsdxSymbolDefinition[] = [
 export const vsdxSymbolCatalogSummary = {
   source: "G:\\electroscheme-studio\\Фигуры.vsdx",
   count: vsdxSymbolDefinitions.length,
+  libraryCount: vsdxLibraryCategories.length,
 }
