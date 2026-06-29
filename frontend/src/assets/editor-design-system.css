@@ -801,3 +801,87 @@
 .clean-stencil-palette .shape-item[aria-disabled='true'] {
   opacity: 1 !important;
 }
+
+/* patch-043-palette-text-flow-and-canvas-placeholder-cleanup */
+.clean-stencil-palette .shape-item.no-icon,
+.stencil-palette .shape-item.no-icon {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) !important;
+  gap: 0 !important;
+}
+
+.clean-stencil-palette .shape-item.no-icon .shape-text,
+.stencil-palette .shape-item.no-icon .shape-text {
+  grid-column: 1 / -1 !important;
+  width: 100% !important;
+  min-width: 0 !important;
+}
+
+.clean-stencil-palette .shape-title,
+.stencil-palette .shape-title,
+.clean-stencil-palette .library-card-title,
+.stencil-palette .library-card-title {
+  white-space: normal !important;
+  word-break: normal !important;
+  overflow-wrap: break-word !important;
+  hyphens: none !important;
+}
+
+.clean-stencil-palette .shape-item.no-icon .shape-title,
+.stencil-palette .shape-item.no-icon .shape-title {
+  display: block !important;
+  width: 100% !important;
+  line-height: 1.18 !important;
+}
+
+.editor-shell,
+.editor-shell *,
+.canvas-shell,
+.canvas-shell *,
+.canvas-viewport,
+.canvas-viewport *,
+.drawing-area,
+.drawing-area *,
+.ruler-layer,
+.ruler-layer *,
+.guide-layer,
+.guide-layer *,
+.properties-panel,
+.properties-panel *,
+.ribbon-bar,
+.ribbon-bar * {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.canvas-viewport input,
+.canvas-viewport textarea,
+.properties-panel input,
+.properties-panel textarea,
+.properties-panel select,
+.ribbon-bar input,
+.ribbon-bar textarea,
+.ribbon-bar select,
+.shape-palette input,
+.shape-palette textarea,
+.shape-palette select {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+svg text {
+  -webkit-user-select: none !important;
+  user-select: none !important;
+  pointer-events: none;
+}
+
+.empty-canvas-label,
+.empty-canvas-placeholder,
+.canvas-empty-state,
+.canvas-page-label,
+.page-format-label,
+.page-size-label,
+.sheet-format-label,
+.drawing-page-label {
+  display: none !important;
+}

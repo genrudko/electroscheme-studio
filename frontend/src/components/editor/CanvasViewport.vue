@@ -178,7 +178,7 @@
           />
 
           <g v-if="busbars.length === 0 && textObjects.length === 0 && primitiveObjects.length === 0" class="empty-canvas-hint">
-            <text x="0" y="-20" text-anchor="middle" dominant-baseline="middle">Пустой канвас</text>
+            
             <text x="0" y="10" text-anchor="middle" dominant-baseline="middle" class="hint-small">Добавьте объект через ленту либо ПКМ-меню</text>
           </g>
         </svg>
