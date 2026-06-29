@@ -1,5 +1,5 @@
 <template>
-  <section class="editor-shell">
+  <section class="editor-shell" @keydown.capture="onShellKeydown" tabindex="0">
     <RibbonBar
       :active-mode="activeMode"
       :settings="canvasSettings"
@@ -9,6 +9,8 @@
     />
 
     <main class="editor-main">
+      <ShapePalette @insert-shape="dispatchCommand" />
+
       <CanvasViewport
         :active-mode="activeMode"
         :command="pendingCommand"
@@ -34,12 +36,16 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
+import { onMounted, reactive, ref } from 'vue'
 import RibbonBar from './RibbonBar.vue'
+import ShapePalette from './ShapePalette.vue'
 import CanvasViewport from './CanvasViewport.vue'
 import StatusBar from './StatusBar.vue'
 import { defaultCanvasSettings, normalizeCanvasSettings, type CanvasSettings } from '../../lib/editor/canvasSettings'
+import { EditorCommandStack, type CommandStackState } from '../../lib/editor/commandStack'
+import { createEmptyEditorDocument } from '../../lib/editor/editorDocument'
 import type { EditorCommand, EditorInteractionMode } from '../../lib/editor/interactionModes'
+import { shortcutSummary } from '../../lib/editor/shortcutRegistry'
 import type { Point, SnapKind } from '../../lib/editor/snapService'
 
 type EditorStatus = {
@@ -52,6 +58,10 @@ type EditorStatus = {
 
 const activeMode = ref<EditorInteractionMode>('select')
 const pendingCommand = ref<EditorCommand | null>(null)
+const commandStack = new EditorCommandStack()
+const shortcutHelpText = shortcutSummary()
+const commandStackState = reactive<CommandStackState>(commandStack.state())
+const editorDocument = createEmptyEditorDocument(defaultCanvasSettings)
 
 const canvasSettings = reactive<CanvasSettings>({ ...defaultCanvasSettings })
 
@@ -62,6 +72,18 @@ const status = reactive<EditorStatus>({
   selectedObjectName: '',
   message: 'Редактор готов.',
 })
+
+onMounted(() => {
+  status.message = `Документ: ${editorDocument.title}. Слои и палитра фигур подключены. Горячие клавиши: .`
+})
+
+function syncStackState(next: CommandStackState): void {
+  commandStackState.undoDepth = next.undoDepth
+  commandStackState.redoDepth = next.redoDepth
+  commandStackState.canUndo = next.canUndo
+  commandStackState.canRedo = next.canRedo
+  commandStackState.lastCommandLabel = next.lastCommandLabel
+}
 
 function updateCanvasSettings(next: CanvasSettings): void {
   const normalized = normalizeCanvasSettings(next)
@@ -80,6 +102,7 @@ function updateCanvasSettings(next: CanvasSettings): void {
   canvasSettings.pageVisible = normalized.pageVisible
   canvasSettings.pageFormat = normalized.pageFormat
   canvasSettings.pageOrientation = normalized.pageOrientation
+  editorDocument.settings = { ...normalized }
 }
 
 function updateStatus(next: EditorStatus): void {
@@ -100,7 +123,56 @@ function setMode(mode: EditorInteractionMode): void {
 }
 
 function dispatchCommand(command: EditorCommand): void {
+  if (command === 'undo') {
+    syncStackState(commandStack.undo())
+    status.message = 'Undo: фундамент command stack подключён; операции CanvasViewport будут подключаться следующим этапом.'
+    return
+  }
+
+  if (command === 'redo') {
+    syncStackState(commandStack.redo())
+    status.message = 'Redo: фундамент command stack подключён; операции CanvasViewport будут подключаться следующим этапом.'
+    return
+  }
+
+  if (command === 'cut') {
+    pendingCommand.value = 'copy'
+    setTimeout(() => { pendingCommand.value = 'delete' }, 0)
+    return
+  }
+
   pendingCommand.value = command
+}
+
+function onShellKeydown(event: KeyboardEvent): void {
+  const target = event.target as HTMLElement | null
+  const tagName = target?.tagName?.toLowerCase()
+  if (tagName === 'input' || tagName === 'textarea' || tagName === 'select' || target?.isContentEditable) return
+
+  const key = event.key.toLowerCase()
+
+  if (event.ctrlKey && key === 'z') {
+    event.preventDefault()
+    dispatchCommand('undo')
+  } else if (event.ctrlKey && (key === 'y' || (event.shiftKey && key === 'z'))) {
+    event.preventDefault()
+    dispatchCommand('redo')
+  } else if (event.ctrlKey && key === 'c') {
+    event.preventDefault()
+    dispatchCommand('copy')
+  } else if (event.ctrlKey && key === 'x') {
+    event.preventDefault()
+    dispatchCommand('cut')
+  } else if (event.ctrlKey && key === 'v') {
+    event.preventDefault()
+    dispatchCommand('paste')
+  } else if (event.key === 'Delete') {
+    event.preventDefault()
+    dispatchCommand('delete')
+  } else if (event.key === 'Escape') {
+    event.preventDefault()
+    setMode('select')
+  }
 }
 </script>
 
@@ -113,9 +185,12 @@ function dispatchCommand(command: EditorCommand): void {
   background: #e5edf7;
   color: #0f172a;
   overflow: hidden;
+  outline: none;
 }
 
 .editor-main {
+  display: grid;
+  grid-template-columns: 250px 1fr;
   min-height: 0;
   overflow: hidden;
 }

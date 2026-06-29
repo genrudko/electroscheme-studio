@@ -26,7 +26,7 @@ const LOW_VOLTAGE_RGB: [number, number, number] = [95, 95, 95]
 
 export const voltageClassColors: VoltageClassColor[] = [
   { id: '1150', label: '1150 кВ', voltageKv: 1150, color: 'rgb(205, 138, 255)', rgb: [205, 138, 255], codifierRange: '1150 кВ' },
-  { id: '800', label: '800 кВ', voltageKv: 800, color: 'rgb(0, 0, 168)', rgb: [0, 0, 168], codifierRange: '800/750 кВ' },
+  { id: '800', label: '800 кВ / 750 кВ', voltageKv: 800, color: 'rgb(0, 0, 168)', rgb: [0, 0, 168], codifierRange: '800/750 кВ' },
   { id: '750', label: '750 кВ', voltageKv: 750, color: 'rgb(0, 0, 168)', rgb: [0, 0, 168], codifierRange: '800/750 кВ' },
   { id: '500', label: '500 кВ', voltageKv: 500, color: 'rgb(213, 0, 0)', rgb: [213, 0, 0], codifierRange: '500 кВ' },
   { id: '400', label: '400 кВ', voltageKv: 400, color: 'rgb(255, 100, 30)', rgb: [255, 100, 30], codifierRange: '400 кВ' },
@@ -66,9 +66,6 @@ export function voltageClassIdFromKv(voltageKv: number): VoltageClassId {
   return '0.4'
 }
 
-/**
- * Backward-compatible helper for old code paths that still only know numeric voltage.
- */
 export function voltageColor(voltageKv: number): string {
   return voltageColorById(voltageClassIdFromKv(voltageKv))
 }
