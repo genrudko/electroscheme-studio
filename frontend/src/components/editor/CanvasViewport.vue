@@ -122,7 +122,7 @@
               :data-busbar-id="busbar.id"
               @pointerdown.stop="onBusbarPointerDown($event, busbar.id)"
             >
-              <rect class="busbar" :style="{ fill: voltageColor(busbar.voltageKv) }" :x="busbar.x" :y="busbar.y" :width="busbar.width" :height="busbar.height" rx="1" />
+              <rect class="busbar" :style="{ fill: voltageColorById(busbar.voltageClassId) }" :x="busbar.x" :y="busbar.y" :width="busbar.width" :height="busbar.height" rx="1" />
             </g>
 
             <circle v-for="slot in baySlots" :key="slot.id" class="bay-slot" :cx="slot.x" :cy="slot.y" r="5" :data-slot-id="slot.id" />
@@ -200,8 +200,8 @@
         <label>X <input v-model.number="selectedBusbar.x" type="number" step="1" @change="syncBusbarLabels(selectedBusbar)" /></label>
         <label>Y <input v-model.number="selectedBusbar.y" type="number" step="1" @change="syncBusbarLabels(selectedBusbar)" /></label>
         <label>Класс напряжения
-          <select v-model.number="selectedBusbar.voltageKv" @change="syncBusbarLabels(selectedBusbar)">
-            <option v-for="item in voltageClassColors" :key="item.id" :value="item.voltageKv">{{ item.label }}</option>
+          <select v-model="selectedBusbar.voltageClassId" @change="syncBusbarLabels(selectedBusbar)">
+            <option v-for="item in voltageClassColors" :key="item.id" :value="item.id">{{ item.label }}</option>
           </select>
         </label>
         <label>Толщина <input v-model.number="selectedBusbar.height" type="number" min="4" step="1" @change="syncBusbarLabels(selectedBusbar)" /></label>
@@ -278,7 +278,7 @@ import { isoPageSizes, normalizeCanvasSettings, type CanvasSettings } from '../.
 import type { EditorCommand, EditorInteractionMode } from '../../lib/editor/interactionModes'
 import { formatPoint, rectsIntersect, snapPoint, type Point, type SnapCandidate, type SnapKind } from '../../lib/editor/snapService'
 import { createReferenceClipboard, placeItemAtReferencePoint, type ReferenceClipboardPayload, type TextClipboardItem } from '../../lib/editor/referenceClipboard'
-import { voltageClassColors, voltageColor } from '../../lib/editor/voltageClasses'
+import { voltageClassColors, voltageColorById, voltageKvById, type VoltageClassId } from '../../lib/editor/voltageClasses'
 
 type TextObjectRole = 'bay-label' | 'bus-label' | 'free-text-box'
 type PrimitiveKind = 'rectangle' | 'ellipse' | 'line'
@@ -311,6 +311,7 @@ type BusbarObject = {
   labelStart: number
   label: string
   voltageKv: number
+  voltageClassId: VoltageClassId
 }
 
 type PrimitiveObject = {
@@ -604,6 +605,7 @@ function createSampleBusbar(): void {
     labelStart: 1,
     label: `${nextIndex}С 10 кВ`,
     voltageKv: 10,
+    voltageClassId: '10',
   }
   busbar.width = autoBusbarWidth(busbar)
   busbars.value.push(busbar)
@@ -657,6 +659,7 @@ function normalizeBusbarSlots(busbar: BusbarObject | null): void {
 function syncBusbarLabels(busbar: BusbarObject | null): void {
   if (!busbar) return
   busbar.height = Math.max(4, busbar.height)
+  busbar.voltageKv = voltageKvById(busbar.voltageClassId)
   busbar.width = autoBusbarWidth(busbar)
   ensureBusbarLabels(busbar)
   message.value = `Параметры шины обновлены: ${busbar.label}.`
