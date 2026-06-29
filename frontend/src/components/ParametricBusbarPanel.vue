@@ -5,7 +5,7 @@
         <p class="eyebrow">Parametric symbol</p>
         <h2>Busbar generator</h2>
         <p class="description">
-          Side-aware labels, larger end offset and draggable/rotatable bus caption.
+          Bus captions and cell number labels can be dragged and rotated.
         </p>
       </div>
       <button type="button" class="primary-button" :disabled="loading" @click="refreshPreview">
@@ -94,6 +94,29 @@
           <label class="field">Label offset
             <input v-model.number="form.bay_label_offset" type="number" min="0" max="120" step="1" />
           </label>
+
+          <label class="field">Default number rotation
+            <input v-model.number="form.bay_label_default_rotation_deg" type="number" min="-360" max="360" step="90" />
+          </label>
+
+          <div class="preset-row">
+            <button type="button" @click="setAllBayLabelRotation(0)">All 0°</button>
+            <button type="button" @click="setAllBayLabelRotation(90)">All +90°</button>
+            <button type="button" @click="setAllBayLabelRotation(-90)">All -90°</button>
+          </div>
+        </section>
+
+        <section class="numbering-box">
+          <h3>Selected cell number</h3>
+          <p class="small-note">{{ selectedBayLabelId || 'Click or drag a cell number label' }}</p>
+
+          <div class="preset-row">
+            <button type="button" :disabled="!selectedBayLabelId" @click="setSelectedBayLabelRotation(0)">0°</button>
+            <button type="button" :disabled="!selectedBayLabelId" @click="setSelectedBayLabelRotation(90)">+90°</button>
+            <button type="button" :disabled="!selectedBayLabelId" @click="setSelectedBayLabelRotation(-90)">-90°</button>
+            <button type="button" :disabled="!selectedBayLabelId" @click="setSelectedBayLabelRotation(180)">180°</button>
+            <button type="button" :disabled="!selectedBayLabelId" @click="resetSelectedBayLabel()">Reset</button>
+          </div>
         </section>
 
         <section class="numbering-box">
@@ -133,16 +156,16 @@
           </label>
 
           <div class="preset-row">
-            <button type="button" @click="setRotation(0)">0°</button>
-            <button type="button" @click="setRotation(90)">+90°</button>
-            <button type="button" @click="setRotation(-90)">-90°</button>
-            <button type="button" @click="setRotation(180)">180°</button>
+            <button type="button" @click="setBusRotation(0)">0°</button>
+            <button type="button" @click="setBusRotation(90)">+90°</button>
+            <button type="button" @click="setBusRotation(-90)">-90°</button>
+            <button type="button" @click="setBusRotation(180)">180°</button>
           </div>
         </section>
       </aside>
 
       <main class="preview-area">
-        <p class="hint">Tip: drag the bus caption directly in the preview. It moves immediately and the model offsets are refreshed on release.</p>
+        <p class="hint">Tip: drag the bus caption or any cell number. Selected cell labels can also be rotated with presets.</p>
 
         <div class="preview-card">
           <svg
@@ -160,9 +183,9 @@
 
         <div v-if="preview" class="summary">
           <article><span>Points</span><strong>{{ preview.bay_slots.length }}</strong></article>
-          <article><span>End offset</span><strong>{{ preview.capabilities.busbar.end_slot_offset }}</strong></article>
-          <article><span>Caption X/Y</span><strong>{{ form.bus_label_offset_x }}, {{ form.bus_label_offset_y }}</strong></article>
-          <article><span>Rotation</span><strong>{{ form.bus_label_rotation_mode }} {{ form.bus_label_rotation_deg }}°</strong></article>
+          <article><span>Selected label</span><strong>{{ selectedBayLabelId || '—' }}</strong></article>
+          <article><span>Overrides</span><strong>{{ Object.keys(form.bay_label_overrides).length }}</strong></article>
+          <article><span>Bus caption X/Y</span><strong>{{ form.bus_label_offset_x }}, {{ form.bus_label_offset_y }}</strong></article>
         </div>
 
         <details v-if="preview" class="terminal-list" open>
@@ -200,6 +223,12 @@ type BusLabelPosition = 'auto' | 'right' | 'left' | 'top' | 'bottom'
 type BayNumberingStyle = 'number_only' | 'prefix_number'
 type RotationMode = 'auto' | 'manual'
 
+type TextLabelOverride = {
+  offset_x: number
+  offset_y: number
+  rotation_deg: number | null
+}
+
 type BusbarPreviewRequest = {
   id: string
   name_ru: string
@@ -222,6 +251,8 @@ type BusbarPreviewRequest = {
   bay_numbering_step: number
   bay_label_offset: number
   bay_label_both_side_separate_rows: boolean
+  bay_label_default_rotation_deg: number
+  bay_label_overrides: Record<string, TextLabelOverride>
   bus_label: string
   bus_label_position: BusLabelPosition
   bus_label_gap: number
@@ -255,6 +286,7 @@ const loading = ref(false)
 const error = ref('')
 const preview = ref<ParametricSymbolPreview | null>(null)
 const previewSvg = ref<SVGSVGElement | null>(null)
+const selectedBayLabelId = ref('')
 
 const form = reactive<BusbarPreviewRequest>({
   id: 'param_busbar_1',
@@ -278,6 +310,8 @@ const form = reactive<BusbarPreviewRequest>({
   bay_numbering_step: 1,
   bay_label_offset: 16,
   bay_label_both_side_separate_rows: true,
+  bay_label_default_rotation_deg: 0,
+  bay_label_overrides: {},
   bus_label: '1С 10 кВ',
   bus_label_position: 'auto',
   bus_label_gap: 34,
@@ -293,9 +327,34 @@ const viewBoxString = computed(() => {
   return `${vb.x} ${vb.y} ${vb.width} ${vb.height}`
 })
 
-function setRotation(degrees: number): void {
+function setBusRotation(degrees: number): void {
   form.bus_label_rotation_mode = 'manual'
   form.bus_label_rotation_deg = degrees
+  void refreshPreview()
+}
+
+function ensureBayLabelOverride(slotId: string): TextLabelOverride {
+  if (!form.bay_label_overrides[slotId]) {
+    form.bay_label_overrides[slotId] = { offset_x: 0, offset_y: 0, rotation_deg: null }
+  }
+  return form.bay_label_overrides[slotId]
+}
+
+function setAllBayLabelRotation(degrees: number): void {
+  form.bay_label_default_rotation_deg = degrees
+  void refreshPreview()
+}
+
+function setSelectedBayLabelRotation(degrees: number): void {
+  if (!selectedBayLabelId.value) return
+  const override = ensureBayLabelOverride(selectedBayLabelId.value)
+  override.rotation_deg = degrees
+  void refreshPreview()
+}
+
+function resetSelectedBayLabel(): void {
+  if (!selectedBayLabelId.value) return
+  delete form.bay_label_overrides[selectedBayLabelId.value]
   void refreshPreview()
 }
 
@@ -310,10 +369,11 @@ function clientToSvgPoint(event: PointerEvent): DOMPoint | null {
   return point.matrixTransform(ctm.inverse())
 }
 
-function findBusLabelTarget(start: Element | null): SVGTextElement | null {
+function findDraggableLabelTarget(start: Element | null): SVGTextElement | null {
   let current: Element | null = start
   while (current && current !== previewSvg.value) {
-    if (current.getAttribute('data-role') === 'bus-label') {
+    const role = current.getAttribute('data-role')
+    if (role === 'bus-label' || role === 'bay-label') {
       return current as SVGTextElement
     }
     current = current.parentElement
@@ -331,7 +391,7 @@ function setLabelVisualPosition(target: SVGTextElement, x: number, y: number): v
 }
 
 function onPreviewPointerDown(event: PointerEvent): void {
-  const target = findBusLabelTarget(event.target as Element | null)
+  const target = findDraggableLabelTarget(event.target as Element | null)
   if (!target) return
 
   event.preventDefault()
@@ -339,10 +399,19 @@ function onPreviewPointerDown(event: PointerEvent): void {
   const start = clientToSvgPoint(event)
   if (!start) return
 
+  const role = target.getAttribute('data-role')
+  const baySlotId = target.getAttribute('data-bay-slot-id') ?? ''
+  if (role === 'bay-label' && baySlotId) {
+    selectedBayLabelId.value = baySlotId
+  }
+
   const baseX = Number(target.getAttribute('x') ?? '0') || 0
   const baseY = Number(target.getAttribute('y') ?? '0') || 0
-  const startOffsetX = form.bus_label_offset_x
-  const startOffsetY = form.bus_label_offset_y
+  const startBusOffsetX = form.bus_label_offset_x
+  const startBusOffsetY = form.bus_label_offset_y
+  const bayOverride = baySlotId ? ensureBayLabelOverride(baySlotId) : null
+  const startBayOffsetX = bayOverride?.offset_x ?? 0
+  const startBayOffsetY = bayOverride?.offset_y ?? 0
   const pointerId = event.pointerId
 
   target.style.cursor = 'grabbing'
@@ -354,8 +423,15 @@ function onPreviewPointerDown(event: PointerEvent): void {
     if (!current) return
     const dx = current.x - start.x
     const dy = current.y - start.y
-    form.bus_label_offset_x = Math.round((startOffsetX + dx) * 10) / 10
-    form.bus_label_offset_y = Math.round((startOffsetY + dy) * 10) / 10
+
+    if (role === 'bus-label') {
+      form.bus_label_offset_x = Math.round((startBusOffsetX + dx) * 10) / 10
+      form.bus_label_offset_y = Math.round((startBusOffsetY + dy) * 10) / 10
+    } else if (role === 'bay-label' && bayOverride) {
+      bayOverride.offset_x = Math.round((startBayOffsetX + dx) * 10) / 10
+      bayOverride.offset_y = Math.round((startBayOffsetY + dy) * 10) / 10
+    }
+
     setLabelVisualPosition(target, baseX + dx, baseY + dy)
   }
 
@@ -410,66 +486,24 @@ onMounted(() => {
 .eyebrow { margin: 0 0 4px; font-size: 12px; font-weight: 800; letter-spacing: 0.08em; color: #2563eb; text-transform: uppercase; }
 .panel-header h2 { margin: 0; font-size: 22px; }
 .description { margin: 4px 0 0; color: #64748b; }
-
-.primary-button {
-  align-self: flex-start;
-  border: 0;
-  border-radius: 999px;
-  padding: 10px 16px;
-  background: #2563eb;
-  color: white;
-  font-weight: 800;
-  cursor: pointer;
-}
-
+.primary-button { align-self: flex-start; border: 0; border-radius: 999px; padding: 10px 16px; background: #2563eb; color: white; font-weight: 800; cursor: pointer; }
 .primary-button:disabled { opacity: 0.55; cursor: default; }
 .status { padding: 16px; border-radius: 12px; background: #eff6ff; color: #1e40af; }
 .status.error { background: #fef2f2; color: #991b1b; }
 .layout { display: grid; grid-template-columns: minmax(250px, 320px) 1fr; gap: 16px; }
 .controls, .preview-area { border: 1px solid #dbeafe; border-radius: 14px; background: white; padding: 14px; }
-
-.field {
-  display: grid;
-  gap: 6px;
-  margin-bottom: 12px;
-  color: #475569;
-  font-size: 12px;
-  font-weight: 800;
-}
-
-.field input, .field select {
-  width: 100%;
-  box-sizing: border-box;
-  border: 1px solid #cbd5e1;
-  border-radius: 10px;
-  padding: 9px 10px;
-  color: #0f172a;
-  background: white;
-}
-
+.field { display: grid; gap: 6px; margin-bottom: 12px; color: #475569; font-size: 12px; font-weight: 800; }
+.field input, .field select { width: 100%; box-sizing: border-box; border: 1px solid #cbd5e1; border-radius: 10px; padding: 9px 10px; color: #0f172a; background: white; }
 .check-field { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; color: #334155; font-size: 12px; font-weight: 800; }
 .numbering-box { margin-top: 14px; padding: 12px; border: 1px solid #dbeafe; border-radius: 12px; background: #eff6ff; }
 .numbering-box h3 { margin: 0 0 10px; font-size: 14px; }
+.small-note { margin: 0 0 10px; color: #64748b; font-size: 12px; font-weight: 700; }
 .preset-row { display: flex; flex-wrap: wrap; gap: 6px; }
 .preset-row button { border: 1px solid #bfdbfe; border-radius: 999px; padding: 6px 9px; background: white; color: #1d4ed8; cursor: pointer; font-weight: 800; }
-
-.preview-card {
-  min-height: 360px;
-  display: grid;
-  place-items: center;
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
-  background:
-    linear-gradient(90deg, rgba(148, 163, 184, 0.14) 1px, transparent 1px),
-    linear-gradient(rgba(148, 163, 184, 0.14) 1px, transparent 1px);
-  background-size: 18px 18px;
-  --busbar-color: #6d0ad6;
-  --slot-stroke: #ffffff;
-  --label-color: #111111;
-}
-
+.preset-row button:disabled { opacity: 0.45; cursor: default; }
+.preview-card { min-height: 360px; display: grid; place-items: center; border: 1px solid #e2e8f0; border-radius: 12px; background: linear-gradient(90deg, rgba(148, 163, 184, 0.14) 1px, transparent 1px), linear-gradient(rgba(148, 163, 184, 0.14) 1px, transparent 1px); background-size: 18px 18px; --busbar-color: #6d0ad6; --slot-stroke: #ffffff; --label-color: #111111; }
 .preview-svg { width: 96%; max-height: 340px; touch-action: none; }
-.preview-svg :deep([data-role='bus-label']) { cursor: grab; user-select: none; }
+.preview-svg :deep([data-role='bus-label']), .preview-svg :deep([data-role='bay-label']) { cursor: grab; user-select: none; }
 .hint { margin: 0 0 10px; color: #64748b; font-size: 12px; font-weight: 700; }
 .summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin: 12px 0; }
 .summary article { border: 1px solid #e2e8f0; border-radius: 12px; padding: 10px; }

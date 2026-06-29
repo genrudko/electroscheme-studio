@@ -20,6 +20,14 @@
   "bay_numbering_step": 1,
   "bay_label_offset": 16,
   "bay_label_both_side_separate_rows": true,
+  "bay_label_default_rotation_deg": 0,
+  "bay_label_overrides": {
+    "bay_slot_bottom_1": {
+      "offset_x": 6,
+      "offset_y": -3,
+      "rotation_deg": 0
+    }
+  },
   "bus_label": "1С 10 кВ",
   "bus_label_position": "auto",
   "bus_label_gap": 34,

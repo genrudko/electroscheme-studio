@@ -8,6 +8,7 @@ import json
 import os
 import shutil
 import subprocess
+import tempfile
 from pathlib import Path
 from typing import Any
 
@@ -46,29 +47,46 @@ def candidate_browsers() -> list[Path]:
 def run_capture(browser: Path, url: str, out_path: Path, window_size: str) -> dict[str, Any]:
     out_path.parent.mkdir(parents=True, exist_ok=True)
 
-    attempts = [
-        ["--headless=new", "--disable-gpu", "--hide-scrollbars", f"--window-size={window_size}", f"--screenshot={out_path}", url],
-        ["--headless", "--disable-gpu", "--hide-scrollbars", f"--window-size={window_size}", f"--screenshot={out_path}", url],
-    ]
+    with tempfile.TemporaryDirectory(prefix="ess_browser_profile_") as profile:
+        profile_path = Path(profile)
+        fallback_path = out_path.parent / "screenshot.png"
+        if fallback_path.exists():
+            fallback_path.unlink()
 
-    last: dict[str, Any] | None = None
-    for args in attempts:
-        proc = subprocess.run([str(browser), *args], capture_output=True, text=True)
-        last = {
-            "browser": str(browser),
-            "url": url,
-            "out": str(out_path),
-            "args": args,
-            "returncode": proc.returncode,
-            "stdout": proc.stdout.strip(),
-            "stderr": proc.stderr.strip(),
-            "exists": out_path.exists(),
-            "size_bytes": out_path.stat().st_size if out_path.exists() else 0,
-        }
-        if proc.returncode == 0 and out_path.exists() and out_path.stat().st_size > 0:
-            return last
-    assert last is not None
-    return last
+        attempts = [
+            ["--headless=new", "--disable-gpu", "--no-first-run", "--disable-extensions", f"--user-data-dir={profile_path}", f"--window-size={window_size}", f"--screenshot={out_path}", url],
+            ["--headless", "--disable-gpu", "--no-first-run", "--disable-extensions", f"--user-data-dir={profile_path}", f"--window-size={window_size}", f"--screenshot={out_path}", url],
+            ["--headless=new", "--disable-gpu", "--no-first-run", "--disable-extensions", f"--user-data-dir={profile_path}", f"--window-size={window_size}", "--screenshot", url],
+            ["--headless", "--disable-gpu", "--no-first-run", "--disable-extensions", f"--user-data-dir={profile_path}", f"--window-size={window_size}", "--screenshot", url],
+        ]
+
+        last: dict[str, Any] | None = None
+        for args in attempts:
+            if out_path.exists():
+                out_path.unlink()
+            if fallback_path.exists():
+                fallback_path.unlink()
+
+            proc = subprocess.run([str(browser), *args], cwd=out_path.parent, capture_output=True, text=True)
+            if not out_path.exists() and fallback_path.exists():
+                fallback_path.replace(out_path)
+
+            last = {
+                "browser": str(browser),
+                "url": url,
+                "out": str(out_path),
+                "args": args,
+                "returncode": proc.returncode,
+                "stdout": proc.stdout.strip(),
+                "stderr": proc.stderr.strip(),
+                "exists": out_path.exists(),
+                "size_bytes": out_path.stat().st_size if out_path.exists() else 0,
+            }
+            if proc.returncode == 0 and out_path.exists() and out_path.stat().st_size > 0:
+                return last
+
+        assert last is not None
+        return last
 
 
 def main() -> int:
@@ -85,21 +103,14 @@ def main() -> int:
 
     browsers = candidate_browsers()
     if not browsers:
-        result = {
-            "status": "browser_not_found",
-            "captures": [],
-            "message": "No Edge/Chrome/Chromium executable found.",
-        }
+        result = {"status": "browser_not_found", "captures": [], "message": "No Edge/Chrome/Chromium executable found."}
         out_dir.mkdir(parents=True, exist_ok=True)
         (out_dir / "capture_manifest.json").write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
         print(json.dumps(result, ensure_ascii=False, indent=2))
         return 2
 
     browser = browsers[0]
-    pages = [
-        ("index", visual_dir / "index.html"),
-        ("interactive", visual_dir / "interactive.html"),
-    ]
+    pages = [("index", visual_dir / "index.html"), ("interactive", visual_dir / "interactive.html")]
 
     captures: list[dict[str, Any]] = []
     for stem, page in pages:

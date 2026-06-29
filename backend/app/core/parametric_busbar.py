@@ -8,6 +8,7 @@ from app.schemas.parametric_symbols import (
     ParametricBaySlot,
     ParametricSymbolPreview,
     ParametricTerminal,
+    TextLabelOverride,
 )
 
 
@@ -229,18 +230,49 @@ def _slot_positions_vertical(params: BusbarPreviewRequest, geom: _BarGeometry) -
     return [geom.bar_y + params.end_slot_offset + i * spacing for i in range(params.connection_count)]
 
 
-def _bay_label_position(params: BusbarPreviewRequest, geom: _BarGeometry, slot_side: str, bus_x: float, bus_y: float) -> tuple[float | None, float | None]:
+def _slot_id(slot_side: str, index: int) -> str:
+    return f"bay_slot_{slot_side}_{index}"
+
+
+def _bay_label_override(params: BusbarPreviewRequest, slot_id: str) -> TextLabelOverride:
+    return params.bay_label_overrides.get(slot_id, TextLabelOverride())
+
+
+def _bay_label_rotation(params: BusbarPreviewRequest, slot_id: str) -> int:
+    override = params.bay_label_overrides.get(slot_id)
+    if override is not None and override.rotation_deg is not None:
+        return override.rotation_deg
+    return params.bay_label_default_rotation_deg
+
+
+def _bay_label_position(
+    params: BusbarPreviewRequest,
+    geom: _BarGeometry,
+    slot_id: str,
+    slot_side: str,
+    bus_x: float,
+    bus_y: float,
+) -> tuple[float | None, float | None]:
     if not params.bay_numbering_enabled:
         return None, None
 
     if params.orientation == "horizontal":
         if params.connection_side == "both" and params.bay_label_both_side_separate_rows and slot_side == "bottom":
-            return bus_x, geom.bar_y + geom.bar_h + params.bay_label_offset
-        return bus_x, geom.bar_y - params.bay_label_offset
+            label_x = bus_x
+            label_y = geom.bar_y + geom.bar_h + params.bay_label_offset
+        else:
+            label_x = bus_x
+            label_y = geom.bar_y - params.bay_label_offset
+    else:
+        if params.connection_side == "both" and params.bay_label_both_side_separate_rows and slot_side == "right":
+            label_x = geom.bar_x + geom.bar_w + params.bay_label_offset
+            label_y = bus_y
+        else:
+            label_x = geom.bar_x - params.bay_label_offset
+            label_y = bus_y
 
-    if params.connection_side == "both" and params.bay_label_both_side_separate_rows and slot_side == "right":
-        return geom.bar_x + geom.bar_w + params.bay_label_offset, bus_y
-    return geom.bar_x - params.bay_label_offset, bus_y
+    override = _bay_label_override(params, slot_id)
+    return label_x + override.offset_x, label_y + override.offset_y
 
 
 def _make_slot(
@@ -271,10 +303,11 @@ def _make_slot(
         equipment_anchor_y = bus_y
         direction = "right"
 
-    label_x, label_y = _bay_label_position(params, geom, slot_side, bus_x, bus_y)
+    slot_id = _slot_id(slot_side, index)
+    label_x, label_y = _bay_label_position(params, geom, slot_id, slot_side, bus_x, bus_y)
 
     return ParametricBaySlot(
-        id=f"bay_slot_{slot_side}_{index}",
+        id=slot_id,
         terminal_id=terminal_id,
         index=index,
         side=slot_side,
@@ -329,9 +362,17 @@ def _render_slot_marker(elements: list[str], params: BusbarPreviewRequest, slot:
     )
     if slot.label and slot.label_x is not None and slot.label_y is not None:
         label = html.escape(slot.label)
+        rotation = _bay_label_rotation(params, slot.id)
+        override = _bay_label_override(params, slot.id)
         elements.append(
             f'<text x="{_fmt(slot.label_x)}" y="{_fmt(slot.label_y)}" '
+            f'transform="rotate({rotation} {_fmt(slot.label_x)} {_fmt(slot.label_y)})" '
             'font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" '
+            'data-role="bay-label" data-draggable="true" '
+            f'data-bay-slot-id="{html.escape(slot.id)}" '
+            f'data-offset-x="{_fmt(override.offset_x)}" '
+            f'data-offset-y="{_fmt(override.offset_y)}" '
+            f'data-rotation="{rotation}" '
             f'fill="{_label_color()}">{label}</text>'
         )
 
@@ -434,7 +475,9 @@ def generate_busbar_preview(params: BusbarPreviewRequest) -> ParametricSymbolPre
             "bay_slot_numbering": params.bay_numbering_enabled,
             "side_aware_label_rows": True,
             "draggable_bus_label": True,
+            "draggable_bay_labels": True,
             "bus_label_rotation": True,
+            "bay_label_rotation": True,
             "bus_label": bool(params.bus_label),
         },
         "busbar": {
@@ -451,6 +494,8 @@ def generate_busbar_preview(params: BusbarPreviewRequest) -> ParametricSymbolPre
             "bay_slot_count": len(bay_slots),
             "bay_numbering_enabled": params.bay_numbering_enabled,
             "bay_label_both_side_separate_rows": params.bay_label_both_side_separate_rows,
+            "bay_label_default_rotation_deg": params.bay_label_default_rotation_deg,
+            "bay_label_override_count": len(params.bay_label_overrides),
             "bay_numbering_style": params.bay_numbering_style,
             "bay_numbering_prefix": params.bay_numbering_prefix,
             "bay_numbering_start": params.bay_numbering_start,

@@ -39,7 +39,7 @@ def build_interactive_page(visual_dir: Path, out_path: Path) -> dict[str, Any]:
     <p class="labels">{labels}</p>
   </header>
   <div class="svg-wrap">{svg}</div>
-  <p class="drag-status">Drag bus caption if present. This is visual-only; it does not rewrite model JSON.</p>
+  <p class="drag-status">Drag bus captions or cell-number labels. This is visual-only; it does not rewrite model JSON.</p>
 </article>"""
         )
 
@@ -49,70 +49,27 @@ def build_interactive_page(visual_dir: Path, out_path: Path) -> dict[str, Any]:
   <meta charset="utf-8">
   <title>Interactive visual review - ElectroScheme Studio</title>
   <style>
-    body {{
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f5f6f8;
-      color: #111827;
-    }}
-    header.page {{
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      background: #111827;
-      color: white;
-      padding: 16px 22px;
-      box-shadow: 0 2px 12px rgba(0,0,0,.2);
-    }}
+    body {{ margin: 0; font-family: Arial, sans-serif; background: #f5f6f8; color: #111827; }}
+    header.page {{ position: sticky; top: 0; z-index: 10; background: #111827; color: white; padding: 16px 22px; box-shadow: 0 2px 12px rgba(0,0,0,.2); }}
     header.page h1 {{ margin: 0 0 6px; font-size: 22px; }}
     header.page p {{ margin: 0; color: #cbd5e1; }}
-    main {{
-      padding: 18px;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(620px, 1fr));
-      gap: 16px;
-    }}
-    .card {{
-      background: white;
-      border: 1px solid #e5e7eb;
-      border-radius: 14px;
-      padding: 14px;
-      box-shadow: 0 1px 4px rgba(0,0,0,.06);
-    }}
+    main {{ padding: 18px; display: grid; grid-template-columns: repeat(auto-fill, minmax(620px, 1fr)); gap: 16px; }}
+    .card {{ background: white; border: 1px solid #e5e7eb; border-radius: 14px; padding: 14px; box-shadow: 0 1px 4px rgba(0,0,0,.06); }}
     .card h2 {{ margin: 0 0 6px; font-size: 17px; }}
     .card p {{ margin: 6px 0; color: #4b5563; }}
     .meta {{ font-size: 12px; font-weight: 700; }}
     .labels {{ font-size: 12px; color: #1d4ed8; }}
-    .svg-wrap {{
-      width: 100%;
-      min-height: 300px;
-      border: 1px solid #e5e7eb;
-      border-radius: 10px;
-      background: #fff;
-      overflow: auto;
-    }}
-    .svg-wrap svg {{
-      width: 100%;
-      height: auto;
-      display: block;
-    }}
-    [data-role="bus-label"] {{
-      cursor: grab;
-      user-select: none;
-    }}
-    [data-role="bus-label"].dragging {{
-      cursor: grabbing;
-    }}
-    .drag-status {{
-      font-size: 12px;
-      color: #64748b;
-    }}
+    .svg-wrap {{ width: 100%; min-height: 300px; border: 1px solid #e5e7eb; border-radius: 10px; background: #fff; overflow: auto; }}
+    .svg-wrap svg {{ width: 100%; height: auto; display: block; }}
+    [data-role="bus-label"], [data-role="bay-label"] {{ cursor: grab; user-select: none; }}
+    [data-role="bus-label"].dragging, [data-role="bay-label"].dragging {{ cursor: grabbing; }}
+    .drag-status {{ font-size: 12px; color: #64748b; }}
   </style>
 </head>
 <body>
   <header class="page">
     <h1>Interactive visual review</h1>
-    <p>Static snapshots are embedded inline. Bus captions can be dragged visually for quick layout experiments.</p>
+    <p>Static snapshots are embedded inline. Bus captions and cell-number labels can be dragged visually.</p>
   </header>
   <main>
     {''.join(cards)}
@@ -137,7 +94,7 @@ def build_interactive_page(visual_dir: Path, out_path: Path) -> dict[str, Any]:
     }}
 
     document.addEventListener('pointerdown', (event) => {{
-      const target = event.target.closest('[data-role="bus-label"]');
+      const target = event.target.closest('[data-role="bus-label"], [data-role="bay-label"]');
       if (!target) return;
       const svg = target.ownerSVGElement;
       if (!svg) return;
@@ -177,12 +134,11 @@ def build_interactive_page(visual_dir: Path, out_path: Path) -> dict[str, Any]:
 """
     write_text(out_path, page)
 
-    summary = {
+    return {
         "interactive_page": str(out_path),
         "case_count": len(manifest.get("cases", [])),
         "source_manifest": str(visual_dir / "manifest.json"),
     }
-    return summary
 
 
 def main() -> int:

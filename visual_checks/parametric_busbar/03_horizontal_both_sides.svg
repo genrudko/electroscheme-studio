@@ -7,29 +7,29 @@
   <g transform="translate(40, 80)" style="color:#4b5563;--voltage-color:#4b5563;--slot-color:#2563eb;--label-color:#111827">
 <rect x="20" y="150" width="268" height="12" fill="var(--busbar-color, #6d0ad6)" stroke="var(--busbar-color, #6d0ad6)" stroke-width="1" rx="0" />
 <circle cx="34" cy="156" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
-<text x="34" y="138" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">21</text>
+<text x="34" y="138" transform="rotate(0 34 138)" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" data-role="bay-label" data-draggable="true" data-bay-slot-id="bay_slot_top_1" data-offset-x="0" data-offset-y="0" data-rotation="0" fill="var(--label-color, #111111)">21</text>
 <circle cx="34" cy="156" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
-<text x="34" y="174" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">22</text>
+<text x="34" y="174" transform="rotate(0 34 174)" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" data-role="bay-label" data-draggable="true" data-bay-slot-id="bay_slot_bottom_1" data-offset-x="0" data-offset-y="0" data-rotation="0" fill="var(--label-color, #111111)">22</text>
 <circle cx="82" cy="156" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
-<text x="82" y="138" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">23</text>
+<text x="82" y="138" transform="rotate(0 82 138)" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" data-role="bay-label" data-draggable="true" data-bay-slot-id="bay_slot_top_2" data-offset-x="0" data-offset-y="0" data-rotation="0" fill="var(--label-color, #111111)">23</text>
 <circle cx="82" cy="156" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
-<text x="82" y="174" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">24</text>
+<text x="82" y="174" transform="rotate(0 82 174)" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" data-role="bay-label" data-draggable="true" data-bay-slot-id="bay_slot_bottom_2" data-offset-x="0" data-offset-y="0" data-rotation="0" fill="var(--label-color, #111111)">24</text>
 <circle cx="130" cy="156" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
-<text x="130" y="138" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">25</text>
+<text x="130" y="138" transform="rotate(0 130 138)" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" data-role="bay-label" data-draggable="true" data-bay-slot-id="bay_slot_top_3" data-offset-x="0" data-offset-y="0" data-rotation="0" fill="var(--label-color, #111111)">25</text>
 <circle cx="130" cy="156" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
-<text x="130" y="174" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">26</text>
+<text x="130" y="174" transform="rotate(0 130 174)" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" data-role="bay-label" data-draggable="true" data-bay-slot-id="bay_slot_bottom_3" data-offset-x="0" data-offset-y="0" data-rotation="0" fill="var(--label-color, #111111)">26</text>
 <circle cx="178" cy="156" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
-<text x="178" y="138" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">27</text>
+<text x="178" y="138" transform="rotate(0 178 138)" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" data-role="bay-label" data-draggable="true" data-bay-slot-id="bay_slot_top_4" data-offset-x="0" data-offset-y="0" data-rotation="0" fill="var(--label-color, #111111)">27</text>
 <circle cx="178" cy="156" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
-<text x="178" y="174" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">28</text>
+<text x="178" y="174" transform="rotate(0 178 174)" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" data-role="bay-label" data-draggable="true" data-bay-slot-id="bay_slot_bottom_4" data-offset-x="0" data-offset-y="0" data-rotation="0" fill="var(--label-color, #111111)">28</text>
 <circle cx="226" cy="156" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
-<text x="226" y="138" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">29</text>
+<text x="226" y="138" transform="rotate(0 226 138)" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" data-role="bay-label" data-draggable="true" data-bay-slot-id="bay_slot_top_5" data-offset-x="0" data-offset-y="0" data-rotation="0" fill="var(--label-color, #111111)">29</text>
 <circle cx="226" cy="156" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
-<text x="226" y="174" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">30</text>
+<text x="226" y="174" transform="rotate(0 226 174)" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" data-role="bay-label" data-draggable="true" data-bay-slot-id="bay_slot_bottom_5" data-offset-x="0" data-offset-y="0" data-rotation="0" fill="var(--label-color, #111111)">30</text>
 <circle cx="274" cy="156" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
-<text x="274" y="138" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">31</text>
+<text x="274" y="138" transform="rotate(0 274 138)" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" data-role="bay-label" data-draggable="true" data-bay-slot-id="bay_slot_top_6" data-offset-x="0" data-offset-y="0" data-rotation="0" fill="var(--label-color, #111111)">31</text>
 <circle cx="274" cy="156" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
-<text x="274" y="174" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">32</text>
+<text x="274" y="174" transform="rotate(0 274 174)" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" data-role="bay-label" data-draggable="true" data-bay-slot-id="bay_slot_bottom_6" data-offset-x="0" data-offset-y="0" data-rotation="0" fill="var(--label-color, #111111)">32</text>
 <text x="322" y="156" transform="rotate(0 322 156)" font-family="Arial, sans-serif" font-size="16" dominant-baseline="middle" data-role="bus-label" data-draggable="true" data-offset-x="0" data-offset-y="0" data-rotation="0" fill="var(--label-color, #111111)">1С 10 кВ</text>
   </g>
   <text x="24" y="426" font-family="Arial, sans-serif" font-size="11" fill="#64748b">terminals=14; bay_slots=12; viewBox=542x324</text>

@@ -14,6 +14,12 @@ BayNumberingStyle = Literal["number_only", "prefix_number"]
 RotationMode = Literal["auto", "manual"]
 
 
+class TextLabelOverride(BaseModel):
+    offset_x: float = Field(default=0.0, ge=-1000.0, le=1000.0)
+    offset_y: float = Field(default=0.0, ge=-1000.0, le=1000.0)
+    rotation_deg: int | None = Field(default=None, ge=-360, le=360)
+
+
 class BusbarPreviewRequest(BaseModel):
     id: str = Field(default="param_busbar_1", min_length=1)
     name_ru: str = Field(default="Шина")
@@ -36,6 +42,8 @@ class BusbarPreviewRequest(BaseModel):
     bay_numbering_step: int = Field(default=1, ge=1, le=100)
     bay_label_offset: float = Field(default=16.0, ge=0.0, le=120.0)
     bay_label_both_side_separate_rows: bool = True
+    bay_label_default_rotation_deg: int = Field(default=0, ge=-360, le=360)
+    bay_label_overrides: dict[str, TextLabelOverride] = Field(default_factory=dict)
     bus_label: str = Field(default="1С 10 кВ", max_length=64)
     bus_label_position: BusLabelPosition = "auto"
     bus_label_gap: float = Field(default=34.0, ge=0.0, le=240.0)
@@ -75,7 +83,7 @@ class ParametricBaySlot(BaseModel):
 
 
 class ParametricSymbolPreview(BaseModel):
-    schema_version: str = "parametric-symbol-preview-0.6"
+    schema_version: str = "parametric-symbol-preview-0.7"
     id: str
     name_ru: str
     kind: Literal["busbar"]
