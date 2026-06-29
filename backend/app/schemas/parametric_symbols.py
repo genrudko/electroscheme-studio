@@ -7,6 +7,8 @@ from pydantic import BaseModel, Field
 
 BusbarOrientation = Literal["horizontal", "vertical"]
 BusbarConnectionSide = Literal["top", "bottom", "both"]
+BaySlotSide = Literal["top", "bottom", "left", "right"]
+RoutingDirection = Literal["up", "down", "left", "right"]
 
 
 class BusbarPreviewRequest(BaseModel):
@@ -20,6 +22,7 @@ class BusbarPreviewRequest(BaseModel):
     stroke_width: float = Field(default=4.0, ge=1.0, le=16.0)
     margin: float = Field(default=20.0, ge=5.0, le=80.0)
     lead_length: float = Field(default=24.0, ge=0.0, le=120.0)
+    bay_depth: float = Field(default=90.0, ge=20.0, le=260.0)
 
 
 class ParametricTerminal(BaseModel):
@@ -31,8 +34,24 @@ class ParametricTerminal(BaseModel):
     index: int | None = None
 
 
+class ParametricBaySlot(BaseModel):
+    id: str
+    terminal_id: str
+    index: int
+    side: BaySlotSide
+    bus_x: float
+    bus_y: float
+    terminal_x: float
+    terminal_y: float
+    equipment_anchor_x: float
+    equipment_anchor_y: float
+    preferred_routing_direction: RoutingDirection
+    allowed_equipment_kinds: list[str] = Field(default_factory=list)
+    reserved: bool = False
+
+
 class ParametricSymbolPreview(BaseModel):
-    schema_version: str = "parametric-symbol-preview-0.1"
+    schema_version: str = "parametric-symbol-preview-0.2"
     id: str
     name_ru: str
     kind: Literal["busbar"]
@@ -41,5 +60,6 @@ class ParametricSymbolPreview(BaseModel):
     svg_fragment: str
     terminals: list[ParametricTerminal]
     snap_anchors: list[ParametricTerminal]
+    bay_slots: list[ParametricBaySlot] = Field(default_factory=list)
     parameters: BusbarPreviewRequest
     capabilities: dict

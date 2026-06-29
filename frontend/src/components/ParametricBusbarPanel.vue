@@ -5,7 +5,7 @@
         <p class="eyebrow">Parametric symbol</p>
         <h2>Busbar generator</h2>
         <p class="description">
-          Generate a busbar with configurable length, connection points, terminals and snap anchors.
+          Generate a busbar with terminals, snap anchors and semantic bay slots for future automatic scheme generation.
         </p>
       </div>
       <button type="button" class="primary-button" :disabled="loading" @click="refreshPreview">
@@ -51,6 +51,10 @@
         <label class="field">Stroke width
           <input v-model.number="form.stroke_width" type="number" min="1" max="16" step="0.5" />
         </label>
+
+        <label class="field">Bay depth
+          <input v-model.number="form.bay_depth" type="number" min="20" max="260" step="10" />
+        </label>
       </aside>
 
       <main class="preview-area">
@@ -72,6 +76,10 @@
             <strong>{{ preview.terminals.length }}</strong>
           </article>
           <article>
+            <span>Bay slots</span>
+            <strong>{{ preview.bay_slots.length }}</strong>
+          </article>
+          <article>
             <span>ViewBox</span>
             <strong>{{ Math.round(preview.viewBox.width) }} × {{ Math.round(preview.viewBox.height) }}</strong>
           </article>
@@ -82,6 +90,32 @@
         </div>
 
         <details v-if="preview" class="terminal-list" open>
+          <summary>Bay slots for automatic scheme generation</summary>
+          <table>
+            <thead>
+              <tr>
+                <th>Slot</th>
+                <th>Terminal</th>
+                <th>Side</th>
+                <th>Bus point</th>
+                <th>Equipment anchor</th>
+                <th>Route</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="slot in preview.bay_slots" :key="slot.id">
+                <td><code>{{ slot.id }}</code></td>
+                <td><code>{{ slot.terminal_id }}</code></td>
+                <td>{{ slot.side }}</td>
+                <td>{{ slot.bus_x.toFixed(1) }}, {{ slot.bus_y.toFixed(1) }}</td>
+                <td>{{ slot.equipment_anchor_x.toFixed(1) }}, {{ slot.equipment_anchor_y.toFixed(1) }}</td>
+                <td>{{ slot.preferred_routing_direction }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </details>
+
+        <details v-if="preview" class="terminal-list">
           <summary>Generated terminals / snap anchors</summary>
           <table>
             <thead>
@@ -126,6 +160,7 @@ type BusbarPreviewRequest = {
   stroke_width: number
   margin: number
   lead_length: number
+  bay_depth: number
 }
 
 type ParametricTerminal = {
@@ -137,6 +172,22 @@ type ParametricTerminal = {
   index?: number
 }
 
+type ParametricBaySlot = {
+  id: string
+  terminal_id: string
+  index: number
+  side: string
+  bus_x: number
+  bus_y: number
+  terminal_x: number
+  terminal_y: number
+  equipment_anchor_x: number
+  equipment_anchor_y: number
+  preferred_routing_direction: string
+  allowed_equipment_kinds: string[]
+  reserved: boolean
+}
+
 type ParametricSymbolPreview = {
   id: string
   name_ru: string
@@ -145,6 +196,7 @@ type ParametricSymbolPreview = {
   svg_fragment: string
   terminals: ParametricTerminal[]
   snap_anchors: ParametricTerminal[]
+  bay_slots: ParametricBaySlot[]
   parameters: BusbarPreviewRequest
   capabilities: Record<string, any>
 }
@@ -157,13 +209,14 @@ const form = reactive<BusbarPreviewRequest>({
   id: 'param_busbar_1',
   name_ru: 'Шина 35 кВ',
   voltage_kv: 35,
-  length: 260,
-  connection_count: 6,
+  length: 420,
+  connection_count: 8,
   connection_side: 'bottom',
   orientation: 'horizontal',
   stroke_width: 4,
   margin: 20,
   lead_length: 24,
+  bay_depth: 90,
 })
 
 const viewBoxString = computed(() => {
@@ -295,7 +348,7 @@ onMounted(() => {
 }
 
 .preview-card {
-  min-height: 260px;
+  min-height: 290px;
   display: grid;
   place-items: center;
   border: 1px solid #e2e8f0;
@@ -306,11 +359,12 @@ onMounted(() => {
   background-size: 18px 18px;
   color: #4b5563;
   --voltage-color: #4b5563;
+  --slot-color: #2563eb;
 }
 
 .preview-svg {
   width: 92%;
-  max-height: 245px;
+  max-height: 275px;
 }
 
 .summary {
