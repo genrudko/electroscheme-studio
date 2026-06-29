@@ -750,3 +750,30 @@
 }
 
 /* Source VSDX micro-previews are intentionally hidden in palette until exact master renderer exists. */
+
+/* patch-041-safe-library-icons */
+.stencil-palette .palette-toolbar {
+  background: #f8fafc;
+}
+
+.stencil-palette .shape-item[data-icon-mode='library'] .preview {
+  color: #5b21b6;
+}
+
+.stencil-palette .preview[data-icon-kind^='library-'] {
+  color: #475569 !important;
+}
+
+.stencil-palette .preview[data-icon-kind^='exact-'] {
+  color: #6d0ad6 !important;
+}
+
+.stencil-palette .planned-dot {
+  box-shadow: none !important;
+}
+
+.stencil-palette .shape-item.no-icon {
+  padding-left: 9px !important;
+}
+
+/* Source VSDX micro-previews stay in generated metadata, but palette uses safe icon policy. */
