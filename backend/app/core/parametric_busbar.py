@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import html
+from dataclasses import dataclass
 
 from app.schemas.parametric_symbols import (
     BusbarPreviewRequest,
@@ -10,14 +11,69 @@ from app.schemas.parametric_symbols import (
 )
 
 
+@dataclass
+class _BarGeometry:
+    bar_x: float
+    bar_y: float
+    bar_w: float
+    bar_h: float
+    center_x: float
+    center_y: float
+    view_w: float
+    view_h: float
+    label_anchor_x: float
+    label_anchor_y: float
+    label_rotation: int = 0
+
+
 def _fmt(value: float) -> str:
     if abs(value) < 1e-9:
         value = 0.0
     return f"{value:.6g}"
 
 
-def _voltage_css_var() -> str:
-    return "var(--voltage-color, currentColor)"
+def _bar_fill() -> str:
+    return "var(--busbar-color, #6d0ad6)"
+
+
+def _slot_stroke() -> str:
+    return "var(--slot-stroke, #ffffff)"
+
+
+def _label_color() -> str:
+    return "var(--label-color, #111111)"
+
+
+def _number_text(params: BusbarPreviewRequest, label_number: int | None) -> str:
+    if not params.bay_numbering_enabled or label_number is None:
+        return ""
+    if params.bay_numbering_style == "prefix_number":
+        return f"{params.bay_numbering_prefix}{label_number}"
+    return f"{label_number}"
+
+
+def _bus_label_position(params: BusbarPreviewRequest, geom: _BarGeometry) -> tuple[float, float, int]:
+    pos = params.bus_label_position
+    if params.orientation == "horizontal":
+        if pos == "auto":
+            pos = "right"
+        if pos == "left":
+            return geom.bar_x - 18.0, geom.center_y, 0
+        if pos == "top":
+            return geom.center_x, geom.bar_y - 28.0, 0
+        if pos == "bottom":
+            return geom.center_x, geom.bar_y + geom.bar_h + 28.0, 0
+        return geom.bar_x + geom.bar_w + 18.0, geom.center_y, 0
+
+    if pos == "auto":
+        pos = "top"
+    if pos == "left":
+        return geom.bar_x - 20.0, geom.center_y, -90
+    if pos == "right":
+        return geom.bar_x + geom.bar_w + 20.0, geom.center_y, 90
+    if pos == "bottom":
+        return geom.center_x, geom.bar_y + geom.bar_h + 22.0, 0
+    return geom.center_x, geom.bar_y - 22.0, -90
 
 
 def _equipment_kinds_for_bus_slot() -> list[str]:
@@ -33,311 +89,359 @@ def _equipment_kinds_for_bus_slot() -> list[str]:
     ]
 
 
-def _label_text(params: BusbarPreviewRequest, label_number: int | None) -> str:
-    if not params.bay_numbering_enabled or label_number is None:
-        return ""
-    return f"{params.bay_numbering_prefix}{label_number}"
+def _compute_length(params: BusbarPreviewRequest) -> float:
+    if params.connection_count <= 1:
+        return max(params.length, 120.0)
+    if params.connection_spacing is None:
+        return params.length
+    slot_span = params.connection_spacing * (params.connection_count - 1)
+    min_total = slot_span + 40.0
+    return max(params.length, min_total)
 
 
-def _label_position(
-    *,
-    params: BusbarPreviewRequest,
-    side: str,
-    bus_x: float,
-    bus_y: float,
-    terminal_x: float,
-    terminal_y: float,
-    equipment_anchor_x: float,
-    equipment_anchor_y: float,
-) -> tuple[float | None, float | None]:
-    if not params.bay_numbering_enabled:
-        return None, None
+def _horizontal_geometry(params: BusbarPreviewRequest) -> _BarGeometry:
+    bar_h = params.thickness_mm
+    top_slot_zone = params.bay_depth if params.connection_side in {"top", "both"} else 0.0
+    bottom_slot_zone = params.bay_depth if params.connection_side in {"bottom", "both"} else 0.0
+    top_label_zone = params.bay_label_offset + 22.0 if params.bay_numbering_enabled else 0.0
+    bottom_label_zone = 0.0
+    length = _compute_length(params)
 
-    position = params.bay_label_position
-    if position == "auto":
-        if side in {"top", "bottom"}:
-            position = "above"
-        elif side == "left":
-            position = "left"
-        else:
-            position = "right"
+    bar_x = params.margin
+    bar_y = params.margin + top_label_zone + top_slot_zone + 8.0
+    bar_w = length
+    bar_h = params.thickness_mm
+    center_y = bar_y + bar_h / 2.0
 
-    offset = params.bay_label_offset
+    label_x, label_y, rotation = _bus_label_position(
+        params,
+        _BarGeometry(
+            bar_x=bar_x,
+            bar_y=bar_y,
+            bar_w=bar_w,
+            bar_h=bar_h,
+            center_x=bar_x + bar_w / 2.0,
+            center_y=center_y,
+            view_w=0.0,
+            view_h=0.0,
+            label_anchor_x=0.0,
+            label_anchor_y=0.0,
+        ),
+    )
 
-    if position == "above":
-        return bus_x, min(bus_y, terminal_y, equipment_anchor_y) - offset
-    if position == "below":
-        return bus_x, max(bus_y, terminal_y, equipment_anchor_y) + offset
-    if position == "left":
-        return min(bus_x, terminal_x, equipment_anchor_x) - offset, bus_y
-    if position == "right":
-        return max(bus_x, terminal_x, equipment_anchor_x) + offset, bus_y
+    view_w = bar_x + bar_w + params.margin + 160.0
+    view_h = bar_y + bar_h + bottom_slot_zone + bottom_label_zone + params.margin + 20.0
 
-    return bus_x, min(bus_y, terminal_y, equipment_anchor_y) - offset
+    return _BarGeometry(
+        bar_x=bar_x,
+        bar_y=bar_y,
+        bar_w=bar_w,
+        bar_h=bar_h,
+        center_x=bar_x + bar_w / 2.0,
+        center_y=center_y,
+        view_w=view_w,
+        view_h=view_h,
+        label_anchor_x=label_x,
+        label_anchor_y=label_y,
+        label_rotation=rotation,
+    )
+
+
+def _vertical_geometry(params: BusbarPreviewRequest) -> _BarGeometry:
+    bar_w = params.thickness_mm
+    left_label_zone = params.bay_label_offset + 18.0 if params.bay_numbering_enabled else 0.0
+    left_slot_zone = params.bay_depth if params.connection_side in {"top", "both"} else 0.0
+    right_slot_zone = params.bay_depth if params.connection_side in {"bottom", "both"} else 0.0
+    length = _compute_length(params)
+
+    bar_x = params.margin + left_label_zone + left_slot_zone + 12.0
+    bar_y = params.margin + 22.0
+    bar_w = params.thickness_mm
+    bar_h = length
+    center_x = bar_x + bar_w / 2.0
+
+    label_x, label_y, rotation = _bus_label_position(
+        params,
+        _BarGeometry(
+            bar_x=bar_x,
+            bar_y=bar_y,
+            bar_w=bar_w,
+            bar_h=bar_h,
+            center_x=center_x,
+            center_y=bar_y + bar_h / 2.0,
+            view_w=0.0,
+            view_h=0.0,
+            label_anchor_x=0.0,
+            label_anchor_y=0.0,
+        ),
+    )
+
+    view_w = bar_x + bar_w + right_slot_zone + params.margin + 180.0
+    view_h = bar_y + bar_h + params.margin + 20.0
+
+    return _BarGeometry(
+        bar_x=bar_x,
+        bar_y=bar_y,
+        bar_w=bar_w,
+        bar_h=bar_h,
+        center_x=center_x,
+        center_y=bar_y + bar_h / 2.0,
+        view_w=view_w,
+        view_h=view_h,
+        label_anchor_x=label_x,
+        label_anchor_y=label_y,
+        label_rotation=rotation,
+    )
+
+
+def _slot_positions_horizontal(params: BusbarPreviewRequest, geom: _BarGeometry) -> list[float]:
+    if params.connection_count <= 0:
+        return []
+    if params.connection_count == 1:
+        return [geom.center_x]
+    spacing = params.connection_spacing if params.connection_spacing is not None else geom.bar_w / (params.connection_count - 1)
+    total_span = spacing * (params.connection_count - 1)
+    start_x = geom.center_x - total_span / 2.0
+    return [start_x + i * spacing for i in range(params.connection_count)]
+
+
+def _slot_positions_vertical(params: BusbarPreviewRequest, geom: _BarGeometry) -> list[float]:
+    if params.connection_count <= 0:
+        return []
+    if params.connection_count == 1:
+        return [geom.center_y]
+    spacing = params.connection_spacing if params.connection_spacing is not None else geom.bar_h / (params.connection_count - 1)
+    total_span = spacing * (params.connection_count - 1)
+    start_y = geom.center_y - total_span / 2.0
+    return [start_y + i * spacing for i in range(params.connection_count)]
+
+
+def _slot_label_xy_horizontal(params: BusbarPreviewRequest, geom: _BarGeometry, x: float) -> tuple[float, float]:
+    return x, geom.bar_y - params.bay_label_offset
+
+
+def _slot_label_xy_vertical(params: BusbarPreviewRequest, geom: _BarGeometry, y: float) -> tuple[float, float]:
+    return geom.bar_x - params.bay_label_offset, y
 
 
 def _make_slot(
     *,
-    terminal: ParametricTerminal,
+    params: BusbarPreviewRequest,
+    terminal_id: str,
+    slot_side: str,
+    index: int,
     bus_x: float,
     bus_y: float,
-    bay_depth: float,
-    params: BusbarPreviewRequest,
     label_number: int | None,
+    geom: _BarGeometry,
 ) -> ParametricBaySlot:
-    if terminal.side == "top":
-        anchor_x = terminal.x
-        anchor_y = terminal.y - bay_depth
+    if slot_side == "top":
+        equipment_anchor_x = bus_x
+        equipment_anchor_y = geom.bar_y - params.bay_depth
         direction = "up"
-        side = "top"
-    elif terminal.side == "bottom":
-        anchor_x = terminal.x
-        anchor_y = terminal.y + bay_depth
+        label_x, label_y = _slot_label_xy_horizontal(params, geom, bus_x)
+    elif slot_side == "bottom":
+        equipment_anchor_x = bus_x
+        equipment_anchor_y = geom.bar_y + geom.bar_h + params.bay_depth
         direction = "down"
-        side = "bottom"
-    elif terminal.side == "left":
-        anchor_x = terminal.x - bay_depth
-        anchor_y = terminal.y
+        label_x, label_y = _slot_label_xy_horizontal(params, geom, bus_x)
+    elif slot_side == "left":
+        equipment_anchor_x = geom.bar_x - params.bay_depth
+        equipment_anchor_y = bus_y
         direction = "left"
-        side = "left"
+        label_x, label_y = _slot_label_xy_vertical(params, geom, bus_y)
     else:
-        anchor_x = terminal.x + bay_depth
-        anchor_y = terminal.y
+        equipment_anchor_x = geom.bar_x + geom.bar_w + params.bay_depth
+        equipment_anchor_y = bus_y
         direction = "right"
-        side = "right"
+        label_x, label_y = geom.bar_x - params.bay_label_offset, bus_y
+        if params.bus_label_position == "right":
+            label_x = geom.bar_x - params.bay_label_offset
 
-    label_x, label_y = _label_position(
-        params=params,
-        side=side,
-        bus_x=bus_x,
-        bus_y=bus_y,
-        terminal_x=terminal.x,
-        terminal_y=terminal.y,
-        equipment_anchor_x=anchor_x,
-        equipment_anchor_y=anchor_y,
-    )
+    label = _number_text(params, label_number)
+    if not params.bay_numbering_enabled:
+        label_x = None
+        label_y = None
 
-    index = terminal.index or 0
     return ParametricBaySlot(
-        id=f"bay_slot_{terminal.side}_{index}",
-        terminal_id=terminal.id,
+        id=f"bay_slot_{slot_side}_{index}",
+        terminal_id=terminal_id,
         index=index,
-        side=side,
+        side=slot_side,
         bus_x=bus_x,
         bus_y=bus_y,
-        terminal_x=terminal.x,
-        terminal_y=terminal.y,
-        equipment_anchor_x=anchor_x,
-        equipment_anchor_y=anchor_y,
+        terminal_x=bus_x,
+        terminal_y=bus_y,
+        equipment_anchor_x=equipment_anchor_x,
+        equipment_anchor_y=equipment_anchor_y,
         preferred_routing_direction=direction,
         label_number=label_number,
-        label=_label_text(params, label_number),
+        label=label,
         label_x=label_x,
         label_y=label_y,
         allowed_equipment_kinds=_equipment_kinds_for_bus_slot(),
     )
 
 
-def _add_slot_marker_and_label(elements: list[str], slot: ParametricBaySlot) -> None:
+def _render_busbar_rect(elements: list[str], geom: _BarGeometry) -> None:
     elements.append(
-        f'<circle cx="{_fmt(slot.equipment_anchor_x)}" cy="{_fmt(slot.equipment_anchor_y)}" r="3" '
-        'fill="none" stroke="var(--slot-color, #2563eb)" stroke-width="1" vector-effect="non-scaling-stroke" />'
+        f'<rect x="{_fmt(geom.bar_x)}" y="{_fmt(geom.bar_y)}" '
+        f'width="{_fmt(geom.bar_w)}" height="{_fmt(geom.bar_h)}" '
+        f'fill="{_bar_fill()}" stroke="{_bar_fill()}" stroke-width="1" rx="0" />'
     )
 
+
+def _render_bus_label(elements: list[str], params: BusbarPreviewRequest, geom: _BarGeometry) -> None:
+    if not params.bus_label:
+        return
+    label = html.escape(params.bus_label)
+    x = geom.label_anchor_x
+    y = geom.label_anchor_y
+    rotation = geom.label_rotation
+    if rotation == 0:
+        elements.append(
+            f'<text x="{_fmt(x)}" y="{_fmt(y)}" '
+            'font-family="Arial, sans-serif" font-size="16" '
+            'dominant-baseline="middle" fill="var(--label-color, #111111)">'
+            f'{label}</text>'
+        )
+    else:
+        elements.append(
+            f'<text x="{_fmt(x)}" y="{_fmt(y)}" '
+            f'transform="rotate({rotation} {_fmt(x)} {_fmt(y)})" '
+            'font-family="Arial, sans-serif" font-size="16" '
+            'dominant-baseline="middle" text-anchor="middle" fill="var(--label-color, #111111)">'
+            f'{label}</text>'
+        )
+
+
+def _render_slot_marker(elements: list[str], params: BusbarPreviewRequest, slot: ParametricBaySlot) -> None:
+    elements.append(
+        f'<circle cx="{_fmt(slot.bus_x)}" cy="{_fmt(slot.bus_y)}" r="{_fmt(params.slot_diameter / 2.0)}" '
+        f'fill="none" stroke="{_slot_stroke()}" stroke-width="1.4" />'
+    )
     if slot.label and slot.label_x is not None and slot.label_y is not None:
         label = html.escape(slot.label)
         elements.append(
             f'<text x="{_fmt(slot.label_x)}" y="{_fmt(slot.label_y)}" '
-            'text-anchor="middle" dominant-baseline="middle" '
-            'font-family="Arial, sans-serif" font-size="10" '
-            'fill="var(--label-color, #111827)" '
-            f'data-bay-slot-id="{html.escape(slot.id)}">{label}</text>'
+            'font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" '
+            f'fill="{_label_color()}">{label}</text>'
         )
 
 
-def _horizontal_terminals(params: BusbarPreviewRequest) -> tuple[list[ParametricTerminal], list[ParametricBaySlot], str, dict[str, float]]:
-    margin = params.margin
-    label_top_extra = params.bay_label_offset + 12 if params.bay_numbering_enabled and params.bay_label_position in {"above", "auto"} else 0
-    y = margin + params.lead_length + label_top_extra + (params.bay_depth if params.connection_side in {"top", "both"} else 0)
-    length = params.length
-    top_extra = params.bay_depth if params.connection_side in {"top", "both"} else 0
-    bottom_extra = params.bay_depth if params.connection_side in {"bottom", "both"} else 0
-    label_bottom_extra = params.bay_label_offset + 12 if params.bay_numbering_enabled and params.bay_label_position == "below" else 0
-    height = margin * 2 + params.lead_length * 2 + top_extra + bottom_extra + label_top_extra + label_bottom_extra
-    width = length + margin * 2
-
+def _horizontal_preview(params: BusbarPreviewRequest) -> tuple[list[ParametricTerminal], list[ParametricBaySlot], str, dict[str, float]]:
+    geom = _horizontal_geometry(params)
     terminals: list[ParametricTerminal] = [
-        ParametricTerminal(id="left_end", x=margin, y=y, role="busbar_end", side="left"),
-        ParametricTerminal(id="right_end", x=margin + length, y=y, role="busbar_end", side="right"),
+        ParametricTerminal(id="left_end", x=geom.bar_x, y=geom.center_y, role="busbar_end", side="left"),
+        ParametricTerminal(id="right_end", x=geom.bar_x + geom.bar_w, y=geom.center_y, role="busbar_end", side="right"),
     ]
     bay_slots: list[ParametricBaySlot] = []
+    elements: list[str] = []
 
-    elements = [
-        (
-            f'<line x1="{_fmt(margin)}" y1="{_fmt(y)}" '
-            f'x2="{_fmt(margin + length)}" y2="{_fmt(y)}" '
-            f'stroke="{_voltage_css_var()}" stroke-width="{_fmt(params.stroke_width)}" '
-            'stroke-linecap="round" vector-effect="non-scaling-stroke" />'
-        )
-    ]
+    _render_busbar_rect(elements, geom)
 
     next_label = params.bay_numbering_start
-    if params.connection_count > 0:
-        step = length / (params.connection_count + 1)
-        for index in range(params.connection_count):
-            x = margin + step * (index + 1)
-            if params.connection_side in {"top", "both"}:
-                y2 = y - params.lead_length
-                terminal = ParametricTerminal(
-                    id=f"tap_top_{index + 1}",
-                    x=x,
-                    y=y2,
-                    role="parameterized_connection",
-                    side="top",
-                    index=index + 1,
-                )
-                terminals.append(terminal)
-                slot = _make_slot(
-                    terminal=terminal,
-                    bus_x=x,
-                    bus_y=y,
-                    bay_depth=params.bay_depth,
-                    params=params,
-                    label_number=next_label if params.bay_numbering_enabled else None,
-                )
-                next_label += params.bay_numbering_step
-                bay_slots.append(slot)
-                elements.append(
-                    f'<line x1="{_fmt(x)}" y1="{_fmt(y)}" x2="{_fmt(x)}" y2="{_fmt(y2)}" '
-                    f'stroke="{_voltage_css_var()}" stroke-width="1.5" vector-effect="non-scaling-stroke" />'
-                )
-            if params.connection_side in {"bottom", "both"}:
-                y2 = y + params.lead_length
-                terminal = ParametricTerminal(
-                    id=f"tap_bottom_{index + 1}",
-                    x=x,
-                    y=y2,
-                    role="parameterized_connection",
-                    side="bottom",
-                    index=index + 1,
-                )
-                terminals.append(terminal)
-                slot = _make_slot(
-                    terminal=terminal,
-                    bus_x=x,
-                    bus_y=y,
-                    bay_depth=params.bay_depth,
-                    params=params,
-                    label_number=next_label if params.bay_numbering_enabled else None,
-                )
-                next_label += params.bay_numbering_step
-                bay_slots.append(slot)
-                elements.append(
-                    f'<line x1="{_fmt(x)}" y1="{_fmt(y)}" x2="{_fmt(x)}" y2="{_fmt(y2)}" '
-                    f'stroke="{_voltage_css_var()}" stroke-width="1.5" vector-effect="non-scaling-stroke" />'
-                )
+    for idx, x in enumerate(_slot_positions_horizontal(params, geom), start=1):
+        if params.connection_side in {"top", "both"}:
+            terminal = ParametricTerminal(id=f"tap_top_{idx}", x=x, y=geom.center_y, role="parameterized_connection", side="top", index=idx)
+            terminals.append(terminal)
+            slot = _make_slot(
+                params=params,
+                terminal_id=terminal.id,
+                slot_side="top",
+                index=idx,
+                bus_x=x,
+                bus_y=geom.center_y,
+                label_number=next_label if params.bay_numbering_enabled else None,
+                geom=geom,
+            )
+            bay_slots.append(slot)
+            next_label += params.bay_numbering_step
+
+        if params.connection_side in {"bottom", "both"}:
+            terminal = ParametricTerminal(id=f"tap_bottom_{idx}", x=x, y=geom.center_y, role="parameterized_connection", side="bottom", index=idx)
+            terminals.append(terminal)
+            slot = _make_slot(
+                params=params,
+                terminal_id=terminal.id,
+                slot_side="bottom",
+                index=idx,
+                bus_x=x,
+                bus_y=geom.center_y,
+                label_number=next_label if params.bay_numbering_enabled else None,
+                geom=geom,
+            )
+            bay_slots.append(slot)
+            next_label += params.bay_numbering_step
 
     for slot in bay_slots:
-        _add_slot_marker_and_label(elements, slot)
+        _render_slot_marker(elements, params, slot)
 
-    view_box = {"x": 0.0, "y": 0.0, "width": width, "height": height}
+    _render_bus_label(elements, params, geom)
+
+    view_box = {"x": 0.0, "y": 0.0, "width": geom.view_w, "height": geom.view_h}
     return terminals, bay_slots, "\n".join(elements), view_box
 
 
-def _vertical_terminals(params: BusbarPreviewRequest) -> tuple[list[ParametricTerminal], list[ParametricBaySlot], str, dict[str, float]]:
-    margin = params.margin
-    label_left_extra = params.bay_label_offset + 24 if params.bay_numbering_enabled and params.bay_label_position == "left" else 0
-    x = margin + params.lead_length + label_left_extra + (params.bay_depth if params.connection_side in {"top", "both"} else 0)
-    length = params.length
-    left_extra = params.bay_depth if params.connection_side in {"top", "both"} else 0
-    right_extra = params.bay_depth if params.connection_side in {"bottom", "both"} else 0
-    label_right_extra = params.bay_label_offset + 24 if params.bay_numbering_enabled and params.bay_label_position in {"right", "auto", "above"} else 0
-    width = margin * 2 + params.lead_length * 2 + left_extra + right_extra + label_left_extra + label_right_extra
-    height = length + margin * 2
-
+def _vertical_preview(params: BusbarPreviewRequest) -> tuple[list[ParametricTerminal], list[ParametricBaySlot], str, dict[str, float]]:
+    geom = _vertical_geometry(params)
     terminals: list[ParametricTerminal] = [
-        ParametricTerminal(id="top_end", x=x, y=margin, role="busbar_end", side="top"),
-        ParametricTerminal(id="bottom_end", x=x, y=margin + length, role="busbar_end", side="bottom"),
+        ParametricTerminal(id="top_end", x=geom.center_x, y=geom.bar_y, role="busbar_end", side="top"),
+        ParametricTerminal(id="bottom_end", x=geom.center_x, y=geom.bar_y + geom.bar_h, role="busbar_end", side="bottom"),
     ]
     bay_slots: list[ParametricBaySlot] = []
+    elements: list[str] = []
 
-    elements = [
-        (
-            f'<line x1="{_fmt(x)}" y1="{_fmt(margin)}" '
-            f'x2="{_fmt(x)}" y2="{_fmt(margin + length)}" '
-            f'stroke="{_voltage_css_var()}" stroke-width="{_fmt(params.stroke_width)}" '
-            'stroke-linecap="round" vector-effect="non-scaling-stroke" />'
-        )
-    ]
+    _render_busbar_rect(elements, geom)
 
     next_label = params.bay_numbering_start
-    if params.connection_count > 0:
-        step = length / (params.connection_count + 1)
-        for index in range(params.connection_count):
-            y = margin + step * (index + 1)
-            if params.connection_side in {"top", "both"}:
-                x2 = x - params.lead_length
-                terminal = ParametricTerminal(
-                    id=f"tap_left_{index + 1}",
-                    x=x2,
-                    y=y,
-                    role="parameterized_connection",
-                    side="left",
-                    index=index + 1,
-                )
-                terminals.append(terminal)
-                slot = _make_slot(
-                    terminal=terminal,
-                    bus_x=x,
-                    bus_y=y,
-                    bay_depth=params.bay_depth,
-                    params=params,
-                    label_number=next_label if params.bay_numbering_enabled else None,
-                )
-                next_label += params.bay_numbering_step
-                bay_slots.append(slot)
-                elements.append(
-                    f'<line x1="{_fmt(x)}" y1="{_fmt(y)}" x2="{_fmt(x2)}" y2="{_fmt(y)}" '
-                    f'stroke="{_voltage_css_var()}" stroke-width="1.5" vector-effect="non-scaling-stroke" />'
-                )
-            if params.connection_side in {"bottom", "both"}:
-                x2 = x + params.lead_length
-                terminal = ParametricTerminal(
-                    id=f"tap_right_{index + 1}",
-                    x=x2,
-                    y=y,
-                    role="parameterized_connection",
-                    side="right",
-                    index=index + 1,
-                )
-                terminals.append(terminal)
-                slot = _make_slot(
-                    terminal=terminal,
-                    bus_x=x,
-                    bus_y=y,
-                    bay_depth=params.bay_depth,
-                    params=params,
-                    label_number=next_label if params.bay_numbering_enabled else None,
-                )
-                next_label += params.bay_numbering_step
-                bay_slots.append(slot)
-                elements.append(
-                    f'<line x1="{_fmt(x)}" y1="{_fmt(y)}" x2="{_fmt(x2)}" y2="{_fmt(y)}" '
-                    f'stroke="{_voltage_css_var()}" stroke-width="1.5" vector-effect="non-scaling-stroke" />'
-                )
+    for idx, y in enumerate(_slot_positions_vertical(params, geom), start=1):
+        if params.connection_side in {"top", "both"}:
+            terminal = ParametricTerminal(id=f"tap_left_{idx}", x=geom.center_x, y=y, role="parameterized_connection", side="left", index=idx)
+            terminals.append(terminal)
+            slot = _make_slot(
+                params=params,
+                terminal_id=terminal.id,
+                slot_side="left",
+                index=idx,
+                bus_x=geom.center_x,
+                bus_y=y,
+                label_number=next_label if params.bay_numbering_enabled else None,
+                geom=geom,
+            )
+            bay_slots.append(slot)
+            next_label += params.bay_numbering_step
+
+        if params.connection_side in {"bottom", "both"}:
+            terminal = ParametricTerminal(id=f"tap_right_{idx}", x=geom.center_x, y=y, role="parameterized_connection", side="right", index=idx)
+            terminals.append(terminal)
+            slot = _make_slot(
+                params=params,
+                terminal_id=terminal.id,
+                slot_side="right",
+                index=idx,
+                bus_x=geom.center_x,
+                bus_y=y,
+                label_number=next_label if params.bay_numbering_enabled else None,
+                geom=geom,
+            )
+            bay_slots.append(slot)
+            next_label += params.bay_numbering_step
 
     for slot in bay_slots:
-        _add_slot_marker_and_label(elements, slot)
+        _render_slot_marker(elements, params, slot)
 
-    view_box = {"x": 0.0, "y": 0.0, "width": width, "height": height}
+    _render_bus_label(elements, params, geom)
+
+    view_box = {"x": 0.0, "y": 0.0, "width": geom.view_w, "height": geom.view_h}
     return terminals, bay_slots, "\n".join(elements), view_box
 
 
 def generate_busbar_preview(params: BusbarPreviewRequest) -> ParametricSymbolPreview:
     if params.orientation == "vertical":
-        terminals, bay_slots, svg_fragment, view_box = _vertical_terminals(params)
+        terminals, bay_slots, svg_fragment, view_box = _vertical_preview(params)
     else:
-        terminals, bay_slots, svg_fragment, view_box = _horizontal_terminals(params)
+        terminals, bay_slots, svg_fragment, view_box = _horizontal_preview(params)
 
     capabilities = {
         "feature_flags": {
@@ -349,28 +453,36 @@ def generate_busbar_preview(params: BusbarPreviewRequest) -> ParametricSymbolPre
             "snap_anchors_required": True,
             "auto_layout_eligible": True,
             "connection_count_configurable": True,
+            "connection_spacing_configurable": True,
+            "internal_slot_markers": True,
             "bay_slots": True,
             "bay_slot_numbering": params.bay_numbering_enabled,
+            "bus_label": bool(params.bus_label),
         },
         "busbar": {
             "connection_count": params.connection_count,
             "connection_side": params.connection_side,
             "orientation": params.orientation,
-            "length": params.length,
-            "stroke_width_multiplier": params.stroke_width,
+            "length": _compute_length(params),
+            "thickness_mm": params.thickness_mm,
+            "connection_spacing": params.connection_spacing,
+            "slot_diameter": params.slot_diameter,
             "bay_depth": params.bay_depth,
             "bay_slot_count": len(bay_slots),
             "bay_numbering_enabled": params.bay_numbering_enabled,
+            "bay_numbering_style": params.bay_numbering_style,
             "bay_numbering_prefix": params.bay_numbering_prefix,
             "bay_numbering_start": params.bay_numbering_start,
             "bay_numbering_step": params.bay_numbering_step,
-            "bay_label_position": params.bay_label_position,
+            "bus_label": params.bus_label,
+            "bus_label_position": params.bus_label_position,
+            "voltage_kv": params.voltage_kv,
         },
         "auto_scheme_generation": {
             "role": "bus_section",
             "can_host_bays": True,
-            "slot_model": "generated_even_spacing",
-            "terminal_generation": "even_spacing",
+            "slot_model": "internal_busbar_points",
+            "terminal_generation": "centered_internal_slots",
             "bay_slot_count": len(bay_slots),
             "bay_labels": [slot.label for slot in bay_slots if slot.label],
         },

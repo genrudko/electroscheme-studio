@@ -5,7 +5,7 @@
         <p class="eyebrow">Parametric symbol</p>
         <h2>Busbar generator</h2>
         <p class="description">
-          Generate a busbar with terminals, snap anchors, semantic bay slots and visible cell numbering.
+          Visual model aligned to Visio feedback: slots inside the busbar, labels above/aside, adjustable spacing and bus caption.
         </p>
       </div>
       <button type="button" class="primary-button" :disabled="loading" @click="refreshPreview">
@@ -21,16 +21,28 @@
           <input v-model="form.name_ru" type="text" />
         </label>
 
-        <label class="field">Voltage, kV
+        <label class="field">Voltage class, kV
           <input v-model.number="form.voltage_kv" type="number" min="0.4" max="1150" step="0.1" />
         </label>
 
-        <label class="field">Length
-          <input v-model.number="form.length" type="number" min="80" max="1200" step="10" />
+        <label class="field">Connection points
+          <input v-model.number="form.connection_count" type="number" min="0" max="64" step="1" />
         </label>
 
-        <label class="field">Connection count
-          <input v-model.number="form.connection_count" type="number" min="0" max="64" step="1" />
+        <label class="field">Spacing between points
+          <input v-model.number="form.connection_spacing" type="number" min="5" max="300" step="1" />
+        </label>
+
+        <label class="field">Bus thickness, mm
+          <input v-model.number="form.thickness_mm" type="number" min="2" max="60" step="0.5" />
+        </label>
+
+        <label class="field">Slot diameter
+          <input v-model.number="form.slot_diameter" type="number" min="2" max="30" step="0.5" />
+        </label>
+
+        <label class="field">Minimum bar length
+          <input v-model.number="form.length" type="number" min="80" max="1600" step="10" />
         </label>
 
         <label class="field">Connection side
@@ -48,18 +60,31 @@
           </select>
         </label>
 
-        <label class="field">Stroke width
-          <input v-model.number="form.stroke_width" type="number" min="1" max="16" step="0.5" />
+        <label class="field">Bus caption
+          <input v-model="form.bus_label" type="text" maxlength="64" />
         </label>
 
-        <label class="field">Bay depth
-          <input v-model.number="form.bay_depth" type="number" min="20" max="260" step="10" />
+        <label class="field">Bus caption position
+          <select v-model="form.bus_label_position">
+            <option value="auto">Auto</option>
+            <option value="right">Right</option>
+            <option value="left">Left</option>
+            <option value="top">Top</option>
+            <option value="bottom">Bottom</option>
+          </select>
         </label>
 
         <section class="numbering-box">
           <label class="check-field">
             <input v-model="form.bay_numbering_enabled" type="checkbox" />
-            Number bay slots / cells
+            Number cells / bay slots
+          </label>
+
+          <label class="field">Number style
+            <select v-model="form.bay_numbering_style">
+              <option value="number_only">Number only</option>
+              <option value="prefix_number">Prefix + number</option>
+            </select>
           </label>
 
           <label class="field">Number prefix
@@ -74,14 +99,8 @@
             <input v-model.number="form.bay_numbering_step" type="number" min="1" max="100" step="1" />
           </label>
 
-          <label class="field">Label position
-            <select v-model="form.bay_label_position">
-              <option value="auto">Auto</option>
-              <option value="above">Above</option>
-              <option value="below">Below</option>
-              <option value="left">Left</option>
-              <option value="right">Right</option>
-            </select>
+          <label class="field">Label offset
+            <input v-model.number="form.bay_label_offset" type="number" min="0" max="120" step="1" />
           </label>
         </section>
       </aside>
@@ -101,11 +120,7 @@
 
         <div v-if="preview" class="summary">
           <article>
-            <span>Terminals</span>
-            <strong>{{ preview.terminals.length }}</strong>
-          </article>
-          <article>
-            <span>Bay slots</span>
+            <span>Points</span>
             <strong>{{ preview.bay_slots.length }}</strong>
           </article>
           <article>
@@ -113,62 +128,34 @@
             <strong>{{ numberedSlotCount }}</strong>
           </article>
           <article>
-            <span>ViewBox</span>
-            <strong>{{ Math.round(preview.viewBox.width) }} × {{ Math.round(preview.viewBox.height) }}</strong>
+            <span>Computed length</span>
+            <strong>{{ preview.capabilities.busbar.length }}</strong>
           </article>
           <article>
-            <span>Auto layout</span>
-            <strong>{{ preview.capabilities.auto_scheme_generation?.can_host_bays ? 'yes' : 'no' }}</strong>
+            <span>Thickness</span>
+            <strong>{{ preview.capabilities.busbar.thickness_mm }}</strong>
           </article>
         </div>
 
         <details v-if="preview" class="terminal-list" open>
-          <summary>Bay slots for automatic scheme generation</summary>
+          <summary>Bay slot data</summary>
           <table>
             <thead>
               <tr>
                 <th>Label</th>
                 <th>Slot</th>
-                <th>Terminal</th>
                 <th>Side</th>
                 <th>Bus point</th>
-                <th>Equipment anchor</th>
-                <th>Route</th>
+                <th>Anchor</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="slot in preview.bay_slots" :key="slot.id">
                 <td><strong>{{ slot.label || '—' }}</strong></td>
                 <td><code>{{ slot.id }}</code></td>
-                <td><code>{{ slot.terminal_id }}</code></td>
                 <td>{{ slot.side }}</td>
                 <td>{{ slot.bus_x.toFixed(1) }}, {{ slot.bus_y.toFixed(1) }}</td>
                 <td>{{ slot.equipment_anchor_x.toFixed(1) }}, {{ slot.equipment_anchor_y.toFixed(1) }}</td>
-                <td>{{ slot.preferred_routing_direction }}</td>
-              </tr>
-            </tbody>
-          </table>
-        </details>
-
-        <details v-if="preview" class="terminal-list">
-          <summary>Generated terminals / snap anchors</summary>
-          <table>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Role</th>
-                <th>Side</th>
-                <th>X</th>
-                <th>Y</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="terminal in preview.terminals" :key="terminal.id">
-                <td><code>{{ terminal.id }}</code></td>
-                <td>{{ terminal.role }}</td>
-                <td>{{ terminal.side }}</td>
-                <td>{{ terminal.x.toFixed(1) }}</td>
-                <td>{{ terminal.y.toFixed(1) }}</td>
               </tr>
             </tbody>
           </table>
@@ -183,7 +170,8 @@ import { computed, onMounted, reactive, ref } from 'vue'
 
 type BusbarConnectionSide = 'top' | 'bottom' | 'both'
 type BusbarOrientation = 'horizontal' | 'vertical'
-type BayLabelPosition = 'auto' | 'above' | 'below' | 'left' | 'right'
+type BusLabelPosition = 'auto' | 'right' | 'left' | 'top' | 'bottom'
+type BayNumberingStyle = 'number_only' | 'prefix_number'
 
 type BusbarPreviewRequest = {
   id: string
@@ -193,25 +181,19 @@ type BusbarPreviewRequest = {
   connection_count: number
   connection_side: BusbarConnectionSide
   orientation: BusbarOrientation
-  stroke_width: number
+  thickness_mm: number
+  connection_spacing: number
+  slot_diameter: number
   margin: number
-  lead_length: number
   bay_depth: number
   bay_numbering_enabled: boolean
   bay_numbering_prefix: string
+  bay_numbering_style: BayNumberingStyle
   bay_numbering_start: number
   bay_numbering_step: number
-  bay_label_position: BayLabelPosition
   bay_label_offset: number
-}
-
-type ParametricTerminal = {
-  id: string
-  x: number
-  y: number
-  role: string
-  side: string
-  index?: number
+  bus_label: string
+  bus_label_position: BusLabelPosition
 }
 
 type ParametricBaySlot = {
@@ -230,8 +212,6 @@ type ParametricBaySlot = {
   label: string
   label_x?: number | null
   label_y?: number | null
-  allowed_equipment_kinds: string[]
-  reserved: boolean
 }
 
 type ParametricSymbolPreview = {
@@ -240,8 +220,6 @@ type ParametricSymbolPreview = {
   kind: 'busbar'
   viewBox: { x: number; y: number; width: number; height: number }
   svg_fragment: string
-  terminals: ParametricTerminal[]
-  snap_anchors: ParametricTerminal[]
   bay_slots: ParametricBaySlot[]
   parameters: BusbarPreviewRequest
   capabilities: Record<string, any>
@@ -253,22 +231,25 @@ const preview = ref<ParametricSymbolPreview | null>(null)
 
 const form = reactive<BusbarPreviewRequest>({
   id: 'param_busbar_1',
-  name_ru: 'Шина 35 кВ',
-  voltage_kv: 35,
-  length: 420,
-  connection_count: 8,
+  name_ru: 'Шина 10 кВ',
+  voltage_kv: 10,
+  length: 260,
+  connection_count: 5,
   connection_side: 'bottom',
   orientation: 'horizontal',
-  stroke_width: 4,
-  margin: 20,
-  lead_length: 24,
+  thickness_mm: 12,
+  connection_spacing: 48,
+  slot_diameter: 8,
+  margin: 24,
   bay_depth: 90,
   bay_numbering_enabled: true,
   bay_numbering_prefix: 'Яч. ',
+  bay_numbering_style: 'number_only',
   bay_numbering_start: 1,
   bay_numbering_step: 1,
-  bay_label_position: 'above',
-  bay_label_offset: 12,
+  bay_label_offset: 14,
+  bus_label: '1С 10 кВ',
+  bus_label_position: 'auto',
 })
 
 const viewBoxString = computed(() => {
@@ -371,7 +352,7 @@ onMounted(() => {
 
 .layout {
   display: grid;
-  grid-template-columns: minmax(220px, 280px) 1fr;
+  grid-template-columns: minmax(250px, 320px) 1fr;
   gap: 16px;
 }
 
@@ -422,7 +403,7 @@ onMounted(() => {
 }
 
 .preview-card {
-  min-height: 320px;
+  min-height: 340px;
   display: grid;
   place-items: center;
   border: 1px solid #e2e8f0;
@@ -431,20 +412,19 @@ onMounted(() => {
     linear-gradient(90deg, rgba(148, 163, 184, 0.14) 1px, transparent 1px),
     linear-gradient(rgba(148, 163, 184, 0.14) 1px, transparent 1px);
   background-size: 18px 18px;
-  color: #4b5563;
-  --voltage-color: #4b5563;
-  --slot-color: #2563eb;
-  --label-color: #111827;
+  --busbar-color: #6d0ad6;
+  --slot-stroke: #ffffff;
+  --label-color: #111111;
 }
 
 .preview-svg {
-  width: 92%;
-  max-height: 305px;
+  width: 96%;
+  max-height: 320px;
 }
 
 .summary {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   gap: 10px;
   margin: 12px 0;
 }

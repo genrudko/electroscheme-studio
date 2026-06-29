@@ -9,27 +9,31 @@ BusbarOrientation = Literal["horizontal", "vertical"]
 BusbarConnectionSide = Literal["top", "bottom", "both"]
 BaySlotSide = Literal["top", "bottom", "left", "right"]
 RoutingDirection = Literal["up", "down", "left", "right"]
-BayLabelPosition = Literal["auto", "above", "below", "left", "right"]
+BusLabelPosition = Literal["auto", "right", "left", "top", "bottom"]
+BayNumberingStyle = Literal["number_only", "prefix_number"]
 
 
 class BusbarPreviewRequest(BaseModel):
     id: str = Field(default="param_busbar_1", min_length=1)
     name_ru: str = Field(default="Шина")
-    voltage_kv: float = Field(default=35.0, ge=0.4, le=1150.0)
-    length: float = Field(default=260.0, ge=80.0, le=1200.0)
-    connection_count: int = Field(default=6, ge=0, le=64)
+    voltage_kv: float = Field(default=10.0, ge=0.4, le=1150.0)
+    length: float = Field(default=260.0, ge=80.0, le=1600.0)
+    connection_count: int = Field(default=5, ge=0, le=64)
     connection_side: BusbarConnectionSide = "bottom"
     orientation: BusbarOrientation = "horizontal"
-    stroke_width: float = Field(default=4.0, ge=1.0, le=16.0)
-    margin: float = Field(default=20.0, ge=5.0, le=80.0)
-    lead_length: float = Field(default=24.0, ge=0.0, le=120.0)
+    thickness_mm: float = Field(default=12.0, ge=2.0, le=60.0)
+    connection_spacing: float | None = Field(default=48.0, ge=5.0, le=300.0)
+    slot_diameter: float = Field(default=8.0, ge=2.0, le=30.0)
+    margin: float = Field(default=24.0, ge=5.0, le=120.0)
     bay_depth: float = Field(default=90.0, ge=20.0, le=260.0)
     bay_numbering_enabled: bool = True
     bay_numbering_prefix: str = Field(default="Яч. ", max_length=32)
+    bay_numbering_style: BayNumberingStyle = "number_only"
     bay_numbering_start: int = Field(default=1, ge=0, le=9999)
     bay_numbering_step: int = Field(default=1, ge=1, le=100)
-    bay_label_position: BayLabelPosition = "above"
-    bay_label_offset: float = Field(default=12.0, ge=0.0, le=80.0)
+    bay_label_offset: float = Field(default=14.0, ge=0.0, le=120.0)
+    bus_label: str = Field(default="1С 10 кВ", max_length=64)
+    bus_label_position: BusLabelPosition = "auto"
 
 
 class ParametricTerminal(BaseModel):
@@ -62,7 +66,7 @@ class ParametricBaySlot(BaseModel):
 
 
 class ParametricSymbolPreview(BaseModel):
-    schema_version: str = "parametric-symbol-preview-0.3"
+    schema_version: str = "parametric-symbol-preview-0.4"
     id: str
     name_ru: str
     kind: Literal["busbar"]
