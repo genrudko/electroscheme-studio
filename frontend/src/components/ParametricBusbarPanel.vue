@@ -5,7 +5,7 @@
         <p class="eyebrow">Parametric symbol</p>
         <h2>Busbar generator</h2>
         <p class="description">
-          Bus captions and cell number labels can be dragged and rotated.
+          Bus captions and cell number labels can be selected, dragged, snapped to guides and rotated.
         </p>
       </div>
       <button type="button" class="primary-button" :disabled="loading" @click="refreshPreview">
@@ -17,6 +17,39 @@
 
     <div class="layout">
       <aside class="controls">
+        <section class="numbering-box text-tools">
+          <h3>Text tools</h3>
+          <p class="small-note">
+            Selected: <strong>{{ selectedTextDescription }}</strong>
+          </p>
+
+          <div class="preset-row">
+            <button type="button" :disabled="!selectedTextRole" @click="rotateSelectedText(0)">0°</button>
+            <button type="button" :disabled="!selectedTextRole" @click="rotateSelectedText(90)">+90°</button>
+            <button type="button" :disabled="!selectedTextRole" @click="rotateSelectedText(-90)">-90°</button>
+            <button type="button" :disabled="!selectedTextRole" @click="rotateSelectedText(180)">180°</button>
+            <button type="button" :disabled="!selectedTextRole" @click="resetSelectedText()">Reset</button>
+          </div>
+
+          <label class="check-field">
+            <input v-model="showAlignmentGuides" type="checkbox" />
+            Show alignment guides
+          </label>
+
+          <label class="check-field">
+            <input v-model="snapTextToGuides" type="checkbox" />
+            Snap text to guides
+          </label>
+
+          <label class="field">Snap tolerance
+            <input v-model.number="textSnapTolerance" type="number" min="0" max="50" step="1" />
+          </label>
+
+          <label class="field">Guide grid step
+            <input v-model.number="textGuideGridStep" type="number" min="0" max="100" step="1" />
+          </label>
+        </section>
+
         <label class="field">Name
           <input v-model="form.name_ru" type="text" />
         </label>
@@ -107,19 +140,6 @@
         </section>
 
         <section class="numbering-box">
-          <h3>Selected cell number</h3>
-          <p class="small-note">{{ selectedBayLabelId || 'Click or drag a cell number label' }}</p>
-
-          <div class="preset-row">
-            <button type="button" :disabled="!selectedBayLabelId" @click="setSelectedBayLabelRotation(0)">0°</button>
-            <button type="button" :disabled="!selectedBayLabelId" @click="setSelectedBayLabelRotation(90)">+90°</button>
-            <button type="button" :disabled="!selectedBayLabelId" @click="setSelectedBayLabelRotation(-90)">-90°</button>
-            <button type="button" :disabled="!selectedBayLabelId" @click="setSelectedBayLabelRotation(180)">180°</button>
-            <button type="button" :disabled="!selectedBayLabelId" @click="resetSelectedBayLabel()">Reset</button>
-          </div>
-        </section>
-
-        <section class="numbering-box">
           <h3>Bus caption</h3>
 
           <label class="field">Caption
@@ -154,18 +174,13 @@
               <option value="manual">Manual</option>
             </select>
           </label>
-
-          <div class="preset-row">
-            <button type="button" @click="setBusRotation(0)">0°</button>
-            <button type="button" @click="setBusRotation(90)">+90°</button>
-            <button type="button" @click="setBusRotation(-90)">-90°</button>
-            <button type="button" @click="setBusRotation(180)">180°</button>
-          </div>
         </section>
       </aside>
 
       <main class="preview-area">
-        <p class="hint">Tip: drag the bus caption or any cell number. Selected cell labels can also be rotated with presets.</p>
+        <p class="hint">
+          Select text by clicking it. Drag selected or unselected text to move it. Blue guide lines show snap targets.
+        </p>
 
         <div class="preview-card">
           <svg
@@ -183,9 +198,9 @@
 
         <div v-if="preview" class="summary">
           <article><span>Points</span><strong>{{ preview.bay_slots.length }}</strong></article>
-          <article><span>Selected label</span><strong>{{ selectedBayLabelId || '—' }}</strong></article>
-          <article><span>Overrides</span><strong>{{ Object.keys(form.bay_label_overrides).length }}</strong></article>
-          <article><span>Bus caption X/Y</span><strong>{{ form.bus_label_offset_x }}, {{ form.bus_label_offset_y }}</strong></article>
+          <article><span>Selected</span><strong>{{ selectedTextDescription }}</strong></article>
+          <article><span>Bay overrides</span><strong>{{ Object.keys(form.bay_label_overrides).length }}</strong></article>
+          <article><span>Snap</span><strong>{{ snapTextToGuides ? textSnapTolerance + ' px' : 'off' }}</strong></article>
         </div>
 
         <details v-if="preview" class="terminal-list" open>
@@ -222,6 +237,7 @@ type BusbarOrientation = 'horizontal' | 'vertical'
 type BusLabelPosition = 'auto' | 'right' | 'left' | 'top' | 'bottom'
 type BayNumberingStyle = 'number_only' | 'prefix_number'
 type RotationMode = 'auto' | 'manual'
+type TextRole = '' | 'bus-label' | 'bay-label'
 
 type TextLabelOverride = {
   offset_x: number
@@ -282,11 +298,23 @@ type ParametricSymbolPreview = {
   capabilities: Record<string, any>
 }
 
+type GuideSet = {
+  vertical: number[]
+  horizontal: number[]
+}
+
 const loading = ref(false)
 const error = ref('')
 const preview = ref<ParametricSymbolPreview | null>(null)
 const previewSvg = ref<SVGSVGElement | null>(null)
+
+const selectedTextRole = ref<TextRole>('')
 const selectedBayLabelId = ref('')
+
+const showAlignmentGuides = ref(true)
+const snapTextToGuides = ref(true)
+const textSnapTolerance = ref(6)
+const textGuideGridStep = ref(6)
 
 const form = reactive<BusbarPreviewRequest>({
   id: 'param_busbar_1',
@@ -327,11 +355,11 @@ const viewBoxString = computed(() => {
   return `${vb.x} ${vb.y} ${vb.width} ${vb.height}`
 })
 
-function setBusRotation(degrees: number): void {
-  form.bus_label_rotation_mode = 'manual'
-  form.bus_label_rotation_deg = degrees
-  void refreshPreview()
-}
+const selectedTextDescription = computed(() => {
+  if (selectedTextRole.value === 'bus-label') return 'Bus caption'
+  if (selectedTextRole.value === 'bay-label') return selectedBayLabelId.value || 'Bay number'
+  return 'Click text'
+})
 
 function ensureBayLabelOverride(slotId: string): TextLabelOverride {
   if (!form.bay_label_overrides[slotId]) {
@@ -345,17 +373,35 @@ function setAllBayLabelRotation(degrees: number): void {
   void refreshPreview()
 }
 
-function setSelectedBayLabelRotation(degrees: number): void {
-  if (!selectedBayLabelId.value) return
-  const override = ensureBayLabelOverride(selectedBayLabelId.value)
-  override.rotation_deg = degrees
-  void refreshPreview()
+function rotateSelectedText(degrees: number): void {
+  if (selectedTextRole.value === 'bus-label') {
+    form.bus_label_rotation_mode = 'manual'
+    form.bus_label_rotation_deg = degrees
+    void refreshPreview()
+    return
+  }
+
+  if (selectedTextRole.value === 'bay-label' && selectedBayLabelId.value) {
+    const override = ensureBayLabelOverride(selectedBayLabelId.value)
+    override.rotation_deg = degrees
+    void refreshPreview()
+  }
 }
 
-function resetSelectedBayLabel(): void {
-  if (!selectedBayLabelId.value) return
-  delete form.bay_label_overrides[selectedBayLabelId.value]
-  void refreshPreview()
+function resetSelectedText(): void {
+  if (selectedTextRole.value === 'bus-label') {
+    form.bus_label_offset_x = 0
+    form.bus_label_offset_y = 0
+    form.bus_label_rotation_mode = 'auto'
+    form.bus_label_rotation_deg = 0
+    void refreshPreview()
+    return
+  }
+
+  if (selectedTextRole.value === 'bay-label' && selectedBayLabelId.value) {
+    delete form.bay_label_overrides[selectedBayLabelId.value]
+    void refreshPreview()
+  }
 }
 
 function clientToSvgPoint(event: PointerEvent): DOMPoint | null {
@@ -369,7 +415,7 @@ function clientToSvgPoint(event: PointerEvent): DOMPoint | null {
   return point.matrixTransform(ctm.inverse())
 }
 
-function findDraggableLabelTarget(start: Element | null): SVGTextElement | null {
+function findDraggableTextTarget(start: Element | null): SVGTextElement | null {
   let current: Element | null = start
   while (current && current !== previewSvg.value) {
     const role = current.getAttribute('data-role')
@@ -381,6 +427,12 @@ function findDraggableLabelTarget(start: Element | null): SVGTextElement | null 
   return null
 }
 
+function selectTextTarget(target: SVGTextElement): void {
+  const role = (target.getAttribute('data-role') ?? '') as TextRole
+  selectedTextRole.value = role
+  selectedBayLabelId.value = role === 'bay-label' ? target.getAttribute('data-bay-slot-id') ?? '' : ''
+}
+
 function setLabelVisualPosition(target: SVGTextElement, x: number, y: number): void {
   const rotation = Number(target.getAttribute('data-rotation') ?? '0') || 0
   const roundedX = Math.round(x * 10) / 10
@@ -390,29 +442,177 @@ function setLabelVisualPosition(target: SVGTextElement, x: number, y: number): v
   target.setAttribute('transform', `rotate(${rotation} ${roundedX} ${roundedY})`)
 }
 
+function uniqueSorted(values: number[]): number[] {
+  return Array.from(new Set(values.map((value) => Math.round(value * 10) / 10))).sort((a, b) => a - b)
+}
+
+function collectGuides(target: SVGTextElement): GuideSet {
+  const svg = previewSvg.value
+  if (!svg) return { vertical: [], horizontal: [] }
+
+  const vertical: number[] = []
+  const horizontal: number[] = []
+
+  svg.querySelectorAll('circle').forEach((circle) => {
+    const cx = Number(circle.getAttribute('cx') ?? 'NaN')
+    const cy = Number(circle.getAttribute('cy') ?? 'NaN')
+    if (Number.isFinite(cx)) vertical.push(cx)
+    if (Number.isFinite(cy)) horizontal.push(cy)
+  })
+
+  svg.querySelectorAll('rect').forEach((rect) => {
+    const x = Number(rect.getAttribute('x') ?? 'NaN')
+    const y = Number(rect.getAttribute('y') ?? 'NaN')
+    const width = Number(rect.getAttribute('width') ?? 'NaN')
+    const height = Number(rect.getAttribute('height') ?? 'NaN')
+    if (Number.isFinite(x) && Number.isFinite(width)) {
+      vertical.push(x, x + width / 2, x + width)
+    }
+    if (Number.isFinite(y) && Number.isFinite(height)) {
+      horizontal.push(y, y + height / 2, y + height)
+    }
+  })
+
+  svg.querySelectorAll('text').forEach((text) => {
+    if (text === target) return
+    const x = Number(text.getAttribute('x') ?? 'NaN')
+    const y = Number(text.getAttribute('y') ?? 'NaN')
+    if (Number.isFinite(x)) vertical.push(x)
+    if (Number.isFinite(y)) horizontal.push(y)
+  })
+
+  const vb = svg.viewBox.baseVal
+  const step = Number(textGuideGridStep.value)
+  if (step > 0) {
+    for (let x = 0; x <= vb.width; x += step) vertical.push(x)
+    for (let y = 0; y <= vb.height; y += step) horizontal.push(y)
+  }
+
+  return { vertical: uniqueSorted(vertical), horizontal: uniqueSorted(horizontal) }
+}
+
+function snapValue(value: number, guides: number[]): { value: number; guide: number | null } {
+  if (!snapTextToGuides.value) return { value, guide: null }
+
+  let bestGuide: number | null = null
+  let bestDistance = Number.POSITIVE_INFINITY
+
+  for (const guide of guides) {
+    const distance = Math.abs(value - guide)
+    if (distance < bestDistance) {
+      bestDistance = distance
+      bestGuide = guide
+    }
+  }
+
+  if (bestGuide !== null && bestDistance <= textSnapTolerance.value) {
+    return { value: bestGuide, guide: bestGuide }
+  }
+
+  return { value, guide: null }
+}
+
+function ensureGuideLayer(svg: SVGSVGElement): SVGGElement {
+  let layer = svg.querySelector('[data-role="alignment-guides"]') as SVGGElement | null
+  if (!layer) {
+    layer = document.createElementNS('http://www.w3.org/2000/svg', 'g')
+    layer.setAttribute('data-role', 'alignment-guides')
+    layer.setAttribute('pointer-events', 'none')
+    svg.appendChild(layer)
+  }
+  return layer
+}
+
+function addGuideLine(layer: SVGGElement, attrs: Record<string, string>): void {
+  const line = document.createElementNS('http://www.w3.org/2000/svg', 'line')
+  Object.entries(attrs).forEach(([key, value]) => line.setAttribute(key, value))
+  layer.appendChild(line)
+}
+
+function drawGuides(x: number, y: number, snapX: number | null, snapY: number | null): void {
+  const svg = previewSvg.value
+  if (!svg || !showAlignmentGuides.value) return
+
+  const layer = ensureGuideLayer(svg)
+  layer.innerHTML = ''
+
+  const vb = svg.viewBox.baseVal
+  const lineBase = {
+    stroke: '#64748b',
+    'stroke-width': '0.8',
+    'stroke-dasharray': '3 3',
+    opacity: '0.55',
+  }
+  const lineSnap = {
+    stroke: '#2563eb',
+    'stroke-width': '1.4',
+    'stroke-dasharray': 'none',
+    opacity: '0.9',
+  }
+
+  addGuideLine(layer, {
+    x1: String(x),
+    y1: String(vb.y),
+    x2: String(x),
+    y2: String(vb.y + vb.height),
+    ...lineBase,
+  })
+
+  addGuideLine(layer, {
+    x1: String(vb.x),
+    y1: String(y),
+    x2: String(vb.x + vb.width),
+    y2: String(y),
+    ...lineBase,
+  })
+
+  if (snapX !== null) {
+    addGuideLine(layer, {
+      x1: String(snapX),
+      y1: String(vb.y),
+      x2: String(snapX),
+      y2: String(vb.y + vb.height),
+      ...lineSnap,
+    })
+  }
+
+  if (snapY !== null) {
+    addGuideLine(layer, {
+      x1: String(vb.x),
+      y1: String(snapY),
+      x2: String(vb.x + vb.width),
+      y2: String(snapY),
+      ...lineSnap,
+    })
+  }
+}
+
+function clearGuides(): void {
+  const svg = previewSvg.value
+  svg?.querySelector('[data-role="alignment-guides"]')?.remove()
+}
+
 function onPreviewPointerDown(event: PointerEvent): void {
-  const target = findDraggableLabelTarget(event.target as Element | null)
+  const target = findDraggableTextTarget(event.target as Element | null)
   if (!target) return
 
   event.preventDefault()
+  selectTextTarget(target)
 
   const start = clientToSvgPoint(event)
   if (!start) return
 
   const role = target.getAttribute('data-role')
   const baySlotId = target.getAttribute('data-bay-slot-id') ?? ''
-  if (role === 'bay-label' && baySlotId) {
-    selectedBayLabelId.value = baySlotId
-  }
-
   const baseX = Number(target.getAttribute('x') ?? '0') || 0
   const baseY = Number(target.getAttribute('y') ?? '0') || 0
   const startBusOffsetX = form.bus_label_offset_x
   const startBusOffsetY = form.bus_label_offset_y
-  const bayOverride = baySlotId ? ensureBayLabelOverride(baySlotId) : null
+  const bayOverride = role === 'bay-label' && baySlotId ? ensureBayLabelOverride(baySlotId) : null
   const startBayOffsetX = bayOverride?.offset_x ?? 0
   const startBayOffsetY = bayOverride?.offset_y ?? 0
   const pointerId = event.pointerId
+  const guides = collectGuides(target)
 
   target.style.cursor = 'grabbing'
   previewSvg.value?.setPointerCapture?.(pointerId)
@@ -421,8 +621,15 @@ function onPreviewPointerDown(event: PointerEvent): void {
     if (moveEvent.pointerId !== pointerId) return
     const current = clientToSvgPoint(moveEvent)
     if (!current) return
-    const dx = current.x - start.x
-    const dy = current.y - start.y
+
+    const rawX = baseX + current.x - start.x
+    const rawY = baseY + current.y - start.y
+    const snappedX = snapValue(rawX, guides.vertical)
+    const snappedY = snapValue(rawY, guides.horizontal)
+    const nextX = snappedX.value
+    const nextY = snappedY.value
+    const dx = nextX - baseX
+    const dy = nextY - baseY
 
     if (role === 'bus-label') {
       form.bus_label_offset_x = Math.round((startBusOffsetX + dx) * 10) / 10
@@ -432,7 +639,8 @@ function onPreviewPointerDown(event: PointerEvent): void {
       bayOverride.offset_y = Math.round((startBayOffsetY + dy) * 10) / 10
     }
 
-    setLabelVisualPosition(target, baseX + dx, baseY + dy)
+    setLabelVisualPosition(target, nextX, nextY)
+    drawGuides(nextX, nextY, snappedX.guide, snappedY.guide)
   }
 
   const up = (upEvent: PointerEvent) => {
@@ -441,6 +649,7 @@ function onPreviewPointerDown(event: PointerEvent): void {
     previewSvg.value?.releasePointerCapture?.(pointerId)
     window.removeEventListener('pointermove', move)
     window.removeEventListener('pointerup', up)
+    clearGuides()
     void refreshPreview()
   }
 
@@ -490,25 +699,27 @@ onMounted(() => {
 .primary-button:disabled { opacity: 0.55; cursor: default; }
 .status { padding: 16px; border-radius: 12px; background: #eff6ff; color: #1e40af; }
 .status.error { background: #fef2f2; color: #991b1b; }
-.layout { display: grid; grid-template-columns: minmax(250px, 320px) 1fr; gap: 16px; }
+.layout { display: grid; grid-template-columns: minmax(250px, 340px) 1fr; gap: 16px; }
 .controls, .preview-area { border: 1px solid #dbeafe; border-radius: 14px; background: white; padding: 14px; }
+
 .field { display: grid; gap: 6px; margin-bottom: 12px; color: #475569; font-size: 12px; font-weight: 800; }
 .field input, .field select { width: 100%; box-sizing: border-box; border: 1px solid #cbd5e1; border-radius: 10px; padding: 9px 10px; color: #0f172a; background: white; }
 .check-field { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; color: #334155; font-size: 12px; font-weight: 800; }
 .numbering-box { margin-top: 14px; padding: 12px; border: 1px solid #dbeafe; border-radius: 12px; background: #eff6ff; }
+.text-tools { margin-top: 0; border-color: #93c5fd; background: #dbeafe; }
 .numbering-box h3 { margin: 0 0 10px; font-size: 14px; }
-.small-note { margin: 0 0 10px; color: #64748b; font-size: 12px; font-weight: 700; }
-.preset-row { display: flex; flex-wrap: wrap; gap: 6px; }
+.small-note { margin: 0 0 10px; color: #334155; font-size: 12px; font-weight: 700; }
+.preset-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
 .preset-row button { border: 1px solid #bfdbfe; border-radius: 999px; padding: 6px 9px; background: white; color: #1d4ed8; cursor: pointer; font-weight: 800; }
 .preset-row button:disabled { opacity: 0.45; cursor: default; }
-.preview-card { min-height: 360px; display: grid; place-items: center; border: 1px solid #e2e8f0; border-radius: 12px; background: linear-gradient(90deg, rgba(148, 163, 184, 0.14) 1px, transparent 1px), linear-gradient(rgba(148, 163, 184, 0.14) 1px, transparent 1px); background-size: 18px 18px; --busbar-color: #6d0ad6; --slot-stroke: #ffffff; --label-color: #111111; }
-.preview-svg { width: 96%; max-height: 340px; touch-action: none; }
+.preview-card { min-height: 400px; display: grid; place-items: center; border: 1px solid #e2e8f0; border-radius: 12px; background: linear-gradient(90deg, rgba(148, 163, 184, 0.14) 1px, transparent 1px), linear-gradient(rgba(148, 163, 184, 0.14) 1px, transparent 1px); background-size: 18px 18px; --busbar-color: #6d0ad6; --slot-stroke: #ffffff; --label-color: #111111; }
+.preview-svg { width: 96%; max-height: 380px; touch-action: none; }
 .preview-svg :deep([data-role='bus-label']), .preview-svg :deep([data-role='bay-label']) { cursor: grab; user-select: none; }
 .hint { margin: 0 0 10px; color: #64748b; font-size: 12px; font-weight: 700; }
 .summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin: 12px 0; }
 .summary article { border: 1px solid #e2e8f0; border-radius: 12px; padding: 10px; }
 .summary span { display: block; color: #64748b; font-size: 12px; }
-.summary strong { display: block; margin-top: 3px; font-size: 18px; }
+.summary strong { display: block; margin-top: 3px; font-size: 15px; word-break: break-word; }
 .terminal-list { margin-top: 12px; }
 .terminal-list table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 12px; }
 .terminal-list th, .terminal-list td { border-bottom: 1px solid #e2e8f0; padding: 6px 8px; text-align: left; }

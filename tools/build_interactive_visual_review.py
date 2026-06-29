@@ -39,7 +39,7 @@ def build_interactive_page(visual_dir: Path, out_path: Path) -> dict[str, Any]:
     <p class="labels">{labels}</p>
   </header>
   <div class="svg-wrap">{svg}</div>
-  <p class="drag-status">Drag bus captions or cell-number labels. This is visual-only; it does not rewrite model JSON.</p>
+  <p class="drag-status">Click or drag bus captions/cell numbers. Use the floating toolbar for rotation presets.</p>
 </article>"""
         )
 
@@ -62,19 +62,59 @@ def build_interactive_page(visual_dir: Path, out_path: Path) -> dict[str, Any]:
     .svg-wrap {{ width: 100%; min-height: 300px; border: 1px solid #e5e7eb; border-radius: 10px; background: #fff; overflow: auto; }}
     .svg-wrap svg {{ width: 100%; height: auto; display: block; }}
     [data-role="bus-label"], [data-role="bay-label"] {{ cursor: grab; user-select: none; }}
-    [data-role="bus-label"].dragging, [data-role="bay-label"].dragging {{ cursor: grabbing; }}
+    [data-role="bus-label"].selected, [data-role="bay-label"].selected {{
+      paint-order: stroke;
+      stroke: rgba(37, 99, 235, 0.35);
+      stroke-width: 3;
+    }}
     .drag-status {{ font-size: 12px; color: #64748b; }}
+    .toolbar {{
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 100;
+      width: 260px;
+      padding: 12px;
+      border-radius: 14px;
+      background: #111827;
+      color: white;
+      box-shadow: 0 12px 28px rgba(0,0,0,.25);
+    }}
+    .toolbar h2 {{ margin: 0 0 8px; font-size: 15px; }}
+    .toolbar p {{ margin: 0 0 10px; color: #cbd5e1; font-size: 12px; }}
+    .toolbar button {{
+      margin: 3px;
+      padding: 6px 9px;
+      border: 0;
+      border-radius: 999px;
+      background: #2563eb;
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+    }}
   </style>
 </head>
 <body>
   <header class="page">
     <h1>Interactive visual review</h1>
-    <p>Static snapshots are embedded inline. Bus captions and cell-number labels can be dragged visually.</p>
+    <p>Bus captions and cell-number labels can be dragged. Alignment guides appear during drag.</p>
   </header>
   <main>
     {''.join(cards)}
   </main>
+  <aside class="toolbar">
+    <h2>Text tools</h2>
+    <p id="selectedText">Selected: none</p>
+    <button data-rotate="0">0°</button>
+    <button data-rotate="90">+90°</button>
+    <button data-rotate="-90">-90°</button>
+    <button data-rotate="180">180°</button>
+  </aside>
   <script>
+    let selectedText = null;
+    const snapTolerance = 6;
+    const gridStep = 6;
+
     function clientToSvgPoint(svg, event) {{
       const point = svg.createSVGPoint();
       point.x = event.clientX;
@@ -93,6 +133,110 @@ def build_interactive_page(visual_dir: Path, out_path: Path) -> dict[str, Any]:
       target.setAttribute('transform', `rotate(${{rotation}} ${{rx}} ${{ry}})`);
     }}
 
+    function selectTarget(target) {{
+      document.querySelectorAll('.selected').forEach((item) => item.classList.remove('selected'));
+      selectedText = target;
+      if (target) {{
+        target.classList.add('selected');
+        const role = target.getAttribute('data-role') || 'text';
+        const id = target.getAttribute('data-bay-slot-id') || role;
+        document.getElementById('selectedText').textContent = `Selected: ${{id}}`;
+      }} else {{
+        document.getElementById('selectedText').textContent = 'Selected: none';
+      }}
+    }}
+
+    function unique(values) {{
+      return [...new Set(values.map((value) => Math.round(value * 10) / 10))].sort((a, b) => a - b);
+    }}
+
+    function collectGuides(svg, target) {{
+      const vertical = [];
+      const horizontal = [];
+      svg.querySelectorAll('circle').forEach((circle) => {{
+        const cx = Number(circle.getAttribute('cx'));
+        const cy = Number(circle.getAttribute('cy'));
+        if (Number.isFinite(cx)) vertical.push(cx);
+        if (Number.isFinite(cy)) horizontal.push(cy);
+      }});
+      svg.querySelectorAll('rect').forEach((rect) => {{
+        const x = Number(rect.getAttribute('x'));
+        const y = Number(rect.getAttribute('y'));
+        const width = Number(rect.getAttribute('width'));
+        const height = Number(rect.getAttribute('height'));
+        if (Number.isFinite(x) && Number.isFinite(width)) vertical.push(x, x + width / 2, x + width);
+        if (Number.isFinite(y) && Number.isFinite(height)) horizontal.push(y, y + height / 2, y + height);
+      }});
+      svg.querySelectorAll('text').forEach((text) => {{
+        if (text === target) return;
+        const x = Number(text.getAttribute('x'));
+        const y = Number(text.getAttribute('y'));
+        if (Number.isFinite(x)) vertical.push(x);
+        if (Number.isFinite(y)) horizontal.push(y);
+      }});
+      const vb = svg.viewBox.baseVal;
+      for (let x = 0; x <= vb.width; x += gridStep) vertical.push(x);
+      for (let y = 0; y <= vb.height; y += gridStep) horizontal.push(y);
+      return {{ vertical: unique(vertical), horizontal: unique(horizontal) }};
+    }}
+
+    function snap(value, guides) {{
+      let best = null;
+      let bestDistance = Infinity;
+      for (const guide of guides) {{
+        const distance = Math.abs(value - guide);
+        if (distance < bestDistance) {{
+          bestDistance = distance;
+          best = guide;
+        }}
+      }}
+      return best !== null && bestDistance <= snapTolerance ? {{ value: best, guide: best }} : {{ value, guide: null }};
+    }}
+
+    function ensureGuideLayer(svg) {{
+      let layer = svg.querySelector('[data-role="alignment-guides"]');
+      if (!layer) {{
+        layer = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+        layer.setAttribute('data-role', 'alignment-guides');
+        layer.setAttribute('pointer-events', 'none');
+        svg.appendChild(layer);
+      }}
+      return layer;
+    }}
+
+    function addLine(layer, attrs) {{
+      const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      for (const [key, value] of Object.entries(attrs)) line.setAttribute(key, String(value));
+      layer.appendChild(line);
+    }}
+
+    function drawGuides(svg, x, y, snapX, snapY) {{
+      const layer = ensureGuideLayer(svg);
+      layer.innerHTML = '';
+      const vb = svg.viewBox.baseVal;
+      const base = {{ stroke: '#64748b', 'stroke-width': '0.8', 'stroke-dasharray': '3 3', opacity: '0.55' }};
+      const highlight = {{ stroke: '#2563eb', 'stroke-width': '1.4', 'stroke-dasharray': 'none', opacity: '0.9' }};
+      addLine(layer, {{ x1: x, y1: vb.y, x2: x, y2: vb.y + vb.height, ...base }});
+      addLine(layer, {{ x1: vb.x, y1: y, x2: vb.x + vb.width, y2: y, ...base }});
+      if (snapX !== null) addLine(layer, {{ x1: snapX, y1: vb.y, x2: snapX, y2: vb.y + vb.height, ...highlight }});
+      if (snapY !== null) addLine(layer, {{ x1: vb.x, y1: snapY, x2: vb.x + vb.width, y2: snapY, ...highlight }});
+    }}
+
+    function clearGuides(svg) {{
+      svg.querySelector('[data-role="alignment-guides"]')?.remove();
+    }}
+
+    document.querySelectorAll('.toolbar button[data-rotate]').forEach((button) => {{
+      button.addEventListener('click', () => {{
+        if (!selectedText) return;
+        const rotation = Number(button.getAttribute('data-rotate') || '0') || 0;
+        const x = Number(selectedText.getAttribute('x') || '0') || 0;
+        const y = Number(selectedText.getAttribute('y') || '0') || 0;
+        selectedText.setAttribute('data-rotation', String(rotation));
+        selectedText.setAttribute('transform', `rotate(${{rotation}} ${{x}} ${{y}})`);
+      }});
+    }});
+
     document.addEventListener('pointerdown', (event) => {{
       const target = event.target.closest('[data-role="bus-label"], [data-role="bay-label"]');
       if (!target) return;
@@ -100,27 +244,33 @@ def build_interactive_page(visual_dir: Path, out_path: Path) -> dict[str, Any]:
       if (!svg) return;
 
       event.preventDefault();
+      selectTarget(target);
 
       const start = clientToSvgPoint(svg, event);
       if (!start) return;
 
       const baseX = Number(target.getAttribute('x') || '0') || 0;
       const baseY = Number(target.getAttribute('y') || '0') || 0;
+      const guides = collectGuides(svg, target);
       const pointerId = event.pointerId;
-      target.classList.add('dragging');
       target.setPointerCapture?.(pointerId);
 
       const move = (moveEvent) => {{
         if (moveEvent.pointerId !== pointerId) return;
         const current = clientToSvgPoint(svg, moveEvent);
         if (!current) return;
-        setTextPosition(target, baseX + current.x - start.x, baseY + current.y - start.y);
+        const rawX = baseX + current.x - start.x;
+        const rawY = baseY + current.y - start.y;
+        const snappedX = snap(rawX, guides.vertical);
+        const snappedY = snap(rawY, guides.horizontal);
+        setTextPosition(target, snappedX.value, snappedY.value);
+        drawGuides(svg, snappedX.value, snappedY.value, snappedX.guide, snappedY.guide);
       }};
 
       const up = (upEvent) => {{
         if (upEvent.pointerId !== pointerId) return;
-        target.classList.remove('dragging');
         target.releasePointerCapture?.(pointerId);
+        clearGuides(svg);
         window.removeEventListener('pointermove', move);
         window.removeEventListener('pointerup', up);
       }};
