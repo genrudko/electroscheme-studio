@@ -9,6 +9,7 @@ BusbarOrientation = Literal["horizontal", "vertical"]
 BusbarConnectionSide = Literal["top", "bottom", "both"]
 BaySlotSide = Literal["top", "bottom", "left", "right"]
 RoutingDirection = Literal["up", "down", "left", "right"]
+BayLabelPosition = Literal["auto", "above", "below", "left", "right"]
 
 
 class BusbarPreviewRequest(BaseModel):
@@ -23,6 +24,12 @@ class BusbarPreviewRequest(BaseModel):
     margin: float = Field(default=20.0, ge=5.0, le=80.0)
     lead_length: float = Field(default=24.0, ge=0.0, le=120.0)
     bay_depth: float = Field(default=90.0, ge=20.0, le=260.0)
+    bay_numbering_enabled: bool = True
+    bay_numbering_prefix: str = Field(default="Яч. ", max_length=32)
+    bay_numbering_start: int = Field(default=1, ge=0, le=9999)
+    bay_numbering_step: int = Field(default=1, ge=1, le=100)
+    bay_label_position: BayLabelPosition = "above"
+    bay_label_offset: float = Field(default=12.0, ge=0.0, le=80.0)
 
 
 class ParametricTerminal(BaseModel):
@@ -46,12 +53,16 @@ class ParametricBaySlot(BaseModel):
     equipment_anchor_x: float
     equipment_anchor_y: float
     preferred_routing_direction: RoutingDirection
+    label_number: int | None = None
+    label: str = ""
+    label_x: float | None = None
+    label_y: float | None = None
     allowed_equipment_kinds: list[str] = Field(default_factory=list)
     reserved: bool = False
 
 
 class ParametricSymbolPreview(BaseModel):
-    schema_version: str = "parametric-symbol-preview-0.2"
+    schema_version: str = "parametric-symbol-preview-0.3"
     id: str
     name_ru: str
     kind: Literal["busbar"]

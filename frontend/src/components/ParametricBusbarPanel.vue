@@ -5,7 +5,7 @@
         <p class="eyebrow">Parametric symbol</p>
         <h2>Busbar generator</h2>
         <p class="description">
-          Generate a busbar with terminals, snap anchors and semantic bay slots for future automatic scheme generation.
+          Generate a busbar with terminals, snap anchors, semantic bay slots and visible cell numbering.
         </p>
       </div>
       <button type="button" class="primary-button" :disabled="loading" @click="refreshPreview">
@@ -55,6 +55,35 @@
         <label class="field">Bay depth
           <input v-model.number="form.bay_depth" type="number" min="20" max="260" step="10" />
         </label>
+
+        <section class="numbering-box">
+          <label class="check-field">
+            <input v-model="form.bay_numbering_enabled" type="checkbox" />
+            Number bay slots / cells
+          </label>
+
+          <label class="field">Number prefix
+            <input v-model="form.bay_numbering_prefix" type="text" maxlength="32" />
+          </label>
+
+          <label class="field">Start number
+            <input v-model.number="form.bay_numbering_start" type="number" min="0" max="9999" step="1" />
+          </label>
+
+          <label class="field">Step
+            <input v-model.number="form.bay_numbering_step" type="number" min="1" max="100" step="1" />
+          </label>
+
+          <label class="field">Label position
+            <select v-model="form.bay_label_position">
+              <option value="auto">Auto</option>
+              <option value="above">Above</option>
+              <option value="below">Below</option>
+              <option value="left">Left</option>
+              <option value="right">Right</option>
+            </select>
+          </label>
+        </section>
       </aside>
 
       <main class="preview-area">
@@ -80,6 +109,10 @@
             <strong>{{ preview.bay_slots.length }}</strong>
           </article>
           <article>
+            <span>Labels</span>
+            <strong>{{ numberedSlotCount }}</strong>
+          </article>
+          <article>
             <span>ViewBox</span>
             <strong>{{ Math.round(preview.viewBox.width) }} × {{ Math.round(preview.viewBox.height) }}</strong>
           </article>
@@ -94,6 +127,7 @@
           <table>
             <thead>
               <tr>
+                <th>Label</th>
                 <th>Slot</th>
                 <th>Terminal</th>
                 <th>Side</th>
@@ -104,6 +138,7 @@
             </thead>
             <tbody>
               <tr v-for="slot in preview.bay_slots" :key="slot.id">
+                <td><strong>{{ slot.label || '—' }}</strong></td>
                 <td><code>{{ slot.id }}</code></td>
                 <td><code>{{ slot.terminal_id }}</code></td>
                 <td>{{ slot.side }}</td>
@@ -148,6 +183,7 @@ import { computed, onMounted, reactive, ref } from 'vue'
 
 type BusbarConnectionSide = 'top' | 'bottom' | 'both'
 type BusbarOrientation = 'horizontal' | 'vertical'
+type BayLabelPosition = 'auto' | 'above' | 'below' | 'left' | 'right'
 
 type BusbarPreviewRequest = {
   id: string
@@ -161,6 +197,12 @@ type BusbarPreviewRequest = {
   margin: number
   lead_length: number
   bay_depth: number
+  bay_numbering_enabled: boolean
+  bay_numbering_prefix: string
+  bay_numbering_start: number
+  bay_numbering_step: number
+  bay_label_position: BayLabelPosition
+  bay_label_offset: number
 }
 
 type ParametricTerminal = {
@@ -184,6 +226,10 @@ type ParametricBaySlot = {
   equipment_anchor_x: number
   equipment_anchor_y: number
   preferred_routing_direction: string
+  label_number?: number | null
+  label: string
+  label_x?: number | null
+  label_y?: number | null
   allowed_equipment_kinds: string[]
   reserved: boolean
 }
@@ -217,12 +263,22 @@ const form = reactive<BusbarPreviewRequest>({
   margin: 20,
   lead_length: 24,
   bay_depth: 90,
+  bay_numbering_enabled: true,
+  bay_numbering_prefix: 'Яч. ',
+  bay_numbering_start: 1,
+  bay_numbering_step: 1,
+  bay_label_position: 'above',
+  bay_label_offset: 12,
 })
 
 const viewBoxString = computed(() => {
   if (!preview.value) return '0 0 100 100'
   const vb = preview.value.viewBox
   return `${vb.x} ${vb.y} ${vb.width} ${vb.height}`
+})
+
+const numberedSlotCount = computed(() => {
+  return preview.value?.bay_slots.filter((slot) => Boolean(slot.label)).length ?? 0
 })
 
 async function refreshPreview(): Promise<void> {
@@ -347,8 +403,26 @@ onMounted(() => {
   background: white;
 }
 
+.check-field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  color: #334155;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.numbering-box {
+  margin-top: 14px;
+  padding: 12px;
+  border: 1px solid #dbeafe;
+  border-radius: 12px;
+  background: #eff6ff;
+}
+
 .preview-card {
-  min-height: 290px;
+  min-height: 320px;
   display: grid;
   place-items: center;
   border: 1px solid #e2e8f0;
@@ -360,11 +434,12 @@ onMounted(() => {
   color: #4b5563;
   --voltage-color: #4b5563;
   --slot-color: #2563eb;
+  --label-color: #111827;
 }
 
 .preview-svg {
   width: 92%;
-  max-height: 275px;
+  max-height: 305px;
 }
 
 .summary {
