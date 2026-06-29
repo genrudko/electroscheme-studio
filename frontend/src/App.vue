@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import ImportedSymbolReviewPanel from './components/ImportedSymbolReviewPanel.vue'
 import { onMounted, ref, computed } from 'vue'
 import { useProject } from './lib/useProject'
 import SchemeCanvas from './components/SchemeCanvas.vue'
@@ -261,7 +262,8 @@ function onSymbolEditorSave(payload: { svg: string; viewBox: string }) {
           <div class="check ok">Модель соединений: орто + узлы + байпас</div>
         </section>
       </aside>
-    </template>
+      <ImportedSymbolReviewPanel />
+</template>
 
     <!-- SYMBOL EDITOR MODE -->
     <section v-else class="symbol-editor-area">
@@ -272,4 +274,5 @@ function onSymbolEditorSave(payload: { svg: string; viewBox: string }) {
       />
     </section>
   </main>
+  <ImportedSymbolReviewPanel />
 </template>
