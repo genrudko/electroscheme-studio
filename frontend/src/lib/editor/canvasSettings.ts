@@ -52,7 +52,7 @@ export const isoPageSizes: Record<IsoPageFormat, { width: number; height: number
 export function normalizeCanvasSettings(settings: CanvasSettings): CanvasSettings {
   return {
     ...settings,
-    zoom: Math.min(Math.max(settings.zoom, 0.2), 6),
+    zoom: Math.min(Math.max(settings.zoom, 0.20), 6),
     gridStep: Math.min(Math.max(settings.gridStep, 2), 100),
     snapTolerance: Math.min(Math.max(settings.snapTolerance, 1), 50),
     displayProfileId: settings.displayProfileId ?? 'gost_r_56303_2014',

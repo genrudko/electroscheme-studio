@@ -1,142 +1,1498 @@
 <template>
   <div class="canvas-workspace" @pointerdown="hideContextMenu">
-    <div class="canvas-frame">
-      <div class="ruler-corner">0,0</div><div class="top-ruler">Линейка X</div><div class="left-ruler">Y</div>
-      <div ref="surfaceRef" class="canvas-surface" @wheel.prevent="onWheelZoom" @dragover.prevent @drop.prevent="onPaletteDrop">
-        <svg class="editor-canvas" :viewBox="canvasViewBox" @pointermove="onPointerMove" @pointerdown="onCanvasPointerDown" @contextmenu.prevent.stop="onContextMenu">
+    <div class="canvas-frame" :class="{ 'without-rulers': !settings.rulersVisible }">
+      <div v-if="settings.rulersVisible" class="ruler-corner">0,0</div>
+
+      <div v-if="settings.rulersVisible" ref="topRulerRef" class="top-ruler" @pointerdown.prevent="onTopRulerPointerDown">
+        <template v-for="tick in topRulerTicks" :key="`top_${tick.value}`">
+          <span class="ruler-tick top" :class="{ major: tick.major }" :style="{ left: `${tick.screen}px` }"></span>
+          <span v-if="tick.major" class="ruler-label top" :style="{ left: `${tick.screen + 3}px` }">{{ tick.value }}</span>
+        </template>
+      </div>
+
+      <div v-if="settings.rulersVisible" ref="leftRulerRef" class="left-ruler" @pointerdown.prevent="onLeftRulerPointerDown">
+        <template v-for="tick in leftRulerTicks" :key="`left_${tick.value}`">
+          <span class="ruler-tick left" :class="{ major: tick.major }" :style="{ top: `${tick.screen}px` }"></span>
+          <span v-if="tick.major" class="ruler-label left" :style="{ top: `${tick.screen + 2}px` }">{{ tick.value }}</span>
+        </template>
+      </div>
+
+      <div ref="canvasSurfaceRef" class="canvas-surface" @wheel.prevent="onWheelZoom">
+        <svg
+          ref="svgRef"
+          class="editor-canvas"
+          :viewBox="canvasViewBox"
+          @pointermove="onPointerMove"
+          @pointerdown="onCanvasPointerDown"
+          @contextmenu.prevent.stop="onContextMenu"
+        >
           <defs>
-            <pattern id="editor-grid" :width="settings.gridStep" :height="settings.gridStep" patternUnits="userSpaceOnUse"><path :d="`M ${settings.gridStep} 0 L 0 0 0 ${settings.gridStep}`" fill="none" stroke="#e5e7eb" stroke-width="0.55" /></pattern>
-            <pattern id="editor-grid-major" :width="majorGridStep" :height="majorGridStep" patternUnits="userSpaceOnUse"><rect :width="majorGridStep" :height="majorGridStep" fill="url(#editor-grid)" /><path :d="`M ${majorGridStep} 0 L 0 0 0 ${majorGridStep}`" fill="none" stroke="#cbd5e1" stroke-width="0.75" /></pattern>
+            <pattern id="editor-grid" :width="settings.gridStep" :height="settings.gridStep" patternUnits="userSpaceOnUse">
+              <path :d="`M ${settings.gridStep} 0 L 0 0 0 ${settings.gridStep}`" fill="none" stroke="#e5e7eb" stroke-width="0.6" />
+            </pattern>
+            <pattern id="editor-grid-major" :width="majorGridStep" :height="majorGridStep" patternUnits="userSpaceOnUse">
+              <rect :width="majorGridStep" :height="majorGridStep" fill="url(#editor-grid)" />
+              <path :d="`M ${majorGridStep} 0 L 0 0 0 ${majorGridStep}`" fill="none" stroke="#cbd5e1" stroke-width="0.75" />
+            </pattern>
           </defs>
-          <rect :x="viewOrigin.x" :y="viewOrigin.y" :width="viewBoxWidth" :height="viewBoxHeight" fill="#dedbe0" />
-          <g class="iso-page-layer"><rect class="iso-page-fill" :x="pageRect.x" :y="pageRect.y" :width="pageRect.width" :height="pageRect.height" /><rect :x="pageRect.x" :y="pageRect.y" :width="pageRect.width" :height="pageRect.height" fill="url(#editor-grid-major)" /><rect class="iso-page-outline" :x="pageRect.x" :y="pageRect.y" :width="pageRect.width" :height="pageRect.height" /><text class="iso-page-label" :x="pageRect.x + 8" :y="pageRect.y + 16">{{ settings.pageFormat }} {{ settings.pageOrientation === 'landscape' ? 'альбомная' : 'книжная' }}</text></g>
-          <g class="origin-layer"><line x1="-10" y1="0" x2="10" y2="0" class="origin-line" /><line x1="0" y1="-10" x2="0" y2="10" class="origin-line" /><circle cx="0" cy="0" r="1.2" class="origin-dot" /><text x="4" y="-4" class="origin-label">0,0</text></g>
-          <g class="guide-layer"><line v-for="guide in verticalGuides" :key="guide.id" :x1="guide.position" :y1="viewOrigin.y" :x2="guide.position" :y2="viewOrigin.y + viewBoxHeight" class="user-guide-line" /><line v-for="guide in horizontalGuides" :key="guide.id" :x1="viewOrigin.x" :y1="guide.position" :x2="viewOrigin.x + viewBoxWidth" :y2="guide.position" class="user-guide-line" /></g>
-          <g class="connection-layer"><line v-for="line in symbolAttachmentLines" :key="line.id" :x1="line.x1" :y1="line.y1" :x2="line.x2" :y2="line.y2" :stroke="line.color" class="electrical-connection" /></g>
-          <g class="object-layer">
-            <g v-for="primitive in primitiveObjects" :key="primitive.id" class="primitive-object" @pointerdown.stop="onPrimitivePointerDown($event, primitive.id)">
-              <rect v-if="primitive.kind === 'rectangle'" :x="primitive.x" :y="primitive.y" :width="primitive.width" :height="primitive.height" :fill="primitive.fill" :stroke="primitive.stroke" :stroke-width="primitive.strokeWidth" />
-              <ellipse v-else-if="primitive.kind === 'ellipse'" :cx="primitive.x + primitive.width / 2" :cy="primitive.y + primitive.height / 2" :rx="Math.abs(primitive.width / 2)" :ry="Math.abs(primitive.height / 2)" :fill="primitive.fill" :stroke="primitive.stroke" :stroke-width="primitive.strokeWidth" />
-              <line v-else :x1="primitive.x" :y1="primitive.y" :x2="primitive.x + primitive.width" :y2="primitive.y + primitive.height" :stroke="primitive.stroke" :stroke-width="primitive.strokeWidth" />
-            </g>
-            <g v-for="busbar in busbars" :key="busbar.id" class="busbar-object" @pointerdown.stop="onBusbarPointerDown($event, busbar.id)"><rect class="busbar" :style="{ fill: voltageColorById(busbar.voltageClassId) }" :x="busbar.x" :y="busbar.y" :width="busbar.width" :height="busbar.height" rx="1" /></g>
-            <g v-for="symbol in symbolObjects" :key="symbol.id" class="symbol-object" @pointerdown.stop="onSymbolPointerDown($event, symbol.id)">
-              <line :x1="symbol.x + symbol.width / 2" :y1="symbol.y - 24" :x2="symbol.x + symbol.width / 2" :y2="symbol.y" :stroke="voltageColorById(symbol.voltageClassId)" class="symbol-line" />
-              <rect :x="symbol.x" :y="symbol.y" :width="symbol.width" :height="symbol.height" fill="#ffffff" :stroke="voltageColorById(symbol.voltageClassId)" class="symbol-body" />
-              <line :x1="symbol.x + 7" :y1="symbol.y + symbol.height / 2" :x2="symbol.x + symbol.width - 7" :y2="symbol.y + symbol.height / 2" :stroke="voltageColorById(symbol.voltageClassId)" class="symbol-line" />
-              <line :x1="symbol.x + symbol.width / 2" :y1="symbol.y + symbol.height" :x2="symbol.x + symbol.width / 2" :y2="symbol.y + symbol.height + 24" :stroke="voltageColorById(symbol.voltageClassId)" class="symbol-line" />
-              <circle :cx="symbol.x + symbol.width / 2" :cy="symbol.y - 24" r="3" class="symbol-terminal" /><circle :cx="symbol.x + symbol.width / 2" :cy="symbol.y + symbol.height + 24" r="3" class="symbol-terminal" /><text class="symbol-label" :x="symbol.x + symbol.width + 9" :y="symbol.y + symbol.height / 2">{{ symbol.label }}</text>
-            </g>
-            <circle v-for="slot in baySlots" :key="slot.id" class="bay-slot" :cx="slot.x" :cy="slot.y" r="5" />
-            <text v-for="object in textObjects" :key="object.id" class="canvas-text" :x="object.anchor.x" :y="object.anchor.y" :font-size="object.fontSize" :fill="object.fill" :transform="`rotate(${object.rotationDeg} ${object.anchor.x} ${object.anchor.y})`" dominant-baseline="middle" text-anchor="middle" @pointerdown.stop="onTextPointerDown($event, object.id)">{{ object.text }}</text>
+
+          <rect :x="viewOrigin.x" :y="viewOrigin.y" :width="viewBoxWidth" :height="viewBoxHeight" fill="#ffffff" />
+          <rect v-if="settings.gridVisible" :x="viewOrigin.x" :y="viewOrigin.y" :width="viewBoxWidth" :height="viewBoxHeight" fill="url(#editor-grid-major)" />
+
+          <g v-if="settings.pageVisible" class="iso-page-layer">
+            <rect class="iso-page" :x="pageRect.x" :y="pageRect.y" :width="pageRect.width" :height="pageRect.height" rx="1" />
+            <text class="iso-page-label" :x="pageRect.x + 8" :y="pageRect.y + 16">{{ settings.pageFormat }} {{ settings.pageOrientation === 'landscape' ? 'альбомная' : 'книжная' }}</text>
           </g>
-          <g v-if="selectionOverlayRect" class="selection-handles-layer"><rect class="selection-outline" :x="selectionOverlayRect.x" :y="selectionOverlayRect.y" :width="selectionOverlayRect.width" :height="selectionOverlayRect.height" /><rect v-for="handle in selectionHandles" :key="handle.id" class="selection-handle" :x="handle.x - handleSize / 2" :y="handle.y - handleSize / 2" :width="handleSize" :height="handleSize" /></g>
-          <rect v-if="marqueeRect" class="selection-marquee" :x="marqueeRect.x" :y="marqueeRect.y" :width="marqueeRect.width" :height="marqueeRect.height" />
-          <g v-if="busbars.length === 0 && textObjects.length === 0 && primitiveObjects.length === 0 && symbolObjects.length === 0" class="empty-canvas-hint"><text x="0" y="-20" text-anchor="middle">Пустой лист</text><text x="0" y="10" text-anchor="middle" class="hint-small">Перетащите фигуру из панели слева или используйте ПКМ</text></g>
+
+          <g v-if="settings.originVisible" class="origin-layer">
+            <line x1="-10" y1="0" x2="10" y2="0" class="origin-line" />
+            <line x1="0" y1="-10" x2="0" y2="10" class="origin-line" />
+            <circle cx="0" cy="0" r="1.2" class="origin-dot" />
+            <text x="4" y="-4" class="origin-label">0,0</text>
+          </g>
+
+          <g v-if="settings.guidesVisible" class="guide-object-layer">
+            <line
+              v-for="guide in verticalGuides"
+              :key="guide.id"
+              :x1="guide.position"
+              :y1="viewOrigin.y"
+              :x2="guide.position"
+              :y2="viewOrigin.y + viewBoxHeight"
+              class="user-guide-line"
+              @pointerdown.stop="onGuidePointerDown($event, guide.id)"
+            />
+            <line
+              v-for="guide in horizontalGuides"
+              :key="guide.id"
+              :x1="viewOrigin.x"
+              :y1="guide.position"
+              :x2="viewOrigin.x + viewBoxWidth"
+              :y2="guide.position"
+              class="user-guide-line"
+              @pointerdown.stop="onGuidePointerDown($event, guide.id)"
+            />
+          </g>
+
+          <g class="object-layer">
+            <g
+              v-for="primitive in primitiveObjects"
+              :key="primitive.id"
+              class="primitive-object"
+              :class="{ selected: isSelected('primitive', primitive.id) }"
+              :data-primitive-id="primitive.id"
+              @pointerdown.stop="onPrimitivePointerDown($event, primitive.id)"
+            >
+              <rect
+                v-if="primitive.kind === 'rectangle'"
+                :x="primitive.x"
+                :y="primitive.y"
+                :width="primitive.width"
+                :height="primitive.height"
+                :fill="primitive.fill"
+                :stroke="primitive.stroke"
+                :stroke-width="primitive.strokeWidth"
+              />
+              <ellipse
+                v-else-if="primitive.kind === 'ellipse'"
+                :cx="primitive.x + primitive.width / 2"
+                :cy="primitive.y + primitive.height / 2"
+                :rx="Math.abs(primitive.width / 2)"
+                :ry="Math.abs(primitive.height / 2)"
+                :fill="primitive.fill"
+                :stroke="primitive.stroke"
+                :stroke-width="primitive.strokeWidth"
+              />
+              <line
+                v-else
+                :x1="primitive.x"
+                :y1="primitive.y"
+                :x2="primitive.x + primitive.width"
+                :y2="primitive.y + primitive.height"
+                :stroke="primitive.stroke"
+                :stroke-width="primitive.strokeWidth"
+              />
+            </g>
+
+            <g
+              v-for="busbar in busbars"
+              :key="busbar.id"
+              class="busbar-object"
+              :class="{ selected: isSelected('busbar', busbar.id) }"
+              :data-busbar-id="busbar.id"
+              @pointerdown.stop="onBusbarPointerDown($event, busbar.id)"
+            >
+              <rect class="busbar" :style="{ fill: voltageColorById(busbar.voltageClassId) }" :x="busbar.x" :y="busbar.y" :width="busbar.width" :height="busbar.height" rx="1" />
+            </g>
+
+            <circle v-for="slot in baySlots" :key="slot.id" class="bay-slot" :cx="slot.x" :cy="slot.y" r="5" :data-slot-id="slot.id" />
+
+            <text
+              v-for="object in textObjects"
+              :key="object.id"
+              class="canvas-text"
+              :class="{ selected: isSelected('text', object.id) }"
+              :x="object.anchor.x"
+              :y="object.anchor.y"
+              :font-size="object.fontSize"
+              :font-family="object.fontFamily"
+              :font-weight="object.bold ? '700' : '400'"
+              :font-style="object.italic ? 'italic' : 'normal'"
+              :fill="object.fill"
+              :data-object-id="object.id"
+              :data-role="object.role"
+              :data-generated="object.generated ? 'true' : 'false'"
+              :transform="`rotate(${object.rotationDeg} ${object.anchor.x} ${object.anchor.y})`"
+              dominant-baseline="middle"
+              text-anchor="middle"
+              @pointerdown.stop="onObjectPointerDown($event, object.id)"
+            >
+              {{ object.text }}
+            </text>
+          </g>
+
+          <g v-if="ghostText" class="ghost-layer">
+            <text class="ghost-text" :x="ghostText.anchor.x" :y="ghostText.anchor.y" :font-size="ghostText.fontSize" :transform="`rotate(${ghostText.rotationDeg} ${ghostText.anchor.x} ${ghostText.anchor.y})`" dominant-baseline="middle" text-anchor="middle">
+              {{ ghostText.text }}
+            </text>
+          </g>
+
+          <g v-if="virtualPoint && showVirtualPoint" class="virtual-point-layer">
+            <line :x1="virtualPoint.x - 6" :y1="virtualPoint.y" :x2="virtualPoint.x + 6" :y2="virtualPoint.y" class="virtual-point-line" />
+            <line :x1="virtualPoint.x" :y1="virtualPoint.y - 6" :x2="virtualPoint.x" :y2="virtualPoint.y + 6" class="virtual-point-line" />
+            <circle :cx="virtualPoint.x" :cy="virtualPoint.y" r="2.5" class="virtual-point-ring" />
+          </g>
+
+          <g v-if="settings.guidesVisible && activeGuidePoint" class="guide-layer">
+            <line :x1="activeGuidePoint.x" :y1="viewOrigin.y" :x2="activeGuidePoint.x" :y2="viewOrigin.y + viewBoxHeight" class="guide-line" />
+            <line :x1="viewOrigin.x" :y1="activeGuidePoint.y" :x2="viewOrigin.x + viewBoxWidth" :y2="activeGuidePoint.y" class="guide-line" />
+          </g>
+
+          <rect
+            v-if="marqueeRect"
+            class="selection-marquee"
+            :x="marqueeRect.x"
+            :y="marqueeRect.y"
+            :width="marqueeRect.width"
+            :height="marqueeRect.height"
+          />
+
+          <g v-if="busbars.length === 0 && textObjects.length === 0 && primitiveObjects.length === 0" class="empty-canvas-hint">
+            <text x="0" y="-20" text-anchor="middle" dominant-baseline="middle">Пустой канвас</text>
+            <text x="0" y="10" text-anchor="middle" dominant-baseline="middle" class="hint-small">Добавьте объект через ленту либо ПКМ-меню</text>
+          </g>
         </svg>
-        <MiniToolbar v-if="miniToolbarPosition" :x="miniToolbarPosition.x" :y="miniToolbarPosition.y" :title="selectedObjectName || 'Объект'" @command="handleCommand" />
       </div>
     </div>
-    <CanvasContextMenu :visible="contextMenu.visible" :x="contextMenu.x" :y="contextMenu.y" :has-selection="selectedElements.length > 0" :can-paste="false" @command="onContextCommand" />
+
+    <CanvasContextMenu
+      :visible="contextMenu.visible"
+      :x="contextMenu.x"
+      :y="contextMenu.y"
+      :has-selection="selectedElements.length > 0"
+      :can-paste="Boolean(referenceClipboard)"
+      @command="onContextCommand"
+    />
+
     <aside class="properties-panel">
-      <template v-if="selectedBusbar"><h2>Свойства шины</h2><label>Класс напряжения<select v-model="selectedBusbar.voltageClassId" @change="syncBusbarLabels(selectedBusbar)"><option v-for="item in voltageClassColors" :key="item.id" :value="item.id">{{ item.label }} — {{ item.colorName }}</option></select></label><label>Ячеек<input v-model.number="selectedBusbar.slots" type="number" @change="normalizeBusbarSlots(selectedBusbar)" /></label><label>Шаг<input v-model.number="selectedBusbar.slotSpacing" type="number" @change="normalizeBusbarSlots(selectedBusbar)" /></label><label>Подпись<input v-model="selectedBusbar.label" @change="syncBusbarLabels(selectedBusbar)" /></label><button class="panel-button" @click="addBusbarSlot(selectedBusbar)">+ Ячейка</button><button class="panel-button" @click="removeBusbarSlot(selectedBusbar)">− Ячейка</button></template>
-      <template v-else-if="selectedSymbol"><h2>Свойства символа</h2><label>Наименование<input v-model="selectedSymbol.label" /></label><p>Привязка: {{ selectedSymbol.attachedSlotId || 'нет' }}</p></template>
-      <template v-else><h2>Свойства</h2><p>Выберите объект. Ctrl+клик — мультивыбор.</p><button class="panel-button" @click="createSampleBusbar()">Добавить шину</button><button class="panel-button" @click="createCircuitBreaker()">Добавить выключатель</button><button class="panel-button" @click="createTextObject()">Добавить текст</button></template>
+      <template v-if="selectedBusbar && selectedElements.length === 1">
+        <h2>Свойства шины</h2>
+        <label>X <input v-model.number="selectedBusbar.x" type="number" step="1" @change="syncBusbarLabels(selectedBusbar)" /></label>
+        <label>Y <input v-model.number="selectedBusbar.y" type="number" step="1" @change="syncBusbarLabels(selectedBusbar)" /></label>
+        <label>Класс напряжения
+          <select v-model="selectedBusbar.voltageClassId" @change="syncBusbarLabels(selectedBusbar)">
+            <option v-for="item in voltageClassColors" :key="item.id" :value="item.id">{{ item.label }}</option>
+          </select>
+        </label>
+        <label>Толщина <input v-model.number="selectedBusbar.height" type="number" min="4" step="1" @change="syncBusbarLabels(selectedBusbar)" /></label>
+        <label>Ячеек <input v-model.number="selectedBusbar.slots" type="number" min="1" max="40" step="1" @change="normalizeBusbarSlots(selectedBusbar)" /></label>
+        <label>Шаг ячеек <input v-model.number="selectedBusbar.slotSpacing" type="number" min="8" step="1" @change="normalizeBusbarSlots(selectedBusbar)" /></label>
+        <label>Подпись <input v-model="selectedBusbar.label" type="text" @change="syncBusbarLabels(selectedBusbar)" /></label>
+        <div class="button-pair">
+          <button type="button" class="panel-button" @click="addBusbarSlot(selectedBusbar)">+ Ячейка</button>
+          <button type="button" class="panel-button" @click="removeBusbarSlot(selectedBusbar)">− Ячейка</button>
+        </div>
+      </template>
+
+      <template v-else-if="selectedText && selectedElements.length === 1">
+        <h2>Свойства текста</h2>
+        <label>Текст <input v-model="selectedText.text" type="text" /></label>
+        <label>Шрифт
+          <select v-model="selectedText.fontFamily">
+            <option value="Arial">Arial</option>
+            <option value="Calibri">Calibri</option>
+            <option value="'Times New Roman'">Times New Roman</option>
+            <option value="GOST type A">GOST type A</option>
+          </select>
+        </label>
+        <label>Размер <input v-model.number="selectedText.fontSize" type="number" min="4" step="1" /></label>
+        <label>Цвет <input v-model="selectedText.fill" type="color" /></label>
+        <label class="inline"><input v-model="selectedText.bold" type="checkbox" /> Жирный</label>
+        <label class="inline"><input v-model="selectedText.italic" type="checkbox" /> Курсив</label>
+        <label>X <input v-model.number="selectedText.anchor.x" type="number" step="1" /></label>
+        <label>Y <input v-model.number="selectedText.anchor.y" type="number" step="1" /></label>
+        <label>Поворот <input v-model.number="selectedText.rotationDeg" type="number" step="90" /></label>
+      </template>
+
+      <template v-else-if="selectedPrimitive && selectedElements.length === 1">
+        <h2>Свойства примитива</h2>
+        <label>X <input v-model.number="selectedPrimitive.x" type="number" step="1" /></label>
+        <label>Y <input v-model.number="selectedPrimitive.y" type="number" step="1" /></label>
+        <label>Ширина / X2 <input v-model.number="selectedPrimitive.width" type="number" step="1" /></label>
+        <label>Высота / Y2 <input v-model.number="selectedPrimitive.height" type="number" step="1" /></label>
+        <label>Линия <input v-model="selectedPrimitive.stroke" type="color" /></label>
+        <label>Заливка <input v-model="selectedPrimitive.fill" type="color" /></label>
+        <label>Толщина линии <input v-model.number="selectedPrimitive.strokeWidth" type="number" min="0.2" step="0.2" /></label>
+      </template>
+
+      <template v-else-if="selectedElements.length > 1">
+        <h2>Мультивыбор</h2>
+        <p>Выбрано объектов: {{ selectedElements.length }}. Ctrl+клик — добавить или убрать объект. Перетаскивание одного из выбранных объектов перемещает всю группу.</p>
+      </template>
+
+      <template v-else>
+        <h2>Свойства</h2>
+        <p>Выберите объект на канвасе. Ctrl+клик — мультивыбор. Протягивание рамкой — выделение области.</p>
+        <button type="button" class="panel-button" @click="createSampleBusbar">Добавить шину</button>
+        <button type="button" class="panel-button" @click="createTextObject">Добавить текст</button>
+      </template>
+
+      <hr />
+
+      <h3>Канвас</h3>
+      <p class="settings-summary">
+        Масштаб: {{ Math.round(settings.zoom * 100) }}%<br />
+        Лист: {{ settings.pageFormat }}, {{ settings.pageOrientation === 'landscape' ? 'альбомная' : 'книжная' }}<br />
+        Сетка: {{ settings.gridVisible ? 'вкл' : 'выкл' }}, шаг {{ settings.gridStep }}<br />
+        Направляющих: {{ guides.length }}<br />
+        Начало вида: {{ Math.round(viewOrigin.x) }}, {{ Math.round(viewOrigin.y) }}
+      </p>
     </aside>
   </div>
 </template>
+
 <script setup lang="ts">
-import { computed, reactive, ref, watch } from 'vue'
+import { computed, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue'
 import CanvasContextMenu from './CanvasContextMenu.vue'
-import MiniToolbar from './MiniToolbar.vue'
 import { isoPageSizes, normalizeCanvasSettings, type CanvasSettings } from '../../lib/editor/canvasSettings'
 import type { EditorCommand, EditorInteractionMode } from '../../lib/editor/interactionModes'
-import { rectsIntersect, snapPoint, type Point, type SnapCandidate, type SnapKind } from '../../lib/editor/snapService'
+import { formatPoint, rectsIntersect, snapPoint, type Point, type SnapCandidate, type SnapKind } from '../../lib/editor/snapService'
+import { createReferenceClipboard, placeItemAtReferencePoint, type ReferenceClipboardPayload, type TextClipboardItem } from '../../lib/editor/referenceClipboard'
 import { voltageClassColors, voltageColorById, voltageKvById, type VoltageClassId } from '../../lib/editor/voltageClasses'
 
+type TextObjectRole = 'bay-label' | 'bus-label' | 'free-text-box'
 type PrimitiveKind = 'rectangle' | 'ellipse' | 'line'
-type TextObject = { id: string; text: string; anchor: Point; center: Point; rotationDeg: number; fontSize: number; fill: string; busbarId?: string }
-type Busbar = { id: string; x: number; y: number; width: number; height: number; slots: number; slotSpacing: number; labelStart: number; label: string; voltageKv: number; voltageClassId: VoltageClassId }
-type Primitive = { id: string; kind: PrimitiveKind; x: number; y: number; width: number; height: number; stroke: string; fill: string; strokeWidth: number }
-type SymbolObject = { id: string; x: number; y: number; width: number; height: number; label: string; voltageClassId: VoltageClassId; attachedSlotId: string | null }
-type Slot = { id: string; busbarId: string; x: number; y: number }
-type Selected = { kind: 'text' | 'busbar' | 'primitive' | 'symbol'; id: string }
-type Rect = { x: number; y: number; width: number; height: number }
 
-const props = defineProps<{ activeMode: EditorInteractionMode; command: EditorCommand | null; settings: CanvasSettings }>()
-const emit = defineEmits<{ modeChange: [mode: EditorInteractionMode]; statusChange: [status: { pointer: Point | null; snapKind: SnapKind | null; snapLabel: string; selectedObjectName: string; message: string }]; settingsChange: [settings: CanvasSettings]; commandHandled: [] }>()
-const surfaceRef = ref<HTMLDivElement | null>(null)
+type CanvasTextObject = {
+  id: string
+  text: string
+  anchor: Point
+  center: Point
+  rotationDeg: number
+  fontSize: number
+  fontFamily: string
+  fill: string
+  bold: boolean
+  italic: boolean
+  role: TextObjectRole
+  generated?: boolean
+  busbarId?: string
+  slotIndex?: number
+}
+
+type BusbarObject = {
+  id: string
+  x: number
+  y: number
+  width: number
+  height: number
+  slots: number
+  slotSpacing: number
+  labelStart: number
+  label: string
+  voltageKv: number
+  voltageClassId: VoltageClassId
+}
+
+type PrimitiveObject = {
+  id: string
+  kind: PrimitiveKind
+  x: number
+  y: number
+  width: number
+  height: number
+  stroke: string
+  fill: string
+  strokeWidth: number
+}
+
+type BaySlot = {
+  id: string
+  busbarId: string
+  x: number
+  y: number
+}
+
+type CanvasGuide = {
+  id: string
+  orientation: 'vertical' | 'horizontal'
+  position: number
+}
+
+type SelectedElement =
+  | { kind: 'text'; id: string }
+  | { kind: 'busbar'; id: string }
+  | { kind: 'primitive'; id: string }
+
+type WorldRect = { x: number; y: number; width: number; height: number }
+type RulerTick = { value: number; screen: number; major: boolean }
+
+type DragBaseline = {
+  selected: SelectedElement
+  x: number
+  y: number
+  anchorX?: number
+  anchorY?: number
+}
+
+const props = defineProps<{
+  activeMode: EditorInteractionMode
+  command: EditorCommand | null
+  settings: CanvasSettings
+}>()
+
+const emit = defineEmits<{
+  modeChange: [mode: EditorInteractionMode]
+  statusChange: [status: {
+    pointer: Point | null
+    snapKind: SnapKind | null
+    snapLabel: string
+    selectedObjectName: string
+    message: string
+  }]
+  settingsChange: [settings: CanvasSettings]
+  commandHandled: []
+}>()
+
+const svgRef = ref<SVGSVGElement | null>(null)
+const topRulerRef = ref<HTMLDivElement | null>(null)
+const leftRulerRef = ref<HTMLDivElement | null>(null)
+const canvasSurfaceRef = ref<HTMLDivElement | null>(null)
+
+let resizeObserver: ResizeObserver | null = null
+
 const viewOrigin = reactive<Point>({ x: -450, y: -260 })
-const canvasPixels = reactive({ width: 1000, height: 650 })
-const pointerPoint = ref<Point | null>(null)
-const selectedElements = ref<Selected[]>([])
-const busbars = ref<Busbar[]>([])
-const textObjects = ref<TextObject[]>([])
-const primitiveObjects = ref<Primitive[]>([])
-const symbolObjects = ref<SymbolObject[]>([])
-const guides = ref<{ id: string; orientation: 'vertical' | 'horizontal'; position: number }[]>([])
-const marqueeRect = ref<Rect | null>(null)
+const canvasPixels = reactive({ width: 900, height: 520 })
+const selectedElements = ref<SelectedElement[]>([])
+const virtualPoint = ref<Point | null>(null)
+const activeGuidePoint = ref<Point | null>(null)
+const referenceClipboard = ref<ReferenceClipboardPayload | null>(null)
+const copyBaseSelection = ref<CanvasTextObject | null>(null)
+const message = ref('Редактор готов. Линейки синхронизированы с сеткой, Ctrl+клик — мультивыбор.')
 const contextMenu = reactive({ visible: false, x: 0, y: 0, point: { x: 0, y: 0 } as Point })
-const message = ref('Редактор готов.')
+const marqueeRect = ref<WorldRect | null>(null)
 
+const busbars = ref<BusbarObject[]>([])
+const textObjects = ref<CanvasTextObject[]>([])
+const primitiveObjects = ref<PrimitiveObject[]>([])
+const guides = ref<CanvasGuide[]>([])
+
+const majorGridStep = computed(() => props.settings.gridStep * 5)
 const viewBoxWidth = computed(() => canvasPixels.width / props.settings.zoom)
 const viewBoxHeight = computed(() => canvasPixels.height / props.settings.zoom)
 const canvasViewBox = computed(() => `${viewOrigin.x} ${viewOrigin.y} ${viewBoxWidth.value} ${viewBoxHeight.value}`)
-const majorGridStep = computed(() => props.settings.gridStep * 5)
-const handleSize = computed(() => Math.max(5 / props.settings.zoom, 3))
-const pageSize = computed(() => { const base = isoPageSizes[props.settings.pageFormat]; return props.settings.pageOrientation === 'landscape' ? { width: Math.max(base.width, base.height), height: Math.min(base.width, base.height) } : { width: Math.min(base.width, base.height), height: Math.max(base.width, base.height) } })
-const pageRect = computed(() => ({ x: -pageSize.value.width / 2, y: -pageSize.value.height / 2, width: pageSize.value.width, height: pageSize.value.height }))
-const verticalGuides = computed(() => guides.value.filter((g) => g.orientation === 'vertical'))
-const horizontalGuides = computed(() => guides.value.filter((g) => g.orientation === 'horizontal'))
-const baySlots = computed<Slot[]>(() => busbars.value.flatMap((b) => Array.from({ length: b.slots }, (_, i) => ({ id: `${b.id}_slot_${i + 1}`, busbarId: b.id, x: b.x + 12 + i * b.slotSpacing, y: b.y + b.height / 2 }))))
-const symbolAttachmentLines = computed(() => symbolObjects.value.flatMap((s) => { if (!s.attachedSlotId) return []; const slot = baySlots.value.find((x) => x.id === s.attachedSlotId); if (!slot) return []; const t = bottomTerminal(s); return [{ id: `${s.id}_${slot.id}`, x1: t.x, y1: t.y, x2: slot.x, y2: slot.y, color: voltageColorById(s.voltageClassId) }] }))
-const selectedBusbar = computed(() => selectedElements.value.length === 1 && selectedElements.value[0].kind === 'busbar' ? busbars.value.find((x) => x.id === selectedElements.value[0].id) ?? null : null)
-const selectedSymbol = computed(() => selectedElements.value.length === 1 && selectedElements.value[0].kind === 'symbol' ? symbolObjects.value.find((x) => x.id === selectedElements.value[0].id) ?? null : null)
-const selectedObjectName = computed(() => selectedBusbar.value?.label ?? selectedSymbol.value?.label ?? '')
-const snapCandidates = computed<SnapCandidate[]>(() => baySlots.value.map((s) => ({ x: s.x, y: s.y, kind: 'slot', label: s.id })))
-const selectionOverlayRect = computed<Rect | null>(() => { const rects = selectedElements.value.map(objectWorldRect).filter((r): r is Rect => Boolean(r)); if (!rects.length) return null; const x = Math.min(...rects.map((r) => r.x)); const y = Math.min(...rects.map((r) => r.y)); const r = Math.max(...rects.map((v) => v.x + v.width)); const b = Math.max(...rects.map((v) => v.y + v.height)); return { x, y, width: r - x, height: b - y } })
-const selectionHandles = computed(() => { const r = selectionOverlayRect.value; if (!r) return []; return [{ id: 'nw', x: r.x, y: r.y }, { id: 'ne', x: r.x + r.width, y: r.y }, { id: 'se', x: r.x + r.width, y: r.y + r.height }, { id: 'sw', x: r.x, y: r.y + r.height }] })
-const miniToolbarPosition = computed(() => { const r = selectionOverlayRect.value; if (!r) return null; return { x: (r.x + r.width / 2 - viewOrigin.x) * props.settings.zoom, y: (r.y - viewOrigin.y) * props.settings.zoom - 8 } })
+const showVirtualPoint = computed(() => props.activeMode === 'copy_by_reference' || props.activeMode === 'paste_by_point' || props.activeMode === 'create_guide')
+const topRulerTicks = computed(() => createRulerTicks(viewOrigin.x, viewBoxWidth.value, props.settings.zoom, props.settings.gridStep, majorGridStep.value))
+const leftRulerTicks = computed(() => createRulerTicks(viewOrigin.y, viewBoxHeight.value, props.settings.zoom, props.settings.gridStep, majorGridStep.value))
+const verticalGuides = computed(() => guides.value.filter((guide) => guide.orientation === 'vertical'))
+const horizontalGuides = computed(() => guides.value.filter((guide) => guide.orientation === 'horizontal'))
 
-function emitStatus(point: Point | null, snapKind: SnapKind | null, snapLabel: string): void { emit('statusChange', { pointer: point, snapKind, snapLabel, selectedObjectName: selectedObjectName.value, message: message.value }) }
-function worldPointFromClient(x: number, y: number): Point | null { const rect = surfaceRef.value?.getBoundingClientRect(); if (!rect) return null; return { x: viewOrigin.x + (x - rect.left) / props.settings.zoom, y: viewOrigin.y + (y - rect.top) / props.settings.zoom } }
-function snapCanvasPoint(point: Point) { return snapPoint(point, { enabled: props.settings.snapEnabled, gridSize: props.settings.gridStep, snapGrid: props.settings.snapGrid, tolerance: props.settings.snapTolerance, candidates: snapCandidates.value }) }
-function onPointerMove(event: PointerEvent): void { const p = worldPointFromClient(event.clientX, event.clientY); if (!p) return; const s = snapCanvasPoint(p); pointerPoint.value = { x: s.x, y: s.y }; emitStatus(pointerPoint.value, s.kind, s.label) }
-function onPaletteDrop(event: DragEvent): void { const command = event.dataTransfer?.getData('application/x-electroscheme-command') as EditorCommand | ''; const p = worldPointFromClient(event.clientX, event.clientY); if (!command || !p) return; handleCommandAtPoint(command, snapCanvasPoint(p)) }
-function autoBusbarWidth(b: Busbar): number { return 24 + Math.max(0, b.slots - 1) * b.slotSpacing }
-function createSampleBusbar(point?: Point): void { const s = snapCanvasPoint(point ?? pointerPoint.value ?? { x: -180, y: -10 }); const b: Busbar = { id: `busbar_${Date.now()}`, x: s.x, y: s.y, width: 0, height: 20, slots: 8, slotSpacing: 48, labelStart: 1, label: '1С 10 кВ', voltageKv: 10, voltageClassId: '10' }; b.width = autoBusbarWidth(b); busbars.value.push(b); ensureBusbarLabels(b); selectSingle('busbar', b.id); emitStatus(s, 'grid', 'Шина') }
-function ensureBusbarLabels(b: Busbar): void { textObjects.value = textObjects.value.filter((t) => t.busbarId !== b.id); for (let i = 0; i < b.slots; i += 1) { const x = b.x + 12 + i * b.slotSpacing; const y = b.y - 28; textObjects.value.push({ id: `${b.id}_label_${i + 1}`, text: String(b.labelStart + i), anchor: { x, y }, center: { x, y }, rotationDeg: 0, fontSize: 16, fill: '#111827', busbarId: b.id }) } const x = b.x + b.width + 52; const y = b.y + b.height / 2; textObjects.value.push({ id: `${b.id}_caption`, text: b.label, anchor: { x, y }, center: { x, y }, rotationDeg: 0, fontSize: 18, fill: '#111827', busbarId: b.id }) }
-function syncBusbarLabels(b: Busbar | null): void { if (!b) return; b.voltageKv = voltageKvById(b.voltageClassId); b.width = autoBusbarWidth(b); ensureBusbarLabels(b); for (const s of symbolObjects.value) if (s.attachedSlotId?.startsWith(`${b.id}_`)) s.voltageClassId = b.voltageClassId }
-function normalizeBusbarSlots(b: Busbar | null): void { if (!b) return; b.slots = Math.max(1, Math.min(40, Math.round(b.slots))); b.slotSpacing = Math.max(8, b.slotSpacing); syncBusbarLabels(b) }
-function addBusbarSlot(b: Busbar | null = selectedBusbar.value): void { if (b) { b.slots += 1; normalizeBusbarSlots(b) } }
-function removeBusbarSlot(b: Busbar | null = selectedBusbar.value): void { if (b) { b.slots = Math.max(1, b.slots - 1); normalizeBusbarSlots(b) } }
-function createCircuitBreaker(point?: Point): void { const s = snapCanvasPoint(point ?? pointerPoint.value ?? { x: 0, y: 0 }); const nearest = findNearestBusbarSlot(s, 70); const obj: SymbolObject = { id: `symbol_${Date.now()}`, x: nearest ? nearest.x - 14 : s.x - 14, y: nearest ? nearest.y - 118 : s.y - 17, width: 28, height: 34, label: `В-${symbolObjects.value.length + 1}`, voltageClassId: nearest ? busbarVoltageClass(nearest.busbarId) : '10', attachedSlotId: nearest?.id ?? null }; symbolObjects.value.push(obj); selectSingle('symbol', obj.id); emitStatus(s, nearest ? 'slot' : s.kind, nearest?.id ?? s.label) }
-function createTextObject(point?: Point): void { const s = snapCanvasPoint(point ?? pointerPoint.value ?? { x: 0, y: 0 }); const id = `text_${Date.now()}`; textObjects.value.push({ id, text: 'Текст', anchor: { x: s.x, y: s.y }, center: { x: s.x, y: s.y }, rotationDeg: 0, fontSize: 16, fill: '#111827' }); selectSingle('text', id) }
-function createPrimitive(kind: PrimitiveKind, point?: Point): void { const s = snapCanvasPoint(point ?? pointerPoint.value ?? { x: 0, y: 0 }); const id = `primitive_${Date.now()}`; primitiveObjects.value.push({ id, kind, x: s.x, y: s.y, width: kind === 'line' ? 80 : 90, height: kind === 'line' ? 0 : 45, stroke: '#111827', fill: kind === 'line' ? 'none' : '#ffffff', strokeWidth: 1.2 }); selectSingle('primitive', id) }
-function busbarVoltageClass(id: string): VoltageClassId { return busbars.value.find((b) => b.id === id)?.voltageClassId ?? '10' }
-function bottomTerminal(s: SymbolObject): Point { return { x: s.x + s.width / 2, y: s.y + s.height + 24 } }
-function findNearestBusbarSlot(point: Point, tolerance: number) { let best: Slot | null = null; let bestDistance = Infinity; for (const slot of baySlots.value) { const d = Math.hypot(point.x - slot.x, point.y - slot.y); if (d < bestDistance && d <= tolerance) { best = slot; bestDistance = d } } return best }
-function attachSymbolToNearestSlot(s: SymbolObject, tolerance: number): void { const nearest = findNearestBusbarSlot(bottomTerminal(s), tolerance); s.attachedSlotId = nearest?.id ?? null; if (nearest) s.voltageClassId = busbarVoltageClass(nearest.busbarId) }
-function handleCommand(c: EditorCommand): void { handleCommandAtPoint(c, pointerPoint.value ?? contextMenu.point); emit('commandHandled') }
-function handleCommandAtPoint(c: EditorCommand, p: Point): void { if (c === 'create_sample_busbar') createSampleBusbar(p); else if (c === 'create_circuit_breaker') createCircuitBreaker(p); else if (c === 'create_text') createTextObject(p); else if (c === 'create_rectangle') createPrimitive('rectangle', p); else if (c === 'create_ellipse') createPrimitive('ellipse', p); else if (c === 'create_line') createPrimitive('line', p); else if (c === 'delete') deleteSelected() }
-function selectSingle(kind: Selected['kind'], id: string): void { selectedElements.value = [{ kind, id }] }
-function onBusbarPointerDown(e: PointerEvent, id: string): void { selectSingle('busbar', id); startDrag(e) }
-function onSymbolPointerDown(e: PointerEvent, id: string): void { selectSingle('symbol', id); startDrag(e) }
-function onPrimitivePointerDown(e: PointerEvent, id: string): void { selectSingle('primitive', id); startDrag(e) }
-function onTextPointerDown(e: PointerEvent, id: string): void { selectSingle('text', id); startDrag(e) }
-function startDrag(e: PointerEvent): void { const start = worldPointFromClient(e.clientX, e.clientY); if (!start) return; const selected = [...selectedElements.value]; const baselines = selected.map((x) => ({ item: x, rect: objectWorldRect(x) })).filter((x) => x.rect) as { item: Selected; rect: Rect }[]; const move = (ev: PointerEvent) => { const p = worldPointFromClient(ev.clientX, ev.clientY); if (!p) return; const s = snapCanvasPoint(p); const dx = s.x - start.x; const dy = s.y - start.y; for (const base of baselines) moveObject(base.item, base.rect, dx, dy) }; const up = () => { window.removeEventListener('pointermove', move); window.removeEventListener('pointerup', up) }; window.addEventListener('pointermove', move); window.addEventListener('pointerup', up) }
-function moveObject(item: Selected, r: Rect, dx: number, dy: number): void { if (item.kind === 'busbar') { const b = busbars.value.find((x) => x.id === item.id); if (!b) return; b.x = r.x + dx; b.y = r.y + dy; ensureBusbarLabels(b) } else if (item.kind === 'symbol') { const s = symbolObjects.value.find((x) => x.id === item.id); if (!s) return; s.x = r.x + dx; s.y = r.y + 24 + dy; attachSymbolToNearestSlot(s, 48) } else if (item.kind === 'primitive') { const p = primitiveObjects.value.find((x) => x.id === item.id); if (!p) return; p.x = r.x + dx; p.y = r.y + dy } else { const t = textObjects.value.find((x) => x.id === item.id); if (!t) return; t.anchor = { x: r.x + 25 + dx, y: r.y + 12 + dy }; t.center = { ...t.anchor } } }
-function onCanvasPointerDown(e: PointerEvent): void { const p = worldPointFromClient(e.clientX, e.clientY); if (!p) return; if (!e.ctrlKey) selectedElements.value = []; startMarquee(e, p) }
-function startMarquee(e: PointerEvent, start: Point): void { const move = (ev: PointerEvent) => { const p = worldPointFromClient(ev.clientX, ev.clientY); if (!p) return; marqueeRect.value = { x: Math.min(start.x, p.x), y: Math.min(start.y, p.y), width: Math.abs(p.x - start.x), height: Math.abs(p.y - start.y) } }; const up = () => { if (marqueeRect.value && marqueeRect.value.width > 2 && marqueeRect.value.height > 2) selectedElements.value = allSelectable().filter((x) => { const r = objectWorldRect(x); return r ? rectsIntersect(marqueeRect.value as Rect, r) : false }); marqueeRect.value = null; window.removeEventListener('pointermove', move); window.removeEventListener('pointerup', up) }; window.addEventListener('pointermove', move); window.addEventListener('pointerup', up) }
-function allSelectable(): Selected[] { return [...busbars.value.map((x) => ({ kind: 'busbar' as const, id: x.id })), ...textObjects.value.map((x) => ({ kind: 'text' as const, id: x.id })), ...primitiveObjects.value.map((x) => ({ kind: 'primitive' as const, id: x.id })), ...symbolObjects.value.map((x) => ({ kind: 'symbol' as const, id: x.id }))] }
-function objectWorldRect(s: Selected): Rect | null { if (s.kind === 'busbar') { const b = busbars.value.find((x) => x.id === s.id); return b ? { x: b.x, y: b.y, width: b.width, height: b.height } : null } if (s.kind === 'symbol') { const o = symbolObjects.value.find((x) => x.id === s.id); return o ? { x: o.x, y: o.y - 24, width: o.width, height: o.height + 48 } : null } if (s.kind === 'primitive') { const p = primitiveObjects.value.find((x) => x.id === s.id); return p ? { x: p.x, y: p.y, width: p.width, height: p.height || 1 } : null } const t = textObjects.value.find((x) => x.id === s.id); return t ? { x: t.center.x - 25, y: t.center.y - 12, width: 50, height: 24 } : null }
-function deleteSelected(): void { for (const s of selectedElements.value) { if (s.kind === 'busbar') { busbars.value = busbars.value.filter((x) => x.id !== s.id); textObjects.value = textObjects.value.filter((x) => x.busbarId !== s.id) } else if (s.kind === 'symbol') symbolObjects.value = symbolObjects.value.filter((x) => x.id !== s.id); else if (s.kind === 'primitive') primitiveObjects.value = primitiveObjects.value.filter((x) => x.id !== s.id); else textObjects.value = textObjects.value.filter((x) => x.id !== s.id) } selectedElements.value = [] }
-function onWheelZoom(e: WheelEvent): void { emit('settingsChange', normalizeCanvasSettings({ ...props.settings, zoom: Math.min(Math.max(props.settings.zoom * (e.deltaY < 0 ? 1.08 : 0.92), 0.2), 6) })) }
-function onContextMenu(e: MouseEvent): void { const p = worldPointFromClient(e.clientX, e.clientY); contextMenu.visible = true; contextMenu.x = e.clientX; contextMenu.y = e.clientY; contextMenu.point = p ?? { x: 0, y: 0 } }
-function onContextCommand(c: EditorCommand): void { hideContextMenu(); handleCommandAtPoint(c, contextMenu.point) }
-function hideContextMenu(): void { contextMenu.visible = false }
-watch(() => props.command, (c) => { if (c) handleCommand(c) })
+const pageSize = computed(() => {
+  const base = isoPageSizes[props.settings.pageFormat]
+  if (props.settings.pageOrientation === 'landscape') return { width: Math.max(base.width, base.height), height: Math.min(base.width, base.height) }
+  return { width: Math.min(base.width, base.height), height: Math.max(base.width, base.height) }
+})
+
+const pageRect = computed(() => ({
+  x: -pageSize.value.width / 2,
+  y: -pageSize.value.height / 2,
+  width: pageSize.value.width,
+  height: pageSize.value.height,
+}))
+
+const baySlots = computed<BaySlot[]>(() => {
+  const slots: BaySlot[] = []
+  for (const busbar of busbars.value) {
+    const firstX = busbar.x + 12
+    const y = busbar.y + busbar.height / 2
+    for (let index = 0; index < busbar.slots; index += 1) {
+      slots.push({ id: `${busbar.id}_slot_${index + 1}`, busbarId: busbar.id, x: firstX + index * busbar.slotSpacing, y })
+    }
+  }
+  return slots
+})
+
+const selectedText = computed(() => {
+  if (selectedElements.value.length !== 1 || selectedElements.value[0].kind !== 'text') return null
+  return textObjects.value.find((object) => object.id === selectedElements.value[0].id) ?? null
+})
+
+const selectedBusbar = computed(() => {
+  if (selectedElements.value.length !== 1 || selectedElements.value[0].kind !== 'busbar') return null
+  return busbars.value.find((object) => object.id === selectedElements.value[0].id) ?? null
+})
+
+const selectedPrimitive = computed(() => {
+  if (selectedElements.value.length !== 1 || selectedElements.value[0].kind !== 'primitive') return null
+  return primitiveObjects.value.find((object) => object.id === selectedElements.value[0].id) ?? null
+})
+
+const selectedObjectName = computed(() => {
+  if (selectedElements.value.length > 1) return `${selectedElements.value.length} объектов`
+  return selectedText.value?.text ?? selectedBusbar.value?.label ?? selectedPrimitive.value?.kind ?? ''
+})
+
+const snapCandidates = computed<SnapCandidate[]>(() => {
+  const candidates: SnapCandidate[] = [{ x: 0, y: 0, kind: 'origin', label: 'Начало координат' }]
+
+  if (props.settings.snapSlots) {
+    candidates.push(...baySlots.value.map((slot) => ({ x: slot.x, y: slot.y, kind: 'slot' as const, label: slot.id })))
+  }
+
+  if (props.settings.snapObjects) {
+    candidates.push(...textObjects.value.map((object) => ({ x: object.center.x, y: object.center.y, kind: 'object' as const, label: object.text })))
+    candidates.push(...busbars.value.map((busbar) => ({ x: busbar.x + busbar.width / 2, y: busbar.y + busbar.height / 2, kind: 'object' as const, label: busbar.label })))
+    candidates.push(...primitiveObjects.value.map((primitive) => ({ x: primitive.x + primitive.width / 2, y: primitive.y + primitive.height / 2, kind: 'object' as const, label: primitive.kind })))
+  }
+
+  if (props.settings.snapGuides && virtualPoint.value) {
+    for (const guide of guides.value) {
+      if (guide.orientation === 'vertical') candidates.push({ x: guide.position, y: virtualPoint.value.y, kind: 'guide', label: `X ${guide.position}` })
+      else candidates.push({ x: virtualPoint.value.x, y: guide.position, kind: 'guide', label: `Y ${guide.position}` })
+    }
+  }
+
+  return candidates
+})
+
+const ghostText = computed<CanvasTextObject | null>(() => {
+  if (props.activeMode !== 'paste_by_point' || !referenceClipboard.value || !virtualPoint.value) return null
+  return placeItemAtReferencePoint(referenceClipboard.value.items[0], referenceClipboard.value, virtualPoint.value) as CanvasTextObject
+})
+
+onMounted(() => {
+  if (!canvasSurfaceRef.value) return
+  resizeObserver = new ResizeObserver((entries) => {
+    const entry = entries[0]
+    if (!entry) return
+    canvasPixels.width = Math.max(320, entry.contentRect.width)
+    canvasPixels.height = Math.max(240, entry.contentRect.height)
+  })
+  resizeObserver.observe(canvasSurfaceRef.value)
+})
+
+onBeforeUnmount(() => {
+  resizeObserver?.disconnect()
+})
+
+function createRulerTicks(origin: number, span: number, zoom: number, step: number, majorStep: number): RulerTick[] {
+  const first = Math.floor(origin / step) * step
+  const ticks: RulerTick[] = []
+  for (let value = first; value <= origin + span + step; value += step) {
+    const screen = (value - origin) * zoom
+    ticks.push({ value, screen, major: Math.abs(value % majorStep) < 0.0001 })
+  }
+  return ticks
+}
+
+function elementKey(kind: SelectedElement['kind'], id: string): string {
+  return `${kind}:${id}`
+}
+
+function isSelected(kind: SelectedElement['kind'], id: string): boolean {
+  return selectedElements.value.some((item) => elementKey(item.kind, item.id) === elementKey(kind, id))
+}
+
+function selectSingle(kind: SelectedElement['kind'], id: string): void {
+  selectedElements.value = [{ kind, id }]
+}
+
+function toggleSelection(kind: SelectedElement['kind'], id: string): void {
+  const key = elementKey(kind, id)
+  if (selectedElements.value.some((item) => elementKey(item.kind, item.id) === key)) {
+    selectedElements.value = selectedElements.value.filter((item) => elementKey(item.kind, item.id) !== key)
+  } else {
+    selectedElements.value = [...selectedElements.value, { kind, id }]
+  }
+}
+
+function worldPointFromCanvasClient(clientX: number, clientY: number): Point | null {
+  const surface = canvasSurfaceRef.value
+  if (!surface) return null
+  const rect = surface.getBoundingClientRect()
+  return {
+    x: viewOrigin.x + (clientX - rect.left) / props.settings.zoom,
+    y: viewOrigin.y + (clientY - rect.top) / props.settings.zoom,
+  }
+}
+
+function worldPointFromTopRuler(event: PointerEvent): Point | null {
+  const ruler = topRulerRef.value
+  if (!ruler) return null
+  const rect = ruler.getBoundingClientRect()
+  return { x: viewOrigin.x + (event.clientX - rect.left) / props.settings.zoom, y: 0 }
+}
+
+function worldPointFromLeftRuler(event: PointerEvent): Point | null {
+  const ruler = leftRulerRef.value
+  if (!ruler) return null
+  const rect = ruler.getBoundingClientRect()
+  return { x: 0, y: viewOrigin.y + (event.clientY - rect.top) / props.settings.zoom }
+}
+
+function snapCanvasPoint(point: Point) {
+  return snapPoint(point, {
+    enabled: props.settings.snapEnabled,
+    gridSize: props.settings.gridStep,
+    snapGrid: props.settings.snapGrid,
+    tolerance: props.settings.snapTolerance,
+    candidates: snapCandidates.value,
+  })
+}
+
+function setStatus(pointer: Point | null, snapKind: SnapKind | null, snapLabel: string): void {
+  emit('statusChange', {
+    pointer,
+    snapKind,
+    snapLabel,
+    selectedObjectName: selectedObjectName.value,
+    message: message.value,
+  })
+}
+
+function updateVirtualPointFromEvent(event: PointerEvent | MouseEvent): Point | null {
+  const point = worldPointFromCanvasClient(event.clientX, event.clientY)
+  if (!point) return null
+  const snapped = snapCanvasPoint(point)
+  virtualPoint.value = { x: snapped.x, y: snapped.y }
+  activeGuidePoint.value = { x: snapped.x, y: snapped.y }
+  setStatus(virtualPoint.value, snapped.kind, snapped.label)
+  return virtualPoint.value
+}
+
+function autoBusbarWidth(busbar: BusbarObject): number {
+  return 24 + Math.max(0, busbar.slots - 1) * busbar.slotSpacing
+}
+
+function canvasObjectToClipboardItem(object: CanvasTextObject): TextClipboardItem {
+  return { kind: 'text', text: object.text, sourceId: object.id, anchor: { ...object.anchor }, center: { ...object.center }, rotationDeg: object.rotationDeg, fontSize: object.fontSize, role: object.role }
+}
+
+function defaultTextStyle() {
+  return { fontFamily: 'Arial', fill: '#111827', bold: false, italic: false }
+}
+
+function createSampleBusbar(): void {
+  const nextIndex = busbars.value.length + 1
+  const busbar: BusbarObject = {
+    id: `busbar_${nextIndex}`,
+    x: -180,
+    y: -12 + (nextIndex - 1) * 80,
+    width: 0,
+    height: 20,
+    slots: 8,
+    slotSpacing: 48,
+    labelStart: 1,
+    label: `${nextIndex}С 10 кВ`,
+    voltageKv: 10,
+    voltageClassId: '10',
+  }
+  busbar.width = autoBusbarWidth(busbar)
+  busbars.value.push(busbar)
+  ensureBusbarLabels(busbar)
+  selectSingle('busbar', busbar.id)
+  message.value = 'Шина добавлена. Цвет берётся по кодификатору классов напряжения.'
+  setStatus(virtualPoint.value, null, '')
+}
+
+function ensureBusbarLabels(busbar: BusbarObject): void {
+  textObjects.value = textObjects.value.filter((object) => object.busbarId !== busbar.id)
+  const style = defaultTextStyle()
+
+  for (let index = 0; index < busbar.slots; index += 1) {
+    const slotX = busbar.x + 12 + index * busbar.slotSpacing
+    textObjects.value.push({
+      id: `${busbar.id}_bay_label_${index + 1}`,
+      text: String(busbar.labelStart + index),
+      anchor: { x: slotX, y: busbar.y - 34 },
+      center: { x: slotX, y: busbar.y - 34 },
+      rotationDeg: 0,
+      fontSize: 16,
+      role: 'bay-label',
+      busbarId: busbar.id,
+      slotIndex: index,
+      ...style,
+    })
+  }
+
+  textObjects.value.push({
+    id: `${busbar.id}_caption`,
+    text: busbar.label,
+    anchor: { x: busbar.x + busbar.width + 52, y: busbar.y + busbar.height / 2 },
+    center: { x: busbar.x + busbar.width + 52, y: busbar.y + busbar.height / 2 },
+    rotationDeg: 0,
+    fontSize: 18,
+    role: 'bus-label',
+    busbarId: busbar.id,
+    ...style,
+  })
+}
+
+function normalizeBusbarSlots(busbar: BusbarObject | null): void {
+  if (!busbar) return
+  busbar.slots = Math.max(1, Math.min(40, Math.round(busbar.slots)))
+  busbar.slotSpacing = Math.max(8, busbar.slotSpacing)
+  busbar.width = autoBusbarWidth(busbar)
+  syncBusbarLabels(busbar)
+}
+
+function syncBusbarLabels(busbar: BusbarObject | null): void {
+  if (!busbar) return
+  busbar.height = Math.max(4, busbar.height)
+  busbar.voltageKv = voltageKvById(busbar.voltageClassId)
+  busbar.width = autoBusbarWidth(busbar)
+  ensureBusbarLabels(busbar)
+  message.value = `Параметры шины обновлены: ${busbar.label}.`
+  setStatus(virtualPoint.value, 'object', busbar.label)
+}
+
+function addBusbarSlot(busbar: BusbarObject | null = selectedBusbar.value): void {
+  if (!busbar) return
+  busbar.slots += 1
+  normalizeBusbarSlots(busbar)
+}
+
+function removeBusbarSlot(busbar: BusbarObject | null = selectedBusbar.value): void {
+  if (!busbar) return
+  busbar.slots = Math.max(1, busbar.slots - 1)
+  normalizeBusbarSlots(busbar)
+}
+
+function createTextObject(): void {
+  const point = virtualPoint.value ?? { x: 0, y: 0 }
+  const snapped = snapCanvasPoint(point)
+  const id = `text_${textObjects.value.length + 1}`
+  textObjects.value.push({
+    id,
+    text: 'Текст',
+    anchor: { x: snapped.x, y: snapped.y },
+    center: { x: snapped.x, y: snapped.y },
+    rotationDeg: 0,
+    fontSize: 16,
+    role: 'free-text-box',
+    ...defaultTextStyle(),
+  })
+  selectSingle('text', id)
+  message.value = 'Текст добавлен.'
+  setStatus({ x: snapped.x, y: snapped.y }, snapped.kind, snapped.label)
+}
+
+function createPrimitive(kind: PrimitiveKind): void {
+  const point = virtualPoint.value ?? { x: 0, y: 0 }
+  const snapped = snapCanvasPoint(point)
+  const id = `primitive_${primitiveObjects.value.length + 1}`
+  primitiveObjects.value.push({
+    id,
+    kind,
+    x: snapped.x,
+    y: snapped.y,
+    width: kind === 'line' ? 80 : 90,
+    height: kind === 'line' ? 0 : 45,
+    stroke: '#111827',
+    fill: kind === 'line' ? 'none' : '#ffffff',
+    strokeWidth: 1.2,
+  })
+  selectSingle('primitive', id)
+  message.value = `Добавлен примитив: ${kind}.`
+  setStatus({ x: snapped.x, y: snapped.y }, snapped.kind, snapped.label)
+}
+
+function copySelectedFromCenter(): void {
+  if (!selectedText.value) {
+    message.value = 'Сейчас копирование с базовой точкой работает для одного текста.'
+    setStatus(virtualPoint.value, null, '')
+    return
+  }
+  referenceClipboard.value = createReferenceClipboard([canvasObjectToClipboardItem(selectedText.value)], { ...selectedText.value.center })
+  message.value = 'Скопировано от центра выбранного текста. Укажите точку вставки.'
+  emit('modeChange', 'paste_by_point')
+  setStatus(virtualPoint.value, 'object', selectedText.value.text)
+}
+
+function beginCopyByReference(): void {
+  if (!selectedText.value) {
+    message.value = 'Сейчас копирование с базовой точкой работает для одного текста.'
+    setStatus(virtualPoint.value, null, '')
+    return
+  }
+  copyBaseSelection.value = selectedText.value
+  message.value = 'Укажите базовую точку. Она привязывается к сетке, объектам и направляющим.'
+  emit('modeChange', 'copy_by_reference')
+  setStatus(virtualPoint.value, null, '')
+}
+
+function pasteAtPoint(point: Point): void {
+  if (!referenceClipboard.value) {
+    message.value = 'Буфер пуст.'
+    setStatus(point, null, '')
+    return
+  }
+  const source = referenceClipboard.value.items[0]
+  const placed = placeItemAtReferencePoint(source, referenceClipboard.value, point)
+  const id = `${placed.sourceId}_${textObjects.value.length + 1}`
+  textObjects.value.push({
+    id,
+    text: placed.text,
+    anchor: { ...placed.anchor },
+    center: { ...placed.center },
+    rotationDeg: placed.rotationDeg,
+    fontSize: placed.fontSize,
+    role: 'free-text-box',
+    generated: true,
+    ...defaultTextStyle(),
+  })
+  selectSingle('text', id)
+  message.value = `Вставлено относительно базовой точки в ${formatPoint(point)}.`
+  setStatus(point, 'grid', 'Точка вставки')
+}
+
+function rotateSelected(degrees: number): void {
+  if (!selectedText.value) return
+  selectedText.value.rotationDeg = degrees
+  message.value = `Выбранный текст повернут на ${degrees}°.`
+  setStatus(virtualPoint.value, null, '')
+}
+
+function deleteSelected(): void {
+  const selection = [...selectedElements.value]
+  for (const selected of selection) {
+    if (selected.kind === 'text') {
+      textObjects.value = textObjects.value.filter((object) => object.id !== selected.id)
+    } else if (selected.kind === 'busbar') {
+      busbars.value = busbars.value.filter((object) => object.id !== selected.id)
+      textObjects.value = textObjects.value.filter((object) => object.busbarId !== selected.id)
+    } else {
+      primitiveObjects.value = primitiveObjects.value.filter((object) => object.id !== selected.id)
+    }
+  }
+  selectedElements.value = []
+  message.value = 'Выбранные объекты удалены.'
+  setStatus(virtualPoint.value, null, '')
+}
+
+function clearGenerated(): void {
+  textObjects.value = textObjects.value.filter((object) => !object.generated)
+  selectedElements.value = []
+  message.value = 'Вставленные копии очищены.'
+  setStatus(virtualPoint.value, null, '')
+}
+
+function createGuide(orientation: 'vertical' | 'horizontal', position?: number): CanvasGuide {
+  const fallback = orientation === 'vertical' ? viewOrigin.x + viewBoxWidth.value / 2 : viewOrigin.y + viewBoxHeight.value / 2
+  const raw = position ?? fallback
+  const snapped = Math.round(raw / props.settings.gridStep) * props.settings.gridStep
+  const guide = { id: `guide_${orientation}_${guides.value.length + 1}`, orientation, position: snapped }
+  guides.value.push(guide)
+  message.value = orientation === 'vertical' ? `Вертикальная направляющая X=${snapped}.` : `Горизонтальная направляющая Y=${snapped}.`
+  setStatus(virtualPoint.value, 'guide', message.value)
+  return guide
+}
+
+function clearGuides(): void {
+  guides.value = []
+  message.value = 'Направляющие очищены.'
+  setStatus(virtualPoint.value, null, '')
+}
+
+function setZoom(nextZoom: number): void {
+  emit('settingsChange', normalizeCanvasSettings({ ...props.settings, zoom: nextZoom }))
+}
+
+function handleCommand(command: EditorCommand): void {
+  if (command === 'copy') copySelectedFromCenter()
+  else if (command === 'copy_by_reference') beginCopyByReference()
+  else if (command === 'paste' || command === 'paste_by_point') {
+    message.value = referenceClipboard.value ? 'Укажите точку вставки.' : 'Буфер пуст.'
+    emit('modeChange', 'paste_by_point')
+    setStatus(virtualPoint.value, null, '')
+  }
+  else if (command === 'rotate_0') rotateSelected(0)
+  else if (command === 'rotate_90') rotateSelected(90)
+  else if (command === 'rotate_minus_90') rotateSelected(-90)
+  else if (command === 'delete') deleteSelected()
+  else if (command === 'clear_generated') clearGenerated()
+  else if (command === 'create_sample_busbar') createSampleBusbar()
+  else if (command === 'create_text') createTextObject()
+  else if (command === 'create_rectangle') createPrimitive('rectangle')
+  else if (command === 'create_ellipse') createPrimitive('ellipse')
+  else if (command === 'create_line') createPrimitive('line')
+  else if (command === 'create_vertical_guide') createGuide('vertical')
+  else if (command === 'create_horizontal_guide') createGuide('horizontal')
+  else if (command === 'clear_guides') clearGuides()
+  else if (command === 'zoom_100') setZoom(1)
+  else if (command === 'zoom_fit') { viewOrigin.x = -viewBoxWidth.value / 2; viewOrigin.y = -viewBoxHeight.value / 2; setZoom(1) }
+  else if (command === 'add_busbar_slot') addBusbarSlot()
+  else if (command === 'remove_busbar_slot') removeBusbarSlot()
+  emit('commandHandled')
+}
+
+function onPointerMove(event: PointerEvent): void {
+  updateVirtualPointFromEvent(event)
+}
+
+function onCanvasPointerDown(event: PointerEvent): void {
+  if (event.button === 1 || props.activeMode === 'pan') {
+    startCanvasPan(event)
+    return
+  }
+
+  if ((event.target as Element).closest('.canvas-text') || (event.target as Element).closest('.busbar-object') || (event.target as Element).closest('.primitive-object')) return
+
+  const point = updateVirtualPointFromEvent(event)
+  if (!point) return
+
+  if (props.activeMode === 'copy_by_reference' && copyBaseSelection.value) {
+    referenceClipboard.value = createReferenceClipboard([canvasObjectToClipboardItem(copyBaseSelection.value)], point)
+    message.value = `Базовая точка сохранена: ${formatPoint(point)}. Укажите точку вставки.`
+    emit('modeChange', 'paste_by_point')
+    setStatus(point, 'grid', 'Базовая точка')
+    return
+  }
+
+  if (props.activeMode === 'paste_by_point') {
+    pasteAtPoint(point)
+    return
+  }
+
+  startMarqueeSelection(event, point)
+}
+
+function onObjectPointerDown(event: PointerEvent, objectId: string): void {
+  if (event.ctrlKey) toggleSelection('text', objectId)
+  else if (!isSelected('text', objectId)) selectSingle('text', objectId)
+  startSelectionDrag(event, { kind: 'text', id: objectId })
+}
+
+function onBusbarPointerDown(event: PointerEvent, busbarId: string): void {
+  if (event.ctrlKey) toggleSelection('busbar', busbarId)
+  else if (!isSelected('busbar', busbarId)) selectSingle('busbar', busbarId)
+  startSelectionDrag(event, { kind: 'busbar', id: busbarId })
+}
+
+function onPrimitivePointerDown(event: PointerEvent, primitiveId: string): void {
+  if (event.ctrlKey) toggleSelection('primitive', primitiveId)
+  else if (!isSelected('primitive', primitiveId)) selectSingle('primitive', primitiveId)
+  startSelectionDrag(event, { kind: 'primitive', id: primitiveId })
+}
+
+function startSelectionDrag(event: PointerEvent, dragged: SelectedElement): void {
+  if (props.activeMode !== 'select') {
+    message.value = 'Объект выбран. Для перетаскивания включите режим «Выбор».'
+    setStatus(virtualPoint.value, 'object', selectedObjectName.value)
+    return
+  }
+
+  if (!isSelected(dragged.kind, dragged.id)) selectedElements.value = [dragged]
+
+  const startPoint = worldPointFromCanvasClient(event.clientX, event.clientY)
+  if (!startPoint) return
+
+  const selection = selectedElements.value.length ? [...selectedElements.value] : [dragged]
+  const baselines: DragBaseline[] = []
+
+  for (const selected of selection) {
+    if (selected.kind === 'busbar') {
+      const busbar = busbars.value.find((item) => item.id === selected.id)
+      if (busbar) baselines.push({ selected, x: busbar.x, y: busbar.y })
+    } else if (selected.kind === 'text') {
+      const text = textObjects.value.find((item) => item.id === selected.id)
+      if (text) baselines.push({ selected, x: text.center.x, y: text.center.y, anchorX: text.anchor.x, anchorY: text.anchor.y })
+    } else {
+      const primitive = primitiveObjects.value.find((item) => item.id === selected.id)
+      if (primitive) baselines.push({ selected, x: primitive.x, y: primitive.y })
+    }
+  }
+
+  const primary = baselines.find((item) => item.selected.kind === dragged.kind && item.selected.id === dragged.id) ?? baselines[0]
+  if (!primary) return
+
+  const pointerId = event.pointerId
+  ;(event.currentTarget as Element).setPointerCapture?.(pointerId)
+
+  const move = (moveEvent: PointerEvent) => {
+    if (moveEvent.pointerId !== pointerId) return
+    const current = worldPointFromCanvasClient(moveEvent.clientX, moveEvent.clientY)
+    if (!current) return
+
+    const rawPrimary = { x: primary.x + current.x - startPoint.x, y: primary.y + current.y - startPoint.y }
+    const snapped = snapCanvasPoint(rawPrimary)
+    const dx = snapped.x - primary.x
+    const dy = snapped.y - primary.y
+
+    for (const base of baselines) {
+      if (base.selected.kind === 'busbar') {
+        const busbar = busbars.value.find((item) => item.id === base.selected.id)
+        if (!busbar) continue
+        busbar.x = base.x + dx
+        busbar.y = base.y + dy
+        ensureBusbarLabels(busbar)
+      } else if (base.selected.kind === 'text') {
+        const text = textObjects.value.find((item) => item.id === base.selected.id)
+        if (!text) continue
+        text.center = { x: base.x + dx, y: base.y + dy }
+        text.anchor = { x: (base.anchorX ?? base.x) + dx, y: (base.anchorY ?? base.y) + dy }
+      } else {
+        const primitive = primitiveObjects.value.find((item) => item.id === base.selected.id)
+        if (!primitive) continue
+        primitive.x = base.x + dx
+        primitive.y = base.y + dy
+      }
+    }
+
+    virtualPoint.value = { x: snapped.x, y: snapped.y }
+    activeGuidePoint.value = { x: snapped.x, y: snapped.y }
+    message.value = selection.length > 1 ? `Групповое перемещение: ${selection.length} объектов.` : 'Перемещение объекта.'
+    setStatus(virtualPoint.value, snapped.kind, snapped.label)
+  }
+
+  const up = (upEvent: PointerEvent) => {
+    if (upEvent.pointerId !== pointerId) return
+    window.removeEventListener('pointermove', move)
+    window.removeEventListener('pointerup', up)
+    message.value = selection.length > 1 ? `Группа размещена: ${selection.length} объектов.` : 'Объект размещён.'
+    setStatus(virtualPoint.value, null, '')
+  }
+
+  window.addEventListener('pointermove', move)
+  window.addEventListener('pointerup', up)
+}
+
+function objectWorldRect(selected: SelectedElement): WorldRect | null {
+  if (selected.kind === 'busbar') {
+    const busbar = busbars.value.find((item) => item.id === selected.id)
+    return busbar ? { x: busbar.x, y: busbar.y, width: busbar.width, height: busbar.height } : null
+  }
+  if (selected.kind === 'primitive') {
+    const primitive = primitiveObjects.value.find((item) => item.id === selected.id)
+    return primitive ? {
+      x: Math.min(primitive.x, primitive.x + primitive.width),
+      y: Math.min(primitive.y, primitive.y + primitive.height),
+      width: Math.abs(primitive.width),
+      height: Math.abs(primitive.height),
+    } : null
+  }
+  const text = textObjects.value.find((item) => item.id === selected.id)
+  return text ? { x: text.center.x - 25, y: text.center.y - 12, width: 50, height: 24 } : null
+}
+
+function allSelectableElements(): SelectedElement[] {
+  return [
+    ...busbars.value.map((item) => ({ kind: 'busbar' as const, id: item.id })),
+    ...textObjects.value.map((item) => ({ kind: 'text' as const, id: item.id })),
+    ...primitiveObjects.value.map((item) => ({ kind: 'primitive' as const, id: item.id })),
+  ]
+}
+
+function startMarqueeSelection(event: PointerEvent, startPoint: Point): void {
+  const pointerId = event.pointerId
+  svgRef.value?.setPointerCapture?.(pointerId)
+  const additive = event.ctrlKey
+  const initialSelection = [...selectedElements.value]
+  let moved = false
+
+  const move = (moveEvent: PointerEvent) => {
+    if (moveEvent.pointerId !== pointerId) return
+    const current = worldPointFromCanvasClient(moveEvent.clientX, moveEvent.clientY)
+    if (!current) return
+    moved = true
+    marqueeRect.value = {
+      x: Math.min(startPoint.x, current.x),
+      y: Math.min(startPoint.y, current.y),
+      width: Math.abs(current.x - startPoint.x),
+      height: Math.abs(current.y - startPoint.y),
+    }
+  }
+
+  const up = (upEvent: PointerEvent) => {
+    if (upEvent.pointerId !== pointerId) return
+    window.removeEventListener('pointermove', move)
+    window.removeEventListener('pointerup', up)
+
+    if (moved && marqueeRect.value && marqueeRect.value.width > 2 && marqueeRect.value.height > 2) {
+      const found = allSelectableElements().filter((item) => {
+        const rect = objectWorldRect(item)
+        return rect ? rectsIntersect(marqueeRect.value as WorldRect, rect) : false
+      })
+      selectedElements.value = additive ? mergeSelection(initialSelection, found) : found
+      message.value = `Рамкой выделено объектов: ${found.length}.`
+    } else if (!additive) {
+      selectedElements.value = []
+      message.value = 'Канвас выбран.'
+    }
+
+    marqueeRect.value = null
+    setStatus(virtualPoint.value, null, '')
+  }
+
+  window.addEventListener('pointermove', move)
+  window.addEventListener('pointerup', up)
+}
+
+function mergeSelection(a: SelectedElement[], b: SelectedElement[]): SelectedElement[] {
+  const map = new Map<string, SelectedElement>()
+  for (const item of a) map.set(elementKey(item.kind, item.id), item)
+  for (const item of b) map.set(elementKey(item.kind, item.id), item)
+  return [...map.values()]
+}
+
+function onGuidePointerDown(event: PointerEvent, guideId: string): void {
+  const guide = guides.value.find((item) => item.id === guideId)
+  if (!guide) return
+  const pointerId = event.pointerId
+  ;(event.currentTarget as Element).setPointerCapture?.(pointerId)
+
+  const move = (moveEvent: PointerEvent) => {
+    if (moveEvent.pointerId !== pointerId) return
+    const point = worldPointFromCanvasClient(moveEvent.clientX, moveEvent.clientY)
+    if (!point) return
+    const snapped = snapCanvasPoint(point)
+    guide.position = guide.orientation === 'vertical' ? snapped.x : snapped.y
+    virtualPoint.value = { x: snapped.x, y: snapped.y }
+    activeGuidePoint.value = { x: snapped.x, y: snapped.y }
+    message.value = 'Перемещение направляющей.'
+    setStatus(virtualPoint.value, 'guide', guide.id)
+  }
+
+  const up = (upEvent: PointerEvent) => {
+    if (upEvent.pointerId !== pointerId) return
+    window.removeEventListener('pointermove', move)
+    window.removeEventListener('pointerup', up)
+    message.value = 'Направляющая размещена.'
+    setStatus(virtualPoint.value, 'guide', guide.id)
+  }
+
+  window.addEventListener('pointermove', move)
+  window.addEventListener('pointerup', up)
+}
+
+function onTopRulerPointerDown(event: PointerEvent): void {
+  const point = worldPointFromTopRuler(event)
+  if (!point) return
+  const guide = createGuide('vertical', point.x)
+  onGuidePointerDown(event, guide.id)
+}
+
+function onLeftRulerPointerDown(event: PointerEvent): void {
+  const point = worldPointFromLeftRuler(event)
+  if (!point) return
+  const guide = createGuide('horizontal', point.y)
+  onGuidePointerDown(event, guide.id)
+}
+
+function startCanvasPan(event: PointerEvent): void {
+  event.preventDefault()
+  const start = { x: event.clientX, y: event.clientY }
+  const startOrigin = { ...viewOrigin }
+  const pointerId = event.pointerId
+  svgRef.value?.setPointerCapture?.(pointerId)
+
+  const move = (moveEvent: PointerEvent) => {
+    if (moveEvent.pointerId !== pointerId) return
+    viewOrigin.x = startOrigin.x + (start.x - moveEvent.clientX) / props.settings.zoom
+    viewOrigin.y = startOrigin.y + (start.y - moveEvent.clientY) / props.settings.zoom
+    message.value = 'Панорамирование канваса.'
+    setStatus(virtualPoint.value, null, '')
+  }
+
+  const up = (upEvent: PointerEvent) => {
+    if (upEvent.pointerId !== pointerId) return
+    window.removeEventListener('pointermove', move)
+    window.removeEventListener('pointerup', up)
+  }
+
+  window.addEventListener('pointermove', move)
+  window.addEventListener('pointerup', up)
+}
+
+function onWheelZoom(event: WheelEvent): void {
+  const cursor = worldPointFromCanvasClient(event.clientX, event.clientY)
+  const surface = canvasSurfaceRef.value
+  if (!cursor || !surface) return
+  const rect = surface.getBoundingClientRect()
+  const fx = (event.clientX - rect.left) / rect.width
+  const fy = (event.clientY - rect.top) / rect.height
+  const factor = event.deltaY < 0 ? 1.08 : 0.92
+  const nextZoom = Math.min(Math.max(props.settings.zoom * factor, 0.2), 6)
+  const nextWidth = canvasPixels.width / nextZoom
+  const nextHeight = canvasPixels.height / nextZoom
+  viewOrigin.x = cursor.x - nextWidth * fx
+  viewOrigin.y = cursor.y - nextHeight * fy
+  emit('settingsChange', normalizeCanvasSettings({ ...props.settings, zoom: nextZoom }))
+  message.value = `Масштаб: ${Math.round(nextZoom * 100)}%.`
+  setStatus(cursor, null, '')
+}
+
+function onContextMenu(event: MouseEvent): void {
+  const point = worldPointFromCanvasClient(event.clientX, event.clientY)
+  contextMenu.visible = true
+  contextMenu.x = event.clientX
+  contextMenu.y = event.clientY
+  contextMenu.point = point ?? { x: 0, y: 0 }
+
+  const targetText = (event.target as Element).closest('.canvas-text')
+  const targetBusbar = (event.target as Element).closest('.busbar-object')
+  const targetPrimitive = (event.target as Element).closest('.primitive-object')
+  if (targetText) selectSingle('text', targetText.getAttribute('data-object-id') ?? '')
+  else if (targetBusbar) {
+    const busbarId = targetBusbar.getAttribute('data-busbar-id')
+    if (busbarId) selectSingle('busbar', busbarId)
+  } else if (targetPrimitive) {
+    const primitiveId = targetPrimitive.getAttribute('data-primitive-id')
+    if (primitiveId) selectSingle('primitive', primitiveId)
+  }
+}
+
+function onContextCommand(command: EditorCommand): void {
+  hideContextMenu()
+  if (command === 'copy_by_reference') beginCopyByReference()
+  else if (command === 'paste_by_point') emit('modeChange', 'paste_by_point')
+  else handleCommand(command)
+}
+
+function hideContextMenu(): void {
+  contextMenu.visible = false
+}
+
+watch(() => props.command, (command) => {
+  if (command) handleCommand(command)
+})
+
+setStatus(null, null, '')
 </script>
+
 <style scoped>
-.canvas-workspace{position:relative;display:grid;grid-template-columns:1fr 280px;min-height:0;height:100%;background:#e5edf7;overflow:hidden}.canvas-frame{display:grid;grid-template-columns:32px 1fr;grid-template-rows:28px 1fr;min-width:0;min-height:0;overflow:hidden}.ruler-corner{display:grid;place-items:center;border-right:1px solid #cbd5e1;border-bottom:1px solid #cbd5e1;background:#f8fafc;color:#64748b;font-size:10px;font-weight:800}.top-ruler,.left-ruler{background:#f8fafc;color:#64748b;font-size:11px}.top-ruler{height:28px;border-bottom:1px solid #cbd5e1;padding-left:10px;line-height:28px}.left-ruler{border-right:1px solid #cbd5e1;writing-mode:vertical-rl;text-align:center}.canvas-surface{position:relative;min-width:0;min-height:0;overflow:hidden;background:#dedbe0}.editor-canvas{width:100%;height:100%;min-width:900px;min-height:520px;display:block;background:#dedbe0;cursor:crosshair}.iso-page-fill{fill:#fff}.iso-page-outline{fill:none;stroke:#8797ad;stroke-width:.7;vector-effect:non-scaling-stroke}.iso-page-label{fill:#64748b;font-family:Arial,sans-serif;font-size:9px}.origin-line{stroke:#ef4444;stroke-width:.45;opacity:.42;stroke-dasharray:2 2;vector-effect:non-scaling-stroke}.origin-dot{fill:#ef4444;opacity:.44}.origin-label{fill:#ef4444;font-size:6px;font-family:Arial,sans-serif;opacity:.55}.busbar-object,.primitive-object,.symbol-object{cursor:move}.busbar{stroke:#111827;stroke-width:.8;vector-effect:non-scaling-stroke}.bay-slot,.symbol-terminal{fill:#fff;stroke:#111827;stroke-width:1.2;vector-effect:non-scaling-stroke}.symbol-body,.symbol-line,.electrical-connection{stroke-width:1.4;vector-effect:non-scaling-stroke}.symbol-label{fill:#111827;font-family:Arial,sans-serif;font-size:14px;dominant-baseline:middle}.canvas-text{font-family:Arial,sans-serif;cursor:grab;user-select:none}.user-guide-line{stroke:#0ea5e9;stroke-width:.8;stroke-dasharray:5 4}.selection-outline{fill:none;stroke:#2563eb;stroke-width:.9;stroke-dasharray:3 2;vector-effect:non-scaling-stroke}.selection-handle{fill:#fff;stroke:#2563eb;stroke-width:.8;vector-effect:non-scaling-stroke}.selection-marquee{fill:rgba(37,99,235,.08);stroke:#2563eb;stroke-width:.8;stroke-dasharray:3 3;vector-effect:non-scaling-stroke}.empty-canvas-hint{fill:#64748b;font-family:Arial,sans-serif;font-size:22px}.empty-canvas-hint .hint-small{fill:#94a3b8;font-size:13px}.properties-panel{border-left:1px solid #cbd5e1;background:#f8fafc;padding:12px;overflow:hidden}.properties-panel h2{margin:0 0 10px;font-size:14px}.properties-panel label{display:grid;gap:4px;margin-bottom:8px;color:#475569;font-size:12px;font-weight:800}.properties-panel input,.properties-panel select{border:1px solid #cbd5e1;border-radius:8px;padding:6px 8px;background:white}.properties-panel p{color:#475569;font-size:12px;line-height:1.4}.panel-button{display:block;width:100%;margin-bottom:8px;border:1px solid #bfdbfe;border-radius:8px;background:white;color:#1e3a8a;cursor:pointer;font-weight:800;padding:8px 10px}
+.canvas-workspace {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  min-height: 0;
+  height: 100%;
+  background: #e5edf7;
+  overflow: hidden;
+}
+
+.canvas-frame {
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  grid-template-rows: 28px 1fr;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.canvas-frame.without-rulers {
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+}
+
+.ruler-corner {
+  display: grid;
+  place-items: center;
+  border-right: 1px solid #cbd5e1;
+  border-bottom: 1px solid #cbd5e1;
+  background: #f8fafc;
+  color: #64748b;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.top-ruler,
+.left-ruler {
+  position: relative;
+  background: #f8fafc;
+  overflow: hidden;
+}
+
+.top-ruler {
+  height: 28px;
+  border-bottom: 1px solid #cbd5e1;
+  cursor: ns-resize;
+}
+
+.left-ruler {
+  width: 32px;
+  border-right: 1px solid #cbd5e1;
+  cursor: ew-resize;
+}
+
+.ruler-tick {
+  position: absolute;
+  background: #94a3b8;
+  pointer-events: none;
+}
+
+.ruler-tick.top {
+  bottom: 0;
+  width: 1px;
+  height: 9px;
+}
+
+.ruler-tick.top.major {
+  height: 18px;
+  background: #64748b;
+}
+
+.ruler-tick.left {
+  right: 0;
+  height: 1px;
+  width: 10px;
+}
+
+.ruler-tick.left.major {
+  width: 20px;
+  background: #64748b;
+}
+
+.ruler-label {
+  position: absolute;
+  color: #475569;
+  font-size: 10px;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+}
+
+.ruler-label.top {
+  top: 4px;
+}
+
+.ruler-label.left {
+  left: 3px;
+  transform: translateY(-50%);
+}
+
+.canvas-surface {
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  background: #dbeafe;
+}
+
+.editor-canvas {
+  width: 100%;
+  height: 100%;
+  min-width: 900px;
+  min-height: 520px;
+  display: block;
+  background: white;
+  cursor: crosshair;
+}
+
+.iso-page {
+  fill: none;
+  stroke: #8797ad;
+  stroke-width: 0.7;
+}
+
+.iso-page-label {
+  fill: #64748b;
+  font-family: Arial, sans-serif;
+  font-size: 9px;
+  pointer-events: none;
+}
+
+.origin-line {
+  stroke: #ef4444;
+  stroke-width: 0.45;
+  opacity: 0.42;
+  stroke-dasharray: 2 2;
+}
+
+.origin-dot {
+  fill: #ef4444;
+  opacity: 0.44;
+}
+
+.origin-label {
+  fill: #ef4444;
+  font-size: 6px;
+  font-family: Arial, sans-serif;
+  opacity: 0.55;
+}
+
+.busbar-object,
+.primitive-object {
+  cursor: move;
+}
+
+.busbar-object.selected .busbar,
+.primitive-object.selected rect,
+.primitive-object.selected ellipse,
+.primitive-object.selected line {
+  stroke: #2563eb !important;
+  stroke-width: 1.4 !important;
+}
+
+.busbar {
+  stroke: #111827;
+  stroke-width: 0.8;
+}
+
+.bay-slot {
+  fill: #ffffff;
+  stroke: #111827;
+  stroke-width: 1.2;
+  pointer-events: none;
+}
+
+.canvas-text {
+  font-family: Arial, sans-serif;
+  cursor: grab;
+  user-select: none;
+}
+
+.canvas-text.selected {
+  paint-order: stroke;
+  stroke: rgba(37, 99, 235, 0.35);
+  stroke-width: 1.8px;
+}
+
+.ghost-text {
+  fill: #2563eb;
+  opacity: 0.35;
+  font-family: Arial, sans-serif;
+  pointer-events: none;
+}
+
+.virtual-point-line {
+  stroke: #f59e0b;
+  stroke-width: 0.9;
+  pointer-events: none;
+}
+
+.virtual-point-ring {
+  fill: none;
+  stroke: #f59e0b;
+  stroke-width: 0.9;
+  pointer-events: none;
+}
+
+.guide-line {
+  stroke: #2563eb;
+  stroke-width: 0.7;
+  stroke-dasharray: 3 3;
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.user-guide-line {
+  stroke: #0ea5e9;
+  stroke-width: 0.8;
+  stroke-dasharray: 5 4;
+  cursor: move;
+  pointer-events: stroke;
+}
+
+.selection-marquee {
+  fill: rgba(37, 99, 235, 0.08);
+  stroke: #2563eb;
+  stroke-width: 0.8;
+  stroke-dasharray: 3 3;
+  pointer-events: none;
+}
+
+.empty-canvas-hint {
+  fill: #64748b;
+  font-family: Arial, sans-serif;
+  font-size: 22px;
+  pointer-events: none;
+}
+
+.empty-canvas-hint .hint-small {
+  fill: #94a3b8;
+  font-size: 13px;
+}
+
+.properties-panel {
+  border-left: 1px solid #cbd5e1;
+  background: #f8fafc;
+  padding: 12px;
+  overflow: hidden;
+}
+
+.properties-panel h2,
+.properties-panel h3 {
+  margin: 0 0 10px;
+  font-size: 14px;
+}
+
+.properties-panel label {
+  display: grid;
+  gap: 4px;
+  margin-bottom: 8px;
+  color: #475569;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.properties-panel label.inline {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.properties-panel input,
+.properties-panel select {
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 6px 8px;
+  background: white;
+}
+
+.properties-panel input[type="color"] {
+  min-height: 32px;
+  padding: 2px;
+}
+
+.properties-panel p,
+.settings-summary {
+  color: #475569;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.properties-panel hr {
+  border: 0;
+  border-top: 1px solid #e2e8f0;
+  margin: 12px 0;
+}
+
+.panel-button {
+  display: block;
+  width: 100%;
+  margin-bottom: 8px;
+  border: 1px solid #bfdbfe;
+  border-radius: 8px;
+  background: white;
+  color: #1e3a8a;
+  cursor: pointer;
+  font-weight: 800;
+  padding: 8px 10px;
+}
+
+.button-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
 </style>

@@ -1,5 +1,25 @@
-export type VoltageDisplayProfileId = 'gost_r_56303_2014' | 'sto_56947007_25_040_70_101_2011'
-export type VoltageClassId = '1150' | '800' | '750' | '500' | '400' | '330' | '220' | '150' | '110' | '60' | '35' | '20' | '15' | '10' | '6' | '3' | 'below3'
+export type VoltageDisplayProfileId =
+  | 'gost_r_56303_2014'
+  | 'sto_56947007_25_040_70_101_2011'
+
+export type VoltageClassId =
+  | '1150'
+  | '800'
+  | '750'
+  | '500'
+  | '400'
+  | '330'
+  | '220'
+  | '150'
+  | '110'
+  | '60'
+  | '35'
+  | '20'
+  | '15'
+  | '10'
+  | '6'
+  | '3'
+  | 'below3'
 
 export type VoltageClassColor = {
   id: VoltageClassId
@@ -12,7 +32,12 @@ export type VoltageClassColor = {
   source: string
 }
 
-export const voltageClassColors: VoltageClassColor[] = [
+export const voltageDisplayProfileLabels: Record<VoltageDisplayProfileId, string> = {
+  gost_r_56303_2014: 'ГОСТ Р 56303-2014',
+  sto_56947007_25_040_70_101_2011: 'СТО ФСК 2011 (позже)',
+}
+
+export const gostR56303VoltageClassColors: VoltageClassColor[] = [
   { id: '1150', label: '1150 кВ', voltageKv: 1150, colorName: 'сиреневый', color: 'rgb(205, 138, 255)', rgb: [205, 138, 255], profileId: 'gost_r_56303_2014', source: 'ГОСТ Р 56303-2014 / Elektroshema' },
   { id: '800', label: '800 кВ', voltageKv: 800, colorName: 'темно-синий', color: 'rgb(0, 0, 168)', rgb: [0, 0, 168], profileId: 'gost_r_56303_2014', source: 'ГОСТ Р 56303-2014 / Elektroshema' },
   { id: '750', label: '750 кВ', voltageKv: 750, colorName: 'темно-синий', color: 'rgb(0, 0, 168)', rgb: [0, 0, 168], profileId: 'gost_r_56303_2014', source: 'ГОСТ Р 56303-2014 / Elektroshema' },
@@ -32,8 +57,14 @@ export const voltageClassColors: VoltageClassColor[] = [
   { id: 'below3', label: 'ниже 3 кВ', voltageKv: 0.4, colorName: 'серый', color: 'rgb(127, 127, 127)', rgb: [127, 127, 127], profileId: 'gost_r_56303_2014', source: 'ГОСТ Р 56303-2014 / Elektroshema' },
 ]
 
+export const voltageClassColors = gostR56303VoltageClassColors
+
 export function voltageClassById(id: VoltageClassId | string): VoltageClassColor {
-  return voltageClassColors.find((item) => item.id === id) ?? voltageClassColors.find((item) => item.id === '10')!
+  if (id === '0.4' || id === '1' || id === 'below_3') {
+    return gostR56303VoltageClassColors.find((item) => item.id === 'below3')!
+  }
+  return gostR56303VoltageClassColors.find((item) => item.id === id)
+    ?? gostR56303VoltageClassColors.find((item) => item.id === '10')!
 }
 
 export function voltageColorById(id: VoltageClassId | string): string {
@@ -42,4 +73,28 @@ export function voltageColorById(id: VoltageClassId | string): string {
 
 export function voltageKvById(id: VoltageClassId | string): number {
   return voltageClassById(id).voltageKv
+}
+
+export function voltageClassIdFromKv(voltageKv: number): VoltageClassId {
+  if (voltageKv >= 1150) return '1150'
+  if (voltageKv >= 800) return '800'
+  if (voltageKv >= 750) return '750'
+  if (voltageKv >= 500) return '500'
+  if (voltageKv >= 400) return '400'
+  if (voltageKv >= 330) return '330'
+  if (voltageKv >= 220) return '220'
+  if (voltageKv >= 150) return '150'
+  if (voltageKv >= 110) return '110'
+  if (voltageKv >= 60) return '60'
+  if (voltageKv >= 35) return '35'
+  if (voltageKv >= 20) return '20'
+  if (voltageKv >= 15) return '15'
+  if (voltageKv >= 10) return '10'
+  if (voltageKv >= 6) return '6'
+  if (voltageKv >= 3) return '3'
+  return 'below3'
+}
+
+export function voltageColor(voltageKv: number): string {
+  return voltageColorById(voltageClassIdFromKv(voltageKv))
 }
