@@ -1,0 +1,100 @@
+{
+  "schema_version": "draft-0.1",
+  "id": "visio_146_основная_надпись",
+  "name_ru": "Основная надпись",
+  "name_en": "",
+  "category": "stamp_frame",
+  "review_status": "needs_review",
+  "source": {
+    "format": "vsdx",
+    "master_id": "146",
+    "master_name": "Основная надпись",
+    "master_part": "visio/masters/master144.xml",
+    "page_usage": [
+      "Штамп, рамки, текст"
+    ],
+    "text": "Должность Подпись Дата Утвердил ФИО Согласовано на______ Нормальная\n(Временная нормальная) схема электрических соединений Вводится в действие с “____”_________ Начальник _______________ «____»__________ /____________/"
+  },
+  "viewBox": {
+    "x": 0,
+    "y": 0,
+    "width": 15.5511811023622,
+    "height": 11.2992125984252
+  },
+  "svg_fragment": "<path d=\"M 15.5512 0 L 0 0 L 0 11.2992 L 15.5512 11.2992 L 15.5512 0\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 11.2992 L 2.3622 11.2992 L 2.3622 11.1024 L 0 11.1024 L 0 11.2992\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 11.2992 L 0.590551 11.2992 L 0.590551 11.1024 L 0 11.1024 L 0 11.2992\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 11.2992 L 0.393701 11.2992 L 0.393701 11.1024 L 0 11.1024 L 0 11.2992\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 11.2992 L 4.52756 11.2992 L 4.52756 11.1024 L 0 11.1024 L 0 11.2992\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 11.2992 L 2.3622 11.2992 L 2.3622 10.9055 L 0 10.9055 L 0 11.2992\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 11.2992 L 0.590551 11.2992 L 0.590551 10.9055 L 0 10.9055 L 0 11.2992\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 11.2992 L 1.1811 11.2992 L 1.1811 10.9055 L 0 10.9055 L 0 11.2992\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 11.2992 L 0.393701 11.2992 L 0.393701 10.9055 L 0 10.9055 L 0 11.2992\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 11.2992 L 1.1811 11.2992 L 1.1811 10.5118 L 0 10.5118 L 0 11.2992\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 11.2992 L 1.5748 11.2992 L 1.5748 10.5118 L 0 10.5118 L 0 11.2992\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 11.2992 L 1.1811 11.2992 L 1.1811 11.1024 L 0 11.1024 L 0 11.2992\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 11.2992 L 4.52756 11.2992 L 4.52756 11.1024 L 0 11.1024 L 0 11.2992\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 11.2992 L 2.3622 11.2992 L 2.3622 10.9055 L 0 10.9055 L 0 11.2992\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 11.2992 L 1.1811 11.2992 L 1.1811 10.9055 L 0 10.9055 L 0 11.2992\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 11.2992 L 0.590551 11.2992 L 0.590551 10.9055 L 0 10.9055 L 0 11.2992\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 11.2992 L 0.393701 11.2992 L 0.393701 10.9055 L 0 10.9055 L 0 11.2992\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 11.2992 L 2.3622 11.2992 L 2.3622 10.9055 L 0 10.9055 L 0 11.2992\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 11.2992 L 2.3622 11.2992 L 2.3622 10.9055 L 0 10.9055 L 0 11.2992\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 11.2992 L 2.3622 11.2992 L 2.3622 10.9055 L 0 10.9055 L 0 11.2992\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 11.2992 L 2.3622 11.2992 L 2.3622 11.2992 L 0 11.2992 L 0 11.2992\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 11.2992 L 2.3622 11.2992 L 2.3622 11.2992 L 0 11.2992 L 0 11.2992\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 11.2992 L 2.3622 11.2992 L 2.3622 11.2992 L 0 11.2992 L 0 11.2992\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 11.2992 L 2.3622 11.2992 L 2.3622 11.2992 L 0 11.2992 L 0 11.2992\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 11.2992 L 2.3622 11.2992 L 2.3622 11.2992 L 0 11.2992 L 0 11.2992\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 11.2992 L 2.3622 11.2992 L 2.3622 11.2992 L 0 11.2992 L 0 11.2992\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 11.2992 L 1.1811 11.2992 L 1.1811 10.9055 L 0 10.9055 L 0 11.2992\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 11.2992 L 1.1811 11.2992 L 1.1811 10.9055 L 0 10.9055 L 0 11.2992\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 11.2992 L 1.1811 11.2992 L 1.1811 10.9055 L 0 10.9055 L 0 11.2992\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 11.2992 L 1.1811 11.2992 L 1.1811 11.2992 L 0 11.2992 L 0 11.2992\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 11.2992 L 1.1811 11.2992 L 1.1811 11.2992 L 0 11.2992 L 0 11.2992\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 11.2992 L 1.1811 11.2992 L 1.1811 11.2992 L 0 11.2992 L 0 11.2992\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 11.2992 L 1.1811 11.2992 L 1.1811 11.2992 L 0 11.2992 L 0 11.2992\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 11.2992 L 1.1811 11.2992 L 1.1811 11.2992 L 0 11.2992 L 0 11.2992\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 11.2992 L 1.1811 11.2992 L 1.1811 11.2992 L 0 11.2992 L 0 11.2992\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 11.2992 L 0.590551 11.2992 L 0.590551 10.9055 L 0 10.9055 L 0 11.2992\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 11.2992 L 0.590551 11.2992 L 0.590551 10.9055 L 0 10.9055 L 0 11.2992\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 11.2992 L 0.590551 11.2992 L 0.590551 10.9055 L 0 10.9055 L 0 11.2992\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 11.2992 L 0.590551 11.2992 L 0.590551 11.2992 L 0 11.2992 L 0 11.2992\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 11.2992 L 0.590551 11.2992 L 0.590551 11.2992 L 0 11.2992 L 0 11.2992\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 11.2992 L 0.590551 11.2992 L 0.590551 11.2992 L 0 11.2992 L 0 11.2992\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 11.2992 L 0.590551 11.2992 L 0.590551 11.2992 L 0 11.2992 L 0 11.2992\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 11.2992 L 0.590551 11.2992 L 0.590551 11.2992 L 0 11.2992 L 0 11.2992\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 11.2992 L 0.590551 11.2992 L 0.590551 11.2992 L 0 11.2992 L 0 11.2992\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 11.2992 L 0.393701 11.2992 L 0.393701 10.9055 L 0 10.9055 L 0 11.2992\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 11.2992 L 0.393701 11.2992 L 0.393701 10.9055 L 0 10.9055 L 0 11.2992\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 11.2992 L 0.393701 11.2992 L 0.393701 10.9055 L 0 10.9055 L 0 11.2992\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 11.2992 L 0.393701 11.2992 L 0.393701 11.2992 L 0 11.2992 L 0 11.2992\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 11.2992 L 0.393701 11.2992 L 0.393701 11.2992 L 0 11.2992 L 0 11.2992\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 11.2992 L 0.393701 11.2992 L 0.393701 11.2992 L 0 11.2992 L 0 11.2992\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 11.2992 L 0.393701 11.2992 L 0.393701 11.2992 L 0 11.2992 L 0 11.2992\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 11.2992 L 0.393701 11.2992 L 0.393701 11.2992 L 0 11.2992 L 0 11.2992\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 11.2992 L 0.393701 11.2992 L 0.393701 11.2992 L 0 11.2992 L 0 11.2992\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 11.2992 L 0 11.1024 M 2.75591 11.1024 L 2.75591 11.2992\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 11.2992 L 0 10.7087 L 2.75591 10.7087 L 2.75591 11.2992\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 11.2992 L 0 11.1024 M 1.49606 11.1024 M 1.49606 11.2992\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 11.2992 M 0 11.1024 M 1.25984 11.1024 L 1.25984 11.2992\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 11.2992 L 0 11.1024 M 2.75591 11.1024 L 2.75591 11.2992\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 11.2992 L 0 11.1024 M 2.75591 11.1024 L 2.75591 11.2992\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 10.9055 L 0 11.2992 L 2.75591 11.2992 L 2.75591 10.9055\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />",
+  "terminals": [],
+  "snap_anchors": [],
+  "capabilities": {
+    "feature_flags": {
+      "colorizable_by_voltage_class": true,
+      "multi_state_candidate": false,
+      "busbar_configurable_connection_points": false,
+      "rotatable": true,
+      "snap_anchors_required": true,
+      "stretchable_leads_candidate": true,
+      "auto_layout_eligible": false,
+      "requires_review": true
+    },
+    "rotation": {
+      "enabled": true,
+      "allowed_degrees": [
+        0,
+        90,
+        180,
+        270
+      ],
+      "terminal_transform_required": true,
+      "snap_anchor_transform_required": true,
+      "label_rotation_policy": "keep_readable"
+    },
+    "stretching": {
+      "enabled": true,
+      "body_geometry_locked": true,
+      "stretchable_parts": [
+        "connection_leads",
+        "busbar_length"
+      ]
+    },
+    "snapping": {
+      "enabled": true,
+      "terminal_count": 0,
+      "snap_to_terminals": true,
+      "snap_to_busbar_generated_points": false,
+      "connection_graph_node_required": true
+    },
+    "voltage_style": {
+      "enabled": true,
+      "stroke_token": "var(--voltage-color)",
+      "normal_scheme_palette": "STO table 1",
+      "ptk_palette": "STO table 5"
+    },
+    "states": {
+      "enabled": false,
+      "detected_tokens": [],
+      "required_for_switching_device": [],
+      "kru_trolley_extra_states": []
+    },
+    "busbar": {
+      "enabled": false,
+      "connection_point_count": 0,
+      "connection_spacing": null,
+      "length": "fixed",
+      "stroke_width_multiplier": null
+    }
+  },
+  "conversion": {
+    "row_counts": {
+      "MoveTo": 67,
+      "LineTo": 226
+    },
+    "warnings": [
+      "multiple Visio shapes flattened without full local transform support"
+    ],
+    "requires_manual_review": true,
+    "known_limitations": [
+      "local transforms and group transforms are not fully normalized yet",
+      "advanced arcs/splines may use line fallback",
+      "imported symbols are drafts only"
+    ]
+  }
+}

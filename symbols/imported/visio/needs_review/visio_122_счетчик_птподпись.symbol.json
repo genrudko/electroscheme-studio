@@ -1,0 +1,100 @@
+{
+  "schema_version": "draft-0.1",
+  "id": "visio_122_счетчик_птподпись",
+  "name_ru": "Счётчик ПТ(Подпись)",
+  "name_en": "",
+  "category": "unknown",
+  "review_status": "needs_review",
+  "source": {
+    "format": "vsdx",
+    "master_id": "122",
+    "master_name": "Счётчик ПТ(Подпись)",
+    "master_part": "visio/masters/master120.xml",
+    "page_usage": [
+      "Доп.элементы"
+    ],
+    "text": "Wh Ошибка Ошибка Год гос.поверки 2010 г. Квартал гос.поверки Г/п: I - Максимальный ток ()А Номинальный ток 0 Напряжение 220В Серийный номер № Название Название"
+  },
+  "viewBox": {
+    "x": 0,
+    "y": 0,
+    "width": 1.0,
+    "height": 1.078740157480315
+  },
+  "svg_fragment": "<path d=\"M 0 1.07874 L 0.393701 1.07874 L 0.393701 0.488189 L 0 0.488189 L 0 1.07874\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 1.07874 L 0.393701 1.07874\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 1.07874 L 0.393701 1.07874 L 0.393701 0.645669 L 0 0.645669 L 0 1.07874\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 1.07874 L 0.241142 1.07874\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 1.07874\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 1.07874 L 0 1.07874 L 0 1.07874 L 0 1.07874\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 1.07874 L 0 1.07874 L 0 1.07874 L 0 1.07874\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 1.07874 L 0.244882 1.07874\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 1.07874\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 1.07874 L 0 1.07874 L 0 1.07874 L 0 1.07874\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 1.07874 L 0 1.07874 L 0 1.07874 L 0 1.07874\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0.019685 1.05906 L 0.492126 1.05906 L 0.492126 0.86456 L 0.019685 0.86456 L 0.019685 1.05906\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0.019685 1.05906 L 0.492126 1.05906\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"2\" />\n<path d=\"M 0.019685 1.05906 L 0.594488 1.05906 L 0.594488 0.86456 L 0.019685 0.86456 L 0.019685 1.05906\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0.019685 1.05906 L 0.594488 1.05906\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"2\" />\n<path d=\"M 0.019685 1.05906 L 0.413386 1.05906 L 0.413386 0.86456 L 0.019685 0.86456 L 0.019685 1.05906\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0.019685 1.05906 L 0.413386 1.05906\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"2\" />\n<path d=\"M 0.019685 1.05906 L 0.255906 1.05906 L 0.255906 0.86456 L 0.019685 0.86456 L 0.019685 1.05906\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0.019685 1.05906 L 0.255906 1.05906\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"2\" />\n<path d=\"M 0.019685 1.05906 L 0.350886 1.05906 L 0.350886 0.86456 L 0.019685 0.86456 L 0.019685 1.05906\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0.019685 1.05906 L 0.350886 1.05906\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"2\" />\n<path d=\"M 0.019685 1.05906 L 1.16142 1.05906 L 1.16142 0.86456 L 0.019685 0.86456 L 0.019685 1.05906\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0.019685 1.05906 L 1.16142 1.05906\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"2\" />\n<path d=\"M 0.019685 1.05906 L 3.40551 1.05906 L 3.40551 0.86456 L 0.019685 0.86456 L 0.019685 1.05906\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0.019685 1.05906 L 3.40551 1.05906\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"2\" />",
+  "terminals": [],
+  "snap_anchors": [],
+  "capabilities": {
+    "feature_flags": {
+      "colorizable_by_voltage_class": true,
+      "multi_state_candidate": false,
+      "busbar_configurable_connection_points": false,
+      "rotatable": true,
+      "snap_anchors_required": true,
+      "stretchable_leads_candidate": true,
+      "auto_layout_eligible": true,
+      "requires_review": true
+    },
+    "rotation": {
+      "enabled": true,
+      "allowed_degrees": [
+        0,
+        90,
+        180,
+        270
+      ],
+      "terminal_transform_required": true,
+      "snap_anchor_transform_required": true,
+      "label_rotation_policy": "keep_readable"
+    },
+    "stretching": {
+      "enabled": true,
+      "body_geometry_locked": true,
+      "stretchable_parts": [
+        "connection_leads",
+        "busbar_length"
+      ]
+    },
+    "snapping": {
+      "enabled": true,
+      "terminal_count": 0,
+      "snap_to_terminals": true,
+      "snap_to_busbar_generated_points": false,
+      "connection_graph_node_required": true
+    },
+    "voltage_style": {
+      "enabled": true,
+      "stroke_token": "var(--voltage-color)",
+      "normal_scheme_palette": "STO table 1",
+      "ptk_palette": "STO table 5"
+    },
+    "states": {
+      "enabled": false,
+      "detected_tokens": [],
+      "required_for_switching_device": [],
+      "kru_trolley_extra_states": []
+    },
+    "busbar": {
+      "enabled": false,
+      "connection_point_count": 0,
+      "connection_spacing": null,
+      "length": "fixed",
+      "stroke_width_multiplier": null
+    }
+  },
+  "conversion": {
+    "row_counts": {
+      "MoveTo": 25,
+      "LineTo": 58
+    },
+    "warnings": [
+      "multiple Visio shapes flattened without full local transform support"
+    ],
+    "requires_manual_review": true,
+    "known_limitations": [
+      "local transforms and group transforms are not fully normalized yet",
+      "advanced arcs/splines may use line fallback",
+      "imported symbols are drafts only"
+    ]
+  }
+}

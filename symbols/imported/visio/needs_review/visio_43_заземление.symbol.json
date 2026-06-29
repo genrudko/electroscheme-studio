@@ -1,0 +1,131 @@
+{
+  "schema_version": "draft-0.1",
+  "id": "visio_43_заземление",
+  "name_ru": "Заземление",
+  "name_en": "",
+  "category": "earthing_switch",
+  "review_status": "needs_review",
+  "source": {
+    "format": "vsdx",
+    "master_id": "43",
+    "master_name": "Заземление",
+    "master_part": "visio/masters/master41.xml",
+    "page_usage": [
+      "Линии, заземление"
+    ],
+    "text": ""
+  },
+  "viewBox": {
+    "x": 0,
+    "y": 0,
+    "width": 1.0,
+    "height": 1.0
+  },
+  "svg_fragment": "<path d=\"M 0 1 L 0.393701 1 L 0.393701 0.80315\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0.511811 0.80315 L 0.275591 0.80315 M 0.46752 0.744094 L 0.319882 0.744094 M 0.418307 0.685039 L 0.369094 0.685039\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"2\" />",
+  "terminals": [
+    {
+      "id": "1",
+      "role": "terminal",
+      "source": "visio_connection_point",
+      "raw": {
+        "x": "0",
+        "y": "0",
+        "formula_x": "Width*0",
+        "formula_y": ""
+      },
+      "x": 0.0,
+      "y": 1.0
+    }
+  ],
+  "snap_anchors": [
+    {
+      "id": "1",
+      "role": "terminal",
+      "source": "visio_connection_point",
+      "raw": {
+        "x": "0",
+        "y": "0",
+        "formula_x": "Width*0",
+        "formula_y": ""
+      },
+      "x": 0.0,
+      "y": 1.0
+    }
+  ],
+  "capabilities": {
+    "feature_flags": {
+      "colorizable_by_voltage_class": true,
+      "multi_state_candidate": true,
+      "busbar_configurable_connection_points": false,
+      "rotatable": true,
+      "snap_anchors_required": true,
+      "stretchable_leads_candidate": true,
+      "auto_layout_eligible": true,
+      "requires_review": true
+    },
+    "rotation": {
+      "enabled": true,
+      "allowed_degrees": [
+        0,
+        90,
+        180,
+        270
+      ],
+      "terminal_transform_required": true,
+      "snap_anchor_transform_required": true,
+      "label_rotation_policy": "keep_readable"
+    },
+    "stretching": {
+      "enabled": true,
+      "body_geometry_locked": true,
+      "stretchable_parts": [
+        "connection_leads",
+        "busbar_length"
+      ]
+    },
+    "snapping": {
+      "enabled": true,
+      "terminal_count": 1,
+      "snap_to_terminals": true,
+      "snap_to_busbar_generated_points": false,
+      "connection_graph_node_required": true
+    },
+    "voltage_style": {
+      "enabled": true,
+      "stroke_token": "var(--voltage-color)",
+      "normal_scheme_palette": "STO table 1",
+      "ptk_palette": "STO table 5"
+    },
+    "states": {
+      "enabled": true,
+      "detected_tokens": [],
+      "required_for_switching_device": [
+        "closed",
+        "open",
+        "unreliable",
+        "repair"
+      ],
+      "kru_trolley_extra_states": []
+    },
+    "busbar": {
+      "enabled": false,
+      "connection_point_count": 0,
+      "connection_spacing": null,
+      "length": "fixed",
+      "stroke_width_multiplier": null
+    }
+  },
+  "conversion": {
+    "row_counts": {
+      "MoveTo": 4,
+      "LineTo": 5
+    },
+    "warnings": [],
+    "requires_manual_review": true,
+    "known_limitations": [
+      "local transforms and group transforms are not fully normalized yet",
+      "advanced arcs/splines may use line fallback",
+      "imported symbols are drafts only"
+    ]
+  }
+}

@@ -1,0 +1,128 @@
+{
+  "schema_version": "draft-0.1",
+  "id": "visio_96_конденсаторная_батарея",
+  "name_ru": "Конденсаторная батарея",
+  "name_en": "",
+  "category": "transformer",
+  "review_status": "needs_review",
+  "source": {
+    "format": "vsdx",
+    "master_id": "96",
+    "master_name": "Конденсаторная батарея",
+    "master_part": "visio/masters/master94.xml",
+    "page_usage": [
+      "УКРМ, фильтры"
+    ],
+    "text": ""
+  },
+  "viewBox": {
+    "x": 0,
+    "y": 0,
+    "width": 1.0,
+    "height": 1.0
+  },
+  "svg_fragment": "<path d=\"M 0 1 L 0.0984252 1\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0.415668 0.670509 L 0.302016 0.736168\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0.436173 0.706048 L 0.322521 0.771706\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"2\" />\n<path d=\"M 0.246063 0.507874 L 0.358842 0.703338 M 0.379347 0.738877 L 0.492126 0.934341 L 0.266568 0.934341 M 0.225558 0.934341 L 0 0.934341 L 0.112779 0.738877 M 0.133284 0.703338 L 0.246063 0.507874\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"3\" />\n<path d=\"M 0.225558 0.868682 L 0.225558 1\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"4\" />\n<path d=\"M 0.266568 0.868682 L 0.266568 1\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"5\" />\n<path d=\"M 0.0559531 0.706048 L 0.169605 0.771706\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"6\" />\n<path d=\"M 0.0764583 0.670509 L 0.19011 0.736168\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"7\" />",
+  "terminals": [
+    {
+      "id": "1",
+      "role": "terminal",
+      "source": "visio_connection_point",
+      "raw": {
+        "x": "0",
+        "y": "0",
+        "formula_x": "Width*0",
+        "formula_y": ""
+      },
+      "x": 0.0,
+      "y": 1.0
+    }
+  ],
+  "snap_anchors": [
+    {
+      "id": "1",
+      "role": "terminal",
+      "source": "visio_connection_point",
+      "raw": {
+        "x": "0",
+        "y": "0",
+        "formula_x": "Width*0",
+        "formula_y": ""
+      },
+      "x": 0.0,
+      "y": 1.0
+    }
+  ],
+  "capabilities": {
+    "feature_flags": {
+      "colorizable_by_voltage_class": true,
+      "multi_state_candidate": false,
+      "busbar_configurable_connection_points": false,
+      "rotatable": true,
+      "snap_anchors_required": true,
+      "stretchable_leads_candidate": true,
+      "auto_layout_eligible": true,
+      "requires_review": true
+    },
+    "rotation": {
+      "enabled": true,
+      "allowed_degrees": [
+        0,
+        90,
+        180,
+        270
+      ],
+      "terminal_transform_required": true,
+      "snap_anchor_transform_required": true,
+      "label_rotation_policy": "keep_readable"
+    },
+    "stretching": {
+      "enabled": true,
+      "body_geometry_locked": true,
+      "stretchable_parts": [
+        "connection_leads",
+        "busbar_length"
+      ]
+    },
+    "snapping": {
+      "enabled": true,
+      "terminal_count": 1,
+      "snap_to_terminals": true,
+      "snap_to_busbar_generated_points": false,
+      "connection_graph_node_required": true
+    },
+    "voltage_style": {
+      "enabled": true,
+      "stroke_token": "var(--voltage-color)",
+      "normal_scheme_palette": "STO table 1",
+      "ptk_palette": "STO table 5"
+    },
+    "states": {
+      "enabled": false,
+      "detected_tokens": [],
+      "required_for_switching_device": [],
+      "kru_trolley_extra_states": []
+    },
+    "busbar": {
+      "enabled": false,
+      "connection_point_count": 0,
+      "connection_spacing": null,
+      "length": "fixed",
+      "stroke_width_multiplier": null
+    }
+  },
+  "conversion": {
+    "row_counts": {
+      "MoveTo": 11,
+      "LineTo": 13
+    },
+    "warnings": [
+      "multiple Visio shapes flattened without full local transform support"
+    ],
+    "requires_manual_review": true,
+    "known_limitations": [
+      "local transforms and group transforms are not fully normalized yet",
+      "advanced arcs/splines may use line fallback",
+      "imported symbols are drafts only"
+    ]
+  }
+}

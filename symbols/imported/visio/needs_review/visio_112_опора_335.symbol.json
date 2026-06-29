@@ -1,0 +1,122 @@
+{
+  "schema_version": "draft-0.1",
+  "id": "visio_112_опора_335",
+  "name_ru": "Опора 3.35",
+  "name_en": "",
+  "category": "annotation",
+  "review_status": "needs_review",
+  "source": {
+    "format": "vsdx",
+    "master_id": "112",
+    "master_name": "Опора 3.35",
+    "master_part": "visio/masters/master110.xml",
+    "page_usage": [
+      "Доп.элементы"
+    ],
+    "text": ""
+  },
+  "viewBox": {
+    "x": 0,
+    "y": 0,
+    "width": 1.0,
+    "height": 1.0
+  },
+  "svg_fragment": "<ellipse cx=\"0.0885827\" cy=\"0.911417\" rx=\"0.0885827\" ry=\"0.15\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" vector-effect=\"non-scaling-stroke\" />",
+  "terminals": [
+    {
+      "id": "t1",
+      "role": "terminal",
+      "source": "visio_connection_point",
+      "raw": {
+        "x": "0.08858267716535373",
+        "y": "0.08858267716535462",
+        "formula_x": "Width*0.5",
+        "formula_y": "Height*0.5"
+      },
+      "x": 0.08858267716535373,
+      "y": 0.9114173228346454
+    }
+  ],
+  "snap_anchors": [
+    {
+      "id": "t1",
+      "role": "terminal",
+      "source": "visio_connection_point",
+      "raw": {
+        "x": "0.08858267716535373",
+        "y": "0.08858267716535462",
+        "formula_x": "Width*0.5",
+        "formula_y": "Height*0.5"
+      },
+      "x": 0.08858267716535373,
+      "y": 0.9114173228346454
+    }
+  ],
+  "capabilities": {
+    "feature_flags": {
+      "colorizable_by_voltage_class": true,
+      "multi_state_candidate": false,
+      "busbar_configurable_connection_points": false,
+      "rotatable": true,
+      "snap_anchors_required": true,
+      "stretchable_leads_candidate": false,
+      "auto_layout_eligible": false,
+      "requires_review": true
+    },
+    "rotation": {
+      "enabled": true,
+      "allowed_degrees": [
+        0,
+        90,
+        180,
+        270
+      ],
+      "terminal_transform_required": true,
+      "snap_anchor_transform_required": true,
+      "label_rotation_policy": "keep_readable"
+    },
+    "stretching": {
+      "enabled": false,
+      "body_geometry_locked": true,
+      "stretchable_parts": []
+    },
+    "snapping": {
+      "enabled": true,
+      "terminal_count": 1,
+      "snap_to_terminals": true,
+      "snap_to_busbar_generated_points": false,
+      "connection_graph_node_required": true
+    },
+    "voltage_style": {
+      "enabled": true,
+      "stroke_token": "var(--voltage-color)",
+      "normal_scheme_palette": "STO table 1",
+      "ptk_palette": "STO table 5"
+    },
+    "states": {
+      "enabled": false,
+      "detected_tokens": [],
+      "required_for_switching_device": [],
+      "kru_trolley_extra_states": []
+    },
+    "busbar": {
+      "enabled": false,
+      "connection_point_count": 0,
+      "connection_spacing": null,
+      "length": "fixed",
+      "stroke_width_multiplier": null
+    }
+  },
+  "conversion": {
+    "row_counts": {
+      "Ellipse": 1
+    },
+    "warnings": [],
+    "requires_manual_review": true,
+    "known_limitations": [
+      "local transforms and group transforms are not fully normalized yet",
+      "advanced arcs/splines may use line fallback",
+      "imported symbols are drafts only"
+    ]
+  }
+}

@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://electroscheme.local/schemas/symbol_definition_draft.schema.json",
+  "title": "ElectroScheme Studio Draft Symbol Definition",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "id",
+    "name_ru",
+    "category",
+    "review_status",
+    "source",
+    "viewBox",
+    "svg_fragment",
+    "terminals",
+    "capabilities",
+    "conversion"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "draft-0.1"
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "name_ru": {
+      "type": "string",
+      "minLength": 1
+    },
+    "name_en": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string"
+    },
+    "review_status": {
+      "const": "needs_review"
+    },
+    "source": {
+      "type": "object",
+      "required": ["format", "master_id", "master_name", "master_part", "page_usage"],
+      "properties": {
+        "format": { "const": "vsdx" },
+        "master_id": { "type": "string" },
+        "master_name": { "type": "string" },
+        "master_part": { "type": "string" },
+        "page_usage": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "text": { "type": "string" }
+      }
+    },
+    "viewBox": {
+      "type": "object",
+      "required": ["x", "y", "width", "height"],
+      "properties": {
+        "x": { "type": "number" },
+        "y": { "type": "number" },
+        "width": { "type": "number", "exclusiveMinimum": 0 },
+        "height": { "type": "number", "exclusiveMinimum": 0 }
+      }
+    },
+    "svg_fragment": {
+      "type": "string"
+    },
+    "terminals": {
+      "type": "array"
+    },
+    "snap_anchors": {
+      "type": "array"
+    },
+    "capabilities": {
+      "type": "object",
+      "required": ["feature_flags", "rotation", "stretching", "snapping", "voltage_style", "states", "busbar"]
+    },
+    "conversion": {
+      "type": "object",
+      "required": ["row_counts", "warnings", "requires_manual_review", "known_limitations"],
+      "properties": {
+        "row_counts": { "type": "object" },
+        "warnings": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "requires_manual_review": { "const": true },
+        "known_limitations": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    }
+  }
+}

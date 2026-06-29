@@ -1,0 +1,165 @@
+{
+  "schema_version": "draft-0.1",
+  "id": "visio_17_выкатная_тележка_автоматического_выключателя",
+  "name_ru": "Выкатная тележка автоматического выключателя",
+  "name_en": "",
+  "category": "kru_trolley",
+  "review_status": "needs_review",
+  "source": {
+    "format": "vsdx",
+    "master_id": "17",
+    "master_name": "Выкатная тележка автоматического выключателя",
+    "master_part": "visio/masters/master15.xml",
+    "page_usage": [
+      "Коммутационные аппараты"
+    ],
+    "text": "Ошибка Ошибка"
+  },
+  "viewBox": {
+    "x": 0,
+    "y": 0,
+    "width": 1.0,
+    "height": 1.0
+  },
+  "svg_fragment": "<path d=\"M 0 1 L 0.147638 1 M 0.836614 1 L 0.984252 1\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0.246063 0.901575 L 0.147638 1 L 0.246063 1.09843 M 0.295276 0.901575 L 0.19685 1 L 0.295276 1.09843 M 0.19685 1 L 0.344488 1\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"2\" />\n<path d=\"M 0.738189 0.901575 L 0.836614 1 L 0.738189 1.09843 M 0.688976 0.901575 L 0.787402 1 L 0.688976 1.09843 M 0.787402 1 L 0.639764 1\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"3\" />\n<path d=\"M 0.19685 0.901575 L 0.19685 1.09843 M 0.787402 0.901575 L 0.787402 1.09843\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"4\" />\n<path d=\"M 0.344488 0.950787 L 0.344488 1.04921\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"5\" />\n<path d=\"M 0.639764 0.950787 L 0.639764 1.04921\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"6\" />\n<path d=\"M 0 1 L 0 1 L 0 1 L 0 1 L 0 1\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 0.891732 L 0.0649606 0.891732 L 0.0649606 0.819554 L 0 0.819554\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"1\" />\n<path d=\"M 0 1 L 0 0.783465\" stroke=\"var(--voltage-color, currentColor)\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\" data-geometry-section=\"2\" />",
+  "terminals": [
+    {
+      "id": "1",
+      "role": "terminal",
+      "source": "visio_connection_point",
+      "raw": {
+        "x": "0",
+        "y": "0",
+        "formula_x": "Width*0",
+        "formula_y": ""
+      },
+      "x": 0.0,
+      "y": 1.0
+    },
+    {
+      "id": "2",
+      "role": "terminal",
+      "source": "visio_connection_point",
+      "raw": {
+        "x": "0.9842519685039353",
+        "y": "0",
+        "formula_x": "Width*1",
+        "formula_y": ""
+      },
+      "x": 0.9842519685039353,
+      "y": 1.0
+    }
+  ],
+  "snap_anchors": [
+    {
+      "id": "1",
+      "role": "terminal",
+      "source": "visio_connection_point",
+      "raw": {
+        "x": "0",
+        "y": "0",
+        "formula_x": "Width*0",
+        "formula_y": ""
+      },
+      "x": 0.0,
+      "y": 1.0
+    },
+    {
+      "id": "2",
+      "role": "terminal",
+      "source": "visio_connection_point",
+      "raw": {
+        "x": "0.9842519685039353",
+        "y": "0",
+        "formula_x": "Width*1",
+        "formula_y": ""
+      },
+      "x": 0.9842519685039353,
+      "y": 1.0
+    }
+  ],
+  "capabilities": {
+    "feature_flags": {
+      "colorizable_by_voltage_class": true,
+      "multi_state_candidate": true,
+      "busbar_configurable_connection_points": false,
+      "rotatable": true,
+      "snap_anchors_required": true,
+      "stretchable_leads_candidate": true,
+      "auto_layout_eligible": true,
+      "requires_review": true
+    },
+    "rotation": {
+      "enabled": true,
+      "allowed_degrees": [
+        0,
+        90,
+        180,
+        270
+      ],
+      "terminal_transform_required": true,
+      "snap_anchor_transform_required": true,
+      "label_rotation_policy": "keep_readable"
+    },
+    "stretching": {
+      "enabled": true,
+      "body_geometry_locked": true,
+      "stretchable_parts": [
+        "connection_leads",
+        "busbar_length"
+      ]
+    },
+    "snapping": {
+      "enabled": true,
+      "terminal_count": 2,
+      "snap_to_terminals": true,
+      "snap_to_busbar_generated_points": false,
+      "connection_graph_node_required": true
+    },
+    "voltage_style": {
+      "enabled": true,
+      "stroke_token": "var(--voltage-color)",
+      "normal_scheme_palette": "STO table 1",
+      "ptk_palette": "STO table 5"
+    },
+    "states": {
+      "enabled": true,
+      "detected_tokens": [],
+      "required_for_switching_device": [
+        "closed",
+        "open",
+        "unreliable",
+        "repair"
+      ],
+      "kru_trolley_extra_states": [
+        "breaker_closed_trolley_service",
+        "breaker_open_trolley_service",
+        "breaker_unreliable_trolley_service",
+        "trolley_withdrawn_repair",
+        "trolley_withdrawn_test"
+      ]
+    },
+    "busbar": {
+      "enabled": false,
+      "connection_point_count": 0,
+      "connection_spacing": null,
+      "length": "fixed",
+      "stroke_width_multiplier": null
+    }
+  },
+  "conversion": {
+    "row_counts": {
+      "MoveTo": 15,
+      "LineTo": 24
+    },
+    "warnings": [
+      "multiple Visio shapes flattened without full local transform support"
+    ],
+    "requires_manual_review": true,
+    "known_limitations": [
+      "local transforms and group transforms are not fully normalized yet",
+      "advanced arcs/splines may use line fallback",
+      "imported symbols are drafts only"
+    ]
+  }
+}
