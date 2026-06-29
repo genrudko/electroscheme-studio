@@ -5,7 +5,7 @@
         <p class="eyebrow">Visio import review</p>
         <h2>Imported draft symbols</h2>
         <p class="description">
-          Review imported Visio masters before promoting them to the core symbol library.
+          Browse, validate and assign workflow status before promoting symbols to the core library.
         </p>
       </div>
       <button type="button" class="refresh-button" :disabled="loading" @click="loadData">
@@ -13,61 +13,33 @@
       </button>
     </header>
 
-    <div v-if="error" class="status error">
-      {{ error }}
-    </div>
-
-    <div v-else-if="loading && !report" class="status">
-      Loading imported symbol review…
-    </div>
+    <div v-if="error" class="status error">{{ error }}</div>
+    <div v-else-if="loading && !report" class="status">Loading imported symbol review…</div>
 
     <template v-else>
       <div class="summary-grid">
-        <article class="summary-card">
-          <span class="summary-label">Drafts</span>
-          <strong>{{ summaryValue('loaded_count') }}</strong>
-        </article>
-        <article class="summary-card">
-          <span class="summary-label">With terminals</span>
-          <strong>{{ report?.summary?.with_terminals ?? 0 }}</strong>
-        </article>
-        <article class="summary-card">
-          <span class="summary-label">Without terminals</span>
-          <strong>{{ report?.summary?.without_terminals ?? 0 }}</strong>
-        </article>
-        <article class="summary-card">
-          <span class="summary-label">Warnings</span>
-          <strong>{{ report?.summary?.with_warnings ?? 0 }}</strong>
-        </article>
-        <article class="summary-card">
-          <span class="summary-label">Errors</span>
-          <strong>{{ report?.summary?.with_errors ?? 0 }}</strong>
-        </article>
-        <article class="summary-card">
-          <span class="summary-label">Avg quality</span>
-          <strong>{{ report?.summary?.average_quality ?? '—' }}</strong>
-        </article>
+        <article class="summary-card"><span class="summary-label">Drafts</span><strong>{{ report?.loaded_count ?? '—' }}</strong></article>
+        <article class="summary-card"><span class="summary-label">With terminals</span><strong>{{ report?.summary?.with_terminals ?? 0 }}</strong></article>
+        <article class="summary-card"><span class="summary-label">Without terminals</span><strong>{{ report?.summary?.without_terminals ?? 0 }}</strong></article>
+        <article class="summary-card"><span class="summary-label">Warnings</span><strong>{{ report?.summary?.with_warnings ?? 0 }}</strong></article>
+        <article class="summary-card"><span class="summary-label">Errors</span><strong>{{ report?.summary?.with_errors ?? 0 }}</strong></article>
+        <article class="summary-card"><span class="summary-label">Accepted</span><strong>{{ workflowSummary.accepted ?? 0 }}</strong></article>
       </div>
 
       <div class="review-layout">
         <aside class="review-sidebar">
-          <label class="field">
-            Search
+          <label class="field">Search
             <input v-model="search" type="search" placeholder="Name, id, category…" />
           </label>
 
-          <label class="field">
-            Category
+          <label class="field">Category
             <select v-model="categoryFilter">
               <option value="">All categories</option>
-              <option v-for="category in categories" :key="category" :value="category">
-                {{ category }}
-              </option>
+              <option v-for="category in categories" :key="category" :value="category">{{ category }}</option>
             </select>
           </label>
 
-          <label class="field">
-            Issue filter
+          <label class="field">Issues
             <select v-model="issueFilter">
               <option value="all">All</option>
               <option value="errors">With errors</option>
@@ -77,17 +49,21 @@
             </select>
           </label>
 
+          <label class="field">Workflow status
+            <select v-model="statusFilter">
+              <option value="">All statuses</option>
+              <option v-for="status in allowedStatuses" :key="status" :value="status">
+                {{ statusLabel(status) }} ({{ workflowSummary[status] ?? 0 }})
+              </option>
+            </select>
+          </label>
+
           <div class="category-list">
             <h3>Categories</h3>
-            <button
-              v-for="[category, count] in categoryEntries"
-              :key="category"
-              type="button"
+            <button v-for="[category, count] in categoryEntries" :key="category" type="button"
               :class="{ active: categoryFilter === category }"
-              @click="categoryFilter = categoryFilter === category ? '' : category"
-            >
-              <span>{{ category }}</span>
-              <strong>{{ count }}</strong>
+              @click="categoryFilter = categoryFilter === category ? '' : category">
+              <span>{{ category }}</span><strong>{{ count }}</strong>
             </button>
           </div>
         </aside>
@@ -99,20 +75,15 @@
           </div>
 
           <div class="symbol-list" role="list">
-            <button
-              v-for="item in filteredSymbols"
-              :key="item.id"
-              type="button"
-              class="symbol-row"
-              :class="{ selected: selectedItem?.id === item.id }"
-              @click="selectSymbol(item)"
-            >
+            <button v-for="item in filteredSymbols" :key="item.id" type="button" class="symbol-row"
+              :class="{ selected: selectedItem?.id === item.id }" @click="selectSymbol(item)">
               <span class="symbol-name">{{ item.name_ru }}</span>
               <code>{{ item.id }}</code>
               <span class="symbol-meta">
                 {{ item.category }} · terminals {{ item.terminal_count }} · score {{ item.quality_score }}
               </span>
               <span class="issue-line">
+                <span class="pill status-pill">{{ statusLabel(statusOf(item)) }}</span>
                 <span v-if="item.error_count" class="pill danger">errors {{ item.error_count }}</span>
                 <span v-if="item.warning_count" class="pill warn">warnings {{ item.warning_count }}</span>
                 <span v-if="!item.error_count && !item.warning_count" class="pill ok">clean</span>
@@ -125,14 +96,8 @@
           <template v-if="selectedItem">
             <div class="preview-card">
               <div v-if="detailLoading" class="status">Loading symbol…</div>
-              <svg
-                v-else-if="selectedSymbol"
-                class="symbol-preview"
-                :viewBox="viewBoxString(selectedSymbol)"
-                role="img"
-                :aria-label="selectedItem.name_ru"
-                v-html="selectedSymbol.svg_fragment"
-              />
+              <svg v-else-if="selectedSymbol" class="symbol-preview" :viewBox="viewBoxString(selectedSymbol)"
+                role="img" :aria-label="selectedItem.name_ru" v-html="selectedSymbol.svg_fragment" />
               <div v-else class="status">Select a symbol to load preview.</div>
             </div>
 
@@ -140,46 +105,46 @@
             <code class="selected-id">{{ selectedItem.id }}</code>
 
             <dl class="details">
-              <div>
-                <dt>Category</dt>
-                <dd>{{ selectedItem.category }}</dd>
-              </div>
-              <div>
-                <dt>Quality</dt>
-                <dd>{{ selectedItem.quality_score }}</dd>
-              </div>
-              <div>
-                <dt>Terminals</dt>
-                <dd>{{ selectedItem.terminal_count }} / {{ selectedItem.terminal_with_coordinates }}</dd>
-              </div>
-              <div>
-                <dt>Status</dt>
-                <dd>{{ selectedItem.review_status }}</dd>
-              </div>
+              <div><dt>Category</dt><dd>{{ selectedItem.category }}</dd></div>
+              <div><dt>Quality</dt><dd>{{ selectedItem.quality_score }}</dd></div>
+              <div><dt>Terminals</dt><dd>{{ selectedItem.terminal_count }} / {{ selectedItem.terminal_with_coordinates }}</dd></div>
+              <div><dt>Status</dt><dd>{{ statusLabel(statusOf(selectedItem)) }}</dd></div>
             </dl>
 
+            <div class="workflow-card">
+              <label class="field">Review status
+                <select v-model="draftStatus">
+                  <option v-for="status in allowedStatuses" :key="status" :value="status">{{ statusLabel(status) }}</option>
+                </select>
+              </label>
+
+              <label class="field">Review note
+                <textarea v-model="draftNote" rows="4" placeholder="What must be fixed or why accepted/rejected…" />
+              </label>
+
+              <button type="button" class="save-button" :disabled="savingStatus" @click="saveStatus">
+                {{ savingStatus ? 'Saving…' : 'Save status' }}
+              </button>
+
+              <p v-if="saveMessage" class="save-message">{{ saveMessage }}</p>
+            </div>
+
             <div class="flags">
-              <span v-for="flag in activeFlags(selectedItem)" :key="flag" class="badge">
-                {{ flag }}
-              </span>
+              <span v-for="flag in activeFlags(selectedItem)" :key="flag" class="badge">{{ flag }}</span>
             </div>
 
             <details class="issue-details" open>
               <summary>Issues</summary>
               <ul v-if="selectedItem.errors.length || selectedItem.warnings.length">
-                <li v-for="err in selectedItem.errors" :key="`e-${err}`" class="error-text">
-                  {{ err }}
-                </li>
-                <li v-for="warn in selectedItem.warnings.slice(0, 20)" :key="`w-${warn}`" class="warning-text">
-                  {{ warn }}
-                </li>
+                <li v-for="err in selectedItem.errors" :key="`e-${err}`" class="error-text">{{ err }}</li>
+                <li v-for="warn in selectedItem.warnings.slice(0, 20)" :key="`w-${warn}`" class="warning-text">{{ warn }}</li>
               </ul>
               <p v-else class="ok-text">No validator issues.</p>
             </details>
           </template>
 
           <div v-else class="empty-detail">
-            Select an imported draft symbol to inspect geometry, terminals and review warnings.
+            Select an imported draft symbol to inspect geometry, terminals and workflow status.
           </div>
         </aside>
       </div>
@@ -189,6 +154,15 @@
 
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
+
+type WorkflowStatus =
+  | 'needs_review'
+  | 'accepted'
+  | 'rejected'
+  | 'needs_geometry_review'
+  | 'needs_manual_terminals'
+  | 'needs_state_mapping'
+  | 'needs_busbar_parameters'
 
 type ReviewSummary = {
   with_terminals: number
@@ -207,6 +181,8 @@ type ReviewItem = {
   name_ru: string
   category: string
   review_status: string
+  workflow_status?: WorkflowStatus
+  workflow_note?: string
   terminal_count: number
   terminal_with_coordinates: number
   warning_count: number
@@ -222,44 +198,80 @@ type ReviewReport = {
   draft_count: number
   loaded_count: number
   summary: ReviewSummary
+  workflow_summary?: Record<string, number>
   symbols: ReviewItem[]
+}
+
+type ReviewStatusEntry = {
+  symbol_id: string
+  status: WorkflowStatus
+  note: string
+  updated_at: string
+  updated_by: string
+}
+
+type ReviewStatusStore = {
+  allowed_statuses: WorkflowStatus[]
+  entries: Record<string, ReviewStatusEntry>
+  summary: Record<string, number>
 }
 
 type ImportedSymbolsResponse = {
   review_status: string
   review_report: ReviewReport | null
+  review_status_store?: ReviewStatusStore
 }
 
 type ImportedSymbolDetail = {
   id: string
   name_ru: string
   review_status: string
-  viewBox: {
-    x: number
-    y: number
-    width: number
-    height: number
-  }
+  workflow_status?: WorkflowStatus
+  workflow_note?: string
+  viewBox: { x: number; y: number; width: number; height: number }
   svg_fragment: string
+}
+
+const defaultAllowedStatuses: WorkflowStatus[] = [
+  'needs_review',
+  'accepted',
+  'rejected',
+  'needs_geometry_review',
+  'needs_manual_terminals',
+  'needs_state_mapping',
+  'needs_busbar_parameters',
+]
+
+const statusLabels: Record<WorkflowStatus, string> = {
+  needs_review: 'Needs review',
+  accepted: 'Accepted',
+  rejected: 'Rejected',
+  needs_geometry_review: 'Geometry review',
+  needs_manual_terminals: 'Manual terminals',
+  needs_state_mapping: 'State mapping',
+  needs_busbar_parameters: 'Busbar parameters',
 }
 
 const loading = ref(false)
 const detailLoading = ref(false)
+const savingStatus = ref(false)
 const error = ref('')
+const saveMessage = ref('')
 const report = ref<ReviewReport | null>(null)
+const statusStore = ref<ReviewStatusStore | null>(null)
 const selectedItem = ref<ReviewItem | null>(null)
 const selectedSymbol = ref<ImportedSymbolDetail | null>(null)
 const search = ref('')
 const categoryFilter = ref('')
 const issueFilter = ref<'all' | 'errors' | 'warnings' | 'no-terminals' | 'priority'>('all')
+const statusFilter = ref<'' | WorkflowStatus>('')
+const draftStatus = ref<WorkflowStatus>('needs_review')
+const draftNote = ref('')
 
-const priorityCategories = new Set([
-  'busbar',
-  'circuit_breaker',
-  'disconnector',
-  'earthing_switch',
-  'kru_trolley',
-])
+const priorityCategories = new Set(['busbar', 'circuit_breaker', 'disconnector', 'earthing_switch', 'kru_trolley'])
+
+const allowedStatuses = computed(() => statusStore.value?.allowed_statuses ?? defaultAllowedStatuses)
+const workflowSummary = computed(() => statusStore.value?.summary ?? report.value?.workflow_summary ?? {})
 
 const categories = computed(() => {
   const byCategory = report.value?.summary?.by_category ?? {}
@@ -275,8 +287,9 @@ const filteredSymbols = computed(() => {
   const query = search.value.trim().toLowerCase()
   return (report.value?.symbols ?? []).filter((item) => {
     if (categoryFilter.value && item.category !== categoryFilter.value) return false
+    if (statusFilter.value && statusOf(item) !== statusFilter.value) return false
     if (query) {
-      const haystack = `${item.name_ru} ${item.id} ${item.category}`.toLowerCase()
+      const haystack = `${item.name_ru} ${item.id} ${item.category} ${statusOf(item)}`.toLowerCase()
       if (!haystack.includes(query)) return false
     }
     if (issueFilter.value === 'errors' && item.error_count <= 0) return false
@@ -287,8 +300,16 @@ const filteredSymbols = computed(() => {
   })
 })
 
-function summaryValue(key: keyof ReviewReport): number | string {
-  return report.value?.[key] ?? '—'
+function statusLabel(status: string): string {
+  return statusLabels[status as WorkflowStatus] ?? status
+}
+
+function statusOf(item: ReviewItem): WorkflowStatus {
+  return statusStore.value?.entries?.[item.id]?.status ?? item.workflow_status ?? 'needs_review'
+}
+
+function noteOf(item: ReviewItem): string {
+  return statusStore.value?.entries?.[item.id]?.note ?? item.workflow_note ?? ''
 }
 
 function viewBoxString(symbol: ImportedSymbolDetail): string {
@@ -302,6 +323,13 @@ function activeFlags(item: ReviewItem): string[] {
     .map(([key]) => key)
 }
 
+function syncDraftStatus(): void {
+  if (!selectedItem.value) return
+  draftStatus.value = statusOf(selectedItem.value)
+  draftNote.value = noteOf(selectedItem.value)
+  saveMessage.value = ''
+}
+
 async function loadData(): Promise<void> {
   loading.value = true
   error.value = ''
@@ -310,10 +338,9 @@ async function loadData(): Promise<void> {
     if (!response.ok) throw new Error(`HTTP ${response.status}`)
     const data = (await response.json()) as ImportedSymbolsResponse
     report.value = data.review_report
-    const first = report.value?.symbols?.[0] ?? null
-    if (!selectedItem.value && first) {
-      await selectSymbol(first)
-    }
+    statusStore.value = data.review_status_store ?? null
+    const first = selectedItem.value ?? report.value?.symbols?.[0] ?? null
+    if (first) await selectSymbol(first)
   } catch (err) {
     error.value = err instanceof Error ? err.message : String(err)
   } finally {
@@ -325,14 +352,41 @@ async function selectSymbol(item: ReviewItem): Promise<void> {
   selectedItem.value = item
   selectedSymbol.value = null
   detailLoading.value = true
+  saveMessage.value = ''
   try {
     const response = await fetch(`/api/imported-symbols/${encodeURIComponent(item.id)}`)
     if (!response.ok) throw new Error(`HTTP ${response.status}`)
     selectedSymbol.value = (await response.json()) as ImportedSymbolDetail
+    syncDraftStatus()
   } catch (err) {
     error.value = err instanceof Error ? err.message : String(err)
   } finally {
     detailLoading.value = false
+  }
+}
+
+async function saveStatus(): Promise<void> {
+  if (!selectedItem.value) return
+  savingStatus.value = true
+  error.value = ''
+  saveMessage.value = ''
+  try {
+    const response = await fetch(`/api/imported-symbols/${encodeURIComponent(selectedItem.value.id)}/review-status`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        status: draftStatus.value,
+        note: draftNote.value,
+        updated_by: 'webui',
+      }),
+    })
+    if (!response.ok) throw new Error(`HTTP ${response.status}`)
+    await loadData()
+    saveMessage.value = 'Status saved.'
+  } catch (err) {
+    error.value = err instanceof Error ? err.message : String(err)
+  } finally {
+    savingStatus.value = false
   }
 }
 
@@ -379,7 +433,8 @@ onMounted(() => {
   color: #64748b;
 }
 
-.refresh-button {
+.refresh-button,
+.save-button {
   border: 0;
   border-radius: 999px;
   padding: 10px 16px;
@@ -389,7 +444,8 @@ onMounted(() => {
   cursor: pointer;
 }
 
-.refresh-button:disabled {
+.refresh-button:disabled,
+.save-button:disabled {
   opacity: 0.55;
   cursor: default;
 }
@@ -434,7 +490,7 @@ onMounted(() => {
 
 .review-layout {
   display: grid;
-  grid-template-columns: minmax(210px, 250px) minmax(320px, 1fr) minmax(310px, 380px);
+  grid-template-columns: minmax(210px, 250px) minmax(320px, 1fr) minmax(310px, 390px);
   gap: 14px;
 }
 
@@ -461,7 +517,8 @@ onMounted(() => {
 }
 
 .field input,
-.field select {
+.field select,
+.field textarea {
   width: 100%;
   box-sizing: border-box;
   border: 1px solid #cbd5e1;
@@ -469,6 +526,7 @@ onMounted(() => {
   padding: 9px 10px;
   color: #0f172a;
   background: white;
+  font: inherit;
 }
 
 .category-list h3 {
@@ -586,6 +644,11 @@ onMounted(() => {
   color: #991b1b;
 }
 
+.status-pill {
+  background: #e0e7ff;
+  color: #3730a3;
+}
+
 .detail-panel {
   padding: 12px;
   overflow: auto;
@@ -635,6 +698,21 @@ onMounted(() => {
 .details dd {
   margin: 0;
   font-weight: 700;
+}
+
+.workflow-card {
+  margin: 12px 0;
+  padding: 12px;
+  border: 1px solid #dbeafe;
+  border-radius: 12px;
+  background: #eff6ff;
+}
+
+.save-message {
+  margin: 8px 0 0;
+  color: #047857;
+  font-weight: 700;
+  font-size: 12px;
 }
 
 .flags {
