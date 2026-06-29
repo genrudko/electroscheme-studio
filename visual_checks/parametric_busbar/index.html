@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <title>ElectroScheme Studio — Visual review snapshots</title>
+  <style>
+    body { margin:0; font-family:Arial,sans-serif; background:#f5f6f8; color:#111827; }
+    header { position:sticky; top:0; z-index:10; background:#111827; color:white; padding:18px 24px; box-shadow:0 2px 12px rgba(0,0,0,.2); }
+    header h1 { margin:0 0 6px; font-size:22px; }
+    header p { margin:0; color:#cbd5e1; }
+    main { padding:18px; display:grid; grid-template-columns:repeat(auto-fill,minmax(560px,1fr)); gap:16px; }
+    .card { background:white; border:1px solid #e5e7eb; border-radius:14px; padding:14px; box-shadow:0 1px 4px rgba(0,0,0,.06); }
+    .card h2 { margin:0 0 6px; font-size:17px; }
+    .card p { margin:6px 0; color:#4b5563; }
+    .meta { font-size:12px; font-weight:700; }
+    .labels { font-size:12px; color:#1d4ed8; }
+    .preview { width:100%; min-height:280px; border:1px solid #e5e7eb; border-radius:10px; background:#fff; }
+    a { color:#2563eb; font-weight:700; }
+  </style>
+</head>
+<body>
+  <header><h1>ElectroScheme Studio — Visual review snapshots</h1><p>Open this file locally and comment on geometry, label placement, slot spacing and readability.</p></header>
+  <main>
+<article class="card">
+  <h2>Horizontal busbar — bottom slots, numbered above</h2>
+  <p>Default RU section case: cells under busbar, numbering above bay slots.</p>
+  <p class="meta">terminals=10; bay_slots=8; labels=8</p>
+  <p class="labels">Яч. 1, Яч. 2, Яч. 3, Яч. 4, Яч. 5, Яч. 6, Яч. 7, Яч. 8</p>
+  <object data="01_horizontal_bottom_numbered.svg" type="image/svg+xml" class="preview"></object>
+  <p><a href="01_horizontal_bottom_numbered.svg" target="_blank" rel="noreferrer">Open SVG</a></p>
+</article>
+<article class="card">
+  <h2>Horizontal busbar — top slots, numbered above</h2>
+  <p>Checks label clearance when equipment slots are above the busbar.</p>
+  <p class="meta">terminals=10; bay_slots=8; labels=8</p>
+  <p class="labels">Яч. 9, Яч. 10, Яч. 11, Яч. 12, Яч. 13, Яч. 14, Яч. 15, Яч. 16</p>
+  <object data="02_horizontal_top_numbered.svg" type="image/svg+xml" class="preview"></object>
+  <p><a href="02_horizontal_top_numbered.svg" target="_blank" rel="noreferrer">Open SVG</a></p>
+</article>
+<article class="card">
+  <h2>Horizontal busbar — both sides</h2>
+  <p>Shows numbering sequence when slots are generated on both sides.</p>
+  <p class="meta">terminals=14; bay_slots=12; labels=12</p>
+  <p class="labels">Яч. 21, Яч. 22, Яч. 23, Яч. 24, Яч. 25, Яч. 26, Яч. 27, Яч. 28, Яч. 29, Яч. 30, Яч. 31, Яч. 32</p>
+  <object data="03_horizontal_both_sides.svg" type="image/svg+xml" class="preview"></object>
+  <p><a href="03_horizontal_both_sides.svg" target="_blank" rel="noreferrer">Open SVG</a></p>
+</article>
+<article class="card">
+  <h2>Vertical busbar — right slots</h2>
+  <p>Checks vertical orientation, right-side bay slots and labels.</p>
+  <p class="meta">terminals=9; bay_slots=7; labels=7</p>
+  <p class="labels">Яч. 1, Яч. 2, Яч. 3, Яч. 4, Яч. 5, Яч. 6, Яч. 7</p>
+  <object data="04_vertical_right_numbered.svg" type="image/svg+xml" class="preview"></object>
+  <p><a href="04_vertical_right_numbered.svg" target="_blank" rel="noreferrer">Open SVG</a></p>
+</article>
+<article class="card">
+  <h2>Vertical busbar — left slots</h2>
+  <p>Checks vertical orientation, left-side bay slots and labels.</p>
+  <p class="meta">terminals=9; bay_slots=7; labels=7</p>
+  <p class="labels">Яч. 1, Яч. 2, Яч. 3, Яч. 4, Яч. 5, Яч. 6, Яч. 7</p>
+  <object data="05_vertical_left_numbered.svg" type="image/svg+xml" class="preview"></object>
+  <p><a href="05_vertical_left_numbered.svg" target="_blank" rel="noreferrer">Open SVG</a></p>
+</article>
+<article class="card">
+  <h2>Horizontal busbar — numbering disabled</h2>
+  <p>Checks clean geometry without cell labels.</p>
+  <p class="meta">terminals=7; bay_slots=5; labels=0</p>
+  <p class="labels"></p>
+  <object data="06_numbering_disabled.svg" type="image/svg+xml" class="preview"></object>
+  <p><a href="06_numbering_disabled.svg" target="_blank" rel="noreferrer">Open SVG</a></p>
+</article>
+<article class="card">
+  <h2>Dense busbar — 16 numbered slots</h2>
+  <p>Stress test for label overlap and slot spacing.</p>
+  <p class="meta">terminals=18; bay_slots=16; labels=16</p>
+  <p class="labels">Яч. 1, Яч. 2, Яч. 3, Яч. 4, Яч. 5, Яч. 6, Яч. 7, Яч. 8, Яч. 9, Яч. 10, Яч. 11, Яч. 12</p>
+  <object data="07_dense_16_slots.svg" type="image/svg+xml" class="preview"></object>
+  <p><a href="07_dense_16_slots.svg" target="_blank" rel="noreferrer">Open SVG</a></p>
+</article></main>
+</body>
+</html>
