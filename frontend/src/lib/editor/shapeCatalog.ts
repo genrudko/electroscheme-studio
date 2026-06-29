@@ -1,4 +1,5 @@
 import type { EditorCommand } from './interactionModes'
+import { vsdxSymbolDefinitions, type VsdxSymbolDefinition } from './vsdxSymbolCatalog.generated'
 
 export type ShapeCatalogStatus = 'available' | 'planned'
 
@@ -11,6 +12,12 @@ export type ShapeCatalogItem = {
   keywords: string[]
   preview: string
   sourceRef?: string
+  widthMm?: number
+  heightMm?: number
+  connectionCount?: number
+  propertyNames?: string[]
+  dataFieldIds?: string[]
+  vsdxMasterId?: string
 }
 
 export type ShapeCatalogCategory = {
@@ -21,19 +28,20 @@ export type ShapeCatalogCategory = {
 }
 
 export const shapeCatalogCategories: ShapeCatalogCategory[] = [
-  { id: 'busbars_lines_grounding', title: 'Линии / шины / заземление', description: 'Линии связи, ЛЭП, кабели, шины, ответвления, заземление', sourceRef: 'Elektroshema / ГОСТ Р 56303-2014' },
-  { id: 'switching', title: 'Коммутационные аппараты', description: 'Выключатели, разъединители, тележки, ЗН, отделители', sourceRef: 'Elektroshema / ГОСТ Р 56303-2014' },
-  { id: 'transformers', title: 'Трансформаторы', description: 'Силовые трансформаторы, автотрансформаторы, ТН, ТТ', sourceRef: 'Elektroshema / ГОСТ Р 56303-2014' },
-  { id: 'compensation_filters', title: 'Компенсация / фильтры', description: 'Реакторы, ДГР, конденсаторы, фильтры, компенсаторы', sourceRef: 'Elektroshema / ГОСТ Р 56303-2014' },
-  { id: 'surge_arresters', title: 'Разрядники / ОПН', description: 'Разрядники, искровые промежутки, ОПН', sourceRef: 'Elektroshema / ГОСТ Р 56303-2014' },
-  { id: 'generators_motors', title: 'Генераторы / двигатели', description: 'Генераторы, ДЭС, синхронные и асинхронные двигатели', sourceRef: 'Elektroshema / ГОСТ Р 56303-2014' },
-  { id: 'fuses', title: 'Предохранители', description: 'Плавкие, инерционные, пробивные, на тележке', sourceRef: 'Elektroshema / ГОСТ Р 56303-2014' },
+  { id: 'busbars_lines_grounding', title: 'Линии / шины / заземление', description: 'Линии связи, ЛЭП, кабели, шины, ответвления, заземление', sourceRef: 'VSDX + ГОСТ Р 56303-2014' },
+  { id: 'switching', title: 'Коммутационные аппараты', description: 'Выключатели, разъединители, тележки, ЗН, отделители', sourceRef: 'VSDX masters' },
+  { id: 'transformers', title: 'Трансформаторы', description: 'Силовые трансформаторы, автотрансформаторы, ТН, ТТ; свойства обмоток и соединений', sourceRef: 'VSDX masters + semantic data fields' },
+  { id: 'compensation_filters', title: 'Компенсация / фильтры', description: 'Реакторы, ДГР, конденсаторы, фильтры, компенсаторы', sourceRef: 'VSDX masters' },
+  { id: 'surge_arresters', title: 'Разрядники / ОПН', description: 'Разрядники, искровые промежутки, ОПН', sourceRef: 'VSDX masters' },
+  { id: 'generators_motors', title: 'Генераторы / двигатели', description: 'Генераторы, ДЭС, синхронные и асинхронные двигатели', sourceRef: 'VSDX masters' },
+  { id: 'fuses', title: 'Предохранители', description: 'Плавкие, инерционные, пробивные, на тележке', sourceRef: 'VSDX masters' },
+  { id: 'vsdx_symbols', title: 'Прочие VSDX-фигуры', description: 'Фигуры из Visio-библиотеки, не попавшие в базовые группы', sourceRef: 'VSDX masters' },
   { id: 'primitives', title: 'Графика', description: 'Базовые графические примитивы' },
   { id: 'text', title: 'Текст и размеры', description: 'Надписи, подписи, размеры' },
   { id: 'images', title: 'Изображения', description: 'Подложки, сканы, растровые вставки' },
 ]
 
-export const shapeCatalogItems: ShapeCatalogItem[] = [
+const coreShapeCatalogItems: ShapeCatalogItem[] = [
   {
     id: 'busbar',
     title: 'Шина',
@@ -42,134 +50,7 @@ export const shapeCatalogItems: ShapeCatalogItem[] = [
     status: 'available',
     keywords: ['шина', 'секция', 'busbar', 'ошиновка'],
     preview: '▰',
-    sourceRef: 'Шина выполняется цветом класса напряжения, точки подключения белые.',
-  },
-  {
-    id: 'line',
-    title: 'Линия электрической связи',
-    categoryId: 'busbars_lines_grounding',
-    command: 'create_line',
-    status: 'available',
-    keywords: ['линия', 'связь', 'ошиновка', 'кабель', 'лэп'],
-    preview: '╱',
-    sourceRef: 'Толщина линии связи 0,4 мм в базовом профиле.',
-  },
-  {
-    id: 'grounding',
-    title: 'Заземление',
-    categoryId: 'busbars_lines_grounding',
-    status: 'planned',
-    keywords: ['заземление', 'земля', 'ground'],
-    preview: '⏚',
-    sourceRef: 'УГО заземления из раздела линий/шин/заземления.',
-  },
-  {
-    id: 'circuit_breaker',
-    title: 'Выключатель',
-    categoryId: 'switching',
-    status: 'planned',
-    keywords: ['выключатель', 'включено', 'отключено', 'breaker'],
-    preview: '□',
-    sourceRef: 'Коммутационные аппараты.',
-  },
-  {
-    id: 'disconnector',
-    title: 'Разъединитель',
-    categoryId: 'switching',
-    status: 'planned',
-    keywords: ['разъединитель', 'лр', 'disconnect'],
-    preview: '⟋',
-    sourceRef: 'Коммутационные аппараты.',
-  },
-  {
-    id: 'earthing_switch',
-    title: 'Заземляющий разъединитель',
-    categoryId: 'switching',
-    status: 'planned',
-    keywords: ['зн', 'заземляющий', 'earthing switch'],
-    preview: '⏚',
-    sourceRef: 'Коммутационные аппараты.',
-  },
-  {
-    id: 'power_transformer',
-    title: 'Трансформатор',
-    categoryId: 'transformers',
-    status: 'planned',
-    keywords: ['трансформатор', 'тр', 'тсн', 'transformer'],
-    preview: '○○',
-    sourceRef: 'Графическое обозначение трансформаторов.',
-  },
-  {
-    id: 'voltage_transformer',
-    title: 'Трансформатор напряжения',
-    categoryId: 'transformers',
-    status: 'planned',
-    keywords: ['тн', 'трансформатор напряжения', 'voltage transformer'],
-    preview: 'ТН',
-    sourceRef: 'Графическое обозначение трансформаторов.',
-  },
-  {
-    id: 'current_transformer',
-    title: 'Трансформатор тока',
-    categoryId: 'transformers',
-    status: 'planned',
-    keywords: ['тт', 'трансформатор тока', 'current transformer'],
-    preview: 'ТТ',
-    sourceRef: 'Графическое обозначение трансформаторов.',
-  },
-  {
-    id: 'reactor',
-    title: 'Реактор',
-    categoryId: 'compensation_filters',
-    status: 'planned',
-    keywords: ['реактор', 'дгр', 'компенсация', 'filter'],
-    preview: '⌁',
-    sourceRef: 'Устройства компенсации, фильтры.',
-  },
-  {
-    id: 'capacitor',
-    title: 'Конденсатор',
-    categoryId: 'compensation_filters',
-    status: 'planned',
-    keywords: ['конденсатор', 'бск', 'capacitor'],
-    preview: '⊣⊢',
-    sourceRef: 'Устройства компенсации, фильтры.',
-  },
-  {
-    id: 'surge_arrester',
-    title: 'ОПН / разрядник',
-    categoryId: 'surge_arresters',
-    status: 'planned',
-    keywords: ['опн', 'разрядник', 'surge arrester'],
-    preview: '⚡',
-    sourceRef: 'Разрядники, ОПН.',
-  },
-  {
-    id: 'generator',
-    title: 'Генератор',
-    categoryId: 'generators_motors',
-    status: 'planned',
-    keywords: ['генератор', 'generator'],
-    preview: 'G',
-    sourceRef: 'Генераторы, электродвигатели.',
-  },
-  {
-    id: 'motor',
-    title: 'Двигатель',
-    categoryId: 'generators_motors',
-    status: 'planned',
-    keywords: ['двигатель', 'motor'],
-    preview: 'M',
-    sourceRef: 'Генераторы, электродвигатели.',
-  },
-  {
-    id: 'fuse',
-    title: 'Предохранитель',
-    categoryId: 'fuses',
-    status: 'planned',
-    keywords: ['предохранитель', 'fuse'],
-    preview: '⌁',
-    sourceRef: 'Предохранители.',
+    sourceRef: 'Рабочая параметрическая шина. Цвет класса напряжения по ГОСТ, точки подключения белые.',
   },
   {
     id: 'text',
@@ -209,6 +90,56 @@ export const shapeCatalogItems: ShapeCatalogItem[] = [
   },
 ]
 
+function knownCategory(categoryId: string): string {
+  return shapeCatalogCategories.some((category) => category.id === categoryId)
+    ? categoryId
+    : 'vsdx_symbols'
+}
+
+function sourceSummary(definition: VsdxSymbolDefinition): string {
+  const size = definition.widthMm && definition.heightMm
+    ? `${definition.widthMm} × ${definition.heightMm} мм`
+    : 'размер не определён'
+  const fields = definition.dataFields.length
+    ? `; поля: ${definition.dataFields.map((field) => field.label).slice(0, 4).join(', ')}`
+    : ''
+  const rawProps = definition.propertyNames.length ? `; ShapeSheet Prop=${definition.propertyNames.length}` : ''
+  return `VSDX master ${definition.masterId}: ${size}; ports=${definition.connectionCount}; shapes=${definition.shapeCount}${rawProps}${fields}`
+}
+
+function vsdxToShapeCatalogItem(definition: VsdxSymbolDefinition): ShapeCatalogItem {
+  return {
+    id: definition.id,
+    title: definition.title,
+    categoryId: knownCategory(definition.categoryId),
+    status: 'planned',
+    keywords: [
+      definition.title,
+      definition.categoryId,
+      `master ${definition.masterId}`,
+      'vsdx',
+      ...definition.propertyNames,
+      ...definition.userCellNames,
+      ...definition.dataFields.map((field) => field.label),
+    ],
+    preview: definition.preview,
+    sourceRef: sourceSummary(definition),
+    widthMm: definition.widthMm,
+    heightMm: definition.heightMm,
+    connectionCount: definition.connectionCount,
+    propertyNames: definition.propertyNames,
+    dataFieldIds: definition.dataFields.map((field) => field.id),
+    vsdxMasterId: definition.masterId,
+  }
+}
+
+export const vsdxShapeCatalogItems: ShapeCatalogItem[] = vsdxSymbolDefinitions.map(vsdxToShapeCatalogItem)
+
+export const shapeCatalogItems: ShapeCatalogItem[] = [
+  ...coreShapeCatalogItems,
+  ...vsdxShapeCatalogItems,
+]
+
 export function filterShapeCatalog(query: string, categoryId: string | null): ShapeCatalogItem[] {
   const normalized = query.trim().toLowerCase()
   return shapeCatalogItems.filter((item) => {
@@ -218,5 +149,6 @@ export function filterShapeCatalog(query: string, categoryId: string | null): Sh
     return item.title.toLowerCase().includes(normalized)
       || item.keywords.some((keyword) => keyword.toLowerCase().includes(normalized))
       || item.sourceRef?.toLowerCase().includes(normalized)
+      || item.vsdxMasterId?.toLowerCase().includes(normalized)
   })
 }
