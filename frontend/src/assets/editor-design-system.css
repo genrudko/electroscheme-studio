@@ -695,3 +695,58 @@
   align-items: center;
   gap: 5px;
 }
+
+/* patch-040-stencil-palette-cleanup */
+.stencil-palette .shape-item {
+  box-shadow: 0 1px 2px rgba(15, 23, 42, .035) !important;
+}
+
+.stencil-palette .shape-item.planned {
+  background: #ffffff !important;
+}
+
+.stencil-palette .shape-item.planned:hover {
+  background: #f8fbff !important;
+}
+
+.stencil-palette .planned-icon,
+.stencil-palette .planned-icon::before {
+  display: none !important;
+  content: none !important;
+}
+
+.stencil-palette .planned-dot {
+  display: inline-block !important;
+}
+
+.stencil-palette .shape-meta {
+  color: #64748b !important;
+  font-weight: 700;
+}
+
+.stencil-palette .preview-svg {
+  display: none !important;
+}
+
+.stencil-palette .stencil-icon {
+  color: #6d0ad6 !important;
+}
+
+.stencil-palette .stencil-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.stencil-palette .stencil-icon svg * {
+  vector-effect: non-scaling-stroke;
+}
+
+.stencil-palette .shape-item[aria-disabled='true'] {
+  opacity: 1 !important;
+}
+
+.stencil-palette .shape-item[aria-disabled='true'] .shape-title {
+  color: #142033 !important;
+}
+
+/* Source VSDX micro-previews are intentionally hidden in palette until exact master renderer exists. */
