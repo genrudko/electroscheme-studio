@@ -16,19 +16,20 @@
     .labels { font-size: 12px; color: #1d4ed8; }
     .svg-wrap { width: 100%; min-height: 300px; border: 1px solid #e5e7eb; border-radius: 10px; background: #fff; overflow: auto; }
     .review-svg { width: 100%; height: auto; display: block; --busbar-color: #6d0ad6; --slot-stroke: #ffffff; --label-color: #111111; }
-    [data-role="bus-label"], [data-role="bay-label"] { cursor: grab; user-select: none; }
-    [data-role="bus-label"].selected, [data-role="bay-label"].selected {
+    [data-role="bus-label"], [data-role="bay-label"], [data-role="free-text-box"] { cursor: grab; user-select: none; }
+    [data-role="bus-label"].selected, [data-role="bay-label"].selected, [data-role="free-text-box"].selected {
       paint-order: stroke;
       stroke: rgba(37, 99, 235, 0.35);
       stroke-width: 3;
     }
+    [data-role="free-text-box"] { fill: #111111; }
     .drag-status { font-size: 12px; color: #64748b; }
     .toolbar {
       position: fixed;
       right: 18px;
       bottom: 18px;
       z-index: 100;
-      width: 300px;
+      width: 330px;
       padding: 12px;
       border-radius: 14px;
       background: #111827;
@@ -37,6 +38,7 @@
     }
     .toolbar h2 { margin: 0 0 8px; font-size: 15px; }
     .toolbar p { margin: 0 0 10px; color: #cbd5e1; font-size: 12px; }
+    .toolbar .group-title { margin: 10px 0 6px; color: #93c5fd; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; }
     .toolbar button {
       margin: 3px;
       padding: 6px 9px;
@@ -47,12 +49,17 @@
       font-weight: 700;
       cursor: pointer;
     }
+    .toolbar button.secondary { background: #334155; }
+    .toolbar button.danger { background: #dc2626; }
+    .toolbar button:disabled { opacity: .45; cursor: default; }
+    .toolbar .mode { padding: 7px 9px; border-radius: 10px; background: rgba(59, 130, 246, .18); color: #dbeafe; line-height: 1.35; }
   </style>
 </head>
-<body>
+<body data-copy-paste-mode="reference_point_copy_paste_visual_prototype">
+  <!-- copy_paste_mode: reference_point_copy_paste_visual_prototype -->
   <header class="page">
     <h1>Clean interactive busbar review</h1>
-    <p>One SVG coordinate system per card: grid, busbar, labels, guides and drag math are aligned.</p>
+    <p>One SVG coordinate system per card. Text can be dragged, rotated, copied normally or copied/pasted relative to a picked point.</p>
   </header>
   <main>
     <article class="card" data-case-id="01_horizontal_bottom_numbered">
@@ -66,6 +73,7 @@
 <svg
   class="review-svg"
   data-clean-canvas="true"
+  data-reference-copy-paste="true"
   data-case-id="01_horizontal_bottom_numbered"
   viewBox="0 0 638 224"
   role="img"
@@ -99,7 +107,7 @@
 <text x="418" y="84" transform="rotate(0 418 84)" font-family="Arial, sans-serif" font-size="16" dominant-baseline="middle" data-role="bus-label" data-draggable="true" data-offset-x="0" data-offset-y="0" data-rotation="0" fill="var(--label-color, #111111)">1С 10 кВ</text>
   </g>
 </svg></div>
-  <p class="drag-status">Drag text. Blue guides use the same coordinate system as the grid and drawing.</p>
+  <p class="drag-status">Drag text. Copy by reference point: select text → Copy by reference point → click base point → click paste point(s).</p>
 </article>
 <article class="card" data-case-id="02_horizontal_top_numbered">
   <header>
@@ -112,6 +120,7 @@
 <svg
   class="review-svg"
   data-clean-canvas="true"
+  data-reference-copy-paste="true"
   data-case-id="02_horizontal_top_numbered"
   viewBox="0 0 638 254"
   role="img"
@@ -145,7 +154,7 @@
 <text x="418" y="174" transform="rotate(0 418 174)" font-family="Arial, sans-serif" font-size="16" dominant-baseline="middle" data-role="bus-label" data-draggable="true" data-offset-x="0" data-offset-y="0" data-rotation="0" fill="var(--label-color, #111111)">1С 10 кВ</text>
   </g>
 </svg></div>
-  <p class="drag-status">Drag text. Blue guides use the same coordinate system as the grid and drawing.</p>
+  <p class="drag-status">Drag text. Copy by reference point: select text → Copy by reference point → click base point → click paste point(s).</p>
 </article>
 <article class="card" data-case-id="03_horizontal_both_sides">
   <header>
@@ -158,6 +167,7 @@
 <svg
   class="review-svg"
   data-clean-canvas="true"
+  data-reference-copy-paste="true"
   data-case-id="03_horizontal_both_sides"
   viewBox="0 0 542 360"
   role="img"
@@ -199,7 +209,7 @@
 <text x="322" y="174" transform="rotate(0 322 174)" font-family="Arial, sans-serif" font-size="16" dominant-baseline="middle" data-role="bus-label" data-draggable="true" data-offset-x="0" data-offset-y="0" data-rotation="0" fill="var(--label-color, #111111)">1С 10 кВ</text>
   </g>
 </svg></div>
-  <p class="drag-status">Drag text. Blue guides use the same coordinate system as the grid and drawing.</p>
+  <p class="drag-status">Drag text. Copy by reference point: select text → Copy by reference point → click base point → click paste point(s).</p>
 </article>
 <article class="card" data-case-id="04_vertical_right_numbered">
   <header>
@@ -212,6 +222,7 @@
 <svg
   class="review-svg"
   data-clean-canvas="true"
+  data-reference-copy-paste="true"
   data-case-id="04_vertical_right_numbered"
   viewBox="0 0 428 464"
   role="img"
@@ -243,7 +254,7 @@
 <text x="88" y="34" transform="rotate(-90 88 34)" font-family="Arial, sans-serif" font-size="16" dominant-baseline="middle" data-role="bus-label" data-draggable="true" data-offset-x="0" data-offset-y="0" data-rotation="-90" fill="var(--label-color, #111111)">1С 10 кВ</text>
   </g>
 </svg></div>
-  <p class="drag-status">Drag text. Blue guides use the same coordinate system as the grid and drawing.</p>
+  <p class="drag-status">Drag text. Copy by reference point: select text → Copy by reference point → click base point → click paste point(s).</p>
 </article>
 <article class="card" data-case-id="05_vertical_left_numbered">
   <header>
@@ -256,6 +267,7 @@
 <svg
   class="review-svg"
   data-clean-canvas="true"
+  data-reference-copy-paste="true"
   data-case-id="05_vertical_left_numbered"
   viewBox="0 0 428 464"
   role="img"
@@ -287,7 +299,7 @@
 <text x="178" y="34" transform="rotate(-90 178 34)" font-family="Arial, sans-serif" font-size="16" dominant-baseline="middle" data-role="bus-label" data-draggable="true" data-offset-x="0" data-offset-y="0" data-rotation="-90" fill="var(--label-color, #111111)">1С 10 кВ</text>
   </g>
 </svg></div>
-  <p class="drag-status">Drag text. Blue guides use the same coordinate system as the grid and drawing.</p>
+  <p class="drag-status">Drag text. Copy by reference point: select text → Copy by reference point → click base point → click paste point(s).</p>
 </article>
 <article class="card" data-case-id="06_numbering_disabled">
   <header>
@@ -300,6 +312,7 @@
 <svg
   class="review-svg"
   data-clean-canvas="true"
+  data-reference-copy-paste="true"
   data-case-id="06_numbering_disabled"
   viewBox="0 0 494 178"
   role="img"
@@ -322,7 +335,7 @@
 <text x="274" y="38" transform="rotate(0 274 38)" font-family="Arial, sans-serif" font-size="16" dominant-baseline="middle" data-role="bus-label" data-draggable="true" data-offset-x="0" data-offset-y="0" data-rotation="0" fill="var(--label-color, #111111)">1С 10 кВ</text>
   </g>
 </svg></div>
-  <p class="drag-status">Drag text. Blue guides use the same coordinate system as the grid and drawing.</p>
+  <p class="drag-status">Drag text. Copy by reference point: select text → Copy by reference point → click base point → click paste point(s).</p>
 </article>
 <article class="card" data-case-id="07_dense_16_slots">
   <header>
@@ -335,6 +348,7 @@
 <svg
   class="review-svg"
   data-clean-canvas="true"
+  data-reference-copy-paste="true"
   data-case-id="07_dense_16_slots"
   viewBox="0 0 656 224"
   role="img"
@@ -384,19 +398,34 @@
 <text x="436" y="84" transform="rotate(0 436 84)" font-family="Arial, sans-serif" font-size="16" dominant-baseline="middle" data-role="bus-label" data-draggable="true" data-offset-x="0" data-offset-y="0" data-rotation="0" fill="var(--label-color, #111111)">1С 10 кВ</text>
   </g>
 </svg></div>
-  <p class="drag-status">Drag text. Blue guides use the same coordinate system as the grid and drawing.</p>
+  <p class="drag-status">Drag text. Copy by reference point: select text → Copy by reference point → click base point → click paste point(s).</p>
 </article>
   </main>
   <aside class="toolbar">
     <h2>Text tools</h2>
     <p id="selectedText">Selected: none</p>
-    <button data-rotate="0">0°</button>
-    <button data-rotate="90">+90°</button>
-    <button data-rotate="-90">-90°</button>
-    <button data-rotate="180">180°</button>
+    <div>
+      <button data-rotate="0">0°</button>
+      <button data-rotate="90">+90°</button>
+      <button data-rotate="-90">-90°</button>
+      <button data-rotate="180">180°</button>
+    </div>
+
+    <p class="group-title">Reference copy/paste</p>
+    <div>
+      <button id="copyCenterButton">Copy from text center</button>
+      <button id="copyByReferenceButton">Copy by reference point</button>
+      <button id="pasteByPointButton">Paste by point</button>
+      <button id="cancelModeButton" class="secondary">Cancel</button>
+      <button id="clearCopiesButton" class="danger">Clear copies</button>
+    </div>
+    <p id="modeStatus" class="mode">Mode: select text or drag labels. Ctrl+C copies from center, Ctrl+V starts paste-by-point, Esc cancels.</p>
   </aside>
   <script>
     let selectedText = null;
+    let clipboard = null;
+    let currentMode = 'normal'; // normal | pickBase | pasteByPoint
+    let generatedCopyCounter = 0;
     const snapTolerance = 6;
     const gridStep = 6;
 
@@ -434,13 +463,18 @@
       target.setAttribute('transform', `rotate(${rotation} ${rx} ${ry})`);
     }
 
+    function setMode(mode, message) {
+      currentMode = mode;
+      document.getElementById('modeStatus').textContent = message;
+    }
+
     function selectTarget(target) {
       document.querySelectorAll('.selected').forEach((item) => item.classList.remove('selected'));
       selectedText = target;
       if (target) {
         target.classList.add('selected');
         const role = target.getAttribute('data-role') || 'text';
-        const id = target.getAttribute('data-bay-slot-id') || role;
+        const id = target.getAttribute('data-bay-slot-id') || target.getAttribute('data-copy-id') || role;
         document.getElementById('selectedText').textContent = `Selected: ${id}`;
       } else {
         document.getElementById('selectedText').textContent = 'Selected: none';
@@ -507,6 +541,17 @@
       return layer;
     }
 
+    function ensureMarkerLayer(svg) {
+      let layer = svg.querySelector('[data-role="reference-copy-markers"]');
+      if (!layer) {
+        layer = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+        layer.setAttribute('data-role', 'reference-copy-markers');
+        layer.setAttribute('pointer-events', 'none');
+        svg.appendChild(layer);
+      }
+      return layer;
+    }
+
     function addLine(layer, attrs) {
       const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
       for (const [key, value] of Object.entries(attrs)) line.setAttribute(key, String(value));
@@ -529,6 +574,157 @@
       svg.querySelector('[data-role="alignment-guides"]')?.remove();
     }
 
+    function drawReferenceMarker(svg, point, kind) {
+      const layer = ensureMarkerLayer(svg);
+      const color = kind === 'base' ? '#f59e0b' : '#22c55e';
+      const size = 5;
+      const group = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+      group.setAttribute('data-marker-kind', kind);
+      addLine(group, { x1: point.x - size, y1: point.y, x2: point.x + size, y2: point.y, stroke: color, 'stroke-width': '1.5' });
+      addLine(group, { x1: point.x, y1: point.y - size, x2: point.x, y2: point.y + size, stroke: color, 'stroke-width': '1.5' });
+      const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      circle.setAttribute('cx', String(point.x));
+      circle.setAttribute('cy', String(point.y));
+      circle.setAttribute('r', '3');
+      circle.setAttribute('fill', 'none');
+      circle.setAttribute('stroke', color);
+      circle.setAttribute('stroke-width', '1');
+      group.appendChild(circle);
+      layer.appendChild(group);
+    }
+
+    function copyStyleAttributes(source, clone) {
+      const attrs = [
+        'font-family',
+        'font-size',
+        'font-weight',
+        'font-style',
+        'text-anchor',
+        'dominant-baseline',
+        'fill',
+        'stroke',
+        'stroke-width',
+      ];
+      attrs.forEach((attr) => {
+        const value = source.getAttribute(attr);
+        if (value !== null) clone.setAttribute(attr, value);
+      });
+    }
+
+    function buildClipboardFromSelected(basePoint) {
+      if (!selectedText) {
+        setMode('normal', 'Mode: select a text label first.');
+        return false;
+      }
+
+      const anchor = textAnchor(selectedText);
+      const center = bboxCenter(selectedText);
+      const rotation = Number(selectedText.getAttribute('data-rotation') || '0') || 0;
+      const text = selectedText.textContent || '';
+
+      clipboard = {
+        kind: 'text',
+        text,
+        role: selectedText.getAttribute('data-role') || 'free-text-box',
+        sourceBaySlotId: selectedText.getAttribute('data-bay-slot-id') || '',
+        anchor,
+        center,
+        basePoint,
+        rotation,
+        attributes: {
+          fontFamily: selectedText.getAttribute('font-family') || 'Arial, sans-serif',
+          fontSize: selectedText.getAttribute('font-size') || '16',
+          textAnchor: selectedText.getAttribute('text-anchor') || 'start',
+          dominantBaseline: selectedText.getAttribute('dominant-baseline') || 'middle',
+          fill: selectedText.getAttribute('fill') || 'var(--label-color, #111111)',
+        },
+      };
+
+      drawReferenceMarker(selectedText.ownerSVGElement, basePoint, 'base');
+      return true;
+    }
+
+    function copySelectedFromCenter() {
+      if (!selectedText) {
+        setMode('normal', 'Mode: select text first, then copy.');
+        return;
+      }
+      const center = bboxCenter(selectedText);
+      if (buildClipboardFromSelected(center)) {
+        setMode('pasteByPoint', 'Mode: copied from text center. Click target paste point. Ctrl+V keeps paste mode active.');
+      }
+    }
+
+    function beginCopyByReferencePoint() {
+      if (!selectedText) {
+        setMode('normal', 'Mode: select text first, then choose Copy by reference point.');
+        return;
+      }
+      setMode('pickBase', 'Mode: click the reference/base point. The copied text will keep this offset on paste.');
+    }
+
+    function beginPasteByPoint() {
+      if (!clipboard) {
+        setMode('normal', 'Mode: clipboard is empty. Copy text first.');
+        return;
+      }
+      setMode('pasteByPoint', 'Mode: click paste point. The object will be placed relative to the copied reference point.');
+    }
+
+    function clearGeneratedCopies() {
+      document.querySelectorAll('[data-generated-copy="true"]').forEach((item) => item.remove());
+      document.querySelectorAll('[data-role="reference-copy-markers"]').forEach((item) => item.remove());
+      setMode('normal', 'Mode: generated copies and reference markers cleared.');
+    }
+
+    function cancelMode() {
+      setMode('normal', 'Mode: select text or drag labels. Ctrl+C copies from center, Ctrl+V starts paste-by-point, Esc cancels.');
+    }
+
+    function pasteClipboardAt(svg, pastePoint) {
+      if (!clipboard || clipboard.kind !== 'text') return;
+
+      generatedCopyCounter += 1;
+
+      const offsetX = clipboard.center.x - clipboard.basePoint.x;
+      const offsetY = clipboard.center.y - clipboard.basePoint.y;
+      const nextCenter = {
+        x: pastePoint.x + offsetX,
+        y: pastePoint.y + offsetY,
+      };
+      const dx = nextCenter.x - clipboard.center.x;
+      const dy = nextCenter.y - clipboard.center.y;
+      const nextAnchor = {
+        x: clipboard.anchor.x + dx,
+        y: clipboard.anchor.y + dy,
+      };
+
+      const clone = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      clone.textContent = clipboard.text;
+      clone.setAttribute('x', String(Math.round(nextAnchor.x * 10) / 10));
+      clone.setAttribute('y', String(Math.round(nextAnchor.y * 10) / 10));
+      clone.setAttribute('font-family', clipboard.attributes.fontFamily);
+      clone.setAttribute('font-size', clipboard.attributes.fontSize);
+      clone.setAttribute('text-anchor', clipboard.attributes.textAnchor);
+      clone.setAttribute('dominant-baseline', clipboard.attributes.dominantBaseline);
+      clone.setAttribute('fill', clipboard.attributes.fill);
+      clone.setAttribute('data-role', 'free-text-box');
+      clone.setAttribute('data-copyable-text', 'true');
+      clone.setAttribute('data-generated-copy', 'true');
+      clone.setAttribute('data-copy-id', `copy_${generatedCopyCounter}`);
+      clone.setAttribute('data-source-role', clipboard.role);
+      clone.setAttribute('data-source-bay-slot-id', clipboard.sourceBaySlotId);
+      clone.setAttribute('data-rotation', String(clipboard.rotation));
+      clone.setAttribute('transform', `rotate(${clipboard.rotation} ${nextAnchor.x} ${nextAnchor.y})`);
+
+      const drawingLayer = svg.querySelector('.drawing-layer') || svg;
+      drawingLayer.appendChild(clone);
+
+      drawReferenceMarker(svg, pastePoint, 'paste');
+      selectTarget(clone);
+      setMode('pasteByPoint', 'Mode: pasted. Click another paste point to repeat, or Esc/Cancel to stop.');
+    }
+
     document.querySelectorAll('.toolbar button[data-rotate]').forEach((button) => {
       button.addEventListener('click', () => {
         if (!selectedText) return;
@@ -539,8 +735,52 @@
       });
     });
 
+    document.getElementById('copyCenterButton').addEventListener('click', copySelectedFromCenter);
+    document.getElementById('copyByReferenceButton').addEventListener('click', beginCopyByReferencePoint);
+    document.getElementById('pasteByPointButton').addEventListener('click', beginPasteByPoint);
+    document.getElementById('cancelModeButton').addEventListener('click', cancelMode);
+    document.getElementById('clearCopiesButton').addEventListener('click', clearGeneratedCopies);
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        cancelMode();
+        return;
+      }
+
+      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'c') {
+        event.preventDefault();
+        copySelectedFromCenter();
+        return;
+      }
+
+      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'v') {
+        event.preventDefault();
+        beginPasteByPoint();
+      }
+    });
+
     document.addEventListener('pointerdown', (event) => {
-      const target = event.target.closest('[data-role="bus-label"], [data-role="bay-label"]');
+      const svgFromTarget = event.target.closest('svg.review-svg');
+      if (!svgFromTarget) return;
+
+      const svgPoint = clientToSvgPoint(svgFromTarget, event);
+      if (!svgPoint) return;
+
+      if (currentMode === 'pickBase') {
+        event.preventDefault();
+        if (buildClipboardFromSelected(svgPoint)) {
+          setMode('pasteByPoint', 'Mode: base point saved. Click paste point(s). Esc cancels.');
+        }
+        return;
+      }
+
+      if (currentMode === 'pasteByPoint') {
+        event.preventDefault();
+        pasteClipboardAt(svgFromTarget, svgPoint);
+        return;
+      }
+
+      const target = event.target.closest('[data-role="bus-label"], [data-role="bay-label"], [data-role="free-text-box"]');
       if (!target) return;
       const svg = target.ownerSVGElement;
       if (!svg) return;
