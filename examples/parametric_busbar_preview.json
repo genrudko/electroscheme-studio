@@ -9,7 +9,7 @@
   "orientation": "horizontal",
   "thickness_mm": 12,
   "connection_spacing": 48,
-  "end_slot_offset": 6.25,
+  "end_slot_offset": 14,
   "slot_diameter": 8,
   "margin": 24,
   "bay_depth": 90,
@@ -18,7 +18,13 @@
   "bay_numbering_style": "number_only",
   "bay_numbering_start": 1,
   "bay_numbering_step": 1,
-  "bay_label_offset": 14,
+  "bay_label_offset": 16,
+  "bay_label_both_side_separate_rows": true,
   "bus_label": "1С 10 кВ",
-  "bus_label_position": "auto"
+  "bus_label_position": "auto",
+  "bus_label_gap": 34,
+  "bus_label_offset_x": 0,
+  "bus_label_offset_y": 0,
+  "bus_label_rotation_mode": "auto",
+  "bus_label_rotation_deg": 0
 }

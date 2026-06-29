@@ -11,6 +11,7 @@ BaySlotSide = Literal["top", "bottom", "left", "right"]
 RoutingDirection = Literal["up", "down", "left", "right"]
 BusLabelPosition = Literal["auto", "right", "left", "top", "bottom"]
 BayNumberingStyle = Literal["number_only", "prefix_number"]
+RotationMode = Literal["auto", "manual"]
 
 
 class BusbarPreviewRequest(BaseModel):
@@ -24,7 +25,7 @@ class BusbarPreviewRequest(BaseModel):
     orientation: BusbarOrientation = "horizontal"
     thickness_mm: float = Field(default=12.0, ge=2.0, le=60.0)
     connection_spacing: float | None = Field(default=48.0, ge=5.0, le=300.0)
-    end_slot_offset: float = Field(default=6.25, ge=0.0, le=300.0)
+    end_slot_offset: float = Field(default=14.0, ge=0.0, le=300.0)
     slot_diameter: float = Field(default=8.0, ge=2.0, le=30.0)
     margin: float = Field(default=24.0, ge=5.0, le=120.0)
     bay_depth: float = Field(default=90.0, ge=20.0, le=260.0)
@@ -33,9 +34,15 @@ class BusbarPreviewRequest(BaseModel):
     bay_numbering_style: BayNumberingStyle = "number_only"
     bay_numbering_start: int = Field(default=1, ge=0, le=9999)
     bay_numbering_step: int = Field(default=1, ge=1, le=100)
-    bay_label_offset: float = Field(default=14.0, ge=0.0, le=120.0)
+    bay_label_offset: float = Field(default=16.0, ge=0.0, le=120.0)
+    bay_label_both_side_separate_rows: bool = True
     bus_label: str = Field(default="1С 10 кВ", max_length=64)
     bus_label_position: BusLabelPosition = "auto"
+    bus_label_gap: float = Field(default=34.0, ge=0.0, le=240.0)
+    bus_label_offset_x: float = Field(default=0.0, ge=-1000.0, le=1000.0)
+    bus_label_offset_y: float = Field(default=0.0, ge=-1000.0, le=1000.0)
+    bus_label_rotation_mode: RotationMode = "auto"
+    bus_label_rotation_deg: int = Field(default=0, ge=-360, le=360)
 
 
 class ParametricTerminal(BaseModel):
@@ -68,7 +75,7 @@ class ParametricBaySlot(BaseModel):
 
 
 class ParametricSymbolPreview(BaseModel):
-    schema_version: str = "parametric-symbol-preview-0.5"
+    schema_version: str = "parametric-symbol-preview-0.6"
     id: str
     name_ru: str
     kind: Literal["busbar"]

@@ -5,7 +5,7 @@
         <p class="eyebrow">Parametric symbol</p>
         <h2>Busbar generator</h2>
         <p class="description">
-          Slots are positioned by explicit end offset and spacing, like the Visio busbar parameters.
+          Side-aware labels, larger end offset and draggable/rotatable bus caption.
         </p>
       </div>
       <button type="button" class="primary-button" :disabled="loading" @click="refreshPreview">
@@ -50,10 +50,6 @@
           <input v-model.number="form.slot_diameter" type="number" min="2" max="30" step="0.5" />
         </label>
 
-        <label class="field">Minimum bar length
-          <input v-model.number="form.length" type="number" min="20" max="1600" step="10" />
-        </label>
-
         <label class="field">Connection side
           <select v-model="form.connection_side">
             <option value="top">Top / left</option>
@@ -69,24 +65,15 @@
           </select>
         </label>
 
-        <label class="field">Bus caption
-          <input v-model="form.bus_label" type="text" maxlength="64" />
-        </label>
-
-        <label class="field">Bus caption position
-          <select v-model="form.bus_label_position">
-            <option value="auto">Auto</option>
-            <option value="right">Right</option>
-            <option value="left">Left</option>
-            <option value="top">Top</option>
-            <option value="bottom">Bottom</option>
-          </select>
-        </label>
-
         <section class="numbering-box">
           <label class="check-field">
             <input v-model="form.bay_numbering_enabled" type="checkbox" />
             Number cells / bay slots
+          </label>
+
+          <label class="check-field">
+            <input v-model="form.bay_label_both_side_separate_rows" type="checkbox" />
+            Separate label rows for both-side busbar
           </label>
 
           <label class="field">Number style
@@ -94,10 +81,6 @@
               <option value="number_only">Number only</option>
               <option value="prefix_number">Prefix + number</option>
             </select>
-          </label>
-
-          <label class="field">Number prefix
-            <input v-model="form.bay_numbering_prefix" type="text" maxlength="32" />
           </label>
 
           <label class="field">Start number
@@ -112,42 +95,74 @@
             <input v-model.number="form.bay_label_offset" type="number" min="0" max="120" step="1" />
           </label>
         </section>
+
+        <section class="numbering-box">
+          <h3>Bus caption</h3>
+
+          <label class="field">Caption
+            <input v-model="form.bus_label" type="text" maxlength="64" />
+          </label>
+
+          <label class="field">Caption position
+            <select v-model="form.bus_label_position">
+              <option value="auto">Auto</option>
+              <option value="right">Right</option>
+              <option value="left">Left</option>
+              <option value="top">Top</option>
+              <option value="bottom">Bottom</option>
+            </select>
+          </label>
+
+          <label class="field">Caption gap
+            <input v-model.number="form.bus_label_gap" type="number" min="0" max="240" step="1" />
+          </label>
+
+          <label class="field">Manual offset X
+            <input v-model.number="form.bus_label_offset_x" type="number" min="-1000" max="1000" step="1" />
+          </label>
+
+          <label class="field">Manual offset Y
+            <input v-model.number="form.bus_label_offset_y" type="number" min="-1000" max="1000" step="1" />
+          </label>
+
+          <label class="field">Rotation mode
+            <select v-model="form.bus_label_rotation_mode">
+              <option value="auto">Auto</option>
+              <option value="manual">Manual</option>
+            </select>
+          </label>
+
+          <div class="preset-row">
+            <button type="button" @click="setRotation(0)">0°</button>
+            <button type="button" @click="setRotation(90)">+90°</button>
+            <button type="button" @click="setRotation(-90)">-90°</button>
+            <button type="button" @click="setRotation(180)">180°</button>
+          </div>
+        </section>
       </aside>
 
       <main class="preview-area">
+        <p class="hint">Tip: drag the bus caption directly in the preview, then click Generate preview.</p>
+
         <div class="preview-card">
           <svg
             v-if="preview"
+            ref="previewSvg"
             class="preview-svg"
             :viewBox="viewBoxString"
             role="img"
             :aria-label="preview.name_ru"
+            @pointerdown="onPreviewPointerDown"
             v-html="preview.svg_fragment"
           />
           <div v-else class="status">No preview yet.</div>
         </div>
 
         <div v-if="preview" class="summary">
-          <article>
-            <span>Points</span>
-            <strong>{{ preview.bay_slots.length }}</strong>
-          </article>
-          <article>
-            <span>End offset</span>
-            <strong>{{ preview.capabilities.busbar.end_slot_offset }}</strong>
-          </article>
-          <article>
-            <span>Spacing</span>
-            <strong>{{ preview.capabilities.busbar.connection_spacing }}</strong>
-          </article>
-          <article>
-            <span>Computed length</span>
-            <strong>{{ preview.capabilities.busbar.length }}</strong>
-          </article>
-          <article>
-            <span>Thickness</span>
-            <strong>{{ preview.capabilities.busbar.thickness_mm }}</strong>
-          </article>
+          <article><span>Points</span><strong>{{ preview.bay_slots.length }}</strong></article>
+          <article><span>End offset</span><strong>{{ preview.capabilities.busbar.end_slot_offset }}</strong></article>
+          <article><span>Caption X/Y</span><strong>{{ form.bus_label_offset_x }}, {{ form.bus_label_offset_y }}</strong></article>
+          <article><span>Rotation</span><strong>{{ form.bus_label_rotation_mode }} {{ form.bus_label_rotation_deg }}°</strong></article>
         </div>
 
         <details v-if="preview" class="terminal-list" open>
@@ -159,7 +174,6 @@
                 <th>Slot</th>
                 <th>Side</th>
                 <th>Bus point</th>
-                <th>Anchor</th>
               </tr>
             </thead>
             <tbody>
@@ -168,7 +182,6 @@
                 <td><code>{{ slot.id }}</code></td>
                 <td>{{ slot.side }}</td>
                 <td>{{ slot.bus_x.toFixed(2) }}, {{ slot.bus_y.toFixed(2) }}</td>
-                <td>{{ slot.equipment_anchor_x.toFixed(2) }}, {{ slot.equipment_anchor_y.toFixed(2) }}</td>
               </tr>
             </tbody>
           </table>
@@ -185,6 +198,7 @@ type BusbarConnectionSide = 'top' | 'bottom' | 'both'
 type BusbarOrientation = 'horizontal' | 'vertical'
 type BusLabelPosition = 'auto' | 'right' | 'left' | 'top' | 'bottom'
 type BayNumberingStyle = 'number_only' | 'prefix_number'
+type RotationMode = 'auto' | 'manual'
 
 type BusbarPreviewRequest = {
   id: string
@@ -207,8 +221,14 @@ type BusbarPreviewRequest = {
   bay_numbering_start: number
   bay_numbering_step: number
   bay_label_offset: number
+  bay_label_both_side_separate_rows: boolean
   bus_label: string
   bus_label_position: BusLabelPosition
+  bus_label_gap: number
+  bus_label_offset_x: number
+  bus_label_offset_y: number
+  bus_label_rotation_mode: RotationMode
+  bus_label_rotation_deg: number
 }
 
 type ParametricBaySlot = {
@@ -218,8 +238,6 @@ type ParametricBaySlot = {
   side: string
   bus_x: number
   bus_y: number
-  equipment_anchor_x: number
-  equipment_anchor_y: number
   label: string
 }
 
@@ -236,6 +254,7 @@ type ParametricSymbolPreview = {
 const loading = ref(false)
 const error = ref('')
 const preview = ref<ParametricSymbolPreview | null>(null)
+const previewSvg = ref<SVGSVGElement | null>(null)
 
 const form = reactive<BusbarPreviewRequest>({
   id: 'param_busbar_1',
@@ -248,7 +267,7 @@ const form = reactive<BusbarPreviewRequest>({
   orientation: 'horizontal',
   thickness_mm: 12,
   connection_spacing: 48,
-  end_slot_offset: 6.25,
+  end_slot_offset: 14,
   slot_diameter: 8,
   margin: 24,
   bay_depth: 90,
@@ -257,9 +276,15 @@ const form = reactive<BusbarPreviewRequest>({
   bay_numbering_style: 'number_only',
   bay_numbering_start: 1,
   bay_numbering_step: 1,
-  bay_label_offset: 14,
+  bay_label_offset: 16,
+  bay_label_both_side_separate_rows: true,
   bus_label: '1С 10 кВ',
   bus_label_position: 'auto',
+  bus_label_gap: 34,
+  bus_label_offset_x: 0,
+  bus_label_offset_y: 0,
+  bus_label_rotation_mode: 'auto',
+  bus_label_rotation_deg: 0,
 })
 
 const viewBoxString = computed(() => {
@@ -267,6 +292,52 @@ const viewBoxString = computed(() => {
   const vb = preview.value.viewBox
   return `${vb.x} ${vb.y} ${vb.width} ${vb.height}`
 })
+
+function setRotation(degrees: number): void {
+  form.bus_label_rotation_mode = 'manual'
+  form.bus_label_rotation_deg = degrees
+  void refreshPreview()
+}
+
+function clientToSvgPoint(event: PointerEvent): DOMPoint | null {
+  const svg = previewSvg.value
+  if (!svg) return null
+  const point = svg.createSVGPoint()
+  point.x = event.clientX
+  point.y = event.clientY
+  const ctm = svg.getScreenCTM()
+  if (!ctm) return null
+  return point.matrixTransform(ctm.inverse())
+}
+
+function onPreviewPointerDown(event: PointerEvent): void {
+  const target = event.target as Element | null
+  if (!target || target.getAttribute('data-role') !== 'bus-label') return
+
+  const start = clientToSvgPoint(event)
+  if (!start) return
+
+  const startOffsetX = form.bus_label_offset_x
+  const startOffsetY = form.bus_label_offset_y
+  const pointerId = event.pointerId
+
+  const move = (moveEvent: PointerEvent) => {
+    if (moveEvent.pointerId !== pointerId) return
+    const current = clientToSvgPoint(moveEvent)
+    if (!current) return
+    form.bus_label_offset_x = Math.round((startOffsetX + current.x - start.x) * 10) / 10
+    form.bus_label_offset_y = Math.round((startOffsetY + current.y - start.y) * 10) / 10
+  }
+
+  const up = (upEvent: PointerEvent) => {
+    if (upEvent.pointerId !== pointerId) return
+    window.removeEventListener('pointermove', move)
+    window.removeEventListener('pointerup', up)
+  }
+
+  window.addEventListener('pointermove', move)
+  window.addEventListener('pointerup', up)
+}
 
 async function refreshPreview(): Promise<void> {
   loading.value = true
@@ -318,15 +389,8 @@ onMounted(() => {
   text-transform: uppercase;
 }
 
-.panel-header h2 {
-  margin: 0;
-  font-size: 22px;
-}
-
-.description {
-  margin: 4px 0 0;
-  color: #64748b;
-}
+.panel-header h2 { margin: 0; font-size: 22px; }
+.description { margin: 4px 0 0; color: #64748b; }
 
 .primary-button {
   align-self: flex-start;
@@ -339,10 +403,7 @@ onMounted(() => {
   cursor: pointer;
 }
 
-.primary-button:disabled {
-  opacity: 0.55;
-  cursor: default;
-}
+.primary-button:disabled { opacity: 0.55; cursor: default; }
 
 .status {
   padding: 16px;
@@ -351,10 +412,7 @@ onMounted(() => {
   color: #1e40af;
 }
 
-.status.error {
-  background: #fef2f2;
-  color: #991b1b;
-}
+.status.error { background: #fef2f2; color: #991b1b; }
 
 .layout {
   display: grid;
@@ -408,8 +466,29 @@ onMounted(() => {
   background: #eff6ff;
 }
 
+.numbering-box h3 {
+  margin: 0 0 10px;
+  font-size: 14px;
+}
+
+.preset-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.preset-row button {
+  border: 1px solid #bfdbfe;
+  border-radius: 999px;
+  padding: 6px 9px;
+  background: white;
+  color: #1d4ed8;
+  cursor: pointer;
+  font-weight: 800;
+}
+
 .preview-card {
-  min-height: 340px;
+  min-height: 360px;
   display: grid;
   place-items: center;
   border: 1px solid #e2e8f0;
@@ -425,7 +504,15 @@ onMounted(() => {
 
 .preview-svg {
   width: 96%;
-  max-height: 320px;
+  max-height: 340px;
+  touch-action: none;
+}
+
+.hint {
+  margin: 0 0 10px;
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 700;
 }
 
 .summary {
@@ -453,27 +540,11 @@ onMounted(() => {
   font-size: 18px;
 }
 
-.terminal-list {
-  margin-top: 12px;
-}
-
-.terminal-list table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 8px;
-  font-size: 12px;
-}
-
-.terminal-list th,
-.terminal-list td {
-  border-bottom: 1px solid #e2e8f0;
-  padding: 6px 8px;
-  text-align: left;
-}
+.terminal-list { margin-top: 12px; }
+.terminal-list table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 12px; }
+.terminal-list th, .terminal-list td { border-bottom: 1px solid #e2e8f0; padding: 6px 8px; text-align: left; }
 
 @media (max-width: 980px) {
-  .layout {
-    grid-template-columns: 1fr;
-  }
+  .layout { grid-template-columns: 1fr; }
 }
 </style>

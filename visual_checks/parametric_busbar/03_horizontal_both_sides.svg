@@ -1,36 +1,36 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="620" height="404" viewBox="0 0 620 404">
+<svg xmlns="http://www.w3.org/2000/svg" width="622" height="454" viewBox="0 0 622 454">
   <rect width="100%" height="100%" fill="#ffffff"/>
   <defs><pattern id="grid" width="18" height="18" patternUnits="userSpaceOnUse"><path d="M 18 0 L 0 0 0 18" fill="none" stroke="#e5e7eb" stroke-width="1"/></pattern></defs>
   <text x="24" y="28" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#111827">Horizontal busbar — both sides</text>
   <text x="24" y="50" font-family="Arial, sans-serif" font-size="12" fill="#4b5563">Shows numbering sequence when slots are generated on both sides.</text>
-  <rect x="28" y="68" width="476.5" height="298" fill="url(#grid)" stroke="#cbd5e1" rx="10"/>
+  <rect x="28" y="68" width="566" height="348" fill="url(#grid)" stroke="#cbd5e1" rx="10"/>
   <g transform="translate(40, 80)" style="color:#4b5563;--voltage-color:#4b5563;--slot-color:#2563eb;--label-color:#111827">
-<rect x="20" y="142" width="252.5" height="12" fill="var(--busbar-color, #6d0ad6)" stroke="var(--busbar-color, #6d0ad6)" stroke-width="1" rx="0" />
-<circle cx="26.25" cy="148" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
-<text x="26.25" y="130" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">21</text>
-<circle cx="26.25" cy="148" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
-<text x="26.25" y="130" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">22</text>
-<circle cx="74.25" cy="148" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
-<text x="74.25" y="130" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">23</text>
-<circle cx="74.25" cy="148" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
-<text x="74.25" y="130" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">24</text>
-<circle cx="122.25" cy="148" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
-<text x="122.25" y="130" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">25</text>
-<circle cx="122.25" cy="148" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
-<text x="122.25" y="130" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">26</text>
-<circle cx="170.25" cy="148" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
-<text x="170.25" y="130" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">27</text>
-<circle cx="170.25" cy="148" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
-<text x="170.25" y="130" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">28</text>
-<circle cx="218.25" cy="148" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
-<text x="218.25" y="130" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">29</text>
-<circle cx="218.25" cy="148" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
-<text x="218.25" y="130" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">30</text>
-<circle cx="266.25" cy="148" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
-<text x="266.25" y="130" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">31</text>
-<circle cx="266.25" cy="148" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
-<text x="266.25" y="130" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">32</text>
-<text x="290.5" y="148" font-family="Arial, sans-serif" font-size="16" dominant-baseline="middle" fill="var(--label-color, #111111)">1С 10 кВ</text>
+<rect x="20" y="150" width="268" height="12" fill="var(--busbar-color, #6d0ad6)" stroke="var(--busbar-color, #6d0ad6)" stroke-width="1" rx="0" />
+<circle cx="34" cy="156" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="34" y="138" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">21</text>
+<circle cx="34" cy="156" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="34" y="174" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">22</text>
+<circle cx="82" cy="156" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="82" y="138" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">23</text>
+<circle cx="82" cy="156" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="82" y="174" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">24</text>
+<circle cx="130" cy="156" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="130" y="138" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">25</text>
+<circle cx="130" cy="156" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="130" y="174" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">26</text>
+<circle cx="178" cy="156" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="178" y="138" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">27</text>
+<circle cx="178" cy="156" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="178" y="174" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">28</text>
+<circle cx="226" cy="156" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="226" y="138" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">29</text>
+<circle cx="226" cy="156" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="226" y="174" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">30</text>
+<circle cx="274" cy="156" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="274" y="138" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">31</text>
+<circle cx="274" cy="156" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="274" y="174" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">32</text>
+<text x="322" y="156" transform="rotate(0 322 156)" font-family="Arial, sans-serif" font-size="16" dominant-baseline="middle" data-role="bus-label" data-draggable="true" data-offset-x="0" data-offset-y="0" data-rotation="0" fill="var(--label-color, #111111)">1С 10 кВ</text>
   </g>
-  <text x="24" y="376" font-family="Arial, sans-serif" font-size="11" fill="#64748b">terminals=14; bay_slots=12; viewBox=452.5x274</text>
+  <text x="24" y="426" font-family="Arial, sans-serif" font-size="11" fill="#64748b">terminals=14; bay_slots=12; viewBox=542x324</text>
 </svg>
