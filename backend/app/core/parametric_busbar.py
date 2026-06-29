@@ -89,22 +89,29 @@ def _equipment_kinds_for_bus_slot() -> list[str]:
     ]
 
 
+def _spacing(params: BusbarPreviewRequest) -> float:
+    return params.connection_spacing if params.connection_spacing is not None else 48.0
+
+
+def _required_slot_length(params: BusbarPreviewRequest) -> float:
+    if params.connection_count <= 0:
+        return max(params.length, params.end_slot_offset * 2.0)
+    if params.connection_count == 1:
+        return max(params.end_slot_offset * 2.0, params.slot_diameter + params.end_slot_offset * 2.0)
+    return params.end_slot_offset * 2.0 + _spacing(params) * (params.connection_count - 1)
+
+
 def _compute_length(params: BusbarPreviewRequest) -> float:
-    if params.connection_count <= 1:
-        return max(params.length, 120.0)
-    if params.connection_spacing is None:
-        return params.length
-    slot_span = params.connection_spacing * (params.connection_count - 1)
-    min_total = slot_span + 40.0
-    return max(params.length, min_total)
+    required = _required_slot_length(params)
+    if params.fit_length_to_slots:
+        return required
+    return max(params.length, required)
 
 
 def _horizontal_geometry(params: BusbarPreviewRequest) -> _BarGeometry:
-    bar_h = params.thickness_mm
+    top_label_zone = params.bay_label_offset + 22.0 if params.bay_numbering_enabled else 0.0
     top_slot_zone = params.bay_depth if params.connection_side in {"top", "both"} else 0.0
     bottom_slot_zone = params.bay_depth if params.connection_side in {"bottom", "both"} else 0.0
-    top_label_zone = params.bay_label_offset + 22.0 if params.bay_numbering_enabled else 0.0
-    bottom_label_zone = 0.0
     length = _compute_length(params)
 
     bar_x = params.margin
@@ -130,7 +137,7 @@ def _horizontal_geometry(params: BusbarPreviewRequest) -> _BarGeometry:
     )
 
     view_w = bar_x + bar_w + params.margin + 160.0
-    view_h = bar_y + bar_h + bottom_slot_zone + bottom_label_zone + params.margin + 20.0
+    view_h = bar_y + bar_h + bottom_slot_zone + params.margin + 20.0
 
     return _BarGeometry(
         bar_x=bar_x,
@@ -148,7 +155,6 @@ def _horizontal_geometry(params: BusbarPreviewRequest) -> _BarGeometry:
 
 
 def _vertical_geometry(params: BusbarPreviewRequest) -> _BarGeometry:
-    bar_w = params.thickness_mm
     left_label_zone = params.bay_label_offset + 18.0 if params.bay_numbering_enabled else 0.0
     left_slot_zone = params.bay_depth if params.connection_side in {"top", "both"} else 0.0
     right_slot_zone = params.bay_depth if params.connection_side in {"bottom", "both"} else 0.0
@@ -198,30 +204,18 @@ def _slot_positions_horizontal(params: BusbarPreviewRequest, geom: _BarGeometry)
     if params.connection_count <= 0:
         return []
     if params.connection_count == 1:
-        return [geom.center_x]
-    spacing = params.connection_spacing if params.connection_spacing is not None else geom.bar_w / (params.connection_count - 1)
-    total_span = spacing * (params.connection_count - 1)
-    start_x = geom.center_x - total_span / 2.0
-    return [start_x + i * spacing for i in range(params.connection_count)]
+        return [geom.bar_x + geom.bar_w / 2.0]
+    spacing = _spacing(params)
+    return [geom.bar_x + params.end_slot_offset + i * spacing for i in range(params.connection_count)]
 
 
 def _slot_positions_vertical(params: BusbarPreviewRequest, geom: _BarGeometry) -> list[float]:
     if params.connection_count <= 0:
         return []
     if params.connection_count == 1:
-        return [geom.center_y]
-    spacing = params.connection_spacing if params.connection_spacing is not None else geom.bar_h / (params.connection_count - 1)
-    total_span = spacing * (params.connection_count - 1)
-    start_y = geom.center_y - total_span / 2.0
-    return [start_y + i * spacing for i in range(params.connection_count)]
-
-
-def _slot_label_xy_horizontal(params: BusbarPreviewRequest, geom: _BarGeometry, x: float) -> tuple[float, float]:
-    return x, geom.bar_y - params.bay_label_offset
-
-
-def _slot_label_xy_vertical(params: BusbarPreviewRequest, geom: _BarGeometry, y: float) -> tuple[float, float]:
-    return geom.bar_x - params.bay_label_offset, y
+        return [geom.bar_y + geom.bar_h / 2.0]
+    spacing = _spacing(params)
+    return [geom.bar_y + params.end_slot_offset + i * spacing for i in range(params.connection_count)]
 
 
 def _make_slot(
@@ -239,24 +233,26 @@ def _make_slot(
         equipment_anchor_x = bus_x
         equipment_anchor_y = geom.bar_y - params.bay_depth
         direction = "up"
-        label_x, label_y = _slot_label_xy_horizontal(params, geom, bus_x)
+        label_x = bus_x
+        label_y = geom.bar_y - params.bay_label_offset
     elif slot_side == "bottom":
         equipment_anchor_x = bus_x
         equipment_anchor_y = geom.bar_y + geom.bar_h + params.bay_depth
         direction = "down"
-        label_x, label_y = _slot_label_xy_horizontal(params, geom, bus_x)
+        label_x = bus_x
+        label_y = geom.bar_y - params.bay_label_offset
     elif slot_side == "left":
         equipment_anchor_x = geom.bar_x - params.bay_depth
         equipment_anchor_y = bus_y
         direction = "left"
-        label_x, label_y = _slot_label_xy_vertical(params, geom, bus_y)
+        label_x = geom.bar_x - params.bay_label_offset
+        label_y = bus_y
     else:
         equipment_anchor_x = geom.bar_x + geom.bar_w + params.bay_depth
         equipment_anchor_y = bus_y
         direction = "right"
-        label_x, label_y = geom.bar_x - params.bay_label_offset, bus_y
-        if params.bus_label_position == "right":
-            label_x = geom.bar_x - params.bay_label_offset
+        label_x = geom.bar_x - params.bay_label_offset
+        label_y = bus_y
 
     label = _number_text(params, label_number)
     if not params.bay_numbering_enabled:
@@ -301,17 +297,14 @@ def _render_bus_label(elements: list[str], params: BusbarPreviewRequest, geom: _
     if rotation == 0:
         elements.append(
             f'<text x="{_fmt(x)}" y="{_fmt(y)}" '
-            'font-family="Arial, sans-serif" font-size="16" '
-            'dominant-baseline="middle" fill="var(--label-color, #111111)">'
-            f'{label}</text>'
+            'font-family="Arial, sans-serif" font-size="16" dominant-baseline="middle" '
+            f'fill="{_label_color()}">{label}</text>'
         )
     else:
         elements.append(
-            f'<text x="{_fmt(x)}" y="{_fmt(y)}" '
-            f'transform="rotate({rotation} {_fmt(x)} {_fmt(y)})" '
-            'font-family="Arial, sans-serif" font-size="16" '
-            'dominant-baseline="middle" text-anchor="middle" fill="var(--label-color, #111111)">'
-            f'{label}</text>'
+            f'<text x="{_fmt(x)}" y="{_fmt(y)}" transform="rotate({rotation} {_fmt(x)} {_fmt(y)})" '
+            'font-family="Arial, sans-serif" font-size="16" dominant-baseline="middle" text-anchor="middle" '
+            f'fill="{_label_color()}">{label}</text>'
         )
 
 
@@ -443,6 +436,8 @@ def generate_busbar_preview(params: BusbarPreviewRequest) -> ParametricSymbolPre
     else:
         terminals, bay_slots, svg_fragment, view_box = _horizontal_preview(params)
 
+    computed_length = _compute_length(params)
+
     capabilities = {
         "feature_flags": {
             "parametric": True,
@@ -454,6 +449,8 @@ def generate_busbar_preview(params: BusbarPreviewRequest) -> ParametricSymbolPre
             "auto_layout_eligible": True,
             "connection_count_configurable": True,
             "connection_spacing_configurable": True,
+            "end_slot_offset_configurable": True,
+            "fit_length_to_slots": params.fit_length_to_slots,
             "internal_slot_markers": True,
             "bay_slots": True,
             "bay_slot_numbering": params.bay_numbering_enabled,
@@ -463,7 +460,9 @@ def generate_busbar_preview(params: BusbarPreviewRequest) -> ParametricSymbolPre
             "connection_count": params.connection_count,
             "connection_side": params.connection_side,
             "orientation": params.orientation,
-            "length": _compute_length(params),
+            "length": computed_length,
+            "fit_length_to_slots": params.fit_length_to_slots,
+            "end_slot_offset": params.end_slot_offset,
             "thickness_mm": params.thickness_mm,
             "connection_spacing": params.connection_spacing,
             "slot_diameter": params.slot_diameter,
@@ -481,8 +480,8 @@ def generate_busbar_preview(params: BusbarPreviewRequest) -> ParametricSymbolPre
         "auto_scheme_generation": {
             "role": "bus_section",
             "can_host_bays": True,
-            "slot_model": "internal_busbar_points",
-            "terminal_generation": "centered_internal_slots",
+            "slot_model": "edge_offset_plus_spacing",
+            "terminal_generation": "edge_offset_spacing",
             "bay_slot_count": len(bay_slots),
             "bay_labels": [slot.label for slot in bay_slots if slot.label],
         },

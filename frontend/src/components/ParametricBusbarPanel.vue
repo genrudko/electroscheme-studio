@@ -5,7 +5,7 @@
         <p class="eyebrow">Parametric symbol</p>
         <h2>Busbar generator</h2>
         <p class="description">
-          Visual model aligned to Visio feedback: slots inside the busbar, labels above/aside, adjustable spacing and bus caption.
+          Slots are positioned by explicit end offset and spacing, like the Visio busbar parameters.
         </p>
       </div>
       <button type="button" class="primary-button" :disabled="loading" @click="refreshPreview">
@@ -30,7 +30,16 @@
         </label>
 
         <label class="field">Spacing between points
-          <input v-model.number="form.connection_spacing" type="number" min="5" max="300" step="1" />
+          <input v-model.number="form.connection_spacing" type="number" min="5" max="300" step="0.25" />
+        </label>
+
+        <label class="field">End slot offset
+          <input v-model.number="form.end_slot_offset" type="number" min="0" max="300" step="0.25" />
+        </label>
+
+        <label class="check-field">
+          <input v-model="form.fit_length_to_slots" type="checkbox" />
+          Fit bus length to offset + spacing
         </label>
 
         <label class="field">Bus thickness, mm
@@ -42,7 +51,7 @@
         </label>
 
         <label class="field">Minimum bar length
-          <input v-model.number="form.length" type="number" min="80" max="1600" step="10" />
+          <input v-model.number="form.length" type="number" min="20" max="1600" step="10" />
         </label>
 
         <label class="field">Connection side
@@ -124,8 +133,12 @@
             <strong>{{ preview.bay_slots.length }}</strong>
           </article>
           <article>
-            <span>Labels</span>
-            <strong>{{ numberedSlotCount }}</strong>
+            <span>End offset</span>
+            <strong>{{ preview.capabilities.busbar.end_slot_offset }}</strong>
+          </article>
+          <article>
+            <span>Spacing</span>
+            <strong>{{ preview.capabilities.busbar.connection_spacing }}</strong>
           </article>
           <article>
             <span>Computed length</span>
@@ -154,8 +167,8 @@
                 <td><strong>{{ slot.label || '—' }}</strong></td>
                 <td><code>{{ slot.id }}</code></td>
                 <td>{{ slot.side }}</td>
-                <td>{{ slot.bus_x.toFixed(1) }}, {{ slot.bus_y.toFixed(1) }}</td>
-                <td>{{ slot.equipment_anchor_x.toFixed(1) }}, {{ slot.equipment_anchor_y.toFixed(1) }}</td>
+                <td>{{ slot.bus_x.toFixed(2) }}, {{ slot.bus_y.toFixed(2) }}</td>
+                <td>{{ slot.equipment_anchor_x.toFixed(2) }}, {{ slot.equipment_anchor_y.toFixed(2) }}</td>
               </tr>
             </tbody>
           </table>
@@ -178,11 +191,13 @@ type BusbarPreviewRequest = {
   name_ru: string
   voltage_kv: number
   length: number
+  fit_length_to_slots: boolean
   connection_count: number
   connection_side: BusbarConnectionSide
   orientation: BusbarOrientation
   thickness_mm: number
   connection_spacing: number
+  end_slot_offset: number
   slot_diameter: number
   margin: number
   bay_depth: number
@@ -203,15 +218,9 @@ type ParametricBaySlot = {
   side: string
   bus_x: number
   bus_y: number
-  terminal_x: number
-  terminal_y: number
   equipment_anchor_x: number
   equipment_anchor_y: number
-  preferred_routing_direction: string
-  label_number?: number | null
   label: string
-  label_x?: number | null
-  label_y?: number | null
 }
 
 type ParametricSymbolPreview = {
@@ -221,7 +230,6 @@ type ParametricSymbolPreview = {
   viewBox: { x: number; y: number; width: number; height: number }
   svg_fragment: string
   bay_slots: ParametricBaySlot[]
-  parameters: BusbarPreviewRequest
   capabilities: Record<string, any>
 }
 
@@ -234,11 +242,13 @@ const form = reactive<BusbarPreviewRequest>({
   name_ru: 'Шина 10 кВ',
   voltage_kv: 10,
   length: 260,
+  fit_length_to_slots: true,
   connection_count: 5,
   connection_side: 'bottom',
   orientation: 'horizontal',
   thickness_mm: 12,
   connection_spacing: 48,
+  end_slot_offset: 6.25,
   slot_diameter: 8,
   margin: 24,
   bay_depth: 90,
@@ -256,10 +266,6 @@ const viewBoxString = computed(() => {
   if (!preview.value) return '0 0 100 100'
   const vb = preview.value.viewBox
   return `${vb.x} ${vb.y} ${vb.width} ${vb.height}`
-})
-
-const numberedSlotCount = computed(() => {
-  return preview.value?.bay_slots.filter((slot) => Boolean(slot.label)).length ?? 0
 })
 
 async function refreshPreview(): Promise<void> {
@@ -388,7 +394,7 @@ onMounted(() => {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
   color: #334155;
   font-size: 12px;
   font-weight: 800;

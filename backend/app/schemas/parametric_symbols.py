@@ -17,12 +17,14 @@ class BusbarPreviewRequest(BaseModel):
     id: str = Field(default="param_busbar_1", min_length=1)
     name_ru: str = Field(default="Шина")
     voltage_kv: float = Field(default=10.0, ge=0.4, le=1150.0)
-    length: float = Field(default=260.0, ge=80.0, le=1600.0)
+    length: float = Field(default=260.0, ge=20.0, le=1600.0)
+    fit_length_to_slots: bool = True
     connection_count: int = Field(default=5, ge=0, le=64)
     connection_side: BusbarConnectionSide = "bottom"
     orientation: BusbarOrientation = "horizontal"
     thickness_mm: float = Field(default=12.0, ge=2.0, le=60.0)
     connection_spacing: float | None = Field(default=48.0, ge=5.0, le=300.0)
+    end_slot_offset: float = Field(default=6.25, ge=0.0, le=300.0)
     slot_diameter: float = Field(default=8.0, ge=2.0, le=30.0)
     margin: float = Field(default=24.0, ge=5.0, le=120.0)
     bay_depth: float = Field(default=90.0, ge=20.0, le=260.0)
@@ -66,7 +68,7 @@ class ParametricBaySlot(BaseModel):
 
 
 class ParametricSymbolPreview(BaseModel):
-    schema_version: str = "parametric-symbol-preview-0.4"
+    schema_version: str = "parametric-symbol-preview-0.5"
     id: str
     name_ru: str
     kind: Literal["busbar"]
