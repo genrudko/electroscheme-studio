@@ -251,7 +251,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue'
+import { computed, onBeforeUnmount, onMounted, reactive, ref, watch, onUnmounted } from 'vue'
 import CanvasContextMenu from './CanvasContextMenu.vue'
 import { isoPageSizes, normalizeCanvasSettings, type CanvasSettings } from '../../lib/editor/canvasSettings'
 import type { EditorCommand, EditorInteractionMode } from '../../lib/editor/interactionModes'
@@ -1212,15 +1212,89 @@ function createVsdxPlaceholderSymbol(payload: PaletteVsdxDropPayload, point: Poi
   emitStatus(snapped, snapped.kind, payload.title)
 }
 
-function onPalettePointerDrop(event: PointerEvent): void {
+let lastPaletteDragClientPoint: { x: number; y: number } | null = null
+
+function rememberPaletteDragClientPoint(event: PointerEvent | DragEvent): void {
+  if (!getPaletteDragPayload()) return
+  const x = Number(event.clientX)
+  const y = Number(event.clientY)
+  if (!Number.isFinite(x) || !Number.isFinite(y)) return
+  if (x === 0 && y === 0) return
+  lastPaletteDragClientPoint = { x, y }
+}
+
+function placePalettePayloadAtClientPoint(clientX: number, clientY: number): boolean {
   const payload = getPaletteDragPayload()
-  if (!payload || payload.status !== 'planned') return
+  if (!payload) return false
 
-  const p = worldPointFromClient(event.clientX, event.clientY)
-  if (!p) return
+  const p = worldPointFromClient(clientX, clientY)
+  if (!p) {
+    clearPaletteDragPayload()
+    lastPaletteDragClientPoint = null
+    return false
+  }
 
-  createVsdxPlaceholderSymbol(payload as PaletteVsdxDropPayload, p)
+  if (payload.status === 'planned') {
+    createVsdxPlaceholderSymbol(payload as PaletteVsdxDropPayload, p)
+    clearPaletteDragPayload()
+    lastPaletteDragClientPoint = null
+    return true
+  }
+
+  if (payload.command) {
+    handleCommandAtPoint(payload.command as EditorCommand, snapCanvasPoint(p))
+    clearPaletteDragPayload()
+    lastPaletteDragClientPoint = null
+    return true
+  }
+
   clearPaletteDragPayload()
+  lastPaletteDragClientPoint = null
+  return false
+}
+
+function onGlobalPalettePointerMove(event: PointerEvent): void {
+  rememberPaletteDragClientPoint(event)
+}
+
+function onGlobalPaletteDragOver(event: DragEvent): void {
+  rememberPaletteDragClientPoint(event)
+}
+
+function onGlobalPalettePointerUp(event: PointerEvent): void {
+  rememberPaletteDragClientPoint(event)
+  if (!getPaletteDragPayload()) return
+  const point = lastPaletteDragClientPoint ?? { x: event.clientX, y: event.clientY }
+  placePalettePayloadAtClientPoint(point.x, point.y)
+}
+
+function onGlobalPaletteDragEnd(event: DragEvent): void {
+  const transferred = readPaletteDragPayloadFromEvent(event)
+  if (!transferred && !getPaletteDragPayload()) return
+  rememberPaletteDragClientPoint(event)
+  const point = lastPaletteDragClientPoint ?? { x: event.clientX, y: event.clientY }
+  placePalettePayloadAtClientPoint(point.x, point.y)
+}
+
+onMounted(() => {
+  window.addEventListener('pointermove', onGlobalPalettePointerMove, true)
+  window.addEventListener('pointerup', onGlobalPalettePointerUp, true)
+  window.addEventListener('dragover', onGlobalPaletteDragOver, true)
+  window.addEventListener('dragend', onGlobalPaletteDragEnd, true)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('pointermove', onGlobalPalettePointerMove, true)
+  window.removeEventListener('pointerup', onGlobalPalettePointerUp, true)
+  window.removeEventListener('dragover', onGlobalPaletteDragOver, true)
+  window.removeEventListener('dragend', onGlobalPaletteDragEnd, true)
+})
+
+
+
+function onPalettePointerDrop(event: PointerEvent): void {
+  rememberPaletteDragClientPoint(event)
+  placePalettePayloadAtClientPoint(event.clientX, event.clientY)
 }
 
 function onPaletteDrop(event: DragEvent): void {
