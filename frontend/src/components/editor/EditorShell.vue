@@ -76,6 +76,10 @@ function updateCanvasSettings(next: CanvasSettings): void {
   canvasSettings.snapGuides = normalized.snapGuides
   canvasSettings.guidesVisible = normalized.guidesVisible
   canvasSettings.rulersVisible = normalized.rulersVisible
+  canvasSettings.originVisible = normalized.originVisible
+  canvasSettings.pageVisible = normalized.pageVisible
+  canvasSettings.pageFormat = normalized.pageFormat
+  canvasSettings.pageOrientation = normalized.pageOrientation
 }
 
 function updateStatus(next: EditorStatus): void {

@@ -24,6 +24,8 @@ export type EditorCommand =
   | 'clear_guides'
   | 'zoom_fit'
   | 'zoom_100'
+  | 'add_busbar_slot'
+  | 'remove_busbar_slot'
 
 export const interactionModeLabels: Record<EditorInteractionMode, string> = {
   select: 'Выбор',

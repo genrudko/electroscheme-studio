@@ -9,6 +9,7 @@ export type SnapKind =
   | 'terminal'
   | 'object'
   | 'guide'
+  | 'origin'
   | 'free'
 
 export type SnapResult = Point & {

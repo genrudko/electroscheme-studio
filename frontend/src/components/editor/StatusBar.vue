@@ -13,8 +13,8 @@
       <input
         :value="settings.zoom"
         type="range"
-        min="0.25"
-        max="4"
+        min="0.2"
+        max="6"
         step="0.05"
         title="Масштаб канваса"
         @input="onZoomInput"

@@ -36,15 +36,6 @@
             <button type="button" @click="$emit('setMode', 'paste_by_point')">⌖ Вставить по точке</button>
           </div>
         </section>
-
-        <section class="ribbon-group">
-          <h3>Поворот</h3>
-          <div class="button-row compact">
-            <button type="button" @click="$emit('command', 'rotate_0')">0°</button>
-            <button type="button" @click="$emit('command', 'rotate_90')">+90°</button>
-            <button type="button" @click="$emit('command', 'rotate_minus_90')">-90°</button>
-          </div>
-        </section>
       </template>
 
       <template v-else-if="activeTab === 'insert'">
@@ -55,15 +46,23 @@
             <button type="button" @click="$emit('command', 'create_text')">Текст</button>
           </div>
         </section>
+
+        <section class="ribbon-group">
+          <h3>Направляющие</h3>
+          <div class="button-row">
+            <button type="button" @click="$emit('command', 'create_vertical_guide')">Вертикальная</button>
+            <button type="button" @click="$emit('command', 'create_horizontal_guide')">Горизонтальная</button>
+          </div>
+        </section>
       </template>
 
       <template v-else-if="activeTab === 'busbars'">
         <section class="ribbon-group wide">
           <h3>Шины / ячейки</h3>
           <div class="button-row">
-            <button type="button" @click="$emit('command', 'create_sample_busbar')">Добавить шину 10 кВ</button>
-            <button type="button" @click="$emit('command', 'create_sample_busbar')">Добавить секцию</button>
-            <button type="button" @click="$emit('command', 'create_text')">Надпись</button>
+            <button type="button" @click="$emit('command', 'create_sample_busbar')">Добавить шину</button>
+            <button type="button" @click="$emit('command', 'add_busbar_slot')">+ Ячейка</button>
+            <button type="button" @click="$emit('command', 'remove_busbar_slot')">− Ячейка</button>
           </div>
         </section>
       </template>
@@ -80,6 +79,23 @@
               Допуск
               <input :value="settings.snapTolerance" type="number" min="1" max="50" step="1" @change="onNumberSetting('snapTolerance', $event)" />
             </label>
+            <label>
+              Лист
+              <select :value="settings.pageFormat" @change="onTextSetting('pageFormat', $event)">
+                <option value="A4">A4</option>
+                <option value="A3">A3</option>
+                <option value="A2">A2</option>
+                <option value="A1">A1</option>
+                <option value="A0">A0</option>
+              </select>
+            </label>
+            <label>
+              Ориентация
+              <select :value="settings.pageOrientation" @change="onTextSetting('pageOrientation', $event)">
+                <option value="landscape">Альбомная</option>
+                <option value="portrait">Книжная</option>
+              </select>
+            </label>
           </div>
         </section>
 
@@ -87,6 +103,8 @@
           <h3>Отображение и привязки</h3>
           <div class="toggle-row">
             <label><input :checked="settings.rulersVisible" type="checkbox" @change="onBooleanSetting('rulersVisible', $event)" /> Линейки</label>
+            <label><input :checked="settings.pageVisible" type="checkbox" @change="onBooleanSetting('pageVisible', $event)" /> Лист ISO</label>
+            <label><input :checked="settings.originVisible" type="checkbox" @change="onBooleanSetting('originVisible', $event)" /> Центр 0,0</label>
             <label><input :checked="settings.gridVisible" type="checkbox" @change="onBooleanSetting('gridVisible', $event)" /> Сетка</label>
             <label><input :checked="settings.guidesVisible" type="checkbox" @change="onBooleanSetting('guidesVisible', $event)" /> Направляющие</label>
             <label><input :checked="settings.snapEnabled" type="checkbox" @change="onBooleanSetting('snapEnabled', $event)" /> Привязки</label>
@@ -107,20 +125,6 @@
         </section>
       </template>
 
-      <template v-else-if="activeTab === 'symbols'">
-        <section class="ribbon-group placeholder">
-          <h3>Символы</h3>
-          <p>Здесь будет палитра выключателей, разъединителей, ТН, ТТ и других фигур.</p>
-        </section>
-      </template>
-
-      <template v-else-if="activeTab === 'connections'">
-        <section class="ribbon-group placeholder">
-          <h3>Соединения</h3>
-          <p>Здесь будут линии, связи, привязки к terminals и настройка трассировки.</p>
-        </section>
-      </template>
-
       <template v-else-if="activeTab === 'text'">
         <section class="ribbon-group">
           <h3>Текст</h3>
@@ -133,10 +137,10 @@
         </section>
       </template>
 
-      <template v-else-if="activeTab === 'export'">
+      <template v-else>
         <section class="ribbon-group placeholder">
-          <h3>Экспорт</h3>
-          <p>Экспорт SVG/PDF/PNG будет подключён после model-backed canvas.</p>
+          <h3>{{ activeTabLabel }}</h3>
+          <p>Раздел подготовлен под следующие редакторские команды.</p>
         </section>
       </template>
     </div>
@@ -144,7 +148,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import type { CanvasSettings } from '../../lib/editor/canvasSettings'
 import { normalizeCanvasSettings } from '../../lib/editor/canvasSettings'
 import type { EditorCommand, EditorInteractionMode } from '../../lib/editor/interactionModes'
@@ -172,6 +176,7 @@ const tabs = [
 ] as const
 
 const activeTab = ref<(typeof tabs)[number]['id']>('home')
+const activeTabLabel = computed(() => tabs.find((tab) => tab.id === activeTab.value)?.label ?? activeTab.value)
 
 function patchSettings(patch: Partial<CanvasSettings>): void {
   emit('settingsChange', normalizeCanvasSettings({ ...props.settings, ...patch }))
@@ -185,6 +190,11 @@ function onBooleanSetting(key: keyof CanvasSettings, event: Event): void {
 function onNumberSetting(key: keyof CanvasSettings, event: Event): void {
   const value = Number((event.target as HTMLInputElement).value)
   if (!Number.isFinite(value)) return
+  patchSettings({ [key]: value } as Partial<CanvasSettings>)
+}
+
+function onTextSetting(key: keyof CanvasSettings, event: Event): void {
+  const value = (event.target as HTMLSelectElement).value
   patchSettings({ [key]: value } as Partial<CanvasSettings>)
 }
 </script>
@@ -213,14 +223,8 @@ function onNumberSetting(key: keyof CanvasSettings, event: Event): void {
   color: white;
 }
 
-.ribbon-title strong {
-  font-size: 15px;
-}
-
-.ribbon-title span {
-  color: #cbd5e1;
-  font-size: 12px;
-}
+.ribbon-title strong { font-size: 15px; }
+.ribbon-title span { color: #cbd5e1; font-size: 12px; }
 
 .ribbon-tabs {
   display: flex;
@@ -267,21 +271,10 @@ function onNumberSetting(key: keyof CanvasSettings, event: Event): void {
   overflow: hidden;
 }
 
-.ribbon-group.wide {
-  min-width: 320px;
-}
-
-.ribbon-group.canvas-settings {
-  min-width: 170px;
-}
-
-.ribbon-group.snap-settings {
-  min-width: 420px;
-}
-
-.ribbon-group.placeholder {
-  min-width: 430px;
-}
+.ribbon-group.wide { min-width: 320px; }
+.ribbon-group.canvas-settings { min-width: 330px; }
+.ribbon-group.snap-settings { min-width: 520px; }
+.ribbon-group.placeholder { min-width: 380px; }
 
 .ribbon-group h3 {
   margin: 0 0 5px;
@@ -305,10 +298,6 @@ function onNumberSetting(key: keyof CanvasSettings, event: Event): void {
   gap: 5px;
 }
 
-.button-row.compact {
-  max-width: 128px;
-}
-
 .button-row button {
   border: 1px solid #bfdbfe;
   border-radius: 8px;
@@ -321,19 +310,11 @@ function onNumberSetting(key: keyof CanvasSettings, event: Event): void {
   box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
 }
 
-.button-row button:hover {
-  background: #eff6ff;
-}
-
-.button-row button.active {
-  background: #2563eb;
-  color: white;
-  border-color: #2563eb;
-}
+.button-row button:hover { background: #eff6ff; }
 
 .settings-grid {
   display: grid;
-  grid-template-columns: 74px 74px;
+  grid-template-columns: 74px 74px 78px 92px;
   gap: 8px;
   align-items: end;
 }
@@ -347,11 +328,13 @@ function onNumberSetting(key: keyof CanvasSettings, event: Event): void {
   font-weight: 800;
 }
 
-.settings-grid input[type="number"] {
+.settings-grid input,
+.settings-grid select {
   width: 100%;
   border: 1px solid #bfdbfe;
   border-radius: 7px;
   padding: 5px 6px;
+  background: white;
 }
 
 .toggle-row label {
