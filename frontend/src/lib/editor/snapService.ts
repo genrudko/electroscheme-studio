@@ -35,9 +35,7 @@ function distance(a: Point, b: Point): number {
 }
 
 export function snapPoint(point: Point, options: SnapOptions): SnapResult {
-  if (!options.enabled) {
-    return { ...point, kind: 'free', label: 'Свободно' }
-  }
+  if (!options.enabled) return { ...point, kind: 'free', label: 'Свободно' }
 
   let best: SnapResult | null = null
   let bestDistance = Number.POSITIVE_INFINITY
@@ -62,12 +60,7 @@ export function snapPoint(point: Point, options: SnapOptions): SnapResult {
     const gridDistance = distance(point, gridPoint)
 
     if (gridDistance < bestDistance && gridDistance <= options.tolerance) {
-      best = {
-        x: gridX,
-        y: gridY,
-        kind: 'grid',
-        label: `Сетка ${options.gridSize}`,
-      }
+      best = { x: gridX, y: gridY, kind: 'grid', label: `Сетка ${options.gridSize}` }
     }
   }
 
@@ -76,4 +69,11 @@ export function snapPoint(point: Point, options: SnapOptions): SnapResult {
 
 export function formatPoint(point: Point): string {
   return `X=${point.x.toFixed(1)} Y=${point.y.toFixed(1)}`
+}
+
+export function rectsIntersect(a: { x: number; y: number; width: number; height: number }, b: { x: number; y: number; width: number; height: number }): boolean {
+  return a.x <= b.x + b.width
+    && a.x + a.width >= b.x
+    && a.y <= b.y + b.height
+    && a.y + a.height >= b.y
 }

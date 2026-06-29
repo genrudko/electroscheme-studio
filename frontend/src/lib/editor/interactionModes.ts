@@ -19,6 +19,9 @@ export type EditorCommand =
   | 'clear_generated'
   | 'create_sample_busbar'
   | 'create_text'
+  | 'create_rectangle'
+  | 'create_ellipse'
+  | 'create_line'
   | 'create_vertical_guide'
   | 'create_horizontal_guide'
   | 'clear_guides'
@@ -33,12 +36,4 @@ export const interactionModeLabels: Record<EditorInteractionMode, string> = {
   copy_by_reference: 'Выбор базовой точки',
   paste_by_point: 'Вставка по точке',
   create_guide: 'Создание направляющей',
-}
-
-export function commandToMode(command: EditorCommand): EditorInteractionMode | null {
-  if (command === 'select') return 'select'
-  if (command === 'pan') return 'pan'
-  if (command === 'copy_by_reference') return 'copy_by_reference'
-  if (command === 'paste_by_point') return 'paste_by_point'
-  return null
 }

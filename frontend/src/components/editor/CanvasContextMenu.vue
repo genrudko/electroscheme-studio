@@ -1,13 +1,10 @@
 <template>
-  <div
-    v-if="visible"
-    class="canvas-context-menu"
-    :style="{ left: `${x}px`, top: `${y}px` }"
-    @pointerdown.stop
-    @contextmenu.prevent.stop
-  >
+  <div v-if="visible" class="canvas-context-menu" :style="{ left: `${x}px`, top: `${y}px` }" @pointerdown.stop @contextmenu.prevent.stop>
     <button type="button" @click="$emit('command', 'create_sample_busbar')">Добавить шину</button>
     <button type="button" @click="$emit('command', 'create_text')">Добавить текст</button>
+    <button type="button" @click="$emit('command', 'create_rectangle')">Прямоугольник</button>
+    <button type="button" @click="$emit('command', 'create_ellipse')">Эллипс</button>
+    <button type="button" @click="$emit('command', 'create_line')">Линия</button>
     <button type="button" @click="$emit('command', 'create_vertical_guide')">Вертикальная направляющая</button>
     <button type="button" @click="$emit('command', 'create_horizontal_guide')">Горизонтальная направляющая</button>
     <hr />
@@ -73,9 +70,7 @@ defineEmits<{
   cursor: default;
 }
 
-.canvas-context-menu button.danger {
-  color: #b91c1c;
-}
+.canvas-context-menu button.danger { color: #b91c1c; }
 
 .canvas-context-menu hr {
   border: 0;

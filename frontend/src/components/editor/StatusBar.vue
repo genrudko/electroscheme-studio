@@ -10,15 +10,7 @@
 
     <div class="zoom-bar">
       <button type="button" @click="setZoom(1)">100%</button>
-      <input
-        :value="settings.zoom"
-        type="range"
-        min="0.2"
-        max="6"
-        step="0.05"
-        title="Масштаб канваса"
-        @input="onZoomInput"
-      />
+      <input :value="settings.zoom" type="range" min="0.2" max="6" step="0.05" title="Масштаб канваса" @input="onZoomInput" />
       <span>{{ Math.round(settings.zoom * 100) }}%</span>
     </div>
   </footer>
@@ -86,9 +78,7 @@ function onZoomInput(event: Event): void {
   overflow: hidden;
 }
 
-.status-left span {
-  flex: 0 0 auto;
-}
+.status-left span { flex: 0 0 auto; }
 
 .status-message {
   flex: 1 1 auto !important;

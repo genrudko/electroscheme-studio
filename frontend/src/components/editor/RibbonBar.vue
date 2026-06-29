@@ -6,13 +6,7 @@
     </div>
 
     <nav class="ribbon-tabs" aria-label="Лента команд редактора">
-      <button
-        v-for="tab in tabs"
-        :key="tab.id"
-        type="button"
-        :class="{ active: tab.id === activeTab }"
-        @click="activeTab = tab.id"
-      >
+      <button v-for="tab in tabs" :key="tab.id" type="button" :class="{ active: tab.id === activeTab }" @click="activeTab = tab.id">
         {{ tab.label }}
       </button>
     </nav>
@@ -26,7 +20,6 @@
             <button type="button" :class="{ active: activeMode === 'pan' }" @click="$emit('setMode', 'pan')">✋ Панорама</button>
           </div>
         </section>
-
         <section class="ribbon-group wide">
           <h3>Буфер</h3>
           <div class="button-row">
@@ -39,19 +32,14 @@
       </template>
 
       <template v-else-if="activeTab === 'insert'">
-        <section class="ribbon-group">
-          <h3>Объекты</h3>
+        <section class="ribbon-group wide">
+          <h3>Фигуры</h3>
           <div class="button-row">
             <button type="button" @click="$emit('command', 'create_sample_busbar')">＋ Шина</button>
             <button type="button" @click="$emit('command', 'create_text')">Текст</button>
-          </div>
-        </section>
-
-        <section class="ribbon-group">
-          <h3>Направляющие</h3>
-          <div class="button-row">
-            <button type="button" @click="$emit('command', 'create_vertical_guide')">Вертикальная</button>
-            <button type="button" @click="$emit('command', 'create_horizontal_guide')">Горизонтальная</button>
+            <button type="button" @click="$emit('command', 'create_rectangle')">Прямоугольник</button>
+            <button type="button" @click="$emit('command', 'create_ellipse')">Эллипс</button>
+            <button type="button" @click="$emit('command', 'create_line')">Линия</button>
           </div>
         </section>
       </template>
@@ -71,29 +59,16 @@
         <section class="ribbon-group canvas-settings">
           <h3>Канвас</h3>
           <div class="settings-grid">
-            <label>
-              Шаг сетки
-              <input :value="settings.gridStep" type="number" min="2" max="100" step="1" @change="onNumberSetting('gridStep', $event)" />
-            </label>
-            <label>
-              Допуск
-              <input :value="settings.snapTolerance" type="number" min="1" max="50" step="1" @change="onNumberSetting('snapTolerance', $event)" />
-            </label>
-            <label>
-              Лист
+            <label>Шаг сетки <input :value="settings.gridStep" type="number" min="2" max="100" step="1" @change="onNumberSetting('gridStep', $event)" /></label>
+            <label>Допуск <input :value="settings.snapTolerance" type="number" min="1" max="50" step="1" @change="onNumberSetting('snapTolerance', $event)" /></label>
+            <label>Лист
               <select :value="settings.pageFormat" @change="onTextSetting('pageFormat', $event)">
-                <option value="A4">A4</option>
-                <option value="A3">A3</option>
-                <option value="A2">A2</option>
-                <option value="A1">A1</option>
-                <option value="A0">A0</option>
+                <option value="A4">A4</option><option value="A3">A3</option><option value="A2">A2</option><option value="A1">A1</option><option value="A0">A0</option>
               </select>
             </label>
-            <label>
-              Ориентация
+            <label>Ориентация
               <select :value="settings.pageOrientation" @change="onTextSetting('pageOrientation', $event)">
-                <option value="landscape">Альбомная</option>
-                <option value="portrait">Книжная</option>
+                <option value="landscape">Альбомная</option><option value="portrait">Книжная</option>
               </select>
             </label>
           </div>
@@ -126,7 +101,7 @@
       </template>
 
       <template v-else-if="activeTab === 'text'">
-        <section class="ribbon-group">
+        <section class="ribbon-group wide">
           <h3>Текст</h3>
           <div class="button-row">
             <button type="button" @click="$emit('command', 'create_text')">Добавить текст</button>
@@ -183,19 +158,16 @@ function patchSettings(patch: Partial<CanvasSettings>): void {
 }
 
 function onBooleanSetting(key: keyof CanvasSettings, event: Event): void {
-  const checked = (event.target as HTMLInputElement).checked
-  patchSettings({ [key]: checked } as Partial<CanvasSettings>)
+  patchSettings({ [key]: (event.target as HTMLInputElement).checked } as Partial<CanvasSettings>)
 }
 
 function onNumberSetting(key: keyof CanvasSettings, event: Event): void {
   const value = Number((event.target as HTMLInputElement).value)
-  if (!Number.isFinite(value)) return
-  patchSettings({ [key]: value } as Partial<CanvasSettings>)
+  if (Number.isFinite(value)) patchSettings({ [key]: value } as Partial<CanvasSettings>)
 }
 
 function onTextSetting(key: keyof CanvasSettings, event: Event): void {
-  const value = (event.target as HTMLSelectElement).value
-  patchSettings({ [key]: value } as Partial<CanvasSettings>)
+  patchSettings({ [key]: (event.target as HTMLSelectElement).value } as Partial<CanvasSettings>)
 }
 </script>
 
