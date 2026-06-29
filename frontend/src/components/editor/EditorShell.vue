@@ -15,6 +15,7 @@
         :settings="canvasSettings"
         @mode-change="setMode"
         @status-change="updateStatus"
+        @settings-change="updateCanvasSettings"
         @command-handled="pendingCommand = null"
       />
     </main>
@@ -26,6 +27,8 @@
       :snap-label="status.snapLabel"
       :selected-object-name="status.selectedObjectName"
       :message="status.message"
+      :settings="canvasSettings"
+      @settings-change="updateCanvasSettings"
     />
   </section>
 </template>
@@ -70,7 +73,9 @@ function updateCanvasSettings(next: CanvasSettings): void {
   canvasSettings.snapGrid = normalized.snapGrid
   canvasSettings.snapSlots = normalized.snapSlots
   canvasSettings.snapObjects = normalized.snapObjects
+  canvasSettings.snapGuides = normalized.snapGuides
   canvasSettings.guidesVisible = normalized.guidesVisible
+  canvasSettings.rulersVisible = normalized.rulersVisible
 }
 
 function updateStatus(next: EditorStatus): void {
@@ -84,7 +89,7 @@ function updateStatus(next: EditorStatus): void {
 function setMode(mode: EditorInteractionMode): void {
   activeMode.value = mode
   status.message = mode === 'copy_by_reference'
-    ? 'Укажите виртуальную базовую точку. Она привязывается к сетке, ячейкам и центрам объектов.'
+    ? 'Укажите виртуальную базовую точку. Она привязывается к сетке, ячейкам, объектам и направляющим.'
     : mode === 'paste_by_point'
       ? 'Укажите точку вставки.'
       : `Режим: ${mode}.`
@@ -98,10 +103,12 @@ function dispatchCommand(command: EditorCommand): void {
 <style scoped>
 .editor-shell {
   display: grid;
-  grid-template-rows: auto 1fr auto;
-  min-height: 100vh;
+  grid-template-rows: 112px 1fr 34px;
+  height: 100vh;
+  min-height: 0;
   background: #e5edf7;
   color: #0f172a;
+  overflow: hidden;
 }
 
 .editor-main {

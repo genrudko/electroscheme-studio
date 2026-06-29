@@ -8,111 +8,137 @@
     <nav class="ribbon-tabs" aria-label="Лента команд редактора">
       <button
         v-for="tab in tabs"
-        :key="tab"
+        :key="tab.id"
         type="button"
-        :class="{ active: tab === activeTab }"
-        @click="activeTab = tab"
+        :class="{ active: tab.id === activeTab }"
+        @click="activeTab = tab.id"
       >
-        {{ tab }}
+        {{ tab.label }}
       </button>
     </nav>
 
     <div class="ribbon-content">
-      <section class="ribbon-group">
-        <h3>Инструменты</h3>
-        <div class="button-row">
-          <button type="button" :class="{ active: activeMode === 'select' }" @click="$emit('setMode', 'select')">↖ Выбор</button>
-          <button type="button" :class="{ active: activeMode === 'pan' }" @click="$emit('setMode', 'pan')">✋ Панорама</button>
-        </div>
-      </section>
+      <template v-if="activeTab === 'home'">
+        <section class="ribbon-group">
+          <h3>Инструменты</h3>
+          <div class="button-row">
+            <button type="button" :class="{ active: activeMode === 'select' }" @click="$emit('setMode', 'select')">↖ Выбор</button>
+            <button type="button" :class="{ active: activeMode === 'pan' }" @click="$emit('setMode', 'pan')">✋ Панорама</button>
+          </div>
+        </section>
 
-      <section class="ribbon-group wide">
-        <h3>Буфер</h3>
-        <div class="button-row">
-          <button type="button" @click="$emit('command', 'copy')">⧉ Копировать</button>
-          <button type="button" @click="$emit('setMode', 'copy_by_reference')">⌖ С базовой точкой</button>
-          <button type="button" @click="$emit('command', 'paste')">▣ Вставить</button>
-          <button type="button" @click="$emit('setMode', 'paste_by_point')">⌖ Вставить по точке</button>
-        </div>
-      </section>
+        <section class="ribbon-group wide">
+          <h3>Буфер</h3>
+          <div class="button-row">
+            <button type="button" @click="$emit('command', 'copy')">⧉ Копировать</button>
+            <button type="button" @click="$emit('setMode', 'copy_by_reference')">⌖ С базовой точкой</button>
+            <button type="button" @click="$emit('command', 'paste')">▣ Вставить</button>
+            <button type="button" @click="$emit('setMode', 'paste_by_point')">⌖ Вставить по точке</button>
+          </div>
+        </section>
 
-      <section class="ribbon-group">
-        <h3>Объекты</h3>
-        <div class="button-row">
-          <button type="button" @click="$emit('command', 'create_sample_busbar')">＋ Шина</button>
-          <button type="button" @click="$emit('command', 'create_text')">Текст</button>
-        </div>
-      </section>
+        <section class="ribbon-group">
+          <h3>Поворот</h3>
+          <div class="button-row compact">
+            <button type="button" @click="$emit('command', 'rotate_0')">0°</button>
+            <button type="button" @click="$emit('command', 'rotate_90')">+90°</button>
+            <button type="button" @click="$emit('command', 'rotate_minus_90')">-90°</button>
+          </div>
+        </section>
+      </template>
 
-      <section class="ribbon-group">
-        <h3>Поворот</h3>
-        <div class="button-row compact">
-          <button type="button" @click="$emit('command', 'rotate_0')">0°</button>
-          <button type="button" @click="$emit('command', 'rotate_90')">+90°</button>
-          <button type="button" @click="$emit('command', 'rotate_minus_90')">-90°</button>
-        </div>
-      </section>
+      <template v-else-if="activeTab === 'insert'">
+        <section class="ribbon-group">
+          <h3>Объекты</h3>
+          <div class="button-row">
+            <button type="button" @click="$emit('command', 'create_sample_busbar')">＋ Шина</button>
+            <button type="button" @click="$emit('command', 'create_text')">Текст</button>
+          </div>
+        </section>
+      </template>
 
-      <section class="ribbon-group canvas-settings">
-        <h3>Канвас</h3>
-        <div class="settings-grid">
-          <label>
-            Масштаб
-            <input
-              :value="settings.zoom"
-              type="range"
-              min="0.5"
-              max="2.5"
-              step="0.1"
-              @input="onNumberSetting('zoom', $event)"
-            />
-            <span>{{ Math.round(settings.zoom * 100) }}%</span>
-          </label>
+      <template v-else-if="activeTab === 'busbars'">
+        <section class="ribbon-group wide">
+          <h3>Шины / ячейки</h3>
+          <div class="button-row">
+            <button type="button" @click="$emit('command', 'create_sample_busbar')">Добавить шину 10 кВ</button>
+            <button type="button" @click="$emit('command', 'create_sample_busbar')">Добавить секцию</button>
+            <button type="button" @click="$emit('command', 'create_text')">Надпись</button>
+          </div>
+        </section>
+      </template>
 
-          <label>
-            Шаг сетки
-            <input
-              :value="settings.gridStep"
-              type="number"
-              min="2"
-              max="100"
-              step="1"
-              @change="onNumberSetting('gridStep', $event)"
-            />
-          </label>
+      <template v-else-if="activeTab === 'view'">
+        <section class="ribbon-group canvas-settings">
+          <h3>Канвас</h3>
+          <div class="settings-grid">
+            <label>
+              Шаг сетки
+              <input :value="settings.gridStep" type="number" min="2" max="100" step="1" @change="onNumberSetting('gridStep', $event)" />
+            </label>
+            <label>
+              Допуск
+              <input :value="settings.snapTolerance" type="number" min="1" max="50" step="1" @change="onNumberSetting('snapTolerance', $event)" />
+            </label>
+          </div>
+        </section>
 
-          <label>
-            Допуск
-            <input
-              :value="settings.snapTolerance"
-              type="number"
-              min="1"
-              max="50"
-              step="1"
-              @change="onNumberSetting('snapTolerance', $event)"
-            />
-          </label>
-        </div>
-      </section>
+        <section class="ribbon-group snap-settings">
+          <h3>Отображение и привязки</h3>
+          <div class="toggle-row">
+            <label><input :checked="settings.rulersVisible" type="checkbox" @change="onBooleanSetting('rulersVisible', $event)" /> Линейки</label>
+            <label><input :checked="settings.gridVisible" type="checkbox" @change="onBooleanSetting('gridVisible', $event)" /> Сетка</label>
+            <label><input :checked="settings.guidesVisible" type="checkbox" @change="onBooleanSetting('guidesVisible', $event)" /> Направляющие</label>
+            <label><input :checked="settings.snapEnabled" type="checkbox" @change="onBooleanSetting('snapEnabled', $event)" /> Привязки</label>
+            <label><input :checked="settings.snapGrid" type="checkbox" @change="onBooleanSetting('snapGrid', $event)" /> к сетке</label>
+            <label><input :checked="settings.snapSlots" type="checkbox" @change="onBooleanSetting('snapSlots', $event)" /> к ячейкам</label>
+            <label><input :checked="settings.snapObjects" type="checkbox" @change="onBooleanSetting('snapObjects', $event)" /> к объектам</label>
+            <label><input :checked="settings.snapGuides" type="checkbox" @change="onBooleanSetting('snapGuides', $event)" /> к направляющим</label>
+          </div>
+        </section>
 
-      <section class="ribbon-group snap-settings">
-        <h3>Привязки</h3>
-        <div class="toggle-row">
-          <label><input :checked="settings.gridVisible" type="checkbox" @change="onBooleanSetting('gridVisible', $event)" /> Сетка</label>
-          <label><input :checked="settings.guidesVisible" type="checkbox" @change="onBooleanSetting('guidesVisible', $event)" /> Направляющие</label>
-          <label><input :checked="settings.snapEnabled" type="checkbox" @change="onBooleanSetting('snapEnabled', $event)" /> Привязки</label>
-          <label><input :checked="settings.snapGrid" type="checkbox" @change="onBooleanSetting('snapGrid', $event)" /> к сетке</label>
-          <label><input :checked="settings.snapSlots" type="checkbox" @change="onBooleanSetting('snapSlots', $event)" /> к ячейкам</label>
-          <label><input :checked="settings.snapObjects" type="checkbox" @change="onBooleanSetting('snapObjects', $event)" /> к объектам</label>
-        </div>
-      </section>
+        <section class="ribbon-group">
+          <h3>Направляющие</h3>
+          <div class="button-row">
+            <button type="button" @click="$emit('command', 'create_vertical_guide')">Вертикальная</button>
+            <button type="button" @click="$emit('command', 'create_horizontal_guide')">Горизонтальная</button>
+            <button type="button" @click="$emit('command', 'clear_guides')">Очистить</button>
+          </div>
+        </section>
+      </template>
 
-      <section class="ribbon-group">
-        <h3>Отладка</h3>
-        <div class="button-row">
-          <button type="button" @click="$emit('command', 'clear_generated')">Очистить вставки</button>
-        </div>
-      </section>
+      <template v-else-if="activeTab === 'symbols'">
+        <section class="ribbon-group placeholder">
+          <h3>Символы</h3>
+          <p>Здесь будет палитра выключателей, разъединителей, ТН, ТТ и других фигур.</p>
+        </section>
+      </template>
+
+      <template v-else-if="activeTab === 'connections'">
+        <section class="ribbon-group placeholder">
+          <h3>Соединения</h3>
+          <p>Здесь будут линии, связи, привязки к terminals и настройка трассировки.</p>
+        </section>
+      </template>
+
+      <template v-else-if="activeTab === 'text'">
+        <section class="ribbon-group">
+          <h3>Текст</h3>
+          <div class="button-row">
+            <button type="button" @click="$emit('command', 'create_text')">Добавить текст</button>
+            <button type="button" @click="$emit('command', 'rotate_0')">0°</button>
+            <button type="button" @click="$emit('command', 'rotate_90')">+90°</button>
+            <button type="button" @click="$emit('command', 'rotate_minus_90')">-90°</button>
+          </div>
+        </section>
+      </template>
+
+      <template v-else-if="activeTab === 'export'">
+        <section class="ribbon-group placeholder">
+          <h3>Экспорт</h3>
+          <p>Экспорт SVG/PDF/PNG будет подключён после model-backed canvas.</p>
+        </section>
+      </template>
     </div>
   </header>
 </template>
@@ -134,8 +160,18 @@ const emit = defineEmits<{
   settingsChange: [settings: CanvasSettings]
 }>()
 
-const tabs = ['Главная', 'Вставка', 'Символы', 'Шины / ячейки', 'Соединения', 'Текст', 'Вид', 'Экспорт']
-const activeTab = ref('Главная')
+const tabs = [
+  { id: 'home', label: 'Главная' },
+  { id: 'insert', label: 'Вставка' },
+  { id: 'symbols', label: 'Символы' },
+  { id: 'busbars', label: 'Шины / ячейки' },
+  { id: 'connections', label: 'Соединения' },
+  { id: 'text', label: 'Текст' },
+  { id: 'view', label: 'Вид' },
+  { id: 'export', label: 'Экспорт' },
+] as const
+
+const activeTab = ref<(typeof tabs)[number]['id']>('home')
 
 function patchSettings(patch: Partial<CanvasSettings>): void {
   emit('settingsChange', normalizeCanvasSettings({ ...props.settings, ...patch }))
@@ -157,12 +193,13 @@ function onNumberSetting(key: keyof CanvasSettings, event: Event): void {
 .ribbon-bar {
   display: grid;
   grid-template-columns: 230px 1fr;
-  grid-template-rows: 34px auto;
+  grid-template-rows: 32px 80px;
   border-bottom: 1px solid #cbd5e1;
   background: #f8fafc;
   color: #0f172a;
   box-shadow: 0 1px 4px rgba(15, 23, 42, 0.08);
   z-index: 3;
+  overflow: hidden;
 }
 
 .ribbon-title {
@@ -190,18 +227,20 @@ function onNumberSetting(key: keyof CanvasSettings, event: Event): void {
   align-items: end;
   gap: 2px;
   padding: 4px 8px 0;
+  overflow: hidden;
 }
 
 .ribbon-tabs button {
-  height: 30px;
+  height: 28px;
   border: 1px solid transparent;
   border-bottom: 0;
   border-radius: 8px 8px 0 0;
-  padding: 0 12px;
+  padding: 0 10px;
   background: transparent;
   color: #334155;
   cursor: pointer;
   font-weight: 700;
+  font-size: 12px;
 }
 
 .ribbon-tabs button.active {
@@ -212,45 +251,58 @@ function onNumberSetting(key: keyof CanvasSettings, event: Event): void {
 
 .ribbon-content {
   display: flex;
+  align-items: stretch;
   gap: 8px;
-  padding: 8px;
+  padding: 6px 8px;
   background: white;
-  overflow-x: auto;
+  overflow: hidden;
 }
 
 .ribbon-group {
   min-width: 132px;
-  padding: 8px;
+  padding: 7px;
   border: 1px solid #dbeafe;
   border-radius: 10px;
   background: #f8fbff;
+  overflow: hidden;
 }
 
 .ribbon-group.wide {
-  min-width: 310px;
+  min-width: 320px;
 }
 
 .ribbon-group.canvas-settings {
-  min-width: 260px;
+  min-width: 170px;
 }
 
 .ribbon-group.snap-settings {
-  min-width: 310px;
+  min-width: 420px;
+}
+
+.ribbon-group.placeholder {
+  min-width: 430px;
 }
 
 .ribbon-group h3 {
-  margin: 0 0 6px;
+  margin: 0 0 5px;
   color: #475569;
-  font-size: 11px;
+  font-size: 10px;
   text-transform: uppercase;
   letter-spacing: 0.04em;
+}
+
+.ribbon-group p {
+  margin: 0;
+  color: #64748b;
+  font-size: 12px;
+  line-height: 1.35;
 }
 
 .button-row,
 .toggle-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 5px;
 }
 
 .button-row.compact {
@@ -265,7 +317,7 @@ function onNumberSetting(key: keyof CanvasSettings, event: Event): void {
   cursor: pointer;
   font-weight: 800;
   font-size: 12px;
-  padding: 7px 9px;
+  padding: 6px 8px;
   box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
 }
 
@@ -281,7 +333,7 @@ function onNumberSetting(key: keyof CanvasSettings, event: Event): void {
 
 .settings-grid {
   display: grid;
-  grid-template-columns: 1fr 78px 74px;
+  grid-template-columns: 74px 74px;
   gap: 8px;
   align-items: end;
 }
@@ -302,15 +354,10 @@ function onNumberSetting(key: keyof CanvasSettings, event: Event): void {
   padding: 5px 6px;
 }
 
-.settings-grid span {
-  color: #64748b;
-  font-size: 11px;
-}
-
 .toggle-row label {
   display: flex;
   align-items: center;
-  gap: 5px;
-  min-width: 84px;
+  gap: 4px;
+  min-width: 92px;
 }
 </style>

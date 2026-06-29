@@ -8,6 +8,8 @@
   >
     <button type="button" @click="$emit('command', 'create_sample_busbar')">Добавить шину</button>
     <button type="button" @click="$emit('command', 'create_text')">Добавить текст</button>
+    <button type="button" @click="$emit('command', 'create_vertical_guide')">Вертикальная направляющая</button>
+    <button type="button" @click="$emit('command', 'create_horizontal_guide')">Горизонтальная направляющая</button>
     <hr />
     <button type="button" :disabled="!hasSelection" @click="$emit('command', 'copy')">Копировать</button>
     <button type="button" :disabled="!hasSelection" @click="$emit('command', 'copy_by_reference')">Копировать с базовой точкой</button>
@@ -40,7 +42,7 @@ defineEmits<{
 .canvas-context-menu {
   position: fixed;
   z-index: 50;
-  min-width: 245px;
+  min-width: 260px;
   padding: 6px;
   border: 1px solid #cbd5e1;
   border-radius: 10px;

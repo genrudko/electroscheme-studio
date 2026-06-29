@@ -7,7 +7,9 @@ export type CanvasSettings = {
   snapGrid: boolean
   snapSlots: boolean
   snapObjects: boolean
+  snapGuides: boolean
   guidesVisible: boolean
+  rulersVisible: boolean
 }
 
 export const defaultCanvasSettings: CanvasSettings = {
@@ -19,7 +21,9 @@ export const defaultCanvasSettings: CanvasSettings = {
   snapGrid: true,
   snapSlots: true,
   snapObjects: true,
+  snapGuides: true,
   guidesVisible: true,
+  rulersVisible: true,
 }
 
 export function normalizeCanvasSettings(settings: CanvasSettings): CanvasSettings {
