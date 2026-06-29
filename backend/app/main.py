@@ -1,4 +1,4 @@
-from app.api import imported_symbols
+from app.api import imported_symbols, parametric_symbols
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -38,3 +38,4 @@ def demo_project() -> dict:
     from app.core.project_service import get_demo_project
 
     return get_demo_project().model_dump(by_alias=True)
+app.include_router(parametric_symbols.router)

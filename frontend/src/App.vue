@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import ParametricBusbarPanel from './components/ParametricBusbarPanel.vue'
 import ImportedSymbolReviewPanel from './components/ImportedSymbolReviewPanel.vue'
 import { onMounted, ref, computed } from 'vue'
 import { useProject } from './lib/useProject'
@@ -263,6 +264,7 @@ function onSymbolEditorSave(payload: { svg: string; viewBox: string }) {
         </section>
       </aside>
       <ImportedSymbolReviewPanel />
+  <ParametricBusbarPanel />
 </template>
 
     <!-- SYMBOL EDITOR MODE -->
@@ -275,4 +277,5 @@ function onSymbolEditorSave(payload: { svg: string; viewBox: string }) {
     </section>
   </main>
   <ImportedSymbolReviewPanel />
+  <ParametricBusbarPanel />
 </template>
