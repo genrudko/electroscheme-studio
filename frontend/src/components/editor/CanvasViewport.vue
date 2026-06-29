@@ -48,7 +48,7 @@
             <line x1="-10" y1="0" x2="10" y2="0" class="origin-line" />
             <line x1="0" y1="-10" x2="0" y2="10" class="origin-line" />
             <circle cx="0" cy="0" r="1.2" class="origin-dot" />
-            <text x="4" y="-4" class="origin-label">0,0</text>
+            
           </g>
 
           <g v-if="settings.guidesVisible" class="guide-object-layer">
@@ -178,8 +178,6 @@
           />
 
           <g v-if="busbars.length === 0 && textObjects.length === 0 && primitiveObjects.length === 0" class="empty-canvas-hint">
-            
-            <text x="0" y="10" text-anchor="middle" dominant-baseline="middle" class="hint-small">Добавьте объект через ленту либо ПКМ-меню</text>
           </g>
         </svg>
       </div>

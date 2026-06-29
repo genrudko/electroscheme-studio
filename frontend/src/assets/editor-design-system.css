@@ -885,3 +885,88 @@ svg text {
 .drawing-page-label {
   display: none !important;
 }
+
+/* patch-044-remove-canvas-hint-labels-and-restore-guides */
+:root {
+  --ess-guide-color: rgba(37, 99, 235, 0.58);
+  --ess-guide-color-hover: rgba(37, 99, 235, 0.78);
+}
+
+.empty-canvas-label,
+.empty-canvas-placeholder,
+.canvas-empty-state,
+.canvas-empty-label,
+.canvas-hint,
+.canvas-help-text,
+.canvas-page-label,
+.canvas-page-title,
+.page-format-label,
+.page-size-label,
+.sheet-format-label,
+.drawing-page-label,
+.origin-label,
+.origin-coordinates,
+.center-origin-label,
+.canvas-origin-label,
+.coordinate-origin-label,
+.zero-origin-label {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+svg text.empty-canvas-label,
+svg text.canvas-empty-state,
+svg text.canvas-hint,
+svg text.canvas-page-label,
+svg text.page-format-label,
+svg text.origin-label,
+svg text.center-origin-label,
+svg text.canvas-origin-label,
+svg text.coordinate-origin-label,
+svg text.zero-origin-label {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
+
+.user-guide-line,
+.guide-layer .user-guide-line,
+svg .user-guide-line {
+  stroke: var(--ess-guide-color) !important;
+  stroke-width: 0.85 !important;
+  stroke-dasharray: 4 4 !important;
+  stroke-linecap: round !important;
+  pointer-events: stroke !important;
+  cursor: move !important;
+  vector-effect: non-scaling-stroke !important;
+}
+
+.user-guide-line:hover,
+.guide-layer .user-guide-line:hover,
+svg .user-guide-line:hover {
+  stroke: var(--ess-guide-color-hover) !important;
+  stroke-width: 1.05 !important;
+}
+
+.user-guide-hit-line,
+.guide-layer .user-guide-hit-line,
+svg .user-guide-hit-line {
+  stroke: rgba(37, 99, 235, 0.001) !important;
+  stroke-width: 12 !important;
+  pointer-events: stroke !important;
+  cursor: move !important;
+  vector-effect: non-scaling-stroke !important;
+}
+
+/* Fallback for guide lines if component uses orientation-specific classes. */
+.horizontal-guide,
+.vertical-guide,
+.guide-line,
+.canvas-guide {
+  stroke: var(--ess-guide-color) !important;
+  stroke-width: 0.85 !important;
+  stroke-dasharray: 4 4 !important;
+  vector-effect: non-scaling-stroke !important;
+}
