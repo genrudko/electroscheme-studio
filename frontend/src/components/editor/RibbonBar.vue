@@ -1,5 +1,5 @@
 <template>
-  <header class="ribbon-bar">
+  <header class="ribbon-bar" :class="{ 'is-collapsed': settings.ribbonCollapsed }">
     <div class="ribbon-title">
       <strong>ElectroScheme Studio</strong>
       <span>Редактор схем</span>
@@ -9,6 +9,7 @@
       <button v-for="tab in tabs" :key="tab.id" type="button" :class="{ active: tab.id === activeTab }" @click="activeTab = tab.id">
         {{ tab.label }}
       </button>
+      <button type="button" class="ribbon-collapse-toggle" @click="toggleRibbon">{{ settings.ribbonCollapsed ? 'Развернуть ленту' : 'Свернуть ленту' }}</button>
     </nav>
 
     <div class="ribbon-content">
@@ -46,7 +47,7 @@
 
       <template v-else-if="activeTab === 'busbars'">
         <section class="ribbon-group wide">
-          <h3>Шины / ячейки</h3>
+          <h3>Схема</h3>
           <div class="button-row">
             <button type="button" @click="$emit('command', 'create_sample_busbar')">Добавить шину</button>
             <button type="button" @click="$emit('command', 'add_busbar_slot')">+ Ячейка</button>
@@ -59,6 +60,13 @@
         <section class="ribbon-group canvas-settings">
           <h3>Канвас</h3>
           <div class="settings-grid">
+            <label>Масштаб UI
+              <input :value="settings.uiScale" type="number" min="0.8" max="1.35" step="0.05" @change="onNumberSetting('uiScale', $event)" />
+            </label>
+            <label>Лента
+              <button type="button" class="inline-ribbon-button" @click="toggleRibbon">{{ settings.ribbonCollapsed ? 'Развернуть' : 'Свернуть' }}</button>
+            </label>
+
             <label>Шаг сетки <input :value="settings.gridStep" type="number" min="2" max="100" step="1" @change="onNumberSetting('gridStep', $event)" /></label>
             <label>Допуск <input :value="settings.snapTolerance" type="number" min="1" max="50" step="1" @change="onNumberSetting('snapTolerance', $event)" /></label>
             <label>Лист
@@ -152,7 +160,6 @@ const tabs = [
   { id: 'home', label: 'Главная' },
   { id: 'insert', label: 'Вставка' },
   { id: 'symbols', label: 'Символы' },
-  { id: 'busbars', label: 'Шины / ячейки' },
   { id: 'connections', label: 'Соединения' },
   { id: 'text', label: 'Текст' },
   { id: 'view', label: 'Вид' },
@@ -164,6 +171,10 @@ const activeTabLabel = computed(() => tabs.find((tab) => tab.id === activeTab.va
 
 function patchSettings(patch: Partial<CanvasSettings>): void {
   emit('settingsChange', normalizeCanvasSettings({ ...props.settings, ...patch }))
+}
+
+function toggleRibbon(): void {
+  patchSettings({ ribbonCollapsed: !props.settings.ribbonCollapsed })
 }
 
 function onBooleanSetting(key: keyof CanvasSettings, event: Event): void {

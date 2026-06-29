@@ -201,10 +201,9 @@
         <label>Y <input v-model.number="selectedBusbar.y" type="number" step="1" @change="syncBusbarLabels(selectedBusbar)" /></label>
         <label>Класс напряжения
           <select v-model="selectedBusbar.voltageClassId" @change="syncBusbarLabels(selectedBusbar)">
-            <option v-for="item in voltageClassColors" :key="item.id" :value="item.id">{{ item.label }}</option>
+            <option v-for="item in voltageClassColors" :key="item.id" :value="item.id">{{ item.label }} — {{ item.colorName }}</option>
           </select>
         </label>
-        <label>Толщина <input v-model.number="selectedBusbar.height" type="number" min="4" step="1" @change="syncBusbarLabels(selectedBusbar)" /></label>
         <label>Ячеек <input v-model.number="selectedBusbar.slots" type="number" min="1" max="40" step="1" @change="normalizeBusbarSlots(selectedBusbar)" /></label>
         <label>Шаг ячеек <input v-model.number="selectedBusbar.slotSpacing" type="number" min="8" step="1" @change="normalizeBusbarSlots(selectedBusbar)" /></label>
         <label>Подпись <input v-model="selectedBusbar.label" type="text" @change="syncBusbarLabels(selectedBusbar)" /></label>
@@ -214,24 +213,17 @@
         </div>
       </template>
 
-      <template v-else-if="selectedText && selectedElements.length === 1">
-        <h2>Свойства текста</h2>
-        <label>Текст <input v-model="selectedText.text" type="text" /></label>
-        <label>Шрифт
-          <select v-model="selectedText.fontFamily">
-            <option value="Arial">Arial</option>
-            <option value="Calibri">Calibri</option>
-            <option value="'Times New Roman'">Times New Roman</option>
-            <option value="GOST type A">GOST type A</option>
+      <template v-else-if="selectedSymbol && selectedElements.length === 1">
+        <h2>Свойства символа</h2>
+        <label>Наименование <input v-model="selectedSymbol.label" type="text" /></label>
+        <label>X <input v-model.number="selectedSymbol.x" type="number" step="1" @change="attachSymbolToNearestSlot(selectedSymbol, 48)" /></label>
+        <label>Y <input v-model.number="selectedSymbol.y" type="number" step="1" @change="attachSymbolToNearestSlot(selectedSymbol, 48)" /></label>
+        <label>Класс напряжения
+          <select v-model="selectedSymbol.voltageClassId">
+            <option v-for="item in voltageClassColors" :key="item.id" :value="item.id">{{ item.label }} — {{ item.colorName }}</option>
           </select>
         </label>
-        <label>Размер <input v-model.number="selectedText.fontSize" type="number" min="4" step="1" /></label>
-        <label>Цвет <input v-model="selectedText.fill" type="color" /></label>
-        <label class="inline"><input v-model="selectedText.bold" type="checkbox" /> Жирный</label>
-        <label class="inline"><input v-model="selectedText.italic" type="checkbox" /> Курсив</label>
-        <label>X <input v-model.number="selectedText.anchor.x" type="number" step="1" /></label>
-        <label>Y <input v-model.number="selectedText.anchor.y" type="number" step="1" /></label>
-        <label>Поворот <input v-model.number="selectedText.rotationDeg" type="number" step="90" /></label>
+        <p class="settings-summary">Нижняя точка: {{ selectedSymbol.attachedSlotId ? `привязана к ${selectedSymbol.attachedSlotId}` : 'не привязана' }}</p>
       </template>
 
       <template v-else-if="selectedPrimitive && selectedElements.length === 1">
@@ -245,28 +237,17 @@
         <label>Толщина линии <input v-model.number="selectedPrimitive.strokeWidth" type="number" min="0.2" step="0.2" /></label>
       </template>
 
-      <template v-else-if="selectedElements.length > 1">
-        <h2>Мультивыбор</h2>
-        <p>Выбрано объектов: {{ selectedElements.length }}. Ctrl+клик — добавить или убрать объект. Перетаскивание одного из выбранных объектов перемещает всю группу.</p>
+      <template v-else-if="selectedText && selectedElements.length === 1">
+        <h2>Свойства текста</h2>
+        <label>Текст <input v-model="selectedText.text" type="text" /></label>
+        <label>Размер <input v-model.number="selectedText.fontSize" type="number" min="4" step="1" /></label>
+        <label>Цвет <input v-model="selectedText.fill" type="color" /></label>
       </template>
 
       <template v-else>
         <h2>Свойства</h2>
-        <p>Выберите объект на канвасе. Ctrl+клик — мультивыбор. Протягивание рамкой — выделение области.</p>
-        <button type="button" class="panel-button" @click="createSampleBusbar">Добавить шину</button>
-        <button type="button" class="panel-button" @click="createTextObject">Добавить текст</button>
+        <p>Выберите объект на канвасе. Ctrl+клик — мультивыбор. Добавление фигур выполняется через библиотеку слева, ленту или ПКМ-меню.</p>
       </template>
-
-      <hr />
-
-      <h3>Канвас</h3>
-      <p class="settings-summary">
-        Масштаб: {{ Math.round(settings.zoom * 100) }}%<br />
-        Лист: {{ settings.pageFormat }}, {{ settings.pageOrientation === 'landscape' ? 'альбомная' : 'книжная' }}<br />
-        Сетка: {{ settings.gridVisible ? 'вкл' : 'выкл' }}, шаг {{ settings.gridStep }}<br />
-        Направляющих: {{ guides.length }}<br />
-        Начало вида: {{ Math.round(viewOrigin.x) }}, {{ Math.round(viewOrigin.y) }}
-      </p>
     </aside>
   </div>
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <section class="editor-shell" @keydown.capture="onShellKeydown" tabindex="0">
+  <section class="editor-shell" :style="{ '--ess-ui-scale': String(canvasSettings.uiScale) }" @keydown.capture="onShellKeydown" tabindex="0">
     <RibbonBar
       :active-mode="activeMode"
       :settings="canvasSettings"
@@ -103,6 +103,8 @@ function updateCanvasSettings(next: CanvasSettings): void {
   canvasSettings.pageFormat = normalized.pageFormat
   canvasSettings.pageOrientation = normalized.pageOrientation
   canvasSettings.displayProfileId = normalized.displayProfileId
+  canvasSettings.uiScale = normalized.uiScale
+  canvasSettings.ribbonCollapsed = normalized.ribbonCollapsed
   editorDocument.settings = { ...normalized }
 }
 

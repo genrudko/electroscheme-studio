@@ -29,9 +29,9 @@ export type ShapeCatalogCategory = {
 }
 
 export const shapeCatalogCategories: ShapeCatalogCategory[] = [
-  { id: 'busbars_lines_grounding', title: 'Линии / шины / заземление', description: 'Линии связи, ЛЭП, кабели, шины, ответвления, заземление', sourceRef: 'VSDX + ГОСТ Р 56303-2014' },
+  { id: 'busbars_lines_grounding', title: 'Линии / шины / заземление', description: 'Линии связи, кабели, шины, ответвления, заземление', sourceRef: 'VSDX + ГОСТ Р 56303-2014' },
   { id: 'switching', title: 'Коммутационные аппараты', description: 'Выключатели, разъединители, тележки, ЗН, отделители', sourceRef: 'VSDX masters' },
-  { id: 'transformers', title: 'Трансформаторы', description: 'Силовые трансформаторы, автотрансформаторы, ТН, ТТ; свойства обмоток и соединений', sourceRef: 'VSDX masters + semantic data fields' },
+  { id: 'transformers', title: 'Трансформаторы', description: 'Силовые трансформаторы, ТН, ТТ; свойства обмоток и соединений', sourceRef: 'VSDX masters + semantic data fields' },
   { id: 'compensation_filters', title: 'Компенсация / фильтры', description: 'Реакторы, ДГР, конденсаторы, фильтры, компенсаторы', sourceRef: 'VSDX masters' },
   { id: 'surge_arresters', title: 'Разрядники / ОПН', description: 'Разрядники, искровые промежутки, ОПН', sourceRef: 'VSDX masters' },
   { id: 'generators_motors', title: 'Генераторы / двигатели', description: 'Генераторы, ДЭС, синхронные и асинхронные двигатели', sourceRef: 'VSDX masters' },
@@ -42,7 +42,7 @@ export const shapeCatalogCategories: ShapeCatalogCategory[] = [
   { id: 'images', title: 'Изображения', description: 'Подложки, сканы, растровые вставки' },
 ]
 
-const coreShapeCatalogItems: ShapeCatalogItem[] = [
+const availableShapeCatalogItems: ShapeCatalogItem[] = [
   {
     id: 'busbar',
     title: 'Шина',
@@ -51,8 +51,7 @@ const coreShapeCatalogItems: ShapeCatalogItem[] = [
     status: 'available',
     keywords: ['шина', 'секция', 'busbar', 'ошиновка'],
     preview: '▰',
-        svgPreview: '<svg viewBox="0 0 64 32" aria-hidden="true"><rect x="7" y="12" width="50" height="8" rx="1.5" fill="#6d0ad6" stroke="#111827" stroke-width="1"/><circle cx="17" cy="16" r="3" fill="#fff" stroke="#111827" stroke-width="1"/><circle cx="32" cy="16" r="3" fill="#fff" stroke="#111827" stroke-width="1"/><circle cx="47" cy="16" r="3" fill="#fff" stroke="#111827" stroke-width="1"/></svg>',
-        svgPreview: '<svg viewBox="0 0 64 32" aria-hidden="true"><text x="32" y="22" text-anchor="middle" font-size="22" font-family="Arial" font-weight="700" fill="#6d0ad6">A</text></svg>',
+    svgPreview: '<svg viewBox="0 0 64 32" aria-hidden="true"><rect x="7" y="12" width="50" height="8" rx="1.5" fill="#6d0ad6" stroke="#111827" stroke-width="1"/><circle cx="17" cy="16" r="3" fill="#fff" stroke="#111827" stroke-width="1"/><circle cx="32" cy="16" r="3" fill="#fff" stroke="#111827" stroke-width="1"/><circle cx="47" cy="16" r="3" fill="#fff" stroke="#111827" stroke-width="1"/></svg>',
     sourceRef: 'Рабочая параметрическая шина. Цвет класса напряжения по ГОСТ, точки подключения белые.',
   },
   {
@@ -63,6 +62,7 @@ const coreShapeCatalogItems: ShapeCatalogItem[] = [
     status: 'available',
     keywords: ['текст', 'надпись', 'label'],
     preview: 'A',
+    svgPreview: '<svg viewBox="0 0 64 32" aria-hidden="true"><text x="32" y="22" text-anchor="middle" font-size="22" font-family="Arial" font-weight="700" fill="#6d0ad6">A</text></svg>',
   },
   {
     id: 'rectangle',
@@ -72,6 +72,7 @@ const coreShapeCatalogItems: ShapeCatalogItem[] = [
     status: 'available',
     keywords: ['прямоугольник', 'rectangle'],
     preview: '▭',
+    svgPreview: '<svg viewBox="0 0 64 32" aria-hidden="true"><rect x="14" y="8" width="36" height="18" fill="none" stroke="#6d0ad6" stroke-width="2"/></svg>',
   },
   {
     id: 'ellipse',
@@ -81,6 +82,7 @@ const coreShapeCatalogItems: ShapeCatalogItem[] = [
     status: 'available',
     keywords: ['эллипс', 'окружность', 'circle'],
     preview: '○',
+    svgPreview: '<svg viewBox="0 0 64 32" aria-hidden="true"><ellipse cx="32" cy="16" rx="17" ry="9" fill="none" stroke="#6d0ad6" stroke-width="2"/></svg>',
   },
   {
     id: 'primitive_line',
@@ -90,6 +92,7 @@ const coreShapeCatalogItems: ShapeCatalogItem[] = [
     status: 'available',
     keywords: ['линия', 'отрезок', 'line'],
     preview: '╱',
+    svgPreview: '<svg viewBox="0 0 64 32" aria-hidden="true"><path d="M14 25 L50 7" fill="none" stroke="#6d0ad6" stroke-width="2" stroke-linecap="round"/></svg>',
   },
 ]
 
@@ -100,7 +103,7 @@ function knownCategory(categoryId: string): string {
 }
 
 function sourceSummary(definition: VsdxSymbolDefinition): string {
-  const size = definition.widthMm && definition.heightMm
+  const size = definition.widthMm > 0 && definition.heightMm > 0
     ? `${definition.widthMm} × ${definition.heightMm} мм`
     : 'размер не определён'
   const fields = definition.dataFields.length
@@ -127,9 +130,6 @@ function vsdxToShapeCatalogItem(definition: VsdxSymbolDefinition): ShapeCatalogI
     ],
     preview: definition.preview,
     svgPreview: definition.svgPreview,
-        svgPreview: '<svg viewBox="0 0 64 32" aria-hidden="true"><rect x="14" y="8" width="36" height="18" fill="none" stroke="#6d0ad6" stroke-width="2"/></svg>',
-        svgPreview: '<svg viewBox="0 0 64 32" aria-hidden="true"><ellipse cx="32" cy="16" rx="17" ry="9" fill="none" stroke="#6d0ad6" stroke-width="2"/></svg>',
-        svgPreview: '<svg viewBox="0 0 64 32" aria-hidden="true"><path d="M14 25 L50 7" fill="none" stroke="#6d0ad6" stroke-width="2" stroke-linecap="round"/></svg>',
     sourceRef: sourceSummary(definition),
     widthMm: definition.widthMm,
     heightMm: definition.heightMm,
@@ -143,7 +143,7 @@ function vsdxToShapeCatalogItem(definition: VsdxSymbolDefinition): ShapeCatalogI
 export const vsdxShapeCatalogItems: ShapeCatalogItem[] = vsdxSymbolDefinitions.map(vsdxToShapeCatalogItem)
 
 export const shapeCatalogItems: ShapeCatalogItem[] = [
-  ...coreShapeCatalogItems,
+  ...availableShapeCatalogItems,
   ...vsdxShapeCatalogItems,
 ]
 

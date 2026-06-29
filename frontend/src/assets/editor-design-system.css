@@ -321,3 +321,267 @@
     min-height: 120px !important;
   }
 }
+
+/* patch-038-guides-properties-ribbon-ui */
+:root {
+  --ess-ui-scale: 1;
+  --ess-guide-color: rgba(37, 99, 235, 0.34);
+  --ess-guide-color-hover: rgba(37, 99, 235, 0.55);
+}
+
+.editor-shell {
+  font-size: calc(13px * var(--ess-ui-scale, 1)) !important;
+  grid-template-rows: minmax(calc(126px * var(--ess-ui-scale, 1)), auto) 1fr 34px !important;
+}
+
+.ribbon-bar {
+  min-height: calc(126px * var(--ess-ui-scale, 1)) !important;
+  overflow: visible !important;
+  transition: min-height 140ms ease, height 140ms ease;
+}
+
+.ribbon-bar.is-collapsed {
+  min-height: 32px !important;
+  height: 32px !important;
+  grid-template-rows: 32px 0 !important;
+  overflow: hidden !important;
+}
+
+.ribbon-bar.is-collapsed .ribbon-content {
+  display: none !important;
+}
+
+.ribbon-collapse-toggle {
+  margin-left: auto;
+  height: 25px;
+  border: 1px solid #bfd4f4;
+  border-radius: 7px;
+  background: #ffffff;
+  color: #174ea6;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 0 9px;
+}
+
+.inline-ribbon-button {
+  min-height: 27px;
+  border: 1px solid #bfd4f4;
+  border-radius: 7px;
+  background: #ffffff;
+  color: #174ea6;
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.ribbon-content {
+  overflow: visible !important;
+  flex-wrap: wrap !important;
+  align-items: flex-start !important;
+}
+
+.ribbon-group {
+  max-height: none !important;
+}
+
+.shape-item {
+  align-items: start !important;
+  min-height: 40px !important;
+}
+
+.shape-item > span:not(.preview),
+.palette-section button > span:not(.preview) {
+  min-width: 0 !important;
+  white-space: normal !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+  line-height: 1.16 !important;
+}
+
+.shape-item small,
+.palette-section small {
+  display: block !important;
+  white-space: normal !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+  line-height: 1.12 !important;
+}
+
+.properties-panel {
+  background: linear-gradient(180deg, #fbfdff, #f4f7fb) !important;
+  box-shadow: inset 1px 0 0 rgba(203, 213, 225, .65);
+}
+
+.properties-panel > h2:first-child {
+  margin: 0 0 8px !important;
+  padding-bottom: 8px !important;
+  border-bottom: 1px solid #dbe5f2 !important;
+  color: #123a7a !important;
+  font-size: 13px !important;
+}
+
+.properties-panel p {
+  max-width: 240px;
+  color: #60718b !important;
+}
+
+.user-guide-line,
+.guide-layer .user-guide-line {
+  stroke: var(--ess-guide-color) !important;
+  stroke-width: 0.55 !important;
+  stroke-dasharray: 2 5 !important;
+  stroke-linecap: round !important;
+  pointer-events: all !important;
+  cursor: move !important;
+  vector-effect: non-scaling-stroke !important;
+}
+
+.user-guide-line:hover,
+.guide-layer .user-guide-line:hover {
+  stroke: var(--ess-guide-color-hover) !important;
+  stroke-width: 0.75 !important;
+}
+
+.user-guide-hit-line {
+  stroke: rgba(37, 99, 235, 0.001) !important;
+  stroke-width: 10 !important;
+  pointer-events: stroke !important;
+  cursor: move !important;
+  vector-effect: non-scaling-stroke !important;
+}
+
+/* patch-038-reworked-after-037-drag-icons-guides-ribbon */
+:root {
+  --ess-ui-scale: 1;
+  --ess-guide-color: rgba(37, 99, 235, 0.30);
+  --ess-guide-color-hover: rgba(37, 99, 235, 0.50);
+}
+
+.editor-shell {
+  font-size: calc(13px * var(--ess-ui-scale, 1)) !important;
+  grid-template-rows: minmax(calc(126px * var(--ess-ui-scale, 1)), auto) 1fr 34px !important;
+}
+
+.ribbon-bar {
+  min-height: calc(126px * var(--ess-ui-scale, 1)) !important;
+  overflow: visible !important;
+  transition: min-height 140ms ease, height 140ms ease;
+}
+
+.ribbon-bar.is-collapsed {
+  min-height: 32px !important;
+  height: 32px !important;
+  grid-template-rows: 32px 0 !important;
+  overflow: hidden !important;
+}
+
+.ribbon-bar.is-collapsed .ribbon-content {
+  display: none !important;
+}
+
+.ribbon-collapse-toggle,
+.inline-ribbon-button {
+  border: 1px solid #bfd4f4 !important;
+  border-radius: 7px !important;
+  background: #ffffff !important;
+  color: #174ea6 !important;
+  cursor: pointer !important;
+  font-size: 11px !important;
+  font-weight: 800 !important;
+}
+
+.ribbon-collapse-toggle {
+  margin-left: auto;
+  height: 25px;
+  padding: 0 9px;
+}
+
+.inline-ribbon-button {
+  min-height: 27px;
+  padding: 4px 8px;
+}
+
+.shape-item,
+.shape-item * {
+  -webkit-user-drag: none;
+}
+
+.shape-item[draggable='true'] {
+  cursor: grab !important;
+}
+
+.shape-item[draggable='true']:active {
+  cursor: grabbing !important;
+}
+
+.preview,
+.preview-svg,
+.preview-svg *,
+.shape-item svg,
+.shape-item svg * {
+  pointer-events: none !important;
+}
+
+.shape-item {
+  align-items: start !important;
+  min-height: 42px !important;
+}
+
+.shape-title,
+.shape-item > span:not(.preview),
+.palette-section button > span:not(.preview) {
+  min-width: 0 !important;
+  white-space: normal !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+  overflow-wrap: anywhere !important;
+  line-height: 1.15 !important;
+}
+
+.planned-icon {
+  font-family: "Segoe UI Symbol", "Segoe UI Emoji", Arial, sans-serif;
+}
+
+.shape-item small,
+.palette-section small {
+  display: block !important;
+  white-space: normal !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+  line-height: 1.12 !important;
+}
+
+.properties-panel {
+  background: linear-gradient(180deg, #fbfdff, #f4f7fb) !important;
+  box-shadow: inset 1px 0 0 rgba(203, 213, 225, .65);
+}
+
+.properties-panel > h2:first-child {
+  margin: 0 0 8px !important;
+  padding-bottom: 8px !important;
+  border-bottom: 1px solid #dbe5f2 !important;
+  color: #123a7a !important;
+  font-size: 13px !important;
+}
+
+.properties-panel p {
+  max-width: 240px;
+  color: #60718b !important;
+}
+
+.user-guide-line,
+.guide-layer .user-guide-line {
+  stroke: var(--ess-guide-color) !important;
+  stroke-width: 0.5 !important;
+  stroke-dasharray: 1.5 5 !important;
+  stroke-linecap: round !important;
+  pointer-events: stroke !important;
+  cursor: move !important;
+  vector-effect: non-scaling-stroke !important;
+}
+
+.user-guide-line:hover,
+.guide-layer .user-guide-line:hover {
+  stroke: var(--ess-guide-color-hover) !important;
+  stroke-width: 0.7 !important;
+}

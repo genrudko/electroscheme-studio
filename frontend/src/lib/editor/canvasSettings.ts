@@ -20,6 +20,8 @@ export type CanvasSettings = {
   pageFormat: IsoPageFormat
   pageOrientation: PageOrientation
   displayProfileId: DisplayProfileId
+  uiScale: number
+  ribbonCollapsed: boolean
   modularGridStepMm: number
   ugoLineWidthMm: number
   electricalConnectionLineWidthMm: number
@@ -42,6 +44,8 @@ export const defaultCanvasSettings: CanvasSettings = {
   pageFormat: 'A3',
   pageOrientation: 'landscape',
   displayProfileId: 'gost_r_56303_2014',
+  uiScale: 1,
+  ribbonCollapsed: false,
   modularGridStepMm: 2.5,
   ugoLineWidthMm: 0.4,
   electricalConnectionLineWidthMm: 0.4,
@@ -62,6 +66,8 @@ export function normalizeCanvasSettings(settings: CanvasSettings): CanvasSetting
     gridStep: Math.min(Math.max(settings.gridStep, 2), 100),
     snapTolerance: Math.min(Math.max(settings.snapTolerance, 1), 50),
     displayProfileId: settings.displayProfileId ?? 'gost_r_56303_2014',
+    uiScale: Math.min(Math.max(settings.uiScale ?? 1, 0.8), 1.35),
+    ribbonCollapsed: Boolean(settings.ribbonCollapsed ?? false),
     modularGridStepMm: Math.min(Math.max(settings.modularGridStepMm ?? 2.5, 0.5), 20),
     ugoLineWidthMm: Math.min(Math.max(settings.ugoLineWidthMm ?? 0.4, 0.2), 1.0),
     electricalConnectionLineWidthMm: Math.min(Math.max(settings.electricalConnectionLineWidthMm ?? 0.4, 0.2), 1.0),
