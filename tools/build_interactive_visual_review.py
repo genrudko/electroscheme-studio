@@ -150,33 +150,84 @@ def build_interactive_page(visual_dir: Path, out_path: Path) -> dict[str, Any]:
       return [...new Set(values.map((value) => Math.round(value * 10) / 10))].sort((a, b) => a - b);
     }}
 
-    function collectGuides(svg, target) {{
-      const vertical = [];
-      const horizontal = [];
-      svg.querySelectorAll('circle').forEach((circle) => {{
-        const cx = Number(circle.getAttribute('cx'));
-        const cy = Number(circle.getAttribute('cy'));
-        if (Number.isFinite(cx)) vertical.push(cx);
-        if (Number.isFinite(cy)) horizontal.push(cy);
-      }});
+
+    function resolveGuideBounds(svg) {{
+      const vb = svg.viewBox.baseVal;
+      const fallback = {{ x: vb.x, y: vb.y, width: vb.width, height: vb.height }};
+      let best = null;
+      let bestArea = 0;
+
       svg.querySelectorAll('rect').forEach((rect) => {{
         const x = Number(rect.getAttribute('x'));
         const y = Number(rect.getAttribute('y'));
         const width = Number(rect.getAttribute('width'));
         const height = Number(rect.getAttribute('height'));
-        if (Number.isFinite(x) && Number.isFinite(width)) vertical.push(x, x + width / 2, x + width);
-        if (Number.isFinite(y) && Number.isFinite(height)) horizontal.push(y, y + height / 2, y + height);
+        if (!Number.isFinite(x) || !Number.isFinite(y) || !Number.isFinite(width) || !Number.isFinite(height)) return;
+
+        const area = width * height;
+        const looksLikeDrawingViewport = width >= 160 && height >= 80;
+        const fitsInsideRoot = x >= vb.x - 1 && y >= vb.y - 1 && x + width <= vb.x + vb.width + 1 && y + height <= vb.y + vb.height + 1;
+
+        if (looksLikeDrawingViewport && fitsInsideRoot && area > bestArea) {{
+          best = {{ x, y, width, height }};
+          bestArea = area;
+        }}
       }});
+
+      return best || fallback;
+    }}
+
+    function isInsideBounds(x, y, bounds) {{
+      return x >= bounds.x - 0.5 &&
+        x <= bounds.x + bounds.width + 0.5 &&
+        y >= bounds.y - 0.5 &&
+        y <= bounds.y + bounds.height + 0.5;
+    }}
+
+    function addGuideIfInside(values, value, min, max) {{
+      if (Number.isFinite(value) && value >= min - 0.5 && value <= max + 0.5) values.push(value);
+    }}
+
+    function collectGuides(svg, target) {{
+      const bounds = resolveGuideBounds(svg);
+      const vertical = [];
+      const horizontal = [];
+
+      svg.querySelectorAll('circle').forEach((circle) => {{
+        const cx = Number(circle.getAttribute('cx'));
+        const cy = Number(circle.getAttribute('cy'));
+        if (!Number.isFinite(cx) || !Number.isFinite(cy) || !isInsideBounds(cx, cy, bounds)) return;
+        vertical.push(cx);
+        horizontal.push(cy);
+      }});
+
+      svg.querySelectorAll('rect').forEach((rect) => {{
+        const x = Number(rect.getAttribute('x'));
+        const y = Number(rect.getAttribute('y'));
+        const width = Number(rect.getAttribute('width'));
+        const height = Number(rect.getAttribute('height'));
+        if (!Number.isFinite(x) || !Number.isFinite(y) || !Number.isFinite(width) || !Number.isFinite(height)) return;
+        if (!isInsideBounds(x + width / 2, y + height / 2, bounds)) return;
+
+        addGuideIfInside(vertical, x, bounds.x, bounds.x + bounds.width);
+        addGuideIfInside(vertical, x + width / 2, bounds.x, bounds.x + bounds.width);
+        addGuideIfInside(vertical, x + width, bounds.x, bounds.x + bounds.width);
+        addGuideIfInside(horizontal, y, bounds.y, bounds.y + bounds.height);
+        addGuideIfInside(horizontal, y + height / 2, bounds.y, bounds.y + bounds.height);
+        addGuideIfInside(horizontal, y + height, bounds.y, bounds.y + bounds.height);
+      }});
+
       svg.querySelectorAll('text').forEach((text) => {{
         if (text === target) return;
         const x = Number(text.getAttribute('x'));
         const y = Number(text.getAttribute('y'));
-        if (Number.isFinite(x)) vertical.push(x);
-        if (Number.isFinite(y)) horizontal.push(y);
+        if (!Number.isFinite(x) || !Number.isFinite(y) || !isInsideBounds(x, y, bounds)) return;
+        vertical.push(x);
+        horizontal.push(y);
       }});
-      const vb = svg.viewBox.baseVal;
-      for (let x = 0; x <= vb.width; x += gridStep) vertical.push(x);
-      for (let y = 0; y <= vb.height; y += gridStep) horizontal.push(y);
+
+      for (let x = bounds.x; x <= bounds.x + bounds.width; x += gridStep) vertical.push(x);
+      for (let y = bounds.y; y <= bounds.y + bounds.height; y += gridStep) horizontal.push(y);
       return {{ vertical: unique(vertical), horizontal: unique(horizontal) }};
     }}
 
@@ -210,16 +261,19 @@ def build_interactive_page(visual_dir: Path, out_path: Path) -> dict[str, Any]:
       layer.appendChild(line);
     }}
 
+
     function drawGuides(svg, x, y, snapX, snapY) {{
       const layer = ensureGuideLayer(svg);
       layer.innerHTML = '';
-      const vb = svg.viewBox.baseVal;
+      const bounds = resolveGuideBounds(svg);
+      const clampedX = Math.min(Math.max(x, bounds.x), bounds.x + bounds.width);
+      const clampedY = Math.min(Math.max(y, bounds.y), bounds.y + bounds.height);
       const base = {{ stroke: '#64748b', 'stroke-width': '0.8', 'stroke-dasharray': '3 3', opacity: '0.55' }};
       const highlight = {{ stroke: '#2563eb', 'stroke-width': '1.4', 'stroke-dasharray': 'none', opacity: '0.9' }};
-      addLine(layer, {{ x1: x, y1: vb.y, x2: x, y2: vb.y + vb.height, ...base }});
-      addLine(layer, {{ x1: vb.x, y1: y, x2: vb.x + vb.width, y2: y, ...base }});
-      if (snapX !== null) addLine(layer, {{ x1: snapX, y1: vb.y, x2: snapX, y2: vb.y + vb.height, ...highlight }});
-      if (snapY !== null) addLine(layer, {{ x1: vb.x, y1: snapY, x2: vb.x + vb.width, y2: snapY, ...highlight }});
+      addLine(layer, {{ x1: clampedX, y1: bounds.y, x2: clampedX, y2: bounds.y + bounds.height, ...base }});
+      addLine(layer, {{ x1: bounds.x, y1: clampedY, x2: bounds.x + bounds.width, y2: clampedY, ...base }});
+      if (snapX !== null) addLine(layer, {{ x1: snapX, y1: bounds.y, x2: snapX, y2: bounds.y + bounds.height, ...highlight }});
+      if (snapY !== null) addLine(layer, {{ x1: bounds.x, y1: snapY, x2: bounds.x + bounds.width, y2: snapY, ...highlight }});
     }}
 
     function clearGuides(svg) {{

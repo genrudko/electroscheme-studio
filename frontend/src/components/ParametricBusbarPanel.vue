@@ -303,6 +303,13 @@ type GuideSet = {
   horizontal: number[]
 }
 
+type GuideBounds = {
+  x: number
+  y: number
+  width: number
+  height: number
+}
+
 const loading = ref(false)
 const error = ref('')
 const preview = ref<ParametricSymbolPreview | null>(null)
@@ -446,18 +453,61 @@ function uniqueSorted(values: number[]): number[] {
   return Array.from(new Set(values.map((value) => Math.round(value * 10) / 10))).sort((a, b) => a - b)
 }
 
+
+function resolveGuideBounds(svg: SVGSVGElement): GuideBounds {
+  const vb = svg.viewBox.baseVal
+  const fallback = { x: vb.x, y: vb.y, width: vb.width, height: vb.height }
+
+  let best: GuideBounds | null = null
+  let bestArea = 0
+
+  svg.querySelectorAll('rect').forEach((rect) => {
+    const x = Number(rect.getAttribute('x') ?? 'NaN')
+    const y = Number(rect.getAttribute('y') ?? 'NaN')
+    const width = Number(rect.getAttribute('width') ?? 'NaN')
+    const height = Number(rect.getAttribute('height') ?? 'NaN')
+    if (!Number.isFinite(x) || !Number.isFinite(y) || !Number.isFinite(width) || !Number.isFinite(height)) return
+
+    const area = width * height
+    const looksLikeDrawingViewport = width >= 160 && height >= 80
+    const fitsInsideRoot = x >= vb.x - 1 && y >= vb.y - 1 && x + width <= vb.x + vb.width + 1 && y + height <= vb.y + vb.height + 1
+
+    if (looksLikeDrawingViewport && fitsInsideRoot && area > bestArea) {
+      best = { x, y, width, height }
+      bestArea = area
+    }
+  })
+
+  return best ?? fallback
+}
+
+function isInsideBounds(x: number, y: number, bounds: GuideBounds): boolean {
+  return x >= bounds.x - 0.5 &&
+    x <= bounds.x + bounds.width + 0.5 &&
+    y >= bounds.y - 0.5 &&
+    y <= bounds.y + bounds.height + 0.5
+}
+
+function addGuideIfInside(values: number[], value: number, min: number, max: number): void {
+  if (Number.isFinite(value) && value >= min - 0.5 && value <= max + 0.5) {
+    values.push(value)
+  }
+}
+
 function collectGuides(target: SVGTextElement): GuideSet {
   const svg = previewSvg.value
   if (!svg) return { vertical: [], horizontal: [] }
 
+  const bounds = resolveGuideBounds(svg)
   const vertical: number[] = []
   const horizontal: number[] = []
 
   svg.querySelectorAll('circle').forEach((circle) => {
     const cx = Number(circle.getAttribute('cx') ?? 'NaN')
     const cy = Number(circle.getAttribute('cy') ?? 'NaN')
-    if (Number.isFinite(cx)) vertical.push(cx)
-    if (Number.isFinite(cy)) horizontal.push(cy)
+    if (!Number.isFinite(cx) || !Number.isFinite(cy) || !isInsideBounds(cx, cy, bounds)) return
+    vertical.push(cx)
+    horizontal.push(cy)
   })
 
   svg.querySelectorAll('rect').forEach((rect) => {
@@ -465,27 +515,30 @@ function collectGuides(target: SVGTextElement): GuideSet {
     const y = Number(rect.getAttribute('y') ?? 'NaN')
     const width = Number(rect.getAttribute('width') ?? 'NaN')
     const height = Number(rect.getAttribute('height') ?? 'NaN')
-    if (Number.isFinite(x) && Number.isFinite(width)) {
-      vertical.push(x, x + width / 2, x + width)
-    }
-    if (Number.isFinite(y) && Number.isFinite(height)) {
-      horizontal.push(y, y + height / 2, y + height)
-    }
+    if (!Number.isFinite(x) || !Number.isFinite(y) || !Number.isFinite(width) || !Number.isFinite(height)) return
+    if (!isInsideBounds(x + width / 2, y + height / 2, bounds)) return
+
+    addGuideIfInside(vertical, x, bounds.x, bounds.x + bounds.width)
+    addGuideIfInside(vertical, x + width / 2, bounds.x, bounds.x + bounds.width)
+    addGuideIfInside(vertical, x + width, bounds.x, bounds.x + bounds.width)
+    addGuideIfInside(horizontal, y, bounds.y, bounds.y + bounds.height)
+    addGuideIfInside(horizontal, y + height / 2, bounds.y, bounds.y + bounds.height)
+    addGuideIfInside(horizontal, y + height, bounds.y, bounds.y + bounds.height)
   })
 
   svg.querySelectorAll('text').forEach((text) => {
     if (text === target) return
     const x = Number(text.getAttribute('x') ?? 'NaN')
     const y = Number(text.getAttribute('y') ?? 'NaN')
-    if (Number.isFinite(x)) vertical.push(x)
-    if (Number.isFinite(y)) horizontal.push(y)
+    if (!Number.isFinite(x) || !Number.isFinite(y) || !isInsideBounds(x, y, bounds)) return
+    vertical.push(x)
+    horizontal.push(y)
   })
 
-  const vb = svg.viewBox.baseVal
   const step = Number(textGuideGridStep.value)
   if (step > 0) {
-    for (let x = 0; x <= vb.width; x += step) vertical.push(x)
-    for (let y = 0; y <= vb.height; y += step) horizontal.push(y)
+    for (let x = bounds.x; x <= bounds.x + bounds.width; x += step) vertical.push(x)
+    for (let y = bounds.y; y <= bounds.y + bounds.height; y += step) horizontal.push(y)
   }
 
   return { vertical: uniqueSorted(vertical), horizontal: uniqueSorted(horizontal) }
@@ -529,6 +582,7 @@ function addGuideLine(layer: SVGGElement, attrs: Record<string, string>): void {
   layer.appendChild(line)
 }
 
+
 function drawGuides(x: number, y: number, snapX: number | null, snapY: number | null): void {
   const svg = previewSvg.value
   if (!svg || !showAlignmentGuides.value) return
@@ -536,7 +590,7 @@ function drawGuides(x: number, y: number, snapX: number | null, snapY: number | 
   const layer = ensureGuideLayer(svg)
   layer.innerHTML = ''
 
-  const vb = svg.viewBox.baseVal
+  const bounds = resolveGuideBounds(svg)
   const lineBase = {
     stroke: '#64748b',
     'stroke-width': '0.8',
@@ -550,37 +604,40 @@ function drawGuides(x: number, y: number, snapX: number | null, snapY: number | 
     opacity: '0.9',
   }
 
+  const clampedX = Math.min(Math.max(x, bounds.x), bounds.x + bounds.width)
+  const clampedY = Math.min(Math.max(y, bounds.y), bounds.y + bounds.height)
+
   addGuideLine(layer, {
-    x1: String(x),
-    y1: String(vb.y),
-    x2: String(x),
-    y2: String(vb.y + vb.height),
+    x1: String(clampedX),
+    y1: String(bounds.y),
+    x2: String(clampedX),
+    y2: String(bounds.y + bounds.height),
     ...lineBase,
   })
 
   addGuideLine(layer, {
-    x1: String(vb.x),
-    y1: String(y),
-    x2: String(vb.x + vb.width),
-    y2: String(y),
+    x1: String(bounds.x),
+    y1: String(clampedY),
+    x2: String(bounds.x + bounds.width),
+    y2: String(clampedY),
     ...lineBase,
   })
 
   if (snapX !== null) {
     addGuideLine(layer, {
       x1: String(snapX),
-      y1: String(vb.y),
+      y1: String(bounds.y),
       x2: String(snapX),
-      y2: String(vb.y + vb.height),
+      y2: String(bounds.y + bounds.height),
       ...lineSnap,
     })
   }
 
   if (snapY !== null) {
     addGuideLine(layer, {
-      x1: String(vb.x),
+      x1: String(bounds.x),
       y1: String(snapY),
-      x2: String(vb.x + vb.width),
+      x2: String(bounds.x + bounds.width),
       y2: String(snapY),
       ...lineSnap,
     })
