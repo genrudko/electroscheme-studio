@@ -1,9 +1,9 @@
 <template>
   <footer class="editor-status-bar">
-    <span><strong>Mode:</strong> {{ modeLabel }}</span>
-    <span><strong>Pointer:</strong> {{ pointerText }}</span>
-    <span><strong>Snap:</strong> {{ snapText }}</span>
-    <span><strong>Selection:</strong> {{ selectionText }}</span>
+    <span><strong>Режим:</strong> {{ modeLabel }}</span>
+    <span><strong>Курсор:</strong> {{ pointerText }}</span>
+    <span><strong>Привязка:</strong> {{ snapText }}</span>
+    <span><strong>Выбор:</strong> {{ selectionText }}</span>
     <span class="status-message">{{ message }}</span>
   </footer>
 </template>
@@ -26,7 +26,7 @@ const props = defineProps<{
 const modeLabel = computed(() => interactionModeLabels[props.mode])
 const pointerText = computed(() => props.pointer ? `X=${props.pointer.x.toFixed(1)} Y=${props.pointer.y.toFixed(1)}` : '—')
 const snapText = computed(() => props.snapKind ? `${props.snapKind}: ${props.snapLabel}` : '—')
-const selectionText = computed(() => props.selectedObjectName || 'none')
+const selectionText = computed(() => props.selectedObjectName || 'нет')
 </script>
 
 <style scoped>

@@ -2,14 +2,17 @@
   <section class="editor-shell">
     <RibbonBar
       :active-mode="activeMode"
+      :settings="canvasSettings"
       @set-mode="setMode"
       @command="dispatchCommand"
+      @settings-change="updateCanvasSettings"
     />
 
     <main class="editor-main">
       <CanvasViewport
         :active-mode="activeMode"
         :command="pendingCommand"
+        :settings="canvasSettings"
         @mode-change="setMode"
         @status-change="updateStatus"
         @command-handled="pendingCommand = null"
@@ -32,6 +35,7 @@ import { reactive, ref } from 'vue'
 import RibbonBar from './RibbonBar.vue'
 import CanvasViewport from './CanvasViewport.vue'
 import StatusBar from './StatusBar.vue'
+import { defaultCanvasSettings, normalizeCanvasSettings, type CanvasSettings } from '../../lib/editor/canvasSettings'
 import type { EditorCommand, EditorInteractionMode } from '../../lib/editor/interactionModes'
 import type { Point, SnapKind } from '../../lib/editor/snapService'
 
@@ -46,13 +50,28 @@ type EditorStatus = {
 const activeMode = ref<EditorInteractionMode>('select')
 const pendingCommand = ref<EditorCommand | null>(null)
 
+const canvasSettings = reactive<CanvasSettings>({ ...defaultCanvasSettings })
+
 const status = reactive<EditorStatus>({
   pointer: null,
   snapKind: null,
   snapLabel: '',
   selectedObjectName: '',
-  message: 'Editor shell ready.',
+  message: 'Редактор готов.',
 })
+
+function updateCanvasSettings(next: CanvasSettings): void {
+  const normalized = normalizeCanvasSettings(next)
+  canvasSettings.zoom = normalized.zoom
+  canvasSettings.gridVisible = normalized.gridVisible
+  canvasSettings.gridStep = normalized.gridStep
+  canvasSettings.snapEnabled = normalized.snapEnabled
+  canvasSettings.snapTolerance = normalized.snapTolerance
+  canvasSettings.snapGrid = normalized.snapGrid
+  canvasSettings.snapSlots = normalized.snapSlots
+  canvasSettings.snapObjects = normalized.snapObjects
+  canvasSettings.guidesVisible = normalized.guidesVisible
+}
 
 function updateStatus(next: EditorStatus): void {
   status.pointer = next.pointer
@@ -65,10 +84,10 @@ function updateStatus(next: EditorStatus): void {
 function setMode(mode: EditorInteractionMode): void {
   activeMode.value = mode
   status.message = mode === 'copy_by_reference'
-    ? 'Pick virtual base point. It snaps to grid, slots and object centers.'
+    ? 'Укажите виртуальную базовую точку. Она привязывается к сетке, ячейкам и центрам объектов.'
     : mode === 'paste_by_point'
-      ? 'Pick paste point.'
-      : `Mode switched to ${mode}.`
+      ? 'Укажите точку вставки.'
+      : `Режим: ${mode}.`
 }
 
 function dispatchCommand(command: EditorCommand): void {

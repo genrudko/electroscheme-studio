@@ -24,6 +24,7 @@ export type SnapCandidate = Point & {
 export type SnapOptions = {
   gridSize: number
   enabled: boolean
+  snapGrid?: boolean
   tolerance: number
   candidates?: SnapCandidate[]
 }
@@ -34,7 +35,7 @@ function distance(a: Point, b: Point): number {
 
 export function snapPoint(point: Point, options: SnapOptions): SnapResult {
   if (!options.enabled) {
-    return { ...point, kind: 'free', label: 'Free' }
+    return { ...point, kind: 'free', label: 'Свободно' }
   }
 
   let best: SnapResult | null = null
@@ -53,21 +54,23 @@ export function snapPoint(point: Point, options: SnapOptions): SnapResult {
     }
   }
 
-  const gridX = Math.round(point.x / options.gridSize) * options.gridSize
-  const gridY = Math.round(point.y / options.gridSize) * options.gridSize
-  const gridPoint = { x: gridX, y: gridY }
-  const gridDistance = distance(point, gridPoint)
+  if (options.snapGrid !== false) {
+    const gridX = Math.round(point.x / options.gridSize) * options.gridSize
+    const gridY = Math.round(point.y / options.gridSize) * options.gridSize
+    const gridPoint = { x: gridX, y: gridY }
+    const gridDistance = distance(point, gridPoint)
 
-  if (gridDistance < bestDistance && gridDistance <= options.tolerance) {
-    best = {
-      x: gridX,
-      y: gridY,
-      kind: 'grid',
-      label: `Grid ${options.gridSize}`,
+    if (gridDistance < bestDistance && gridDistance <= options.tolerance) {
+      best = {
+        x: gridX,
+        y: gridY,
+        kind: 'grid',
+        label: `Сетка ${options.gridSize}`,
+      }
     }
   }
 
-  return best ?? { ...point, kind: 'free', label: 'Free' }
+  return best ?? { ...point, kind: 'free', label: 'Свободно' }
 }
 
 export function formatPoint(point: Point): string {

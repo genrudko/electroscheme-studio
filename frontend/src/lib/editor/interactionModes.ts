@@ -16,12 +16,14 @@ export type EditorCommand =
   | 'rotate_minus_90'
   | 'delete'
   | 'clear_generated'
+  | 'create_sample_busbar'
+  | 'create_text'
 
 export const interactionModeLabels: Record<EditorInteractionMode, string> = {
-  select: 'Selection',
-  pan: 'Pan',
-  copy_by_reference: 'Pick base point',
-  paste_by_point: 'Paste by point',
+  select: 'Выбор',
+  pan: 'Панорама',
+  copy_by_reference: 'Выбор базовой точки',
+  paste_by_point: 'Вставка по точке',
 }
 
 export function commandToMode(command: EditorCommand): EditorInteractionMode | null {

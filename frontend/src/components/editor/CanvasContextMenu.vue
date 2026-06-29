@@ -6,14 +6,17 @@
     @pointerdown.stop
     @contextmenu.prevent.stop
   >
-    <button type="button" :disabled="!hasSelection" @click="$emit('command', 'copy')">Copy</button>
-    <button type="button" :disabled="!hasSelection" @click="$emit('command', 'copy_by_reference')">Copy by reference point</button>
-    <button type="button" :disabled="!canPaste" @click="$emit('command', 'paste')">Paste</button>
-    <button type="button" :disabled="!canPaste" @click="$emit('command', 'paste_by_point')">Paste by point</button>
+    <button type="button" @click="$emit('command', 'create_sample_busbar')">Добавить шину</button>
+    <button type="button" @click="$emit('command', 'create_text')">Добавить текст</button>
     <hr />
-    <button type="button" :disabled="!hasSelection" @click="$emit('command', 'rotate_90')">Rotate +90°</button>
-    <button type="button" :disabled="!hasSelection" @click="$emit('command', 'rotate_minus_90')">Rotate -90°</button>
-    <button type="button" :disabled="!hasSelection" class="danger" @click="$emit('command', 'delete')">Delete</button>
+    <button type="button" :disabled="!hasSelection" @click="$emit('command', 'copy')">Копировать</button>
+    <button type="button" :disabled="!hasSelection" @click="$emit('command', 'copy_by_reference')">Копировать с базовой точкой</button>
+    <button type="button" :disabled="!canPaste" @click="$emit('command', 'paste')">Вставить</button>
+    <button type="button" :disabled="!canPaste" @click="$emit('command', 'paste_by_point')">Вставить по точке</button>
+    <hr />
+    <button type="button" :disabled="!hasSelection" @click="$emit('command', 'rotate_90')">Повернуть +90°</button>
+    <button type="button" :disabled="!hasSelection" @click="$emit('command', 'rotate_minus_90')">Повернуть -90°</button>
+    <button type="button" :disabled="!hasSelection" class="danger" @click="$emit('command', 'delete')">Удалить</button>
   </div>
 </template>
 
@@ -37,7 +40,7 @@ defineEmits<{
 .canvas-context-menu {
   position: fixed;
   z-index: 50;
-  min-width: 210px;
+  min-width: 245px;
   padding: 6px;
   border: 1px solid #cbd5e1;
   border-radius: 10px;
