@@ -11,7 +11,7 @@
         :active-mode="activeMode"
         :command="pendingCommand"
         @mode-change="setMode"
-        @status-change="status = $event"
+        @status-change="updateStatus"
         @command-handled="pendingCommand = null"
       />
     </main>
@@ -53,6 +53,14 @@ const status = reactive<EditorStatus>({
   selectedObjectName: '',
   message: 'Editor shell ready.',
 })
+
+function updateStatus(next: EditorStatus): void {
+  status.pointer = next.pointer
+  status.snapKind = next.snapKind
+  status.snapLabel = next.snapLabel
+  status.selectedObjectName = next.selectedObjectName
+  status.message = next.message
+}
 
 function setMode(mode: EditorInteractionMode): void {
   activeMode.value = mode
