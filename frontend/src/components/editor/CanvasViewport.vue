@@ -17,7 +17,7 @@
         </template>
       </div>
 
-      <div ref="canvasSurfaceRef" class="canvas-surface" @wheel.prevent="onWheelZoom">
+      <div ref="canvasSurfaceRef" class="canvas-surface" @dragover.prevent @drop.prevent="onPaletteDrop" @wheel.prevent="onWheelZoom">
         <svg
           ref="svgRef"
           class="editor-canvas"
@@ -258,6 +258,20 @@ import type { EditorCommand, EditorInteractionMode } from '../../lib/editor/inte
 import { formatPoint, rectsIntersect, snapPoint, type Point, type SnapCandidate, type SnapKind } from '../../lib/editor/snapService'
 import { createReferenceClipboard, placeItemAtReferencePoint, type ReferenceClipboardPayload, type TextClipboardItem } from '../../lib/editor/referenceClipboard'
 import { voltageClassColors, voltageColorById, voltageKvById, type VoltageClassId } from '../../lib/editor/voltageClasses'
+
+type PaletteVsdxDropPayload = {
+  id: string
+  status?: 'available' | 'planned'
+  command?: string
+  title: string
+  categoryId?: string
+  libraryPageName?: string
+  semanticCategoryId?: string
+  vsdxMasterId?: string
+  widthMm?: number
+  heightMm?: number
+  connectionCount?: number
+}
 
 type TextObjectRole = 'bay-label' | 'bus-label' | 'free-text-box'
 type PrimitiveKind = 'rectangle' | 'ellipse' | 'line'
@@ -1157,6 +1171,65 @@ watch(() => props.command, (command) => {
 })
 
 setStatus(null, null, '')
+function readPaletteVsdxDropPayload(event: DragEvent): PaletteVsdxDropPayload | null {
+  const raw = event.dataTransfer?.getData('application/x-electroscheme-shape-catalog-item')
+  if (!raw) return null
+
+  try {
+    const parsed = JSON.parse(raw) as PaletteVsdxDropPayload
+    if (!parsed || typeof parsed.title !== 'string' || parsed.title.trim().length === 0) return null
+    return parsed
+  } catch {
+    return null
+  }
+}
+
+function isPlannedVsdxDropPayload(payload: PaletteVsdxDropPayload | null): payload is PaletteVsdxDropPayload {
+  return Boolean(payload && payload.status === 'planned')
+}
+
+function safeVsdxPlaceholderSize(value: unknown, fallback: number, min: number, max: number): number {
+  const numeric = Number(value)
+  if (!Number.isFinite(numeric) || numeric <= 0) return fallback
+  return Math.min(Math.max(numeric * 2.8, min), max)
+}
+
+function createVsdxPlaceholderSymbol(payload: PaletteVsdxDropPayload, point: Point): void {
+  const snapped = snapCanvasPoint(point)
+  const width = safeVsdxPlaceholderSize(payload.widthMm, 42, 30, 120)
+  const height = safeVsdxPlaceholderSize(payload.heightMm, 30, 22, 96)
+
+  const obj: SymbolObject = {
+    id: `vsdx_symbol_${Date.now()}`,
+    x: snapped.x - width / 2,
+    y: snapped.y - height / 2,
+    width,
+    height,
+    label: payload.title,
+    voltageClassId: '10',
+    attachedSlotId: null,
+  }
+
+  symbolObjects.value.push(obj)
+  selectSingle('symbol', obj.id)
+  emitStatus(snapped, snapped.kind, payload.title)
+}
+
+function onPaletteDrop(event: DragEvent): void {
+  const p = worldPointFromClient(event.clientX, event.clientY)
+  if (!p) return
+
+  const plannedVsdxPayload = readPaletteVsdxDropPayload(event)
+  if (isPlannedVsdxDropPayload(plannedVsdxPayload)) {
+    createVsdxPlaceholderSymbol(plannedVsdxPayload, p)
+    return
+  }
+
+  const command = event.dataTransfer?.getData('application/x-electroscheme-command') as EditorCommand | ''
+  if (!command) return
+  handleCommandAtPoint(command, snapCanvasPoint(p))
+}
+
 </script>
 
 <style scoped>

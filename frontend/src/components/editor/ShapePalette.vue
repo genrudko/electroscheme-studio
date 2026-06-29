@@ -45,9 +45,9 @@
           :key="item.id"
           type="button"
           class="shape-item"
-          :class="{ planned: item.status === 'planned', available: Boolean(item.command), 'no-icon': iconMode === 'none' }"
-          :draggable="Boolean(item.command)"
-          :aria-disabled="!item.command"
+          :class="{ planned: item.status === 'planned', available: isDraggableItem(item), 'no-icon': iconMode === 'none' }"
+          :draggable="isDraggableItem(item)"
+          :aria-disabled="!isDraggableItem(item)"
           :title="itemTooltip(item)"
           @click="insertItem(item)"
           @dragstart="onDragStart($event, item)"
@@ -94,19 +94,44 @@ const layers = createDefaultLayers()
 
 const filteredItems = computed(() => filterShapeCatalog(query.value, activeCategoryId.value))
 
+function isDraggableItem(item: ShapeCatalogItem): boolean {
+  return Boolean(item.command) || item.status === 'planned'
+}
+
+function vsdxDropPayload(item: ShapeCatalogItem): string {
+  return JSON.stringify({
+    id: item.id,
+    title: item.title,
+    categoryId: item.categoryId,
+    libraryPageName: item.libraryPageName ?? '',
+    semanticCategoryId: item.semanticCategoryId ?? '',
+    vsdxMasterId: item.vsdxMasterId ?? '',
+    widthMm: item.widthMm ?? 0,
+    heightMm: item.heightMm ?? 0,
+    connectionCount: item.connectionCount ?? 0,
+  })
+}
+
 function insertItem(item: ShapeCatalogItem): void {
   if (!item.command) return
   emit('insertShape', item.command)
 }
 
 function onDragStart(event: DragEvent, item: ShapeCatalogItem): void {
-  if (!item.command) {
+  if (!isDraggableItem(item)) {
     event.preventDefault()
     return
   }
 
-  event.dataTransfer?.setData('application/x-electroscheme-command', item.command)
-  event.dataTransfer?.setData('text/plain', item.command)
+  event.dataTransfer?.setData('application/x-electroscheme-shape-catalog-item', shapeCatalogDropPayload(item))
+
+  if (item.command) {
+    event.dataTransfer?.setData('application/x-electroscheme-command', item.command)
+    event.dataTransfer?.setData('text/plain', item.command)
+  } else {
+    event.dataTransfer?.setData('text/plain', item.title)
+  }
+
   if (event.dataTransfer) {
     event.dataTransfer.effectAllowed = 'copy'
     event.dataTransfer.dropEffect = 'copy'
@@ -374,14 +399,15 @@ function machineIcon(letter: 'G' | 'M'): string {
 }
 
 .shape-item.planned {
-  cursor: default;
+  cursor: grab;
 }
 
 .shape-item.available {
   cursor: grab;
 }
 
-.shape-item.available:active {
+.shape-item.available:active,
+.shape-item.planned:active {
   cursor: grabbing;
 }
 
