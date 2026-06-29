@@ -142,7 +142,7 @@
       </aside>
 
       <main class="preview-area">
-        <p class="hint">Tip: drag the bus caption directly in the preview, then click Generate preview.</p>
+        <p class="hint">Tip: drag the bus caption directly in the preview. It moves immediately and the model offsets are refreshed on release.</p>
 
         <div class="preview-card">
           <svg
@@ -310,29 +310,62 @@ function clientToSvgPoint(event: PointerEvent): DOMPoint | null {
   return point.matrixTransform(ctm.inverse())
 }
 
+function findBusLabelTarget(start: Element | null): SVGTextElement | null {
+  let current: Element | null = start
+  while (current && current !== previewSvg.value) {
+    if (current.getAttribute('data-role') === 'bus-label') {
+      return current as SVGTextElement
+    }
+    current = current.parentElement
+  }
+  return null
+}
+
+function setLabelVisualPosition(target: SVGTextElement, x: number, y: number): void {
+  const rotation = Number(target.getAttribute('data-rotation') ?? '0') || 0
+  const roundedX = Math.round(x * 10) / 10
+  const roundedY = Math.round(y * 10) / 10
+  target.setAttribute('x', String(roundedX))
+  target.setAttribute('y', String(roundedY))
+  target.setAttribute('transform', `rotate(${rotation} ${roundedX} ${roundedY})`)
+}
+
 function onPreviewPointerDown(event: PointerEvent): void {
-  const target = event.target as Element | null
-  if (!target || target.getAttribute('data-role') !== 'bus-label') return
+  const target = findBusLabelTarget(event.target as Element | null)
+  if (!target) return
+
+  event.preventDefault()
 
   const start = clientToSvgPoint(event)
   if (!start) return
 
+  const baseX = Number(target.getAttribute('x') ?? '0') || 0
+  const baseY = Number(target.getAttribute('y') ?? '0') || 0
   const startOffsetX = form.bus_label_offset_x
   const startOffsetY = form.bus_label_offset_y
   const pointerId = event.pointerId
+
+  target.style.cursor = 'grabbing'
+  previewSvg.value?.setPointerCapture?.(pointerId)
 
   const move = (moveEvent: PointerEvent) => {
     if (moveEvent.pointerId !== pointerId) return
     const current = clientToSvgPoint(moveEvent)
     if (!current) return
-    form.bus_label_offset_x = Math.round((startOffsetX + current.x - start.x) * 10) / 10
-    form.bus_label_offset_y = Math.round((startOffsetY + current.y - start.y) * 10) / 10
+    const dx = current.x - start.x
+    const dy = current.y - start.y
+    form.bus_label_offset_x = Math.round((startOffsetX + dx) * 10) / 10
+    form.bus_label_offset_y = Math.round((startOffsetY + dy) * 10) / 10
+    setLabelVisualPosition(target, baseX + dx, baseY + dy)
   }
 
   const up = (upEvent: PointerEvent) => {
     if (upEvent.pointerId !== pointerId) return
+    target.style.cursor = 'grab'
+    previewSvg.value?.releasePointerCapture?.(pointerId)
     window.removeEventListener('pointermove', move)
     window.removeEventListener('pointerup', up)
+    void refreshPreview()
   }
 
   window.addEventListener('pointermove', move)
@@ -373,22 +406,8 @@ onMounted(() => {
   color: #0f172a;
 }
 
-.panel-header {
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  margin-bottom: 16px;
-}
-
-.eyebrow {
-  margin: 0 0 4px;
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  color: #2563eb;
-  text-transform: uppercase;
-}
-
+.panel-header { display: flex; justify-content: space-between; gap: 16px; margin-bottom: 16px; }
+.eyebrow { margin: 0 0 4px; font-size: 12px; font-weight: 800; letter-spacing: 0.08em; color: #2563eb; text-transform: uppercase; }
 .panel-header h2 { margin: 0; font-size: 22px; }
 .description { margin: 4px 0 0; color: #64748b; }
 
@@ -404,29 +423,10 @@ onMounted(() => {
 }
 
 .primary-button:disabled { opacity: 0.55; cursor: default; }
-
-.status {
-  padding: 16px;
-  border-radius: 12px;
-  background: #eff6ff;
-  color: #1e40af;
-}
-
+.status { padding: 16px; border-radius: 12px; background: #eff6ff; color: #1e40af; }
 .status.error { background: #fef2f2; color: #991b1b; }
-
-.layout {
-  display: grid;
-  grid-template-columns: minmax(250px, 320px) 1fr;
-  gap: 16px;
-}
-
-.controls,
-.preview-area {
-  border: 1px solid #dbeafe;
-  border-radius: 14px;
-  background: white;
-  padding: 14px;
-}
+.layout { display: grid; grid-template-columns: minmax(250px, 320px) 1fr; gap: 16px; }
+.controls, .preview-area { border: 1px solid #dbeafe; border-radius: 14px; background: white; padding: 14px; }
 
 .field {
   display: grid;
@@ -437,8 +437,7 @@ onMounted(() => {
   font-weight: 800;
 }
 
-.field input,
-.field select {
+.field input, .field select {
   width: 100%;
   box-sizing: border-box;
   border: 1px solid #cbd5e1;
@@ -448,44 +447,11 @@ onMounted(() => {
   background: white;
 }
 
-.check-field {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 12px;
-  color: #334155;
-  font-size: 12px;
-  font-weight: 800;
-}
-
-.numbering-box {
-  margin-top: 14px;
-  padding: 12px;
-  border: 1px solid #dbeafe;
-  border-radius: 12px;
-  background: #eff6ff;
-}
-
-.numbering-box h3 {
-  margin: 0 0 10px;
-  font-size: 14px;
-}
-
-.preset-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-
-.preset-row button {
-  border: 1px solid #bfdbfe;
-  border-radius: 999px;
-  padding: 6px 9px;
-  background: white;
-  color: #1d4ed8;
-  cursor: pointer;
-  font-weight: 800;
-}
+.check-field { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; color: #334155; font-size: 12px; font-weight: 800; }
+.numbering-box { margin-top: 14px; padding: 12px; border: 1px solid #dbeafe; border-radius: 12px; background: #eff6ff; }
+.numbering-box h3 { margin: 0 0 10px; font-size: 14px; }
+.preset-row { display: flex; flex-wrap: wrap; gap: 6px; }
+.preset-row button { border: 1px solid #bfdbfe; border-radius: 999px; padding: 6px 9px; background: white; color: #1d4ed8; cursor: pointer; font-weight: 800; }
 
 .preview-card {
   min-height: 360px;
@@ -502,44 +468,13 @@ onMounted(() => {
   --label-color: #111111;
 }
 
-.preview-svg {
-  width: 96%;
-  max-height: 340px;
-  touch-action: none;
-}
-
-.hint {
-  margin: 0 0 10px;
-  color: #64748b;
-  font-size: 12px;
-  font-weight: 700;
-}
-
-.summary {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 10px;
-  margin: 12px 0;
-}
-
-.summary article {
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
-  padding: 10px;
-}
-
-.summary span {
-  display: block;
-  color: #64748b;
-  font-size: 12px;
-}
-
-.summary strong {
-  display: block;
-  margin-top: 3px;
-  font-size: 18px;
-}
-
+.preview-svg { width: 96%; max-height: 340px; touch-action: none; }
+.preview-svg :deep([data-role='bus-label']) { cursor: grab; user-select: none; }
+.hint { margin: 0 0 10px; color: #64748b; font-size: 12px; font-weight: 700; }
+.summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin: 12px 0; }
+.summary article { border: 1px solid #e2e8f0; border-radius: 12px; padding: 10px; }
+.summary span { display: block; color: #64748b; font-size: 12px; }
+.summary strong { display: block; margin-top: 3px; font-size: 18px; }
 .terminal-list { margin-top: 12px; }
 .terminal-list table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 12px; }
 .terminal-list th, .terminal-list td { border-bottom: 1px solid #e2e8f0; padding: 6px 8px; text-align: left; }

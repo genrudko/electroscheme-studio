@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <title>Interactive visual review - ElectroScheme Studio</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f6f8;
+      color: #111827;
+    }
+    header.page {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: #111827;
+      color: white;
+      padding: 16px 22px;
+      box-shadow: 0 2px 12px rgba(0,0,0,.2);
+    }
+    header.page h1 { margin: 0 0 6px; font-size: 22px; }
+    header.page p { margin: 0; color: #cbd5e1; }
+    main {
+      padding: 18px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(620px, 1fr));
+      gap: 16px;
+    }
+    .card {
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 14px;
+      box-shadow: 0 1px 4px rgba(0,0,0,.06);
+    }
+    .card h2 { margin: 0 0 6px; font-size: 17px; }
+    .card p { margin: 6px 0; color: #4b5563; }
+    .meta { font-size: 12px; font-weight: 700; }
+    .labels { font-size: 12px; color: #1d4ed8; }
+    .svg-wrap {
+      width: 100%;
+      min-height: 300px;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      background: #fff;
+      overflow: auto;
+    }
+    .svg-wrap svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    [data-role="bus-label"] {
+      cursor: grab;
+      user-select: none;
+    }
+    [data-role="bus-label"].dragging {
+      cursor: grabbing;
+    }
+    .drag-status {
+      font-size: 12px;
+      color: #64748b;
+    }
+  </style>
+</head>
+<body>
+  <header class="page">
+    <h1>Interactive visual review</h1>
+    <p>Static snapshots are embedded inline. Bus captions can be dragged visually for quick layout experiments.</p>
+  </header>
+  <main>
+    <article class="card" data-case-id="01_horizontal_bottom_numbered">
+  <header>
+    <h2>Horizontal busbar — bottom slots, numbered above</h2>
+    <p>Default RU section case: cells under busbar, numbering above bay slots.</p>
+    <p class="meta">terminals=10; bay_slots=8; labels=8</p>
+    <p class="labels">1, 2, 3, 4, 5, 6, 7, 8</p>
+  </header>
+  <div class="svg-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="718" height="342" viewBox="0 0 718 342">
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <defs><pattern id="grid" width="18" height="18" patternUnits="userSpaceOnUse"><path d="M 18 0 L 0 0 0 18" fill="none" stroke="#e5e7eb" stroke-width="1"/></pattern></defs>
+  <text x="24" y="28" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#111827">Horizontal busbar — bottom slots, numbered above</text>
+  <text x="24" y="50" font-family="Arial, sans-serif" font-size="12" fill="#4b5563">Default RU section case: cells under busbar, numbering above bay slots.</text>
+  <rect x="28" y="68" width="662" height="236" fill="url(#grid)" stroke="#cbd5e1" rx="10"/>
+  <g transform="translate(40, 80)" style="color:#4b5563;--voltage-color:#4b5563;--slot-color:#2563eb;--label-color:#111827">
+<rect x="20" y="70" width="364" height="12" fill="var(--busbar-color, #6d0ad6)" stroke="var(--busbar-color, #6d0ad6)" stroke-width="1" rx="0" />
+<circle cx="34" cy="76" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="34" y="58" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">1</text>
+<circle cx="82" cy="76" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="82" y="58" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">2</text>
+<circle cx="130" cy="76" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="130" y="58" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">3</text>
+<circle cx="178" cy="76" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="178" y="58" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">4</text>
+<circle cx="226" cy="76" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="226" y="58" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">5</text>
+<circle cx="274" cy="76" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="274" y="58" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">6</text>
+<circle cx="322" cy="76" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="322" y="58" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">7</text>
+<circle cx="370" cy="76" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="370" y="58" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">8</text>
+<text x="418" y="76" transform="rotate(0 418 76)" font-family="Arial, sans-serif" font-size="16" dominant-baseline="middle" data-role="bus-label" data-draggable="true" data-offset-x="0" data-offset-y="0" data-rotation="0" fill="var(--label-color, #111111)">1С 10 кВ</text>
+  </g>
+  <text x="24" y="314" font-family="Arial, sans-serif" font-size="11" fill="#64748b">terminals=10; bay_slots=8; viewBox=638x212</text>
+</svg>
+</div>
+  <p class="drag-status">Drag bus caption if present. This is visual-only; it does not rewrite model JSON.</p>
+</article><article class="card" data-case-id="02_horizontal_top_numbered">
+  <header>
+    <h2>Horizontal busbar — top slots, numbered above</h2>
+    <p>Checks label clearance when equipment slots are above the busbar.</p>
+    <p class="meta">terminals=10; bay_slots=8; labels=8</p>
+    <p class="labels">9, 10, 11, 12, 13, 14, 15, 16</p>
+  </header>
+  <div class="svg-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="718" height="376" viewBox="0 0 718 376">
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <defs><pattern id="grid" width="18" height="18" patternUnits="userSpaceOnUse"><path d="M 18 0 L 0 0 0 18" fill="none" stroke="#e5e7eb" stroke-width="1"/></pattern></defs>
+  <text x="24" y="28" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#111827">Horizontal busbar — top slots, numbered above</text>
+  <text x="24" y="50" font-family="Arial, sans-serif" font-size="12" fill="#4b5563">Checks label clearance when equipment slots are above the busbar.</text>
+  <rect x="28" y="68" width="662" height="270" fill="url(#grid)" stroke="#cbd5e1" rx="10"/>
+  <g transform="translate(40, 80)" style="color:#4b5563;--voltage-color:#4b5563;--slot-color:#2563eb;--label-color:#111827">
+<rect x="20" y="160" width="364" height="12" fill="var(--busbar-color, #6d0ad6)" stroke="var(--busbar-color, #6d0ad6)" stroke-width="1" rx="0" />
+<circle cx="34" cy="166" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="34" y="148" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">9</text>
+<circle cx="82" cy="166" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="82" y="148" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">10</text>
+<circle cx="130" cy="166" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="130" y="148" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">11</text>
+<circle cx="178" cy="166" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="178" y="148" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">12</text>
+<circle cx="226" cy="166" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="226" y="148" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">13</text>
+<circle cx="274" cy="166" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="274" y="148" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">14</text>
+<circle cx="322" cy="166" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="322" y="148" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">15</text>
+<circle cx="370" cy="166" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="370" y="148" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">16</text>
+<text x="418" y="166" transform="rotate(0 418 166)" font-family="Arial, sans-serif" font-size="16" dominant-baseline="middle" data-role="bus-label" data-draggable="true" data-offset-x="0" data-offset-y="0" data-rotation="0" fill="var(--label-color, #111111)">1С 10 кВ</text>
+  </g>
+  <text x="24" y="348" font-family="Arial, sans-serif" font-size="11" fill="#64748b">terminals=10; bay_slots=8; viewBox=638x246</text>
+</svg>
+</div>
+  <p class="drag-status">Drag bus caption if present. This is visual-only; it does not rewrite model JSON.</p>
+</article><article class="card" data-case-id="03_horizontal_both_sides">
+  <header>
+    <h2>Horizontal busbar — both sides</h2>
+    <p>Shows numbering sequence when slots are generated on both sides.</p>
+    <p class="meta">terminals=14; bay_slots=12; labels=12</p>
+    <p class="labels">21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32</p>
+  </header>
+  <div class="svg-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="622" height="454" viewBox="0 0 622 454">
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <defs><pattern id="grid" width="18" height="18" patternUnits="userSpaceOnUse"><path d="M 18 0 L 0 0 0 18" fill="none" stroke="#e5e7eb" stroke-width="1"/></pattern></defs>
+  <text x="24" y="28" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#111827">Horizontal busbar — both sides</text>
+  <text x="24" y="50" font-family="Arial, sans-serif" font-size="12" fill="#4b5563">Shows numbering sequence when slots are generated on both sides.</text>
+  <rect x="28" y="68" width="566" height="348" fill="url(#grid)" stroke="#cbd5e1" rx="10"/>
+  <g transform="translate(40, 80)" style="color:#4b5563;--voltage-color:#4b5563;--slot-color:#2563eb;--label-color:#111827">
+<rect x="20" y="150" width="268" height="12" fill="var(--busbar-color, #6d0ad6)" stroke="var(--busbar-color, #6d0ad6)" stroke-width="1" rx="0" />
+<circle cx="34" cy="156" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="34" y="138" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">21</text>
+<circle cx="34" cy="156" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="34" y="174" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">22</text>
+<circle cx="82" cy="156" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="82" y="138" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">23</text>
+<circle cx="82" cy="156" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="82" y="174" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">24</text>
+<circle cx="130" cy="156" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="130" y="138" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">25</text>
+<circle cx="130" cy="156" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="130" y="174" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">26</text>
+<circle cx="178" cy="156" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="178" y="138" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">27</text>
+<circle cx="178" cy="156" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="178" y="174" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">28</text>
+<circle cx="226" cy="156" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="226" y="138" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">29</text>
+<circle cx="226" cy="156" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="226" y="174" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">30</text>
+<circle cx="274" cy="156" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="274" y="138" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">31</text>
+<circle cx="274" cy="156" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="274" y="174" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">32</text>
+<text x="322" y="156" transform="rotate(0 322 156)" font-family="Arial, sans-serif" font-size="16" dominant-baseline="middle" data-role="bus-label" data-draggable="true" data-offset-x="0" data-offset-y="0" data-rotation="0" fill="var(--label-color, #111111)">1С 10 кВ</text>
+  </g>
+  <text x="24" y="426" font-family="Arial, sans-serif" font-size="11" fill="#64748b">terminals=14; bay_slots=12; viewBox=542x324</text>
+</svg>
+</div>
+  <p class="drag-status">Drag bus caption if present. This is visual-only; it does not rewrite model JSON.</p>
+</article><article class="card" data-case-id="04_vertical_right_numbered">
+  <header>
+    <h2>Vertical busbar — right slots</h2>
+    <p>Checks vertical orientation, right-side bay slots and labels.</p>
+    <p class="meta">terminals=9; bay_slots=7; labels=7</p>
+    <p class="labels">1, 2, 3, 4, 5, 6, 7</p>
+  </header>
+  <div class="svg-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="620" height="590" viewBox="0 0 620 590">
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <defs><pattern id="grid" width="18" height="18" patternUnits="userSpaceOnUse"><path d="M 18 0 L 0 0 0 18" fill="none" stroke="#e5e7eb" stroke-width="1"/></pattern></defs>
+  <text x="24" y="28" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#111827">Vertical busbar — right slots</text>
+  <text x="24" y="50" font-family="Arial, sans-serif" font-size="12" fill="#4b5563">Checks vertical orientation, right-side bay slots and labels.</text>
+  <rect x="28" y="68" width="440" height="484" fill="url(#grid)" stroke="#cbd5e1" rx="10"/>
+  <g transform="translate(40, 80)" style="color:#4b5563;--voltage-color:#4b5563;--slot-color:#2563eb;--label-color:#111827">
+<rect x="74" y="64" width="12" height="316" fill="var(--busbar-color, #6d0ad6)" stroke="var(--busbar-color, #6d0ad6)" stroke-width="1" rx="0" />
+<circle cx="80" cy="78" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="62" y="78" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">1</text>
+<circle cx="80" cy="126" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="62" y="126" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">2</text>
+<circle cx="80" cy="174" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="62" y="174" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">3</text>
+<circle cx="80" cy="222" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="62" y="222" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">4</text>
+<circle cx="80" cy="270" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="62" y="270" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">5</text>
+<circle cx="80" cy="318" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="62" y="318" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">6</text>
+<circle cx="80" cy="366" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="62" y="366" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">7</text>
+<text x="80" y="30" transform="rotate(-90 80 30)" font-family="Arial, sans-serif" font-size="16" dominant-baseline="middle" data-role="bus-label" data-draggable="true" data-offset-x="0" data-offset-y="0" data-rotation="-90" fill="var(--label-color, #111111)">1С 10 кВ</text>
+  </g>
+  <text x="24" y="562" font-family="Arial, sans-serif" font-size="11" fill="#64748b">terminals=9; bay_slots=7; viewBox=416x460</text>
+</svg>
+</div>
+  <p class="drag-status">Drag bus caption if present. This is visual-only; it does not rewrite model JSON.</p>
+</article><article class="card" data-case-id="05_vertical_left_numbered">
+  <header>
+    <h2>Vertical busbar — left slots</h2>
+    <p>Checks vertical orientation, left-side bay slots and labels.</p>
+    <p class="meta">terminals=9; bay_slots=7; labels=7</p>
+    <p class="labels">1, 2, 3, 4, 5, 6, 7</p>
+  </header>
+  <div class="svg-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="620" height="590" viewBox="0 0 620 590">
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <defs><pattern id="grid" width="18" height="18" patternUnits="userSpaceOnUse"><path d="M 18 0 L 0 0 0 18" fill="none" stroke="#e5e7eb" stroke-width="1"/></pattern></defs>
+  <text x="24" y="28" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#111827">Vertical busbar — left slots</text>
+  <text x="24" y="50" font-family="Arial, sans-serif" font-size="12" fill="#4b5563">Checks vertical orientation, left-side bay slots and labels.</text>
+  <rect x="28" y="68" width="440" height="484" fill="url(#grid)" stroke="#cbd5e1" rx="10"/>
+  <g transform="translate(40, 80)" style="color:#4b5563;--voltage-color:#4b5563;--slot-color:#2563eb;--label-color:#111827">
+<rect x="164" y="64" width="12" height="316" fill="var(--busbar-color, #6d0ad6)" stroke="var(--busbar-color, #6d0ad6)" stroke-width="1" rx="0" />
+<circle cx="170" cy="78" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="152" y="78" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">1</text>
+<circle cx="170" cy="126" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="152" y="126" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">2</text>
+<circle cx="170" cy="174" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="152" y="174" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">3</text>
+<circle cx="170" cy="222" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="152" y="222" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">4</text>
+<circle cx="170" cy="270" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="152" y="270" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">5</text>
+<circle cx="170" cy="318" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="152" y="318" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">6</text>
+<circle cx="170" cy="366" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="152" y="366" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">7</text>
+<text x="170" y="30" transform="rotate(-90 170 30)" font-family="Arial, sans-serif" font-size="16" dominant-baseline="middle" data-role="bus-label" data-draggable="true" data-offset-x="0" data-offset-y="0" data-rotation="-90" fill="var(--label-color, #111111)">1С 10 кВ</text>
+  </g>
+  <text x="24" y="562" font-family="Arial, sans-serif" font-size="11" fill="#64748b">terminals=9; bay_slots=7; viewBox=416x460</text>
+</svg>
+</div>
+  <p class="drag-status">Drag bus caption if present. This is visual-only; it does not rewrite model JSON.</p>
+</article><article class="card" data-case-id="06_numbering_disabled">
+  <header>
+    <h2>Horizontal busbar — numbering disabled</h2>
+    <p>Checks clean geometry without cell labels.</p>
+    <p class="meta">terminals=7; bay_slots=5; labels=0</p>
+    <p class="labels"></p>
+  </header>
+  <div class="svg-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="620" height="290" viewBox="0 0 620 290">
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <defs><pattern id="grid" width="18" height="18" patternUnits="userSpaceOnUse"><path d="M 18 0 L 0 0 0 18" fill="none" stroke="#e5e7eb" stroke-width="1"/></pattern></defs>
+  <text x="24" y="28" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#111827">Horizontal busbar — numbering disabled</text>
+  <text x="24" y="50" font-family="Arial, sans-serif" font-size="12" fill="#4b5563">Checks clean geometry without cell labels.</text>
+  <rect x="28" y="68" width="518" height="184" fill="url(#grid)" stroke="#cbd5e1" rx="10"/>
+  <g transform="translate(40, 80)" style="color:#4b5563;--voltage-color:#4b5563;--slot-color:#2563eb;--label-color:#111827">
+<rect x="20" y="28" width="220" height="12" fill="var(--busbar-color, #6d0ad6)" stroke="var(--busbar-color, #6d0ad6)" stroke-width="1" rx="0" />
+<circle cx="34" cy="34" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<circle cx="82" cy="34" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<circle cx="130" cy="34" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<circle cx="178" cy="34" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<circle cx="226" cy="34" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="274" y="34" transform="rotate(0 274 34)" font-family="Arial, sans-serif" font-size="16" dominant-baseline="middle" data-role="bus-label" data-draggable="true" data-offset-x="0" data-offset-y="0" data-rotation="0" fill="var(--label-color, #111111)">1С 10 кВ</text>
+  </g>
+  <text x="24" y="262" font-family="Arial, sans-serif" font-size="11" fill="#64748b">terminals=7; bay_slots=5; viewBox=494x160</text>
+</svg>
+</div>
+  <p class="drag-status">Drag bus caption if present. This is visual-only; it does not rewrite model JSON.</p>
+</article><article class="card" data-case-id="07_dense_16_slots">
+  <header>
+    <h2>Dense busbar — 16 numbered slots</h2>
+    <p>Stress test for label overlap and slot spacing.</p>
+    <p class="meta">terminals=18; bay_slots=16; labels=16</p>
+    <p class="labels">1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16</p>
+  </header>
+  <div class="svg-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="1102" height="320" viewBox="0 0 1102 320">
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <defs><pattern id="grid" width="18" height="18" patternUnits="userSpaceOnUse"><path d="M 18 0 L 0 0 0 18" fill="none" stroke="#e5e7eb" stroke-width="1"/></pattern></defs>
+  <text x="24" y="28" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#111827">Dense busbar — 16 numbered slots</text>
+  <text x="24" y="50" font-family="Arial, sans-serif" font-size="12" fill="#4b5563">Stress test for label overlap and slot spacing.</text>
+  <rect x="28" y="68" width="1046" height="214" fill="url(#grid)" stroke="#cbd5e1" rx="10"/>
+  <g transform="translate(40, 80)" style="color:#4b5563;--voltage-color:#4b5563;--slot-color:#2563eb;--label-color:#111827">
+<rect x="20" y="68" width="748" height="12" fill="var(--busbar-color, #6d0ad6)" stroke="var(--busbar-color, #6d0ad6)" stroke-width="1" rx="0" />
+<circle cx="34" cy="74" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="34" y="58" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">1</text>
+<circle cx="82" cy="74" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="82" y="58" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">2</text>
+<circle cx="130" cy="74" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="130" y="58" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">3</text>
+<circle cx="178" cy="74" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="178" y="58" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">4</text>
+<circle cx="226" cy="74" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="226" y="58" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">5</text>
+<circle cx="274" cy="74" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="274" y="58" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">6</text>
+<circle cx="322" cy="74" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="322" y="58" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">7</text>
+<circle cx="370" cy="74" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="370" y="58" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">8</text>
+<circle cx="418" cy="74" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="418" y="58" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">9</text>
+<circle cx="466" cy="74" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="466" y="58" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">10</text>
+<circle cx="514" cy="74" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="514" y="58" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">11</text>
+<circle cx="562" cy="74" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="562" y="58" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">12</text>
+<circle cx="610" cy="74" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="610" y="58" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">13</text>
+<circle cx="658" cy="74" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="658" y="58" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">14</text>
+<circle cx="706" cy="74" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="706" y="58" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">15</text>
+<circle cx="754" cy="74" r="4" fill="none" stroke="var(--slot-stroke, #ffffff)" stroke-width="1.4" />
+<text x="754" y="58" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="var(--label-color, #111111)">16</text>
+<text x="802" y="74" transform="rotate(0 802 74)" font-family="Arial, sans-serif" font-size="16" dominant-baseline="middle" data-role="bus-label" data-draggable="true" data-offset-x="0" data-offset-y="0" data-rotation="0" fill="var(--label-color, #111111)">1С 10 кВ</text>
+  </g>
+  <text x="24" y="292" font-family="Arial, sans-serif" font-size="11" fill="#64748b">terminals=18; bay_slots=16; viewBox=1022x190</text>
+</svg>
+</div>
+  <p class="drag-status">Drag bus caption if present. This is visual-only; it does not rewrite model JSON.</p>
+</article>
+  </main>
+  <script>
+    function clientToSvgPoint(svg, event) {
+      const point = svg.createSVGPoint();
+      point.x = event.clientX;
+      point.y = event.clientY;
+      const ctm = svg.getScreenCTM();
+      if (!ctm) return null;
+      return point.matrixTransform(ctm.inverse());
+    }
+
+    function setTextPosition(target, x, y) {
+      const rotation = Number(target.getAttribute('data-rotation') || '0') || 0;
+      const rx = Math.round(x * 10) / 10;
+      const ry = Math.round(y * 10) / 10;
+      target.setAttribute('x', String(rx));
+      target.setAttribute('y', String(ry));
+      target.setAttribute('transform', `rotate(${rotation} ${rx} ${ry})`);
+    }
+
+    document.addEventListener('pointerdown', (event) => {
+      const target = event.target.closest('[data-role="bus-label"]');
+      if (!target) return;
+      const svg = target.ownerSVGElement;
+      if (!svg) return;
+
+      event.preventDefault();
+
+      const start = clientToSvgPoint(svg, event);
+      if (!start) return;
+
+      const baseX = Number(target.getAttribute('x') || '0') || 0;
+      const baseY = Number(target.getAttribute('y') || '0') || 0;
+      const pointerId = event.pointerId;
+      target.classList.add('dragging');
+      target.setPointerCapture?.(pointerId);
+
+      const move = (moveEvent) => {
+        if (moveEvent.pointerId !== pointerId) return;
+        const current = clientToSvgPoint(svg, moveEvent);
+        if (!current) return;
+        setTextPosition(target, baseX + current.x - start.x, baseY + current.y - start.y);
+      };
+
+      const up = (upEvent) => {
+        if (upEvent.pointerId !== pointerId) return;
+        target.classList.remove('dragging');
+        target.releasePointerCapture?.(pointerId);
+        window.removeEventListener('pointermove', move);
+        window.removeEventListener('pointerup', up);
+      };
+
+      window.addEventListener('pointermove', move);
+      window.addEventListener('pointerup', up);
+    });
+  </script>
+</body>
+</html>
