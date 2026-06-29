@@ -31,7 +31,7 @@ class BusbarPreviewRequest(BaseModel):
     orientation: BusbarOrientation = "horizontal"
     thickness_mm: float = Field(default=12.0, ge=2.0, le=60.0)
     connection_spacing: float | None = Field(default=48.0, ge=5.0, le=300.0)
-    end_slot_offset: float = Field(default=14.0, ge=0.0, le=300.0)
+    end_slot_offset: float = Field(default=12.0, ge=0.0, le=300.0)
     slot_diameter: float = Field(default=8.0, ge=2.0, le=30.0)
     margin: float = Field(default=24.0, ge=5.0, le=120.0)
     bay_depth: float = Field(default=90.0, ge=20.0, le=260.0)

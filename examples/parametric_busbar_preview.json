@@ -9,7 +9,7 @@
   "orientation": "horizontal",
   "thickness_mm": 12,
   "connection_spacing": 48,
-  "end_slot_offset": 14,
+  "end_slot_offset": 12,
   "slot_diameter": 8,
   "margin": 24,
   "bay_depth": 90,
