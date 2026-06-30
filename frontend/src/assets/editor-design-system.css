@@ -1367,3 +1367,99 @@ body,
 .ess-view-ribbon-panel br {
   display: none !important;
 }
+
+/* patch-059-expand-view-ribbon-height-and-unclip-controls
+   Small expansion after structural View ribbon rewrite. */
+
+.ribbon-bar,
+.ribbon,
+.app-ribbon,
+.editor-ribbon {
+  max-height: 124px !important;
+  overflow: visible !important;
+}
+
+.ribbon-content,
+.ribbon-body,
+.ribbon-groups,
+.ribbon-panel {
+  min-height: 96px !important;
+  max-height: 104px !important;
+  overflow-y: visible !important;
+}
+
+.ess-view-ribbon-panel {
+  height: 96px !important;
+  min-height: 96px !important;
+  max-height: 96px !important;
+  align-items: stretch !important;
+  padding: 6px 8px !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+}
+
+.ess-ribbon-command-group {
+  height: 84px !important;
+  min-height: 84px !important;
+  max-height: 84px !important;
+  grid-template-rows: 14px 1fr !important;
+  padding: 5px 8px 6px !important;
+}
+
+.ess-ribbon-command-group--canvas {
+  width: 850px !important;
+}
+
+.ess-ribbon-command-group--canvas .ess-ribbon-field-grid,
+.ess-ribbon-field-grid--canvas {
+  grid-template-rows: repeat(3, 21px) !important;
+  gap: 3px 10px !important;
+}
+
+.ess-ribbon-command-group--display {
+  width: 690px !important;
+}
+
+.ess-ribbon-check-grid {
+  grid-template-rows: repeat(2, 24px) !important;
+  gap: 5px 11px !important;
+}
+
+.ess-ribbon-command-group--guides {
+  width: 270px !important;
+}
+
+.ess-ribbon-command-title {
+  height: 14px !important;
+  line-height: 14px !important;
+}
+
+.ess-view-ribbon-panel label {
+  height: 21px !important;
+  min-height: 21px !important;
+  max-height: 21px !important;
+  line-height: 1 !important;
+}
+
+.ess-view-ribbon-panel input:not([type='checkbox']),
+.ess-view-ribbon-panel select {
+  height: 21px !important;
+  min-height: 21px !important;
+  max-height: 21px !important;
+  padding-top: 1px !important;
+  padding-bottom: 1px !important;
+}
+
+.ess-view-ribbon-panel button {
+  height: 23px !important;
+  min-height: 23px !important;
+  max-height: 23px !important;
+}
+
+.canvas-shell,
+.canvas-viewport,
+.canvas-scroll,
+.drawing-area,
+.canvas-workspace {
+  min-height: 0 !important;
+}
