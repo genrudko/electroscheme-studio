@@ -1196,3 +1196,217 @@ body,
   opacity: 0 !important;
   pointer-events: none !important;
 }
+
+/* patch-057-force-ribbon-controls-horizontal-no-inner-scroll
+   The Ribbon content must be horizontal. No inner vertical scroll. */
+
+.ribbon-bar,
+.ribbon,
+.app-ribbon,
+.editor-ribbon {
+  max-height: 78px !important;
+  overflow: hidden !important;
+}
+
+/* Active tab body: one horizontal strip. */
+.ribbon-content,
+.ribbon-body,
+.ribbon-groups,
+.ribbon-panel {
+  height: 46px !important;
+  min-height: 46px !important;
+  max-height: 46px !important;
+  display: flex !important;
+  flex-flow: row nowrap !important;
+  align-items: center !important;
+  align-content: center !important;
+  gap: 8px !important;
+  padding: 4px 8px !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  scrollbar-width: thin !important;
+}
+
+/* IMPORTANT:
+   Existing Ribbon markup contains nested wrappers. Flatten all common wrapper
+   levels inside the active ribbon body into a single horizontal row. */
+.ribbon-content > *,
+.ribbon-body > *,
+.ribbon-groups > *,
+.ribbon-panel > *,
+.ribbon-content > * > *,
+.ribbon-body > * > *,
+.ribbon-groups > * > *,
+.ribbon-panel > * > *,
+.ribbon-content > * > * > *,
+.ribbon-body > * > * > *,
+.ribbon-groups > * > * > *,
+.ribbon-panel > * > * > * {
+  display: inline-flex !important;
+  flex-flow: row nowrap !important;
+  align-items: center !important;
+  align-content: center !important;
+  justify-content: flex-start !important;
+  gap: 6px !important;
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  height: 28px !important;
+  min-height: 24px !important;
+  max-height: 34px !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  overflow: visible !important;
+  white-space: nowrap !important;
+}
+
+/* Do not let headings force vertical form layout. */
+.ribbon-content h1,
+.ribbon-content h2,
+.ribbon-content h3,
+.ribbon-content h4,
+.ribbon-content strong,
+.ribbon-content legend,
+.ribbon-body h1,
+.ribbon-body h2,
+.ribbon-body h3,
+.ribbon-body h4,
+.ribbon-body strong,
+.ribbon-body legend,
+.ribbon-groups h1,
+.ribbon-groups h2,
+.ribbon-groups h3,
+.ribbon-groups h4,
+.ribbon-groups strong,
+.ribbon-groups legend,
+.ribbon-panel h1,
+.ribbon-panel h2,
+.ribbon-panel h3,
+.ribbon-panel h4,
+.ribbon-panel strong,
+.ribbon-panel legend {
+  display: inline-flex !important;
+  align-items: center !important;
+  height: 22px !important;
+  min-height: 22px !important;
+  max-height: 22px !important;
+  margin: 0 !important;
+  padding: 0 4px 0 0 !important;
+  color: #64748b !important;
+  font: 900 9px/1 "Segoe UI", Arial, sans-serif !important;
+  letter-spacing: .04em !important;
+  text-transform: uppercase !important;
+  white-space: nowrap !important;
+}
+
+/* Labels must be label + field in one horizontal line. */
+.ribbon-content label,
+.ribbon-body label,
+.ribbon-groups label,
+.ribbon-panel label {
+  display: inline-flex !important;
+  flex-flow: row nowrap !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 4px !important;
+  width: auto !important;
+  height: 24px !important;
+  min-height: 24px !important;
+  max-height: 24px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  white-space: nowrap !important;
+}
+
+/* Inputs/buttons/selects should never create a second line. */
+.ribbon-content input[type='checkbox'],
+.ribbon-body input[type='checkbox'],
+.ribbon-groups input[type='checkbox'],
+.ribbon-panel input[type='checkbox'] {
+  flex: 0 0 auto !important;
+  width: 13px !important;
+  height: 13px !important;
+  min-width: 13px !important;
+  margin: 0 !important;
+}
+
+.ribbon-content input:not([type='checkbox']),
+.ribbon-body input:not([type='checkbox']),
+.ribbon-groups input:not([type='checkbox']),
+.ribbon-panel input:not([type='checkbox']) {
+  flex: 0 0 72px !important;
+  width: 72px !important;
+  height: 24px !important;
+  min-height: 24px !important;
+  max-height: 24px !important;
+}
+
+.ribbon-content select,
+.ribbon-body select,
+.ribbon-groups select,
+.ribbon-panel select {
+  flex: 0 0 auto !important;
+  width: auto !important;
+  min-width: 78px !important;
+  height: 24px !important;
+  min-height: 24px !important;
+  max-height: 24px !important;
+}
+
+.ribbon-content button,
+.ribbon-body button,
+.ribbon-groups button,
+.ribbon-panel button {
+  flex: 0 0 auto !important;
+  width: auto !important;
+  height: 24px !important;
+  min-height: 24px !important;
+  max-height: 24px !important;
+  white-space: nowrap !important;
+}
+
+/* Any line breaks inside Ribbon are layout bugs. */
+.ribbon-content br,
+.ribbon-body br,
+.ribbon-groups br,
+.ribbon-panel br {
+  display: none !important;
+}
+
+/* Remove inner vertical scrollbars from all Ribbon descendants. */
+.ribbon-content *,
+.ribbon-body *,
+.ribbon-groups *,
+.ribbon-panel * {
+  overflow-y: visible !important;
+}
+
+/* If there are too many controls, scroll horizontally only. */
+.ribbon-content::-webkit-scrollbar,
+.ribbon-body::-webkit-scrollbar,
+.ribbon-groups::-webkit-scrollbar,
+.ribbon-panel::-webkit-scrollbar {
+  height: 6px;
+}
+
+.ribbon-content::-webkit-scrollbar-thumb,
+.ribbon-body::-webkit-scrollbar-thumb,
+.ribbon-groups::-webkit-scrollbar-thumb,
+.ribbon-panel::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: #aebdd0;
+}
+
+/* Keep the canvas directly under the compact ribbon. */
+.canvas-shell,
+.canvas-viewport,
+.canvas-scroll,
+.drawing-area,
+.canvas-workspace {
+  min-height: 0 !important;
+}
+
+/* patch-057-repair1-smoke-marker:
+   horizontal scroll only */
