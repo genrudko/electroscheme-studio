@@ -224,4 +224,6 @@ export function installRulerMmIntermediateLabels(): void {
   window.setInterval(scheduleRulerRefresh, 750)
 }
 
-installRulerMmIntermediateLabels()
+// Disabled by patch_053: DOM-guessing ruler overlay caused visual breakage.
+// Proper intermediate labels must be implemented in the actual ruler renderer.
+// installRulerMmIntermediateLabels()

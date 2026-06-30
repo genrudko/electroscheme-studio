@@ -1722,3 +1722,319 @@ svg text {
 .ruler-layer {
   position: relative;
 }
+
+/* patch-053-repair-broken-ui-layout-after-051-052
+   Compact layout repair after broad patch_051 CSS and patch_052 DOM ruler overlay.
+   This block intentionally overrides earlier patch-051 rules. */
+
+/* Keep the application as a drawing tool, not a giant form page. */
+html,
+body,
+#app {
+  overflow: hidden !important;
+}
+
+/* ---------------- Ribbon: compact desktop tool strip ---------------- */
+.ribbon-bar,
+.ribbon,
+.app-ribbon,
+.editor-ribbon {
+  flex: 0 0 auto !important;
+  min-height: 0 !important;
+  max-height: 132px !important;
+  overflow: hidden !important;
+  border-bottom: 1px solid #bac8d8 !important;
+  background: linear-gradient(180deg, #f9fbfe 0%, #eef4fb 100%) !important;
+}
+
+.ribbon-tabs,
+.ribbon-tab-list,
+.ribbon-nav,
+.ribbon-tab-strip {
+  min-height: 28px !important;
+  height: 28px !important;
+  padding: 3px 8px 0 !important;
+  gap: 2px !important;
+  overflow: hidden !important;
+  white-space: nowrap !important;
+}
+
+.ribbon-tab,
+.ribbon-tab-button,
+.ribbon-tabs button,
+.ribbon-nav button {
+  min-height: 25px !important;
+  height: 25px !important;
+  padding: 4px 10px !important;
+  font-size: 12px !important;
+  line-height: 1 !important;
+}
+
+.ribbon-content,
+.ribbon-body,
+.ribbon-groups,
+.ribbon-panel {
+  min-height: 0 !important;
+  height: auto !important;
+  max-height: 102px !important;
+  padding: 5px 8px !important;
+  display: flex !important;
+  flex-flow: row nowrap !important;
+  align-items: stretch !important;
+  gap: 7px !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  background: #f8fbff !important;
+}
+
+/* The View tab has many settings. Keep them horizontal and compact. */
+.ribbon-group,
+.ribbon-section,
+.ribbon-command-group,
+.ribbon-panel-group,
+.ribbon-content > section,
+.ribbon-body > section,
+.ribbon-panel > section,
+.ribbon-groups > section,
+.ribbon-content > div,
+.ribbon-body > div,
+.ribbon-panel > div,
+.ribbon-groups > div {
+  flex: 0 0 auto !important;
+  min-width: auto !important;
+  max-width: none !important;
+  min-height: 54px !important;
+  max-height: 92px !important;
+  display: flex !important;
+  flex-flow: row wrap !important;
+  align-content: flex-start !important;
+  align-items: center !important;
+  gap: 5px 8px !important;
+  padding: 6px 8px !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+  border: 1px solid #d1dce9 !important;
+  border-radius: 7px !important;
+  background: #ffffff !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.8) !important;
+}
+
+.ribbon-group::after,
+.ribbon-section::after,
+.ribbon-command-group::after,
+.ribbon-panel-group::after {
+  content: none !important;
+}
+
+.ribbon-content label,
+.ribbon-body label,
+.ribbon-panel label,
+.ribbon-groups label {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  min-height: 22px !important;
+  margin: 0 !important;
+  color: #28384f !important;
+  font-size: 11px !important;
+  font-weight: 750 !important;
+  white-space: nowrap !important;
+}
+
+.ribbon-content input[type='checkbox'],
+.ribbon-body input[type='checkbox'],
+.ribbon-panel input[type='checkbox'],
+.ribbon-groups input[type='checkbox'] {
+  width: 13px !important;
+  height: 13px !important;
+  margin: 0 !important;
+}
+
+.ribbon-content input:not([type='checkbox']),
+.ribbon-body input:not([type='checkbox']),
+.ribbon-panel input:not([type='checkbox']),
+.ribbon-groups input:not([type='checkbox']),
+.ribbon-content select,
+.ribbon-body select,
+.ribbon-panel select,
+.ribbon-groups select {
+  width: 86px !important;
+  height: 24px !important;
+  min-height: 24px !important;
+  padding: 2px 6px !important;
+  font-size: 11px !important;
+  border: 1px solid #bccbdd !important;
+  border-radius: 5px !important;
+}
+
+.ribbon-content button,
+.ribbon-body button,
+.ribbon-panel button,
+.ribbon-groups button {
+  min-width: 30px !important;
+  min-height: 24px !important;
+  height: 24px !important;
+  padding: 3px 7px !important;
+  border-radius: 5px !important;
+  font-size: 11px !important;
+  line-height: 1 !important;
+}
+
+/* ---------------- Workbench sizing ---------------- */
+.editor-layout,
+.workspace-layout,
+.editor-workbench,
+.main-workspace,
+.editor-shell,
+.app-shell,
+.workspace-shell,
+.main-editor,
+.studio-shell {
+  min-height: 0 !important;
+}
+
+.canvas-shell,
+.canvas-viewport,
+.canvas-scroll,
+.drawing-area,
+.canvas-workspace {
+  min-height: 0 !important;
+}
+
+/* ---------------- Panels: calm but not swollen ---------------- */
+.shape-palette,
+.stencil-palette,
+.clean-stencil-palette {
+  width: 280px !important;
+  min-width: 240px !important;
+  max-width: 340px !important;
+  background: #f5f8fc !important;
+}
+
+.properties-panel,
+.property-panel,
+.inspector-panel,
+.right-panel {
+  background: #f6f9fc !important;
+}
+
+.shape-palette .shape-item,
+.stencil-palette .shape-item {
+  min-height: 30px !important;
+  padding: 5px 7px !important;
+  border-radius: 6px !important;
+  background: #fff !important;
+}
+
+.shape-palette .shape-title,
+.stencil-palette .shape-title {
+  font-size: 12px !important;
+  line-height: 1.25 !important;
+}
+
+/* ---------------- Canvas/rulers: remove broken intermediate DOM overlays ---------------- */
+.ruler-mm-intermediate-label,
+.ruler-mm-unit-badge {
+  display: none !important;
+}
+
+.ruler,
+.ruler-horizontal,
+.ruler-vertical,
+.canvas-ruler,
+.ruler-layer {
+  position: relative !important;
+  min-height: 20px !important;
+  background: #eef3f8 !important;
+  border-color: #c4d1df !important;
+  color: #334155 !important;
+}
+
+/* Existing ruler SVG/text should remain readable. */
+.ruler text,
+.ruler-horizontal text,
+.ruler-vertical text,
+.canvas-ruler text,
+.ruler-layer text,
+svg text.ruler-label,
+svg .ruler-label {
+  fill: #334155 !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+}
+
+/* Keep guides visible but definitely auxiliary. */
+.user-guide-line,
+.guide-layer .user-guide-line,
+svg .user-guide-line,
+.horizontal-guide,
+.vertical-guide,
+.guide-line,
+.canvas-guide {
+  stroke: rgba(37, 99, 235, .48) !important;
+  stroke-width: .8 !important;
+  stroke-dasharray: 4 4 !important;
+  vector-effect: non-scaling-stroke !important;
+}
+
+.user-guide-hit-line,
+.guide-layer .user-guide-hit-line,
+svg .user-guide-hit-line {
+  stroke: rgba(37, 99, 235, 0.001) !important;
+  stroke-width: 12 !important;
+  pointer-events: stroke !important;
+}
+
+/* Remove decorative labels that made the canvas look like a placeholder. */
+.empty-canvas-label,
+.empty-canvas-placeholder,
+.canvas-empty-state,
+.canvas-empty-label,
+.canvas-hint,
+.canvas-help-text,
+.canvas-page-label,
+.canvas-page-title,
+.page-format-label,
+.page-size-label,
+.sheet-format-label,
+.drawing-page-label,
+.origin-label,
+.origin-coordinates,
+.center-origin-label,
+.canvas-origin-label,
+.coordinate-origin-label,
+.zero-origin-label {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Drag ghost still belongs to real drag-and-drop and must stay visible. */
+.palette-drag-ghost {
+  position: fixed !important;
+  z-index: 2147483000 !important;
+  top: 0 !important;
+  left: 0 !important;
+  max-width: 280px !important;
+  padding: 7px 10px !important;
+  border: 1px solid rgba(37, 99, 235, .48) !important;
+  border-radius: 8px !important;
+  background: rgba(247, 251, 255, .98) !important;
+  color: #12376f !important;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, .22) !important;
+  font: 800 12px/1.2 "Segoe UI", Arial, sans-serif !important;
+  pointer-events: none !important;
+  transform: translate(-9999px, -9999px);
+  white-space: normal !important;
+}
+
+/* Small safety: never let earlier UI pass force huge chrome again. */
+@media (min-height: 560px) {
+  .ribbon-bar,
+  .ribbon,
+  .app-ribbon,
+  .editor-ribbon {
+    max-height: 132px !important;
+  }
+}
