@@ -1,5 +1,5 @@
 <template>
-  <header class="ribbon-bar ess-ribbon-rewritten" :class="{ 'is-collapsed': settings.ribbonCollapsed }">
+  <header class="ribbon-bar" :class="{ 'is-collapsed': settings.ribbonCollapsed }">
     <div class="ribbon-title">
       <strong>ElectroScheme Studio</strong>
       <span>Редактор схем</span>
