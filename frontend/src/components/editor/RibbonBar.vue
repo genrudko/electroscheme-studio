@@ -1,18 +1,18 @@
 <template>
-  <header class="ribbon-bar" :class="{ 'is-collapsed': settings.ribbonCollapsed }">
+  <header class="ribbon-bar ess-ribbon-rewritten" :class="{ 'is-collapsed': settings.ribbonCollapsed }">
     <div class="ribbon-title">
       <strong>ElectroScheme Studio</strong>
       <span>Редактор схем</span>
     </div>
 
-    <nav class="ribbon-tabs" aria-label="Лента команд редактора">
+    <nav class="ribbon-tabs ess-ribbon-tabs-row" aria-label="Лента команд редактора">
       <button v-for="tab in tabs" :key="tab.id" type="button" :class="{ active: tab.id === activeTab }" @click="activeTab = tab.id">
         {{ tab.label }}
       </button>
       <button type="button" class="ribbon-collapse-toggle" @click="toggleRibbon">{{ settings.ribbonCollapsed ? 'Развернуть ленту' : 'Свернуть ленту' }}</button>
     </nav>
 
-    <div class="ribbon-content">
+    <div class="ribbon-content ess-ribbon-command-row">
       <template v-if="activeTab === 'home'">
         <section class="ribbon-group">
           <h3>Инструменты</h3>
