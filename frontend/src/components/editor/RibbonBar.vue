@@ -12,130 +12,63 @@
       <button type="button" class="ribbon-collapse-toggle" @click="toggleRibbon">{{ settings.ribbonCollapsed ? 'Развернуть ленту' : 'Свернуть ленту' }}</button>
     </nav>
 
-    <div class="ribbon-content ess-ribbon-command-row">
-      <template v-if="activeTab === 'home'">
-        <section class="ribbon-group">
-          <h3>Инструменты</h3>
-          <div class="button-row">
-            <button type="button" :class="{ active: activeMode === 'select' }" @click="$emit('setMode', 'select')">↖ Выбор</button>
-            <button type="button" :class="{ active: activeMode === 'pan' }" @click="$emit('setMode', 'pan')">✋ Панорама</button>
-          </div>
-        </section>
-        <section class="ribbon-group wide">
-          <h3>Буфер</h3>
-          <div class="button-row">
-            <button type="button" @click="$emit('command', 'copy')">⧉ Копировать</button>
-            <button type="button" @click="$emit('setMode', 'copy_by_reference')">⌖ С базовой точкой</button>
-            <button type="button" @click="$emit('command', 'paste')">▣ Вставить</button>
-            <button type="button" @click="$emit('setMode', 'paste_by_point')">⌖ Вставить по точке</button>
-          </div>
-        </section>
-      </template>
-
-      <template v-else-if="activeTab === 'insert'">
-        <section class="ribbon-group wide">
-          <h3>Фигуры</h3>
-          <div class="button-row">
-            <button type="button" @click="$emit('command', 'create_sample_busbar')">＋ Шина</button>
-            <button type="button" @click="$emit('command', 'create_text')">Текст</button>
-            <button type="button" @click="$emit('command', 'create_rectangle')">Прямоугольник</button>
-            <button type="button" @click="$emit('command', 'create_ellipse')">Эллипс</button>
-            <button type="button" @click="$emit('command', 'create_line')">Линия</button>
-          </div>
-        </section>
-      </template>
-
-      <template v-else-if="activeTab === 'busbars'">
-        <section class="ribbon-group wide">
-          <h3>Схема</h3>
-          <div class="button-row">
-            <button type="button" @click="$emit('command', 'create_sample_busbar')">Добавить шину</button>
-            <button type="button" @click="$emit('command', 'add_busbar_slot')">+ Ячейка</button>
-            <button type="button" @click="$emit('command', 'remove_busbar_slot')">− Ячейка</button>
-          </div>
-        </section>
-      </template>
-
-      <template v-else-if="activeTab === 'view'">
-        <section class="ribbon-group canvas-settings">
-          <h3>Канвас</h3>
-          <div class="settings-grid">
-            <label>Масштаб UI
-              <input :value="settings.uiScale" type="number" min="0.8" max="1.35" step="0.05" @change="onNumberSetting('uiScale', $event)" />
-            </label>
-            <label>Лента
-              <button type="button" class="inline-ribbon-button" @click="toggleRibbon">{{ settings.ribbonCollapsed ? 'Развернуть' : 'Свернуть' }}</button>
-            </label>
-
-            <label>Шаг сетки (мм) <input :value="settings.gridStep" type="number" min="2" max="100" step="1" @change="onNumberSetting('gridStep', $event)" /></label>
-            <label>Допуск (мм) <input :value="settings.snapTolerance" type="number" min="1" max="50" step="1" @change="onNumberSetting('snapTolerance', $event)" /></label>
-            <label>Лист
-              <select :value="settings.pageFormat" @change="onTextSetting('pageFormat', $event)">
-                <option value="A4">A4</option><option value="A3">A3</option><option value="A2">A2</option><option value="A1">A1</option><option value="A0">A0</option>
-              </select>
-            </label>
-            <label>Ориентация
-              <select :value="settings.pageOrientation" @change="onTextSetting('pageOrientation', $event)">
-                <option value="landscape">Альбомная</option><option value="portrait">Книжная</option>
-              </select>
-            </label>            <label>Профиль
-              <select :value="settings.displayProfileId" @change="onTextSetting('displayProfileId', $event)">
-                <option value="gost_r_56303_2014">ГОСТ Р 56303-2014</option>
-                <option value="sto_fsk_placeholder">СТО ФСК (позже)</option>
-              </select>
-            </label>
-            <label>Модульная сетка, мм <input :value="settings.modularGridStepMm" type="number" min="0.5" max="20" step="0.5" @change="onNumberSetting('modularGridStepMm', $event)" /></label>
-            <label>Линия УГО, мм <input :value="settings.ugoLineWidthMm" type="number" min="0.2" max="1" step="0.1" @change="onNumberSetting('ugoLineWidthMm', $event)" /></label>
-            <label>Эл. связь, мм <input :value="settings.electricalConnectionLineWidthMm" type="number" min="0.2" max="1" step="0.1" @change="onNumberSetting('electricalConnectionLineWidthMm', $event)" /></label>
-
-          </div>
-        </section>
-
-        <section class="ribbon-group snap-settings">
-          <h3>Отображение и привязки</h3>
-          <div class="toggle-row">
-            <label><input :checked="settings.rulersVisible" type="checkbox" @change="onBooleanSetting('rulersVisible', $event)" /> Линейки</label>
-            <label><input :checked="settings.pageVisible" type="checkbox" @change="onBooleanSetting('pageVisible', $event)" /> Лист ISO</label>
-            <label><input :checked="settings.originVisible" type="checkbox" @change="onBooleanSetting('originVisible', $event)" /> Центр 0,0</label>
-            <label><input :checked="settings.gridVisible" type="checkbox" @change="onBooleanSetting('gridVisible', $event)" /> Сетка</label>
-            <label><input :checked="settings.guidesVisible" type="checkbox" @change="onBooleanSetting('guidesVisible', $event)" /> Направляющие</label>
-            <label><input :checked="settings.snapEnabled" type="checkbox" @change="onBooleanSetting('snapEnabled', $event)" /> Привязки</label>
-            <label><input :checked="settings.snapGrid" type="checkbox" @change="onBooleanSetting('snapGrid', $event)" /> к сетке</label>
-            <label><input :checked="settings.snapSlots" type="checkbox" @change="onBooleanSetting('snapSlots', $event)" /> к ячейкам</label>
-            <label><input :checked="settings.snapObjects" type="checkbox" @change="onBooleanSetting('snapObjects', $event)" /> к объектам</label>
-            <label><input :checked="settings.snapGuides" type="checkbox" @change="onBooleanSetting('snapGuides', $event)" /> к направляющим</label>
-          </div>
-        </section>
-
-        <section class="ribbon-group">
-          <h3>Направляющие</h3>
-          <div class="button-row">
-            <button type="button" @click="$emit('command', 'create_vertical_guide')">Вертикальная</button>
-            <button type="button" @click="$emit('command', 'create_horizontal_guide')">Горизонтальная</button>
-            <button type="button" @click="$emit('command', 'clear_guides')">Очистить</button>
-          </div>
-        </section>
-      </template>
-
-      <template v-else-if="activeTab === 'text'">
-        <section class="ribbon-group wide">
-          <h3>Текст</h3>
-          <div class="button-row">
-            <button type="button" @click="$emit('command', 'create_text')">Добавить текст</button>
-            <button type="button" @click="$emit('command', 'rotate_0')">0°</button>
-            <button type="button" @click="$emit('command', 'rotate_90')">+90°</button>
-            <button type="button" @click="$emit('command', 'rotate_minus_90')">-90°</button>
-          </div>
-        </section>
-      </template>
-
-      <template v-else>
-        <section class="ribbon-group placeholder">
-          <h3>{{ activeTabLabel }}</h3>
-          <p>Раздел подготовлен под следующие редакторские команды.</p>
-        </section>
-      </template>
+    <div class="ribbon-content ess-ribbon-command-row ess-view-ribbon-panel">
+  <section class="ess-ribbon-command-group ess-ribbon-command-group--canvas">
+    <span class="ess-ribbon-command-title">Канвас</span>
+    <div class="ess-ribbon-field-grid ess-ribbon-field-grid--canvas">
+        <label>Масштаб UI
+                      <input :value="settings.uiScale" type="number" min="0.8" max="1.35" step="0.05" @change="onNumberSetting('uiScale', $event)" />
+                    </label>
+        <label>Лента
+                      <button type="button" class="inline-ribbon-button" @click="toggleRibbon">{{ settings.ribbonCollapsed ? 'Развернуть' : 'Свернуть' }}</button>
+                    </label>
+        <label>Шаг сетки (мм) <input :value="settings.gridStep" type="number" min="2" max="100" step="1" @change="onNumberSetting('gridStep', $event)" /></label>
+        <label>Допуск (мм) <input :value="settings.snapTolerance" type="number" min="1" max="50" step="1" @change="onNumberSetting('snapTolerance', $event)" /></label>
+        <label>Лист
+                      <select :value="settings.pageFormat" @change="onTextSetting('pageFormat', $event)">
+                        <option value="A4">A4</option><option value="A3">A3</option><option value="A2">A2</option><option value="A1">A1</option><option value="A0">A0</option>
+                      </select>
+                    </label>
+        <label>Ориентация
+                      <select :value="settings.pageOrientation" @change="onTextSetting('pageOrientation', $event)">
+                        <option value="landscape">Альбомная</option><option value="portrait">Книжная</option>
+                      </select>
+                    </label>
+        <label>Профиль
+                      <select :value="settings.displayProfileId" @change="onTextSetting('displayProfileId', $event)">
+                        <option value="gost_r_56303_2014">ГОСТ Р 56303-2014</option>
+                        <option value="sto_fsk_placeholder">СТО ФСК (позже)</option>
+                      </select>
+                    </label>
+        <label>Модульная сетка, мм <input :value="settings.modularGridStepMm" type="number" min="0.5" max="20" step="0.5" @change="onNumberSetting('modularGridStepMm', $event)" /></label>
+        <label>Линия УГО, мм <input :value="settings.ugoLineWidthMm" type="number" min="0.2" max="1" step="0.1" @change="onNumberSetting('ugoLineWidthMm', $event)" /></label>
+        <label>Эл. связь, мм <input :value="settings.electricalConnectionLineWidthMm" type="number" min="0.2" max="1" step="0.1" @change="onNumberSetting('electricalConnectionLineWidthMm', $event)" /></label>
     </div>
+  </section>
+  <section class="ess-ribbon-command-group ess-ribbon-command-group--display">
+    <span class="ess-ribbon-command-title">Отображение и привязки</span>
+    <div class="ess-ribbon-check-grid">
+        <label><input :checked="settings.rulersVisible" type="checkbox" @change="onBooleanSetting('rulersVisible', $event)" /> Линейки</label>
+        <label><input :checked="settings.pageVisible" type="checkbox" @change="onBooleanSetting('pageVisible', $event)" /> Лист ISO</label>
+        <label><input :checked="settings.originVisible" type="checkbox" @change="onBooleanSetting('originVisible', $event)" /> Центр 0,0</label>
+        <label><input :checked="settings.gridVisible" type="checkbox" @change="onBooleanSetting('gridVisible', $event)" /> Сетка</label>
+        <label><input :checked="settings.guidesVisible" type="checkbox" @change="onBooleanSetting('guidesVisible', $event)" /> Направляющие</label>
+        <label><input :checked="settings.snapEnabled" type="checkbox" @change="onBooleanSetting('snapEnabled', $event)" /> Привязки</label>
+        <label><input :checked="settings.snapGrid" type="checkbox" @change="onBooleanSetting('snapGrid', $event)" /> к сетке</label>
+        <label><input :checked="settings.snapSlots" type="checkbox" @change="onBooleanSetting('snapSlots', $event)" /> к ячейкам</label>
+        <label><input :checked="settings.snapObjects" type="checkbox" @change="onBooleanSetting('snapObjects', $event)" /> к объектам</label>
+        <label><input :checked="settings.snapGuides" type="checkbox" @change="onBooleanSetting('snapGuides', $event)" /> к направляющим</label>
+    </div>
+  </section>
+  <section class="ess-ribbon-command-group ess-ribbon-command-group--guides">
+    <span class="ess-ribbon-command-title">Направляющие</span>
+    <div class="ess-ribbon-button-row">
+        <button type="button" @click="$emit('command', 'create_vertical_guide')">Вертикальная</button>
+        <button type="button" @click="$emit('command', 'create_horizontal_guide')">Горизонтальная</button>
+        <button type="button" @click="$emit('command', 'clear_guides')">Очистить</button>
+    </div>
+  </section>
+</div>
   </header>
 </template>
 
