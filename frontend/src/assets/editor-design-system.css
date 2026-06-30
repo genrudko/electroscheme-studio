@@ -2038,3 +2038,248 @@ svg .user-guide-hit-line {
     max-height: 132px !important;
   }
 }
+
+/* patch-054-compact-ribbon-view-tab-real-layout
+   Corrects the actual ribbon DOM: direct children are panels, not command groups. */
+
+/* Hard ribbon height budget. */
+.ribbon-bar,
+.ribbon,
+.app-ribbon,
+.editor-ribbon {
+  flex: 0 0 auto !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: 92px !important;
+  overflow: hidden !important;
+  background: linear-gradient(180deg, #fbfdff 0%, #edf4fb 100%) !important;
+  border-bottom: 1px solid #b9c8d8 !important;
+}
+
+/* Tabs: one compact line. */
+.ribbon-tabs,
+.ribbon-tab-list,
+.ribbon-nav,
+.ribbon-tab-strip {
+  height: 28px !important;
+  min-height: 28px !important;
+  max-height: 28px !important;
+  padding: 3px 8px 0 !important;
+  overflow: hidden !important;
+}
+
+.ribbon-tab,
+.ribbon-tab-button,
+.ribbon-tabs button,
+.ribbon-nav button {
+  height: 25px !important;
+  min-height: 25px !important;
+  padding: 4px 10px !important;
+  line-height: 1 !important;
+}
+
+/* The active tab content is a horizontal command strip, not a full form. */
+.ribbon-content,
+.ribbon-body,
+.ribbon-groups,
+.ribbon-panel {
+  height: 60px !important;
+  min-height: 60px !important;
+  max-height: 60px !important;
+  box-sizing: border-box !important;
+  padding: 4px 8px !important;
+  display: flex !important;
+  flex-flow: row nowrap !important;
+  align-items: stretch !important;
+  gap: 7px !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  background: #f8fbff !important;
+}
+
+/* CRITICAL: direct children are wrappers/panels. Do not draw them as giant groups. */
+.ribbon-content > *,
+.ribbon-body > *,
+.ribbon-groups > *,
+.ribbon-panel > * {
+  flex: 0 0 auto !important;
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  height: 50px !important;
+  min-height: 50px !important;
+  max-height: 50px !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  flex-flow: row nowrap !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  overflow: visible !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Real command islands: nested sections/groups/fieldsets get the card look. */
+.ribbon-content :where(fieldset, section, [class*='group'], [class*='section'], [class*='cluster'], [class*='block']),
+.ribbon-body :where(fieldset, section, [class*='group'], [class*='section'], [class*='cluster'], [class*='block']),
+.ribbon-groups :where(fieldset, section, [class*='group'], [class*='section'], [class*='cluster'], [class*='block']),
+.ribbon-panel :where(fieldset, section, [class*='group'], [class*='section'], [class*='cluster'], [class*='block']) {
+  flex: 0 0 auto !important;
+  width: auto !important;
+  min-width: 72px !important;
+  max-width: 520px !important;
+  height: 50px !important;
+  min-height: 50px !important;
+  max-height: 50px !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  flex-flow: row nowrap !important;
+  align-items: center !important;
+  gap: 6px !important;
+  padding: 5px 7px !important;
+  overflow: hidden !important;
+  border: 1px solid #d2deea !important;
+  border-radius: 7px !important;
+  background: #ffffff !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.85) !important;
+}
+
+/* Labels inside ribbon must stay compact and inline. */
+.ribbon-content label,
+.ribbon-body label,
+.ribbon-groups label,
+.ribbon-panel label {
+  flex: 0 0 auto !important;
+  display: inline-flex !important;
+  flex-flow: row nowrap !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 4px !important;
+  min-width: 0 !important;
+  width: auto !important;
+  height: 22px !important;
+  min-height: 22px !important;
+  max-height: 22px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  color: #24354b !important;
+  font-size: 11px !important;
+  font-weight: 750 !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+}
+
+/* Group headings like "КАНВАС" must not create vertical form blocks. */
+.ribbon-content h1,
+.ribbon-content h2,
+.ribbon-content h3,
+.ribbon-content h4,
+.ribbon-content strong,
+.ribbon-content legend,
+.ribbon-body h1,
+.ribbon-body h2,
+.ribbon-body h3,
+.ribbon-body h4,
+.ribbon-body strong,
+.ribbon-body legend,
+.ribbon-panel h1,
+.ribbon-panel h2,
+.ribbon-panel h3,
+.ribbon-panel h4,
+.ribbon-panel strong,
+.ribbon-panel legend,
+.ribbon-groups h1,
+.ribbon-groups h2,
+.ribbon-groups h3,
+.ribbon-groups h4,
+.ribbon-groups strong,
+.ribbon-groups legend {
+  flex: 0 0 auto !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  height: 22px !important;
+  margin: 0 !important;
+  padding: 0 4px 0 0 !important;
+  border: 0 !important;
+  color: #64748b !important;
+  font-size: 9px !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+  letter-spacing: .045em !important;
+  text-transform: uppercase !important;
+  white-space: nowrap !important;
+}
+
+.ribbon-content input[type='checkbox'],
+.ribbon-body input[type='checkbox'],
+.ribbon-groups input[type='checkbox'],
+.ribbon-panel input[type='checkbox'] {
+  width: 13px !important;
+  height: 13px !important;
+  min-width: 13px !important;
+  margin: 0 !important;
+}
+
+.ribbon-content input:not([type='checkbox']),
+.ribbon-body input:not([type='checkbox']),
+.ribbon-groups input:not([type='checkbox']),
+.ribbon-panel input:not([type='checkbox']),
+.ribbon-content select,
+.ribbon-body select,
+.ribbon-groups select,
+.ribbon-panel select {
+  flex: 0 0 auto !important;
+  width: 72px !important;
+  height: 24px !important;
+  min-height: 24px !important;
+  padding: 2px 6px !important;
+  border: 1px solid #bac9db !important;
+  border-radius: 5px !important;
+  background: #fff !important;
+  color: #172033 !important;
+  font-size: 11px !important;
+  line-height: 1 !important;
+}
+
+.ribbon-content button,
+.ribbon-body button,
+.ribbon-groups button,
+.ribbon-panel button {
+  flex: 0 0 auto !important;
+  width: auto !important;
+  min-width: 30px !important;
+  height: 24px !important;
+  min-height: 24px !important;
+  padding: 3px 7px !important;
+  border-radius: 5px !important;
+  font-size: 11px !important;
+  line-height: 1 !important;
+}
+
+/* If actual View panel is a plain vertical form, flatten it as much as CSS can. */
+.ribbon-content > * > *,
+.ribbon-body > * > *,
+.ribbon-groups > * > *,
+.ribbon-panel > * > * {
+  flex-shrink: 0 !important;
+}
+
+.ribbon-content br,
+.ribbon-body br,
+.ribbon-groups br,
+.ribbon-panel br {
+  display: none !important;
+}
+
+/* Avoid any old patch making the canvas start too low. */
+.canvas-shell,
+.canvas-viewport,
+.canvas-scroll,
+.drawing-area,
+.canvas-workspace {
+  min-height: 0 !important;
+}
