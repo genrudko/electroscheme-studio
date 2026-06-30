@@ -46,7 +46,7 @@
           type="button"
           class="shape-item"
           :class="{ planned: item.status === 'planned', available: isDraggableItem(item), 'no-icon': iconMode === 'none' }"
-          :draggable="isDraggableItem(item)"
+          draggable="false"
           :aria-disabled="!isDraggableItem(item)"
           :title="itemTooltip(item)"
           @click="insertItem(item)"
@@ -101,26 +101,62 @@ let activePalettePointerDrag: {
   pointerId: number
   startX: number
   startY: number
+  lastX: number
+  lastY: number
   payload: PaletteDragPayload
   moved: boolean
 } | null = null
+
+let paletteDragGhost: HTMLDivElement | null = null
+
+function showPaletteDragGhost(payload: PaletteDragPayload, clientX: number, clientY: number): void {
+  if (!paletteDragGhost) {
+    paletteDragGhost = document.createElement('div')
+    paletteDragGhost.className = 'palette-drag-ghost'
+    document.body.appendChild(paletteDragGhost)
+  }
+
+  paletteDragGhost.textContent = payload.title
+  movePaletteDragGhost(clientX, clientY)
+}
+
+function movePaletteDragGhost(clientX: number, clientY: number): void {
+  if (!paletteDragGhost) return
+  paletteDragGhost.style.transform = `translate(${clientX + 14}px, ${clientY + 14}px)`
+}
+
+function hidePaletteDragGhost(): void {
+  paletteDragGhost?.remove()
+  paletteDragGhost = null
+}
 
 function cleanupPalettePointerDrag(): void {
   window.removeEventListener('pointermove', onPaletteWindowPointerMove, true)
   window.removeEventListener('pointerup', onPaletteWindowPointerUp, true)
   window.removeEventListener('pointercancel', onPaletteWindowPointerCancel, true)
   activePalettePointerDrag = null
+  hidePaletteDragGhost()
   document.body.classList.remove('palette-pointer-dragging')
 }
 
 function onPaletteWindowPointerMove(event: PointerEvent): void {
   if (!activePalettePointerDrag || event.pointerId !== activePalettePointerDrag.pointerId) return
 
+  activePalettePointerDrag.lastX = event.clientX
+  activePalettePointerDrag.lastY = event.clientY
+
   const dx = event.clientX - activePalettePointerDrag.startX
   const dy = event.clientY - activePalettePointerDrag.startY
   if (Math.hypot(dx, dy) >= 4) {
     activePalettePointerDrag.moved = true
     document.body.classList.add('palette-pointer-dragging')
+    showPaletteDragGhost(activePalettePointerDrag.payload, event.clientX, event.clientY)
+  }
+
+  if (activePalettePointerDrag.moved) {
+    event.preventDefault()
+    event.stopPropagation()
+    movePaletteDragGhost(event.clientX, event.clientY)
   }
 }
 
@@ -129,13 +165,21 @@ function onPaletteWindowPointerUp(event: PointerEvent): void {
 
   const drag = activePalettePointerDrag
   const shouldDrop = drag.moved
+  const clientX = event.clientX || drag.lastX
+  const clientY = event.clientY || drag.lastY
   cleanupPalettePointerDrag()
 
-  if (!shouldDrop) return
+  if (!shouldDrop) {
+    window.setTimeout(() => clearPaletteDragPayload(), 0)
+    return
+  }
+
+  event.preventDefault()
+  event.stopPropagation()
 
   const detail: PalettePointerDropDetail = {
-    clientX: event.clientX,
-    clientY: event.clientY,
+    clientX,
+    clientY,
     payload: drag.payload,
   }
 
@@ -169,6 +213,18 @@ function vsdxDropPayload(item: ShapeCatalogItem): string {
 function onPointerDown(event: PointerEvent, item: ShapeCatalogItem): void {
   if (!isDraggableItem(item) || event.button !== 0) return
 
+  event.preventDefault()
+  event.stopPropagation()
+
+  const target = event.currentTarget
+  if (target instanceof HTMLElement) {
+    try {
+      target.setPointerCapture(event.pointerId)
+    } catch {
+      // Pointer capture can fail if the element is detached; global listeners still handle drag.
+    }
+  }
+
   const payload = shapeCatalogDropPayloadObject(item)
   setPaletteDragPayload(payload)
 
@@ -176,6 +232,8 @@ function onPointerDown(event: PointerEvent, item: ShapeCatalogItem): void {
     pointerId: event.pointerId,
     startX: event.clientX,
     startY: event.clientY,
+    lastX: event.clientX,
+    lastY: event.clientY,
     payload,
     moved: false,
   }
@@ -191,21 +249,40 @@ function onDragEnd(): void {
   }, 0)
 }
 
+function shapeCatalogDropPayloadObject(item: ShapeCatalogItem): PaletteDragPayload {
+  return {
+    id: item.id,
+    status: item.status,
+    command: item.command ?? '',
+    title: item.title,
+    categoryId: item.categoryId,
+    libraryPageName: item.libraryPageName ?? '',
+    semanticCategoryId: item.semanticCategoryId ?? '',
+    vsdxMasterId: item.vsdxMasterId ?? '',
+    widthMm: item.widthMm ?? 0,
+    heightMm: item.heightMm ?? 0,
+    connectionCount: item.connectionCount ?? 0,
+  }
+}
+
+function shapeCatalogDropPayload(item: ShapeCatalogItem): string {
+  return serializePaletteDragPayload(shapeCatalogDropPayloadObject(item))
+}
+
 function insertItem(item: ShapeCatalogItem): void {
   if (!item.command) return
   emit('insertShape', item.command)
 }
 
 function onDragStart(event: DragEvent, item: ShapeCatalogItem): void {
+  // Native HTML5 drag is intentionally not the primary path because it is unreliable
+  // over the SVG canvas. Keep dataTransfer for compatibility only.
   if (!isDraggableItem(item)) {
     event.preventDefault()
     return
   }
 
-  const payload = typeof shapeCatalogDropPayloadObject === 'function'
-    ? shapeCatalogDropPayloadObject(item)
-    : JSON.parse(shapeCatalogDropPayload(item)) as PaletteDragPayload
-
+  const payload = shapeCatalogDropPayloadObject(item)
   setPaletteDragPayload(payload)
   event.dataTransfer?.setData(PALETTE_SHAPE_MIME, serializePaletteDragPayload(payload))
 

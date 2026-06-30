@@ -503,7 +503,37 @@ function onPaletteCustomPointerDrop(event: Event): void {
   placePalettePayload(detail.payload as PaletteVsdxDropPayload, detail.clientX, detail.clientY)
 }
 
+function placePalettePointerPayload(payload: PaletteVsdxDropPayload, clientX: number, clientY: number): boolean {
+  const point = worldPointFromClient(clientX, clientY)
+  if (!point) {
+    clearPaletteDragPayload()
+    return false
+  }
+
+  if (payload.status === 'planned') {
+    createVsdxPlaceholderSymbol(payload, point)
+    clearPaletteDragPayload()
+    return true
+  }
+
+  if (payload.command) {
+    handleCommandAtPoint(payload.command as EditorCommand, snapCanvasPoint(point))
+    clearPaletteDragPayload()
+    return true
+  }
+
+  clearPaletteDragPayload()
+  return false
+}
+
+function onPalettePointerDropEvent(event: Event): void {
+  const detail = (event as CustomEvent<PalettePointerDropDetail>).detail
+  if (!detail?.payload) return
+  placePalettePointerPayload(detail.payload as PaletteVsdxDropPayload, detail.clientX, detail.clientY)
+}
+
 onMounted(() => {
+  window.addEventListener(PALETTE_POINTER_DROP_EVENT, onPalettePointerDropEvent as EventListener)
   window.addEventListener(PALETTE_POINTER_DROP_EVENT, onPaletteCustomPointerDrop as EventListener)
   if (!canvasSurfaceRef.value) return
   resizeObserver = new ResizeObserver((entries) => {
@@ -1314,6 +1344,7 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
+  window.removeEventListener(PALETTE_POINTER_DROP_EVENT, onPalettePointerDropEvent as EventListener)
   window.removeEventListener(PALETTE_POINTER_DROP_EVENT, onPaletteCustomPointerDrop as EventListener)
   window.removeEventListener('pointermove', onGlobalPalettePointerMove, true)
   window.removeEventListener('pointerup', onGlobalPalettePointerUp, true)

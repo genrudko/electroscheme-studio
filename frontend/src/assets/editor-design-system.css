@@ -992,3 +992,34 @@ body.palette-pointer-dragging * {
 .stencil-palette .shape-item.planned {
   cursor: grab !important;
 }
+
+/* patch-050-disable-native-dnd-and-force-custom-pointer-drag */
+.clean-stencil-palette .shape-item,
+.stencil-palette .shape-item {
+  -webkit-user-drag: none !important;
+  touch-action: none !important;
+  user-select: none !important;
+}
+
+body.palette-pointer-dragging,
+body.palette-pointer-dragging * {
+  cursor: grabbing !important;
+}
+
+.palette-drag-ghost {
+  position: fixed;
+  z-index: 2147483000;
+  top: 0;
+  left: 0;
+  max-width: 260px;
+  padding: 6px 9px;
+  border: 1px solid rgba(37, 99, 235, .45);
+  border-radius: 8px;
+  background: rgba(239, 246, 255, .96);
+  color: #12376f;
+  box-shadow: 0 8px 26px rgba(15, 23, 42, .18);
+  font: 700 12px/1.2 Arial, sans-serif;
+  pointer-events: none;
+  transform: translate(-9999px, -9999px);
+  white-space: normal;
+}
