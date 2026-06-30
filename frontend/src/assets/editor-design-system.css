@@ -1673,3 +1673,52 @@ svg text {
   touch-action: none !important;
   user-select: none !important;
 }
+
+/* patch-052-units-busbar-limit-and-ruler-mm-labels */
+.ruler-mm-intermediate-label {
+  position: absolute;
+  z-index: 4;
+  display: block;
+  min-width: 18px;
+  padding: 0 1px;
+  color: rgba(43, 59, 82, .78);
+  font: 700 9px/1 "Segoe UI", Arial, sans-serif;
+  letter-spacing: -.02em;
+  text-align: center;
+  text-shadow: 0 1px 0 rgba(255,255,255,.88);
+  pointer-events: none;
+  user-select: none;
+  transform: translateX(-50%);
+}
+
+.ruler-vertical .ruler-mm-intermediate-label,
+.vertical-ruler .ruler-mm-intermediate-label {
+  min-width: 0;
+  transform: translateY(-50%);
+  text-align: right;
+}
+
+.ruler-mm-unit-badge {
+  position: absolute;
+  z-index: 5;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 17px;
+  height: 12px;
+  border: 1px solid rgba(120, 136, 158, .46);
+  border-radius: 4px;
+  background: rgba(248, 251, 255, .86);
+  color: rgba(50, 65, 88, .82);
+  font: 800 8px/1 "Segoe UI", Arial, sans-serif;
+  pointer-events: none;
+  user-select: none;
+}
+
+.canvas-ruler,
+.ruler,
+.ruler-horizontal,
+.ruler-vertical,
+.ruler-layer {
+  position: relative;
+}

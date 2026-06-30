@@ -41,11 +41,11 @@
             Snap text to guides
           </label>
 
-          <label class="field">Snap tolerance
+          <label class="field">Snap tolerance (mm)
             <input v-model.number="textSnapTolerance" type="number" min="0" max="50" step="1" />
           </label>
 
-          <label class="field">Guide grid step
+          <label class="field">Guide grid step (mm)
             <input v-model.number="textGuideGridStep" type="number" min="0" max="100" step="1" />
           </label>
         </section>
@@ -200,7 +200,7 @@
           <article><span>Points</span><strong>{{ preview.bay_slots.length }}</strong></article>
           <article><span>Selected</span><strong>{{ selectedTextDescription }}</strong></article>
           <article><span>Bay overrides</span><strong>{{ Object.keys(form.bay_label_overrides).length }}</strong></article>
-          <article><span>Snap</span><strong>{{ snapTextToGuides ? textSnapTolerance + ' px' : 'off' }}</strong></article>
+          <article><span>Snap</span><strong>{{ snapTextToGuides ? textSnapTolerance + ' мм' : 'off' }}</strong></article>
         </div>
 
         <details v-if="preview" class="terminal-list" open>

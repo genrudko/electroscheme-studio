@@ -202,8 +202,8 @@
             <option v-for="item in voltageClassColors" :key="item.id" :value="item.id">{{ item.label }} — {{ item.colorName }}</option>
           </select>
         </label>
-        <label>Ячеек <input v-model.number="selectedBusbar.slots" type="number" min="1" max="40" step="1" @change="normalizeBusbarSlots(selectedBusbar)" /></label>
-        <label>Шаг ячеек <input v-model.number="selectedBusbar.slotSpacing" type="number" min="8" step="1" @change="normalizeBusbarSlots(selectedBusbar)" /></label>
+        <label>Ячеек <input v-model.number="selectedBusbar.slots" type="number" min="1" max="100" step="1" @change="normalizeBusbarSlots(selectedBusbar)" /></label>
+        <label>Шаг ячеек (мм) <input v-model.number="selectedBusbar.slotSpacing" type="number" min="8" step="1" @change="normalizeBusbarSlots(selectedBusbar)" /></label>
         <label>Подпись <input v-model="selectedBusbar.label" type="text" @change="syncBusbarLabels(selectedBusbar)" /></label>
         <div class="button-pair">
           <button type="button" class="panel-button" @click="addBusbarSlot(selectedBusbar)">+ Ячейка</button>

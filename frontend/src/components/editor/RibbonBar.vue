@@ -67,8 +67,8 @@
               <button type="button" class="inline-ribbon-button" @click="toggleRibbon">{{ settings.ribbonCollapsed ? 'Развернуть' : 'Свернуть' }}</button>
             </label>
 
-            <label>Шаг сетки <input :value="settings.gridStep" type="number" min="2" max="100" step="1" @change="onNumberSetting('gridStep', $event)" /></label>
-            <label>Допуск <input :value="settings.snapTolerance" type="number" min="1" max="50" step="1" @change="onNumberSetting('snapTolerance', $event)" /></label>
+            <label>Шаг сетки (мм) <input :value="settings.gridStep" type="number" min="2" max="100" step="1" @change="onNumberSetting('gridStep', $event)" /></label>
+            <label>Допуск (мм) <input :value="settings.snapTolerance" type="number" min="1" max="50" step="1" @change="onNumberSetting('snapTolerance', $event)" /></label>
             <label>Лист
               <select :value="settings.pageFormat" @change="onTextSetting('pageFormat', $event)">
                 <option value="A4">A4</option><option value="A3">A3</option><option value="A2">A2</option><option value="A1">A1</option><option value="A0">A0</option>
