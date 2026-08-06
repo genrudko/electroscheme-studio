@@ -1,18 +1,20 @@
 name: Desktop Platform Spike Bootstrap
 
 on:
-  push:
-    branches: [architecture/desktop-platform-and-core-spike-001]
+  pull_request:
+    branches: [main]
 
 permissions:
   contents: write
 
 jobs:
   bootstrap:
+    if: github.event.pull_request.head.ref == 'architecture/desktop-platform-and-core-spike-001'
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: architecture/desktop-platform-and-core-spike-001
           fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
@@ -23,13 +25,13 @@ jobs:
       - uses: dtolnay/rust-toolchain@stable
         with:
           toolchain: 1.97.1
-      - name: Generate committed npm and Cargo locks
+      - name: Generate canonical dependency locks
         run: |
           cd spikes
           npm install --package-lock-only --ignore-scripts
           cd tauri/src-tauri
           cargo generate-lockfile
-      - name: Add reproducible neutral spike icons
+      - name: Generate neutral reproducible spike icon resources
         shell: bash
         run: |
           mkdir -p spikes/tauri/src-tauri/icons
@@ -46,7 +48,7 @@ jobs:
           MARK = (224, 228, 233, 255)
 
           def pixels() -> bytes:
-              out = bytearray()
+              output = bytearray()
               for y in range(SIZE):
                   for x in range(SIZE):
                       color = BG
@@ -54,11 +56,12 @@ jobs:
                           color = GRID
                       if (29 <= x <= 34 and 14 <= y <= 49) or (14 <= x <= 49 and 29 <= y <= 34):
                           color = MARK
-                      out.extend(color)
-              return bytes(out)
+                      output.extend(color)
+              return bytes(output)
 
           def chunk(kind: bytes, data: bytes) -> bytes:
-              return struct.pack('>I', len(data)) + kind + data + struct.pack('>I', binascii.crc32(kind + data) & 0xffffffff)
+              checksum = binascii.crc32(kind + data) & 0xffffffff
+              return struct.pack('>I', len(data)) + kind + data + struct.pack('>I', checksum)
 
           def png_bytes() -> bytes:
               raw = pixels()
@@ -69,7 +72,9 @@ jobs:
                       + chunk(b'IEND', b''))
 
           def ico_bytes(png: bytes) -> bytes:
-              return struct.pack('<HHH', 0, 1, 1) + struct.pack('<BBBBHHII', SIZE, SIZE, 0, 0, 1, 32, len(png), 22) + png
+              header = struct.pack('<HHH', 0, 1, 1)
+              entry = struct.pack('<BBBBHHII', SIZE, SIZE, 0, 0, 1, 32, len(png), 22)
+              return header + entry + png
 
           def main() -> None:
               parser = argparse.ArgumentParser()
@@ -89,12 +94,12 @@ jobs:
           cat > spikes/tauri/src-tauri/icons/README.md <<'EOF'
           # Tauri spike icon resources
 
-          These are neutral temporary resources required by `tauri::generate_context!()` for the architecture spike. They are not an accepted product logo or branding asset.
+          These neutral temporary resources are required by `tauri::generate_context!()` for the architecture spike. They are not an accepted product logo or branding asset.
 
-          Reproduce with:
+          Reproduce from the parent directory with:
 
           ```bash
-          python ../generate_spike_icons.py .
+          python generate_spike_icons.py icons
           ```
 
           Expected SHA-256:
@@ -104,9 +109,9 @@ jobs:
           70fe1e09bfa9206748eecc84f979290a97090aed674fe343615d92471641f05a  icon.ico
           ```
 
-          `icon.png` is required by Linux context generation and `icon.ico` by Windows resource generation even with `--no-bundle`. No macOS `.icns` or production installer icon set is included because those are outside this spike.
+          `icon.png` is required by Linux context generation and `icon.ico` by Windows resource generation even with `--no-bundle`. No `.icns` or production installer branding set is included because those are outside this spike.
           EOF
-      - name: Pin the spike-only Tauri icon contract
+      - name: Pin the spike-only icon resource contract
         shell: python
         run: |
           import json, pathlib
@@ -114,208 +119,7 @@ jobs:
           data = json.loads(path.read_text())
           data['bundle'] = {'active': False, 'icon': ['icons/icon.png', 'icons/icon.ico']}
           path.write_text(json.dumps(data, indent=2) + '\n')
-      - name: Install final locked workflow
-        shell: bash
-        run: |
-          cat > .github/workflows/desktop-platform-spike.yml <<'FINAL'
-          name: Desktop Platform Spike
-
-          on:
-            push:
-              branches: [architecture/desktop-platform-and-core-spike-001]
-            pull_request:
-              branches: [main]
-
-          permissions:
-            contents: read
-
-          jobs:
-            shared-contracts:
-              runs-on: ubuntu-24.04
-              steps:
-                - uses: actions/checkout@v4
-                  with:
-                    fetch-depth: 0
-                - uses: actions/setup-node@v4
-                  with:
-                    node-version: 24.19.0
-                - uses: actions/setup-python@v5
-                  with:
-                    python-version: '3.13'
-                - uses: dtolnay/rust-toolchain@stable
-                  with:
-                    toolchain: 1.97.1
-                - name: Install exact JavaScript dependencies
-                  working-directory: spikes
-                  run: npm ci --ignore-scripts
-                - name: Capture npm audit evidence
-                  working-directory: spikes
-                  shell: bash
-                  run: |
-                    mkdir -p evidence/generated
-                    set +e
-                    npm audit --json > evidence/generated/npm-audit.json
-                    status=$?
-                    set -e
-                    printf '%s\n' "$status" > evidence/generated/npm-audit-exit-code.txt
-                    if [ "$status" -gt 1 ]; then exit "$status"; fi
-                - name: Verify changed scope
-                  working-directory: spikes
-                  env:
-                    SPIKE_BASE_SHA: b95d7111d9c5a36db4c355ee91f742efea8ecc10
-                  run: npm run verify:scope
-                - name: Typecheck and canonical core tests
-                  working-directory: spikes
-                  run: npm test
-                - name: VSDX and generated VSSX package tests
-                  working-directory: spikes
-                  run: python -m unittest tools/test_visio_spike_tool.py -v
-                - name: Build shared Vue SVG renderer and Electron boundary
-                  working-directory: spikes
-                  run: npm run build
-                - name: Verify lockfiles and generated icons are unchanged
-                  run: |
-                    python spikes/tauri/src-tauri/generate_spike_icons.py /tmp/spike-icons
-                    cmp /tmp/spike-icons/icon.png spikes/tauri/src-tauri/icons/icon.png
-                    cmp /tmp/spike-icons/icon.ico spikes/tauri/src-tauri/icons/icon.ico
-                    git diff --exit-code -- spikes/package-lock.json spikes/tauri/src-tauri/Cargo.lock
-                - uses: actions/upload-artifact@v4
-                  with:
-                    name: desktop-spike-security-and-lock-evidence
-                    path: |
-                      spikes/package-lock.json
-                      spikes/tauri/src-tauri/Cargo.lock
-                      spikes/evidence/generated/npm-audit.json
-                      spikes/evidence/generated/npm-audit-exit-code.txt
-                    if-no-files-found: error
-
-            candidate-build:
-              strategy:
-                fail-fast: false
-                matrix:
-                  os: [ubuntu-24.04, windows-2025]
-              runs-on: ${{ matrix.os }}
-              steps:
-                - uses: actions/checkout@v4
-                - uses: actions/setup-node@v4
-                  with:
-                    node-version: 24.19.0
-                - uses: actions/setup-python@v5
-                  with:
-                    python-version: '3.13'
-                - uses: dtolnay/rust-toolchain@stable
-                  with:
-                    toolchain: 1.97.1
-                - name: Install Linux Tauri runtime dependencies
-                  if: runner.os == 'Linux'
-                  run: sudo apt-get update && sudo apt-get install -y libwebkit2gtk-4.1-dev libgtk-3-dev librsvg2-dev patchelf xvfb
-                - name: Install exact JavaScript dependencies
-                  working-directory: spikes
-                  run: npm ci --ignore-scripts
-                - name: Build shared renderer and Electron adapter
-                  working-directory: spikes
-                  run: npm run build
-                - name: Build Tauri executable with committed Cargo lock
-                  working-directory: spikes/tauri
-                  run: npx tauri build --no-bundle -- --locked
-                - name: Generate controlled runtime Visio fixtures
-                  working-directory: spikes
-                  run: python tools/generate_controlled_visio_fixtures.py evidence/generated/visio-fixtures --canonical shared/fixtures/canonical-project.json
-                - name: Package Electron executable directory
-                  working-directory: spikes
-                  run: npm run package:electron
-                - name: Package Tauri portable evidence directory
-                  working-directory: spikes
-                  run: npm run package:tauri
-                - name: Benchmark shared canonical/editor core
-                  working-directory: spikes
-                  shell: bash
-                  run: npm run benchmark:shared -- "evidence/generated/shared-benchmark-${RUNNER_OS}.json"
-                - name: Run Electron in-app scenario (Linux)
-                  if: runner.os == 'Linux'
-                  working-directory: spikes
-                  run: npm run scenario:candidate -- electron evidence/generated/electron-scenario-linux.json -- xvfb-run -a ./evidence/generated/electron-package/ElectroSchemeSpikeElectron-linux-x64/ElectroSchemeSpikeElectron
-                - name: Run Tauri in-app scenario (Linux)
-                  if: runner.os == 'Linux'
-                  working-directory: spikes
-                  env:
-                    WEBKIT_DISABLE_COMPOSITING_MODE: '1'
-                  run: npm run scenario:candidate -- tauri evidence/generated/tauri-scenario-linux.json -- xvfb-run -a ./evidence/generated/tauri-portable-linux-x64/ElectroSchemeSpikeTauri
-                - name: Run Electron in-app scenario (Windows)
-                  if: runner.os == 'Windows'
-                  working-directory: spikes
-                  shell: pwsh
-                  run: npm run scenario:candidate -- electron evidence/generated/electron-scenario-windows.json -- .\evidence\generated\electron-package\ElectroSchemeSpikeElectron-win32-x64\ElectroSchemeSpikeElectron.exe
-                - name: Run Tauri in-app scenario (Windows)
-                  if: runner.os == 'Windows'
-                  working-directory: spikes
-                  shell: pwsh
-                  run: npm run scenario:candidate -- tauri evidence/generated/tauri-scenario-windows.json -- .\evidence\generated\tauri-portable-win32-x64\ElectroSchemeSpikeTauri.exe
-                - name: Measure Electron startup and process-tree RSS (Linux)
-                  if: runner.os == 'Linux'
-                  working-directory: spikes
-                  run: npm run measure:candidate -- electron evidence/generated/electron-runtime-linux.json -- xvfb-run -a ./evidence/generated/electron-package/ElectroSchemeSpikeElectron-linux-x64/ElectroSchemeSpikeElectron
-                - name: Measure Tauri startup and process-tree RSS (Linux)
-                  if: runner.os == 'Linux'
-                  working-directory: spikes
-                  env:
-                    WEBKIT_DISABLE_COMPOSITING_MODE: '1'
-                  run: npm run measure:candidate -- tauri evidence/generated/tauri-runtime-linux.json -- xvfb-run -a ./evidence/generated/tauri-portable-linux-x64/ElectroSchemeSpikeTauri
-                - name: Measure Electron startup and process-tree RSS (Windows)
-                  if: runner.os == 'Windows'
-                  working-directory: spikes
-                  shell: pwsh
-                  run: npm run measure:candidate -- electron evidence/generated/electron-runtime-windows.json -- .\evidence\generated\electron-package\ElectroSchemeSpikeElectron-win32-x64\ElectroSchemeSpikeElectron.exe
-                - name: Measure Tauri startup and process-tree RSS (Windows)
-                  if: runner.os == 'Windows'
-                  working-directory: spikes
-                  shell: pwsh
-                  run: npm run measure:candidate -- tauri evidence/generated/tauri-runtime-windows.json -- .\evidence\generated\tauri-portable-win32-x64\ElectroSchemeSpikeTauri.exe
-                - name: Record artifact sizes, hashes and toolchain conditions
-                  shell: python
-                  run: |
-                    import hashlib, json, pathlib, platform, subprocess
-                    root = pathlib.Path('spikes')
-                    generated = root / 'evidence' / 'generated'
-                    tauri_name = 'tauri-portable-win32-x64' if platform.system() == 'Windows' else 'tauri-portable-linux-x64'
-                    package_roots = {
-                        'electron': generated / 'electron-package',
-                        'tauri_portable': generated / tauri_name,
-                    }
-                    def size(path): return sum(item.stat().st_size for item in path.rglob('*') if item.is_file()) if path.exists() else 0
-                    def version(command): return subprocess.run(command, text=True, capture_output=True, check=True).stdout.strip()
-                    def sha256(path): return hashlib.sha256(path.read_bytes()).hexdigest()
-                    key_json = sorted(str(p.relative_to(root)) for p in generated.glob('*.json'))
-                    output = {
-                        'runner_os': platform.platform(),
-                        'runner_architecture': platform.machine(),
-                        'python': platform.python_version(),
-                        'node': version(['node', '--version']),
-                        'npm': version(['npm', '--version']),
-                        'rustc': version(['rustc', '--version']),
-                        'cargo': version(['cargo', '--version']),
-                        'candidate_sizes_bytes': {name: size(path) for name, path in package_roots.items()},
-                        'package_roots': {name: str(path.relative_to(root)) for name, path in package_roots.items()},
-                        'evidence_json': key_json,
-                        'npm_lock_sha256': sha256(root / 'package-lock.json'),
-                        'cargo_lock_sha256': sha256(root / 'tauri' / 'src-tauri' / 'Cargo.lock'),
-                        'measurement_scope': 'GitHub-hosted runner output trees from this exact run; not universal benchmark values',
-                    }
-                    generated.mkdir(parents=True, exist_ok=True)
-                    (generated / f'measurements-{platform.system().lower()}.json').write_text(json.dumps(output, indent=2) + '\n')
-                - name: Verify build did not modify committed locks or icon resources
-                  run: git diff --exit-code -- spikes/package-lock.json spikes/tauri/src-tauri/Cargo.lock spikes/tauri/src-tauri/icons
-                - uses: actions/upload-artifact@v4
-                  with:
-                    name: desktop-spike-${{ runner.os }}-${{ runner.arch }}
-                    path: |
-                      spikes/evidence/generated/**
-                      spikes/tauri/src-tauri/Cargo.lock
-                      spikes/package-lock.json
-                      spikes/tauri/src-tauri/icons/**
-                    if-no-files-found: error
-          FINAL
-      - name: Capture bootstrap npm audit result
+      - name: Capture npm security finding
         working-directory: spikes
         shell: bash
         run: |
@@ -328,16 +132,19 @@ jobs:
           if [ "$status" -gt 1 ]; then exit "$status"; fi
       - uses: actions/upload-artifact@v4
         with:
-          name: desktop-spike-bootstrap-audit
+          name: desktop-spike-bootstrap-locks-and-audit
           path: |
+            spikes/package-lock.json
+            spikes/tauri/src-tauri/Cargo.lock
             spikes/evidence/generated/npm-audit-bootstrap.json
             spikes/evidence/generated/npm-audit-bootstrap-exit-code.txt
+            spikes/tauri/src-tauri/icons/**
           if-no-files-found: error
-      - name: Commit generated canonical dependency and resource inputs
+      - name: Commit canonical locks and reproducible resources
         shell: bash
         run: |
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add .github/workflows/desktop-platform-spike.yml spikes/package-lock.json spikes/tauri/src-tauri/Cargo.lock spikes/tauri/src-tauri/tauri.conf.json spikes/tauri/src-tauri/generate_spike_icons.py spikes/tauri/src-tauri/icons
+          git add spikes/package-lock.json spikes/tauri/src-tauri/Cargo.lock spikes/tauri/src-tauri/tauri.conf.json spikes/tauri/src-tauri/generate_spike_icons.py spikes/tauri/src-tauri/icons
           git commit -m "Commit reproducible spike locks and neutral Tauri resources"
           git push origin HEAD:architecture/desktop-platform-and-core-spike-001
