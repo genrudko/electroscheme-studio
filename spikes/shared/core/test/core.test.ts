@@ -1,12 +1,17 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
+import { readFileSync } from "node:fs";
 import { CommandHistory, createCanonicalFixture, parseProject, renderDeterministicPdf, renderDeterministicSvg, serializeProject, validateProject } from "../src/index.ts";
+
+const canonicalFixtureText = readFileSync(new URL("../../fixtures/canonical-project.json", import.meta.url), "utf8");
+const svgFixtureText = readFileSync(new URL("../../fixtures/editor-output.svg", import.meta.url), "utf8");
 
 test("fixture validates and round-trips deterministically", () => {
   const fixture = createCanonicalFixture();
   assert.deepEqual(validateProject(fixture), []);
   const one = serializeProject(fixture);
+  assert.equal(one, canonicalFixtureText);
   const two = serializeProject(parseProject(one));
   assert.equal(two, one);
 });
@@ -28,7 +33,8 @@ test("SVG and PDF outputs are deterministic", () => {
   const fixture = createCanonicalFixture();
   const svg1 = renderDeterministicSvg(fixture);
   const svg2 = renderDeterministicSvg(parseProject(serializeProject(fixture)));
-  assert.equal(svg1, svg2);
+  assert.equal(svg1, svgFixtureText);
+  assert.equal(svg2, svg1);
   const pdf1 = renderDeterministicPdf(fixture);
   const pdf2 = renderDeterministicPdf(fixture);
   assert.equal(createHash("sha256").update(pdf1).digest("hex"), createHash("sha256").update(pdf2).digest("hex"));
