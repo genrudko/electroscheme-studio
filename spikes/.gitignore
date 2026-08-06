@@ -5,3 +5,4 @@ electron/dist/
 electron/package-input/
 tauri/src-tauri/target/
 evidence/generated/
+!tauri/src-tauri/icons/icon.png
