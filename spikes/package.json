@@ -9,7 +9,8 @@
   "scripts": {
     "typecheck": "tsc -p tsconfig.json && vue-tsc -p shared/ui/tsconfig.json --noEmit && tsc -p electron/tsconfig.json --noEmit",
     "test:core": "tsx --test shared/core/test/*.test.ts",
-    "test": "npm run typecheck && npm run test:core",
+    "test:harness": "node --test scripts/test/*.test.mjs",
+    "test": "npm run typecheck && npm run test:core && npm run test:harness",
     "build:ui": "vite build --config shared/ui/vite.config.ts",
     "build:electron": "tsc -p electron/tsconfig.json",
     "build": "npm run build:ui && npm run build:electron",
