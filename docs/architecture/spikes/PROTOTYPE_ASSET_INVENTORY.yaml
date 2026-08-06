@@ -1,237 +1,50 @@
-schema_version: 1
+schema_version: 3
 inventory:
   id: DESKTOP-PLATFORM-AND-CORE-SPIKE-001-PROTOTYPE-ASSETS
-  status: in_progress
+  status: complete_for_architecture_decision
   baseline_commit: b95d7111d9c5a36db4c355ee91f742efea8ecc10
   policy: docs/project/PROTOTYPE_QUARANTINE.md
-  allowed_dispositions:
-    - retain_as_reference
-    - salvage_after_tests
-    - reimplement_from_contract
-    - retire
-
+field_order: [id, path, blob_sha, responsibility, limitations, dependencies, target_owner, disposition, tests, migration, retirement]
 rules:
-  - No asset is accepted because it works in the prototype.
-  - Blob SHA records the inspected baseline revision, not a promise to reuse it.
-  - UI/CSS, interactions and writable state default to reimplement_from_contract.
-  - Reuse requires new target ownership, tests, migration method and owner acceptance.
-  - No old and new model may both save authoritative project state.
-
+  - UI/CSS and writable state default to reimplement_from_contract.
+  - salvage_after_tests is limited to bounded pure algorithms/extractors.
+  - No automatic promotion or deletion.
+  - Old and new models may not both write authoritative state.
 assets:
-  - id: frontend_canvas_viewport
-    path: frontend/src/components/editor/CanvasViewport.vue
-    blob_sha: fdefafae2eaea4ac47bef006505a5d80c9a95177
-    category: editor_ui_and_interactions
-    current_responsibility:
-      - SVG canvas composition
-      - viewport interactions
-      - object collections and editing behavior
-      - guides rulers grid snapping and context UI
-    known_findings:
-      - monolithic responsibility boundary
-      - owns or mutates substantial local editor state
-      - not driven by one canonical document model
-      - prototype UI and behavior are not compatibility requirements
-    preliminary_disposition: reimplement_from_contract
-    proposed_target_owner:
-      - editor_kernel
-      - renderer_projection
-      - temporary_interaction_state
-    required_tests:
-      - coordinate_transform_tests
-      - pointer_interaction_tests
-      - command_path_tests
-      - visual_regression_tests
-      - large_scene_performance_tests
-    migration_method: extract algorithms only after independent tests; do not port the component wholesale
-    retirement_condition: accepted editor kernel and renderer provide equivalent approved scenarios without legacy state ownership
-
-  - id: frontend_editor_shell
-    path: frontend/src/components/editor/EditorShell.vue
-    blob_sha: e492b81abd4679e1a56449b0710623a57ac50f7e
-    category: application_shell_prototype
-    current_responsibility:
-      - composes ribbon palette canvas and status bar
-      - constructs prototype command stack and editor document
-      - forwards commands and settings
-    known_findings:
-      - command stack is not the mandatory mutation path for CanvasViewport operations
-      - editor document is not the authoritative state rendered by the canvas
-      - contains prototype wiring and status defects
-    preliminary_disposition: reimplement_from_contract
-    proposed_target_owner:
-      - desktop_application_ui
-      - application_command_dispatch
-    required_tests:
-      - shell_component_tests
-      - command_dispatch_tests
-      - desktop_e2e_tests
-    migration_method: retain only factual interaction lessons; create fresh shell after platform decision
-    retirement_condition: selected desktop candidate has accepted application composition and command wiring
-
-  - id: frontend_editor_document
-    path: frontend/src/lib/editor/editorDocument.ts
-    blob_sha: 0f785b5b528f802d7165dc17f661054b418ea5cf
-    category: document_model_prototype
-    current_responsibility:
-      - defines prototype layers objects selection and settings
-      - provides empty editor document factory
-    known_findings:
-      - incomplete object union relative to declared object kinds
-      - parallel to backend Project and useProject state
-      - not authoritative for CanvasViewport local collections
-      - lacks accepted equipment identity representation and interoperability boundaries
-    preliminary_disposition: reimplement_from_contract
-    proposed_target_owner:
-      - canonical_document_core
-    required_tests:
-      - schema_validation
-      - deterministic_round_trip
-      - stable_identity_tests
-      - migration_tests
-      - source_provenance_tests
-    migration_method: use only as inventory input when designing the minimal spike schema
-    retirement_condition: one accepted canonical document contract replaces all parallel writable models
-
-  - id: frontend_command_stack
-    path: frontend/src/lib/editor/commandStack.ts
-    blob_sha: d39ec41297382047af5c348cf1f371ed2bbe4317
-    category: command_research
-    current_responsibility:
-      - generic execute undo redo stacks
-    known_findings:
-      - commands wrap callbacks rather than deterministic document transactions
-      - does not enforce atomic validation or topology/index updates
-      - disconnected from many actual prototype mutations
-    preliminary_disposition: reimplement_from_contract
-    proposed_target_owner:
-      - application_command_core
-    required_tests:
-      - atomic_command_tests
-      - deterministic_undo_redo_tests
-      - compound_transaction_tests
-      - failure_no_change_tests
-    migration_method: retain interface lessons only; implement commands against canonical document state
-    retirement_condition: all accepted mutations use the new command/transaction contract
-
-  - id: frontend_use_project
-    path: frontend/src/lib/useProject.ts
-    blob_sha: dc3d4b124d65c0f01705af716f276531fd968911
-    category: legacy_frontend_state_and_api
-    current_responsibility:
-      - loads project and symbol library through API
-      - maintains fallback project state
-      - mutates symbols and connections with partial rollback
-    known_findings:
-      - parallel writable model
-      - tied to prototype FastAPI flow
-      - direct reactive mutation is not the accepted command architecture
-    preliminary_disposition: retire
-    proposed_target_owner:
-      - none
-    required_tests:
-      - legacy_behavior_inventory_only
-    migration_method: no direct migration; replace with application services over canonical core
-    retirement_condition: canonical project lifecycle and command services are active
-
-  - id: backend_project_schema
-    path: backend/app/schemas/project.py
-    blob_sha: 3163b1ec13b697de2935475c9ec8fea7c2e35ec2
-    category: backend_document_model_prototype
-    current_responsibility:
-      - Pydantic project sheet symbol terminal and connection structures
-    known_findings:
-      - parallel to frontend models
-      - insufficient equipment identity representation state profile and interoperability ownership
-      - endpoint semantics are not yet a complete accepted topology contract
-    preliminary_disposition: reimplement_from_contract
-    proposed_target_owner:
-      - canonical_document_core_input
-    required_tests:
-      - schema_reconciliation_tests
-      - topology_reference_tests
-      - deterministic_serialization_tests
-    migration_method: compare fields and example data against the new spike schema; do not keep as coequal runtime owner
-    retirement_condition: selected canonical core owns the only writable schema
-
-  - id: visio_vsdx_inspector
-    path: tools/visio_inspect_vsdx.py
-    blob_sha: eeaac17fe2a5a785d4f30fc1ada12e9a0d0a46b9
-    category: visio_source_inspection
-    current_responsibility:
-      - inspects VSDX packages and ShapeSheet-oriented source data
-      - preserves warnings and selected semantic clues
-    known_findings:
-      - inspector rather than editable document importer
-      - does not prove VSSX migration VSDX write or controlled round trip
-      - heuristics cannot be treated as engineering or normative acceptance
-    preliminary_disposition: salvage_after_tests
-    proposed_target_owner:
-      - visio_interoperability_tooling
-    required_tests:
-      - package_relationship_fixtures
-      - source_id_and_formula_preservation
-      - malformed_package_fail_closed_tests
-      - structured_diagnostic_tests
-    migration_method: isolate reusable package parsing behind a normalized source model and fixture suite
-    retirement_condition: accepted interoperability adapter supersedes or incorporates tested parsing behavior
-
-  - id: visio_master_draft_converter
-    path: tools/visio_master_to_symbol_draft.py
-    blob_sha: a852cf426d7d64b179084431fcd72e35321de836
-    category: visio_symbol_conversion_research
-    current_responsibility:
-      - converts Visio masters into review-required symbol drafts
-    known_findings:
-      - output is intentionally draft quality
-      - incomplete geometry and transform coverage
-      - conversion success is not semantic or normative acceptance
-    preliminary_disposition: salvage_after_tests
-    proposed_target_owner:
-      - symbol_source_pipeline
-    required_tests:
-      - geometry_command_fixtures
-      - transform_and_group_fixtures
-      - unsupported_formula_diagnostics
-      - no_auto_promotion_tests
-    migration_method: retain diagnostics and provenance concepts; replace approximations with explicit supported/unsupported behavior
-    retirement_condition: accepted VSSX migration and SymbolDefinition candidate pipeline exists
-
-  - id: visio_master_metrics_extractor
-    path: tools/extract_vsdx_master_metrics.py
-    blob_sha: d0752cf7ba279a578d5825be546160e4105becb1
-    category: shapesheet_metrics_research
-    current_responsibility:
-      - extracts dimensions connection data and metrics from Visio packages
-    known_findings:
-      - extracted values require fixture verification and engineering review
-      - formulas and local transforms may require broader resolution
-    preliminary_disposition: salvage_after_tests
-    proposed_target_owner:
-      - symbol_source_pipeline
-      - visio_interoperability_tooling
-    required_tests:
-      - unit_conversion_tests
-      - formula_resolution_fixtures
-      - connection_point_transform_tests
-      - source_provenance_tests
-    migration_method: wrap normalized outputs in a versioned schema with diagnostics and exact source references
-    retirement_condition: accepted normalized ShapeSheet extraction service is established
-
-inventory_backlog:
-  - backend API routes and in-memory project service
-  - frontend renderer coordinate snap and routing helpers
-  - busbar backend and frontend calculations
-  - shapeCatalog and ShapePalette
-  - generated symbol drafts and source manifests
-  - ribbon properties panels design tokens and CSS overrides
-  - start/build scripts
-  - CI workflows and test assets
-  - historical patch scripts and patch documentation
-
-completion_gate:
-  - every runtime editor tooling and library area has an exact path and blob SHA
-  - every item has a disposition and target owner
-  - no automatic reuse entries remain
-  - dispositions are reconciled with the selected architecture ADR
-  - owner accepts the migration and retirement map
+  - ["backend_project_schema", "backend/app/schemas/project.py", "3163b1ec13b697de2935475c9ec8fea7c2e35ec2", "Pydantic project DTOs", "parallel writable schema; lacks accepted identity/provenance model", "Pydantic/FastAPI", "packages/canonical-core", "reimplement_from_contract", "invariants; IDs; deterministic round-trip; migration", "field inventory only", "new canonical schema + migration accepted"]
+  - ["backend_api_composition", "backend/app/main.py", "a59b92092c38f273004e0eb0c28b2665a26d8a04", "FastAPI app/router composition", "duplicate router; dev CORS; demo/tool/runtime mixed", "FastAPI routers", "tools/research-api", "retain_as_reference", "router/protocol tests", "do not package; extract approved tools only", "desktop runs without FastAPI"]
+  - ["backend_project_service", "backend/app/core/project_service.py", "01161ca00193026000ecd77aed4584af8d8d885d", "global project + JSON persistence", "mutable singleton; demo fallback; non-transactional", "backend schema", "none", "retire", "legacy read fixture", "one-way importer only if required", "canonical store owns all writes"]
+  - ["backend_project_router", "backend/app/api/project.py", "60e6fe11c73dad23ea1fe1dd5482e7e78620fe59", "project mutation endpoints", "direct list mutation; no atomic rollback", "FastAPI/project_service", "application commands", "reimplement_from_contract", "atomicity; failure-no-change; references", "derive from accepted commands, not endpoints", "new application layer covers lifecycle"]
+  - ["backend_parametric_busbar", "backend/app/core/parametric_busbar.py", "5136d9a61ea2f0731e128d16d454f89172a4f0d4", "busbar geometry/ports/SVG preview", "domain geometry and SVG mixed; no canonical command/topology", "Python schemas/HTML/SVG", "packages/domain-symbols-candidate", "salvage_after_tests", "golden geometry; units; ports; renderer split", "extract pure geometry after tests", "accepted busbar library reproduces fixtures"]
+  - ["backend_parametric_busbar_api", "backend/app/api/parametric_symbols.py", "7747ec96846ff7749d8b853a62a86c8ad423b082", "FastAPI busbar preview", "loopback API not desktop requirement", "FastAPI/busbar", "none", "retire", "tool inventory", "invoke accepted library in-process", "canonical command creates busbar"]
+  - ["frontend_use_project", "frontend/src/lib/useProject.ts", "dc3d4b124d65c0f01705af716f276531fd968911", "API/reactive project state", "parallel writable state; direct mutation; FastAPI coupling", "Vue/backend API", "none", "retire", "legacy behavior inventory", "replace with canonical application services", "no production imports remain"]
+  - ["frontend_editor_document", "frontend/src/lib/editor/editorDocument.ts", "0f785b5b528f802d7165dc17f661054b418ea5cf", "prototype editor types/factory", "not authoritative; parallel model; incomplete identity", "TypeScript", "packages/canonical-core", "reimplement_from_contract", "schema; IDs; round-trip; migration", "field inventory only", "canonical core accepted"]
+  - ["frontend_command_stack", "frontend/src/lib/editor/commandStack.ts", "d39ec41297382047af5c348cf1f371ed2bbe4317", "callback undo/redo", "not deterministic transactions; viewport bypasses it", "TypeScript", "packages/canonical-core/commands", "reimplement_from_contract", "atomic command; undo/redo; failure-no-change", "retain interface lessons only", "all mutations use new commands"]
+  - ["frontend_editor_shell", "frontend/src/components/editor/EditorShell.vue", "e492b81abd4679e1a56449b0710623a57ac50f7e", "composes editor UI", "stack disconnected from viewport; prototype UX", "Vue/editor components", "apps/desktop-ui", "reimplement_from_contract", "dispatch; shell state; desktop E2E", "new shell after ADR", "accepted shell covers scenario"]
+  - ["frontend_canvas_viewport", "frontend/src/components/editor/CanvasViewport.vue", "fdefafae2eaea4ac47bef006505a5d80c9a95177", "SVG canvas/interactions/properties", "monolithic writable owner; direct v-model; cannot be projection", "Vue/editor helpers", "renderer-svg + editor-application", "reimplement_from_contract", "coordinates; pointer; commands-only; performance", "no wholesale copy; pure algorithms separately assessed", "new renderer has no authoritative state"]
+  - ["frontend_canvas_settings", "frontend/src/lib/editor/canvasSettings.ts", "d60e7a422ea4f7e57689817dcc89e353a0a1b964", "view/settings/profile options", "preferences and normative profile mixed", "TypeScript/profile helpers", "preferences + profiles", "reimplement_from_contract", "normalization; persistence; ownership", "split settings from profile", "new owners accepted"]
+  - ["frontend_interaction_modes", "frontend/src/lib/editor/interactionModes.ts", "1c011efda89f2e0798a7bc189ef975e4f98ccd34", "UI modes/string actions", "UI labels conflated with commands", "TypeScript", "editor-application", "reimplement_from_contract", "state machine; mapping; cancel", "typed intents", "new controller owns modes"]
+  - ["frontend_snap_service", "frontend/src/lib/editor/snapService.ts", "0713092d0712d60e72facc82f5fd1d3cb36e7f4f", "pure snapping/rect helpers", "implicit tolerance/coordinate contract", "TypeScript", "editor-geometry", "salvage_after_tests", "goldens; ties; zoom; properties", "copy only after semantics pinned", "accepted geometry package supersedes"]
+  - ["frontend_reference_clipboard", "frontend/src/lib/editor/referenceClipboard.ts", "cb119fb3c166163ace6811b4e7c22531534e0c3f", "text/reference paste", "coordinate-derived unstable IDs; unversioned; browser-only", "Clipboard API/prototype objects", "editor-application/clipboard", "reimplement_from_contract", "version; ID remap; malformed; cross-platform", "structured canonical clipboard", "legacy payload retired/migrated"]
+  - ["frontend_palette_drag_transfer", "frontend/src/lib/editor/paletteDragTransfer.ts", "379e5d3fc616b684395eb00a0003c94d799c4c03", "global drag payload/events", "module-global state; DOM coupling; no native file boundary", "DOM/palette/viewport", "platform-ports + editor-application", "reimplement_from_contract", "internal/native drop; cleanup", "typed payload + platform adapter", "no production imports"]
+  - ["frontend_shape_palette", "frontend/src/components/editor/ShapePalette.vue", "1d93d5789d83ada380a85f51ad0f3330bb517042", "prototype symbol browser", "drafts mixed with primitives; global drag ghost", "Vue/catalog/drag", "desktop-ui/symbol-browser", "reimplement_from_contract", "filter; keyboard; drag; no-auto-promotion", "rebuild on accepted catalog API", "approved UX/provenance gates pass"]
+  - ["frontend_shape_catalog", "frontend/src/lib/editor/shapeCatalog.ts", "c085b48fb9e12d1523d72902383e810e3d2987e4", "primitives + generated drafts + SVG", "catalog/render conflated; drafts not accepted", "generated catalog/palette", "packages/symbol-catalog", "reimplement_from_contract", "schema; provenance; renderer; no-auto-promotion", "versioned references to accepted definitions", "accepted catalog unused old file"]
+  - ["frontend_generated_vsdx_catalog", "frontend/src/lib/editor/vsdxSymbolCatalog.generated.ts", "a635492bf409f53d7830da8d57cd46bf7c991a83", "generated VSDX drafts", "absolute G:\\ source path; non-content-addressed; draft geometry", "catalog generator/local VSDX", "prototype reference", "retain_as_reference", "reproducibility; source hash; diagnostics", "regenerate only after accepted pipeline", "accepted output has no host paths"]
+  - ["visio_vsdx_inspector", "tools/visio_inspect_vsdx.py", "eeaac17fe2a5a785d4f30fc1ada12e9a0d0a46b9", "VSDX package/ShapeSheet inspection", "not importer; heuristic semantics; no write proof", "Python OOXML", "tools/visio-python", "salvage_after_tests", "rels; IDs/formulas; malformed fail-closed", "versioned JSON process protocol", "accepted adapter supersedes"]
+  - ["visio_master_metrics", "tools/extract_vsdx_master_metrics.py", "d0752cf7ba279a578d5825be546160e4105becb1", "master metrics/connections", "formula/transform coverage incomplete", "Python XML/ZIP", "tools/visio-python", "salvage_after_tests", "units; formulas; groups; provenance", "normalized source model + diagnostics", "accepted extractor covers fixtures"]
+  - ["visio_master_converter", "tools/visio_master_to_symbol_draft.py", "a852cf426d7d64b179084431fcd72e35321de836", "master-to-symbol draft", "approximated geometry; not normative acceptance", "metrics extractor", "tools/symbol-source-pipeline", "salvage_after_tests", "geometry; groups; formulas; no-auto-promotion", "retain diagnostics; explicit support matrix", "accepted pipeline supersedes"]
+  - ["visio_catalog_generator", "tools/build_vsdx_symbol_catalog.py", "443517007d1a0a9c0adf54571c026b21392fdc91", "VSDX to TS/JSON/CSV/MD", "fallback hides missing source; heuristic fields; emits host path", "Python/VSDX", "tools/symbol-source-pipeline", "reimplement_from_contract", "content hash; deterministic; fail-closed", "split extract/normalize/review/promotion", "new pipeline reproduces fixtures"]
+  - ["frontend_ribbon", "frontend/src/components/editor/RibbonBar.vue", "8474fac563866efa6dc82505cb2020fcfe010cd1", "prototype ribbon/settings", "commands/preferences/profile mixed; UX not baseline", "Vue/settings", "apps/desktop-ui", "reimplement_from_contract", "enablement; keyboard; layout", "rebuild after command/profile contracts", "new ribbon accepted"]
+  - ["frontend_status", "frontend/src/components/editor/StatusBar.vue", "a8d546eff5691a2bb48b2cca8be91dfdd5a9c36b", "prototype status/zoom/coordinates", "not accepted application projection", "Vue/shell", "apps/desktop-ui", "reimplement_from_contract", "projection; units; accessibility", "retain factual fields only", "new status accepted"]
+  - ["frontend_context_menu", "frontend/src/components/editor/CanvasContextMenu.vue", "29e157c2bd0978481da8f070371b9ba19162d109", "string-action context menu", "sample creation via viewport vocabulary; bypass risk", "interactionModes/viewport", "apps/desktop-ui", "reimplement_from_contract", "typed dispatch; enablement; keyboard", "application command descriptors", "cannot bypass commands"]
+  - ["frontend_voltage_classes", "frontend/src/lib/editor/voltageClasses.ts", "83fbf89a1edf435a1b3796fef9bd3d34a152e830", "voltage/color lookup", "source strings not evidence; silent unknown->10kV", "TypeScript", "packages/profiles", "salvage_after_tests", "evidence; fail-closed; versioning", "validate normative data first", "accepted profile owns data"]
+  - ["frontend_design_override", "frontend/src/assets/editor-design-system.css", "a5d5b81cf429de35cfd87f1175e106ee67a33b1c", "global component-class overrides", "legacy DOM/specificity coupling; not baseline", "prototype CSS classes", "none", "retire", "visual inventory only", "do not migrate selectors", "new UI independent"]
+  - ["frontend_app_css", "frontend/src/styles/app.css", "4c7ed4eefa7aa9fa69a80a762e22ffe7bdad49b8", "prototype shell CSS", "fixed browser columns; competes with override", "prototype DOM", "none", "retire", "visual inventory only", "rebuild from desktop UX", "new shell styles accepted"]
+  - ["frontend_bootstrap", "frontend/src/main.ts", "20d5e3f83938a5923ba21d6774468cacf4ee00f5", "browser Vue bootstrap", "browser-only; imports quarantined CSS", "Vue/Vite/CSS", "apps/desktop-ui", "reimplement_from_contract", "desktop bootstrap; CSP; adapter injection", "clean selected-host entry", "desktop renderer sole startup"]
+  - ["frontend_manifest", "frontend/package.json", "8617c4f10fe5223d6bade6d76376f73dcaf7b02f", "Vite scripts/dependency ranges", "caret ranges; no desktop/package/test flow", "npm/Vue/Vite", "workspace manifests", "retain_as_reference", "lock; build; typecheck", "new workspace after ADR", "production builds independently"]
+  - ["backend_manifest", "backend/pyproject.toml", "929659e0ec60a309e36f863d13491acec99cd640", "FastAPI deps/pytest path", "ranges; server assumed; no sidecar contract", "pip/Python", "tools/visio-python manifest", "retain_as_reference", "locked tool env; protocol", "isolated tool package if retained", "desktop does not install backend"]
+  - ["prototype_ci", ".github/workflows/ci.yml", "53b3098f3c14354e3bee2b6f16804d53887dd3e5", "three-file existence check", "placeholder; no build/test/platform evidence", "GitHub Actions", "repository CI", "retire", "replacement Win/Linux green", "remove only in later governed item", "accepted CI supersedes"]
+coverage:
+  required_areas: [schema/API/service, project/document/commands, shell/viewport/settings/interactions/snap/clipboard/drag-drop, busbar/SVG, palette/catalog/generated-drafts, VSDX/VSSX/ShapeSheet, ribbon/context/status/CSS, manifests/CI]
+  start_build_finding: "Baseline executable ownership is frontend package scripts, backend manifest, README instructions and placeholder CI; none is an accepted desktop packaging flow."
+completion_gate: {unresolved_assets: [], automatic_reuse_entries: 0, deletion_authorized: false}
