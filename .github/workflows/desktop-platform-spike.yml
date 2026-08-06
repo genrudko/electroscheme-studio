@@ -87,6 +87,26 @@ jobs:
         working-directory: spikes
         shell: bash
         run: npm run benchmark:shared -- "evidence/generated/shared-benchmark-${RUNNER_OS}.json"
+      - name: Run Electron in-app scenario (Linux)
+        if: runner.os == 'Linux'
+        working-directory: spikes
+        run: npm run scenario:candidate -- electron evidence/generated/electron-scenario-linux.json -- xvfb-run -a ./evidence/generated/electron-package/ElectroSchemeSpikeElectron-linux-x64/ElectroSchemeSpikeElectron
+      - name: Run Tauri in-app scenario (Linux)
+        if: runner.os == 'Linux'
+        working-directory: spikes
+        env:
+          WEBKIT_DISABLE_COMPOSITING_MODE: '1'
+        run: npm run scenario:candidate -- tauri evidence/generated/tauri-scenario-linux.json -- xvfb-run -a ./evidence/generated/tauri-portable-linux-x64/ElectroSchemeSpikeTauri
+      - name: Run Electron in-app scenario (Windows)
+        if: runner.os == 'Windows'
+        working-directory: spikes
+        shell: pwsh
+        run: npm run scenario:candidate -- electron evidence/generated/electron-scenario-windows.json -- .\evidence\generated\electron-package\ElectroSchemeSpikeElectron-win32-x64\ElectroSchemeSpikeElectron.exe
+      - name: Run Tauri in-app scenario (Windows)
+        if: runner.os == 'Windows'
+        working-directory: spikes
+        shell: pwsh
+        run: npm run scenario:candidate -- tauri evidence/generated/tauri-scenario-windows.json -- .\evidence\generated\tauri-portable-win32-x64\ElectroSchemeSpikeTauri.exe
       - name: Measure Electron startup and process-tree RSS (Linux)
         if: runner.os == 'Linux'
         working-directory: spikes
