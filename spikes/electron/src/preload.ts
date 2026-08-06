@@ -1,12 +1,15 @@
 import { contextBridge, ipcRenderer, webUtils } from "electron";
+
 contextBridge.exposeInMainWorld("electroHost", {
   candidate: () => "electron",
   platform: () => ipcRenderer.invoke("platform"),
+  automationContext: () => ipcRenderer.invoke("automation-context"),
   markReady: () => ipcRenderer.invoke("mark-ready"),
   openProject: () => ipcRenderer.invoke("open-project"),
   saveProject: (defaultName: string, content: string) => ipcRenderer.invoke("save-project", { defaultName, content }),
   readPath: (path: string) => ipcRenderer.invoke("read-path", path),
   writePath: (path: string, content: string) => ipcRenderer.invoke("write-path", { path, content }),
+  writeBytesPath: (path: string, bytes: Uint8Array) => ipcRenderer.invoke("write-bytes-path", { path, bytes: Array.from(bytes) }),
   writeStructured: (text: string) => ipcRenderer.invoke("clipboard-write", text),
   readStructured: () => ipcRenderer.invoke("clipboard-read"),
   subscribe: async () => () => {},

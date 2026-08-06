@@ -15,6 +15,7 @@
     "build": "npm run build:ui && npm run build:electron",
     "package:electron": "node scripts/package-electron.mjs",
     "package:tauri": "node scripts/package-tauri.mjs",
+    "scenario:candidate": "node scripts/run-candidate-scenario.mjs",
     "benchmark:shared": "tsx scripts/benchmark-shared.ts",
     "measure:candidate": "node scripts/measure-candidate.mjs",
     "verify:scope": "node scripts/verify-changed-scope.mjs"

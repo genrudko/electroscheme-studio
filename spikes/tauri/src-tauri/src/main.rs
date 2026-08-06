@@ -1,6 +1,7 @@
 use serde::Serialize;
 use std::{
     fs,
+    path::{Path, PathBuf},
     process::{Command, Stdio},
     thread,
     time::{Duration, Instant, SystemTime, UNIX_EPOCH},
@@ -21,8 +22,55 @@ struct ReadyEvidence {
     ready_epoch_ms: u128,
 }
 
+#[derive(Serialize)]
+#[serde(rename_all = "camelCase")]
+struct AutomationContext {
+    result_path: String,
+    canonical_fixture_path: String,
+    vsdx_fixture_path: String,
+    vssx_fixture_path: String,
+    round_trip_path: String,
+    pdf_path: String,
+    generated_vsdx_path: String,
+}
+
+fn packaged_root() -> Option<PathBuf> {
+    std::env::current_exe().ok()?.parent().map(Path::to_path_buf)
+}
+
+fn development_root() -> PathBuf {
+    PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../..")
+}
+
+fn runtime_root() -> PathBuf {
+    packaged_root().filter(|root| root.join("tools").exists()).unwrap_or_else(development_root)
+}
+
+fn fixture_root() -> PathBuf {
+    packaged_root()
+        .filter(|root| root.join("fixtures").exists())
+        .map(|root| root.join("fixtures"))
+        .unwrap_or_else(|| development_root().join("shared/fixtures"))
+}
+
 #[tauri::command]
 fn platform() -> String { std::env::consts::OS.to_string() }
+
+#[tauri::command]
+fn automation_context() -> Option<AutomationContext> {
+    let result_path = PathBuf::from(std::env::var("SPIKE_SCENARIO_RESULT").ok()?);
+    let workspace = result_path.parent().unwrap_or_else(|| Path::new("."));
+    let fixtures = fixture_root();
+    Some(AutomationContext {
+        result_path: result_path.to_string_lossy().into_owned(),
+        canonical_fixture_path: fixtures.join("canonical-project.json").to_string_lossy().into_owned(),
+        vsdx_fixture_path: fixtures.join("visio/controlled-minimal.vsdx").to_string_lossy().into_owned(),
+        vssx_fixture_path: fixtures.join("visio/controlled-master.vssx").to_string_lossy().into_owned(),
+        round_trip_path: workspace.join("tauri-canonical-roundtrip.json").to_string_lossy().into_owned(),
+        pdf_path: workspace.join("tauri-deterministic-output.pdf").to_string_lossy().into_owned(),
+        generated_vsdx_path: workspace.join("tauri-generated-minimal.vsdx").to_string_lossy().into_owned(),
+    })
+}
 
 #[tauri::command]
 fn mark_ready(app: tauri::AppHandle) -> Result<(), String> {
@@ -47,6 +95,9 @@ fn read_path(path: String) -> Result<String, String> { fs::read_to_string(path).
 
 #[tauri::command]
 fn write_path(path: String, content: String) -> Result<(), String> { fs::write(path, content).map_err(|error| error.to_string()) }
+
+#[tauri::command]
+fn write_bytes_path(path: String, bytes: Vec<u8>) -> Result<(), String> { fs::write(path, bytes).map_err(|error| error.to_string()) }
 
 #[tauri::command]
 fn open_project() -> Result<Option<String>, String> {
@@ -85,9 +136,7 @@ fn clipboard_read() -> Result<String, String> {
 #[tauri::command]
 fn run_visio_tool(args: Vec<String>) -> Result<ToolResult, String> {
     let executable = if cfg!(windows) { "python" } else { "python3" };
-    let packaged = std::env::current_exe().ok().and_then(|path| path.parent().map(|parent| parent.join("tools/visio_spike_tool.py")));
-    let development = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../../tools/visio_spike_tool.py");
-    let tool = packaged.filter(|path| path.exists()).unwrap_or(development);
+    let tool = runtime_root().join("tools/visio_spike_tool.py");
     let mut child = Command::new(executable).arg(tool).args(args).stdin(Stdio::null()).stdout(Stdio::piped()).stderr(Stdio::piped()).spawn().map_err(|error| error.to_string())?;
     let started = Instant::now();
     loop {
@@ -106,7 +155,20 @@ fn run_visio_tool(args: Vec<String>) -> Result<ToolResult, String> {
 
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![platform, mark_ready, read_path, write_path, open_project, save_project, export_pdf, clipboard_write, clipboard_read, run_visio_tool])
+        .invoke_handler(tauri::generate_handler![
+            platform,
+            automation_context,
+            mark_ready,
+            read_path,
+            write_path,
+            write_bytes_path,
+            open_project,
+            save_project,
+            export_pdf,
+            clipboard_write,
+            clipboard_read,
+            run_visio_tool
+        ])
         .run(tauri::generate_context!())
         .expect("tauri spike runtime");
 }

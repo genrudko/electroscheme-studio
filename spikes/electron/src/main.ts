@@ -7,17 +7,35 @@ import { fileURLToPath } from "node:url";
 const processStartedAt = Date.now();
 const here = path.dirname(fileURLToPath(import.meta.url));
 const spikeRoot = app.isPackaged ? app.getAppPath() : path.resolve(here, "../..");
-const toolRoot = app.isPackaged ? path.join(process.resourcesPath, "app.asar.unpacked") : spikeRoot;
+const unpackedRoot = app.isPackaged ? path.join(process.resourcesPath, "app.asar.unpacked") : spikeRoot;
 const ui = path.join(spikeRoot, "shared/ui/dist/index.html");
 let windowRef: BrowserWindow | null = null;
 
 type SavePayload = { defaultName: string; content: string };
 type WritePayload = { path: string; content: string };
+type WriteBytesPayload = { path: string; bytes: number[] };
 type PdfPayload = { defaultName: string; bytes: number[] };
 type ToolResult = { exitCode: number; stdout: string; stderr: string };
 
+function automationContext() {
+  const resultPath = process.env.SPIKE_SCENARIO_RESULT;
+  if (!resultPath) return null;
+  const workspace = path.dirname(resultPath);
+  const fixtures = path.join(unpackedRoot, "shared", "fixtures");
+  return {
+    resultPath,
+    canonicalFixturePath: path.join(fixtures, "canonical-project.json"),
+    vsdxFixturePath: path.join(fixtures, "visio", "controlled-minimal.vsdx"),
+    vssxFixturePath: path.join(fixtures, "visio", "controlled-master.vssx"),
+    roundTripPath: path.join(workspace, "electron-canonical-roundtrip.json"),
+    pdfPath: path.join(workspace, "electron-deterministic-output.pdf"),
+    generatedVsdxPath: path.join(workspace, "electron-generated-minimal.vsdx")
+  };
+}
+
 function register(): void {
   ipcMain.handle("platform", () => process.platform);
+  ipcMain.handle("automation-context", () => automationContext());
   ipcMain.handle("mark-ready", async () => {
     const readyFile = process.env.SPIKE_READY_FILE;
     if (readyFile) {
@@ -38,6 +56,7 @@ function register(): void {
   });
   ipcMain.handle("read-path", (_event: IpcMainInvokeEvent, filePath: string) => fs.readFile(filePath, "utf8"));
   ipcMain.handle("write-path", async (_event: IpcMainInvokeEvent, { path: filePath, content }: WritePayload) => { await fs.writeFile(filePath, content, "utf8"); });
+  ipcMain.handle("write-bytes-path", async (_event: IpcMainInvokeEvent, { path: filePath, bytes }: WriteBytesPayload) => { await fs.writeFile(filePath, Buffer.from(bytes)); });
   ipcMain.handle("clipboard-write", (_event: IpcMainInvokeEvent, text: string) => clipboard.writeText(text, "clipboard"));
   ipcMain.handle("clipboard-read", () => clipboard.readText("clipboard"));
   ipcMain.handle("export-pdf", async (_event: IpcMainInvokeEvent, { defaultName, bytes }: PdfPayload) => {
@@ -47,7 +66,7 @@ function register(): void {
     return true;
   });
   ipcMain.handle("run-visio-tool", (_event: IpcMainInvokeEvent, args: string[]) => new Promise<ToolResult>(resolve => {
-    const tool = path.join(toolRoot, "tools/visio_spike_tool.py");
+    const tool = path.join(unpackedRoot, "tools", "visio_spike_tool.py");
     const child = spawn(process.platform === "win32" ? "python" : "python3", [tool, ...args], { stdio: ["ignore", "pipe", "pipe"] });
     let stdout = "";
     let stderr = "";
@@ -78,4 +97,5 @@ app.whenReady().then(() => {
   windowRef.webContents.setWindowOpenHandler(() => ({ action: "deny" }));
   void windowRef.loadFile(ui);
 });
+
 app.on("window-all-closed", () => app.quit());
