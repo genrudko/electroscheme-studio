@@ -1,0 +1,7 @@
+node_modules/
+dist/
+shared/ui/dist/
+electron/dist/
+electron/package-input/
+tauri/src-tauri/target/
+evidence/generated/
