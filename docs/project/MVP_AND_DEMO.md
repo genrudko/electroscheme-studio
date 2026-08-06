@@ -4,7 +4,12 @@
 
 ### MVP
 
-Минимальный продукт, который позволяет выполнить один полный реальный инженерный сценарий от создания проекта до повторного открытия и выпуска схемы.
+Минимальный продукт, который позволяет выполнить полный реальный инженерный сценарий от создания или миграции проекта до повторного открытия и выпуска схемы.
+
+MVP обязан доказать два входных пути:
+
+- создание новой схемы в ElectroScheme Studio;
+- продолжение работы с существующей схемой Visio в пределах утверждённого compatibility profile без ручной перерисовки с нуля.
 
 ### Demo
 
@@ -12,7 +17,7 @@
 
 ### Pilot
 
-Ограниченная эксплуатация специалистом на реальной рабочей задаче с сохранением проектов, обратной связью и контролем совместимости между версиями.
+Ограниченная эксплуатация специалистом на реальной рабочей задаче с сохранением проектов, обратной связью, контролем совместимости между версиями и переходным обменом с Visio.
 
 ## 2. Первый вертикальный продуктовый контур
 
@@ -28,11 +33,12 @@ MVP не обязан одновременно реализовывать:
 - полноценное эксплуатационное ведение;
 - расчёты режимов и КЗ;
 - SCADA/телемеханику;
-- автоматическое создание всех связанных представлений.
+- автоматическое создание всех связанных представлений;
+- произвольную совместимость со всеми типами документов и функциями Microsoft Visio.
 
-При этом canonical model не должна делать эти направления невозможными. В MVP должны существовать конкретные extension points для equipment identity, state model, phase-aware ports/connections, document variants and representations.
+При этом canonical model не должна делать эти направления невозможными. В MVP должны существовать конкретные extension points для equipment identity, state model, phase-aware ports/connections, document variants, representations and source interoperability.
 
-## 3. MVP scenario
+## 3. MVP scenario — создание новой схемы
 
 Пользователь должен иметь возможность:
 
@@ -59,7 +65,24 @@ MVP не обязан одновременно реализовывать:
 21. выпустить SVG и PDF с предсказуемыми размерами;
 22. распечатать схему без изменения масштаба, линий и подписей.
 
-MVP считается достигнутым только при успешном прохождении полного сценария на обеих целевых платформах.
+## 3.1 MVP scenario — миграция из Visio
+
+Пользователь должен иметь возможность:
+
+1. выбрать существующий `.vsdx` из утверждённого compatibility corpus;
+2. получить предварительный анализ страниц, masters, shapes, groups, connectors, properties и неподдерживаемых элементов;
+3. импортировать поддерживаемое электротехническое подмножество в canonical project;
+4. сохранить source page/master/shape IDs и provenance;
+5. сопоставить известные masters с принятыми SymbolDefinition;
+6. увидеть неизвестные или неоднозначные элементы как явно обозначенный foreign/unsupported content;
+7. получить структурированный compatibility report без скрытых потерь;
+8. подключить или мигрировать связанную `.vssx`-библиотеку;
+9. продолжить редактирование импортированной схемы обычными command-based операциями;
+10. сохранить результат в собственном формате ElectroScheme Studio;
+11. закрыть и повторно открыть проект без потери imported mappings, source provenance и topology;
+12. сравнить импортированное представление с исходным VSDX в пределах утверждённого tolerance.
+
+MVP считается достигнутым только при успешном прохождении обоих сценариев на целевых платформах в применимой части. Фактическая проверка открытия VSDX в Microsoft Visio выполняется на Windows.
 
 ## 4. MVP object set
 
@@ -135,12 +158,19 @@ State model должна:
 - validation panel with navigation to object;
 - SVG/PDF output;
 - print preview;
-- predictable large-sheet navigation for the accepted demo size.
+- predictable large-sheet navigation for the accepted demo size;
+- editable VSDX import for the approved normal-scheme subset;
+- VSSX library migration for approved masters;
+- compatibility report and navigation to unsupported/foreign elements;
+- source provenance preservation.
 
 Не блокируют MVP:
 
 - universal autorouting;
-- arbitrary VSDX document import;
+- arbitrary VSDX document import outside the approved compatibility profile;
+- complete editable VSDX export and controlled round-trip, which are mandatory before Pilot;
+- native parsing of every legacy `.vsd/.vss` variant, provided an accepted local migration path is documented before Pilot;
+- VBA, ActiveX/OLE and arbitrary Visio add-ons;
 - DWG;
 - CIM import/export;
 - load-flow or short-circuit calculations;
@@ -172,6 +202,8 @@ MVP должен реализовать ограниченный, явно им�
 
 Изменение нормативного источника не должно требовать ручного переписывания каждого проекта; profile/version reference сохраняется в документе.
 
+Импортированный Visio-объект не считается нормативно принятым только из-за визуального сходства. Mapping к profile/family должен быть явным и диагностируемым.
+
 ## 8. Demo scheme
 
 Demo должна быть не декоративным примером, а нормальной электрической схемой с достаточной сложностью.
@@ -193,6 +225,8 @@ Demo должна быть не декоративным примером, а н
 - минимум одна намеренно созданная ошибка presentation/compliance profile в автоматизируемом boundary.
 
 Demo reference должна быть заранее принята владельцем и сохранена в репозитории в обезличенном или синтетическом виде.
+
+Для D9 дополнительно используется утверждённая исходная версия этой схемы в VSDX и, при наличии, связанная VSSX-библиотека.
 
 ## 9. Demo acceptance script
 
@@ -259,14 +293,28 @@ Demo reference должна быть заранее принята владел�
 - восстановить последнюю безопасную autosave/recovery state;
 - не повредить последний известный корректный project file.
 
+### D9 — Visio migration
+
+- открыть утверждённую исходную VSDX-схему;
+- просмотреть предварительные diagnostics;
+- импортировать поддерживаемые pages/shapes/groups/connectors/properties;
+- мигрировать утверждённые VSSX masters;
+- проверить source mappings и foreign/unsupported content;
+- сравнить компоновку, текст, свойства и связи с исходником;
+- отредактировать один импортированный аппарат и одно соединение;
+- сохранить, закрыть и повторно открыть canonical project;
+- убедиться, что ручная перерисовка схемы с нуля не потребовалась.
+
 ## 10. Demo exit criteria
 
 Demo считается принятой, когда:
 
-- все D1–D8 проходят на exact release candidate head;
+- все D1–D9 проходят на exact release candidate head;
 - нет ручной подмены project files;
 - нет известных data-loss defects;
 - нет известных topology-loss defects в accepted scenario;
+- нет silent Visio import loss в accepted compatibility profile;
+- compatibility report соответствует фактическому результату;
 - нет обхода command path для основных действий;
 - критические действия покрыты automated interaction tests;
 - normative profile boundary и исключения документированы;
@@ -286,14 +334,22 @@ Pilot допускается после Demo и включает:
 - сбор defect evidence без передачи чувствительных схем во внешние сервисы;
 - documented support/update procedure;
 - сравнение pilot output с принятой исходной схемой/документом;
+- editable VSDX export для утверждённого compatibility profile;
+- открытие и базовое редактирование экспортированного файла в Microsoft Visio;
+- controlled VSDX import/export round-trip corpus;
+- compatibility/loss reports;
+- документированный локальный migration path для реально встречающихся `.vsd/.vss`;
 - отсутствие необходимости возвращаться в Visio/Автограф/АСМОграф для базовых операций accepted scope.
 
 ## 12. Pilot success criteria
 
-- реальная схема создана или актуализирована в приложении;
+- реальная существующая Visio-схема импортирована и актуализирована без перерисовки с нуля;
+- новая схема может быть создана непосредственно в приложении;
 - пользователь завершил задачу без возврата в универсальный редактор из-за отсутствия базовой функции;
+- поддерживаемая редакция экспортируется в VSDX и открывается в Visio;
 - проект повторно открывается после обновления версии;
-- нет потери объектов, связей, свойств, состояний или печатного результата;
+- нет потери объектов, связей, свойств, состояний, source mappings или печатного результата;
+- известные ограничения совместимости явно опубликованы и совпадают с diagnostics;
 - выявленные неудобства классифицированы как defects, usability improvements или post-MVP scope;
 - следующий release plan основан на фактических pilot findings.
 
@@ -316,5 +372,7 @@ Pilot допускается после Demo и включает:
 - сравнение ревизий схем;
 - автоматическая генерация из topology/equipment list;
 - дополнительные ГОСТ/СТО-профили;
+- расширенные Visio compatibility profiles;
+- собственная или bridged-поддержка legacy VSD/VSS;
 - CIM and calculation adapters;
 - adapters к ЭОД и внешним системам.
