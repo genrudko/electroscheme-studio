@@ -11,14 +11,15 @@ Baseline main: `6e1209d800c0cc65da4a922506586d5a100c2a84`
 3. `docs/project/CURRENT_STATE.md` — фактическое текущее состояние.
 4. `docs/project/PRODUCT_SCOPE.md` — целевой продукт, границы и конкурентная позиция.
 5. `docs/research/MARKET_ANALYSIS_INTAKE_2026-08-06.md` — принятый рыночный вход, проверенные стратегические выводы и границы доказательности.
-6. `docs/project/PROTOTYPE_QUARANTINE.md` — запрет автоматического наследования прототипа и правила migration disposition.
-7. `docs/project/MVP_AND_DEMO.md` — проверяемые пользовательские результаты MVP, demo и pilot.
-8. `docs/project/IMPLEMENTATION_PROGRAM.yaml` — последовательность фаз, зависимости и gates.
-9. `docs/architecture/SYSTEM_ARCHITECTURE.md` — целевая архитектура и migration direction.
-10. `docs/architecture/DOMAIN_INVARIANTS.md` — обязательные правила модели документа и электрической топологии.
-11. `docs/quality/ACCEPTANCE_GATES.md` — CI, тесты, visual evidence и cross-platform требования.
-12. `docs/decisions/0002_desktop_first_refoundation.md` — принятое решение о desktop-first переосновании.
-13. `docs/project/NEXT_WORK_ITEM.md` — готовый контракт следующего desktop/platform/core spike.
+6. `docs/architecture/VISIO_INTEROPERABILITY_CONTRACT.md` — обязательный переходный мост Visio, уровни совместимости и запрет скрытых потерь.
+7. `docs/project/PROTOTYPE_QUARANTINE.md` — запрет автоматического наследования прототипа и правила migration disposition.
+8. `docs/project/MVP_AND_DEMO.md` — проверяемые пользовательские результаты MVP, demo и pilot.
+9. `docs/project/IMPLEMENTATION_PROGRAM.yaml` — последовательность фаз, зависимости и gates.
+10. `docs/architecture/SYSTEM_ARCHITECTURE.md` — целевая архитектура и migration direction.
+11. `docs/architecture/DOMAIN_INVARIANTS.md` — обязательные правила модели документа и электрической топологии.
+12. `docs/quality/ACCEPTANCE_GATES.md` — CI, тесты, visual evidence и cross-platform требования.
+13. `docs/decisions/0002_desktop_first_refoundation.md` — принятое решение о desktop-first переосновании.
+14. `docs/project/NEXT_WORK_ITEM.md` — готовый контракт следующего desktop/platform/core spike.
 
 ## Владение документами
 
@@ -29,6 +30,7 @@ Baseline main: `6e1209d800c0cc65da4a922506586d5a100c2a84`
 | `CURRENT_STATE.md` | Изменяемый фактический срез GitHub/проекта |
 | `PRODUCT_SCOPE.md` | Продуктовые границы и приоритеты |
 | `MARKET_ANALYSIS_INTAKE_2026-08-06.md` | Рыночные гипотезы, конкурентные reference roles и проверенные стратегические выводы |
+| `VISIO_INTEROPERABILITY_CONTRACT.md` | Обязательная совместимость Visio, mapping boundary, diagnostics и acceptance corpus |
 | `PROTOTYPE_QUARANTINE.md` | Классификация, reuse и retirement prototype assets |
 | `MVP_AND_DEMO.md` | Пользовательские acceptance scenarios |
 | `IMPLEMENTATION_PROGRAM.yaml` | Фазы, зависимости, статусы и gates |
@@ -48,6 +50,7 @@ Baseline main: `6e1209d800c0cc65da4a922506586d5a100c2a84`
 - нишу low-friction объектного редактора энергетических схем;
 - необходимость изучать Модус, ETAP, Engineering Base, EPLAN, Visio, Model Studio, EnergyCS, Автограф и АСМОграф в разных reference roles;
 - важность topology/state/document semantics;
+- обязательность Visio interoperability как переходного рыночного моста;
 - ошибочность раннего включения расчётного комплекса, SCADA и universal CAD scope.
 
 Детальный hands-on benchmark, измеримые пользовательские сценарии и окончательные `must_match / must_exceed / defer / reject` решения остаются фазой `P1_MARKET_AND_WORKFLOW_BASELINE`.
@@ -66,7 +69,8 @@ Baseline main: `6e1209d800c0cc65da4a922506586d5a100c2a84`
 - prototype quarantine;
 - Windows/Linux requirement;
 - local-first boundary;
-- доказательность ГОСТ/СТО claims.
+- доказательность ГОСТ/СТО claims;
+- обязательный Visio migration/exchange bridge для принятого compatibility profile.
 
 ## Историческая документация
 
@@ -83,7 +87,7 @@ Baseline main: `6e1209d800c0cc65da4a922506586d5a100c2a84`
 
 ```text
 accepted ADR
-→ DOMAIN_INVARIANTS / SYSTEM_ARCHITECTURE
+→ DOMAIN_INVARIANTS / SYSTEM_ARCHITECTURE / VISIO_INTEROPERABILITY_CONTRACT
 → PROTOTYPE_QUARANTINE
 → IMPLEMENTATION_PROGRAM / MVP_AND_DEMO / PRODUCT_SCOPE
 → accepted research intake
