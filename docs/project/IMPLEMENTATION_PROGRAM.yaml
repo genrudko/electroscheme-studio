@@ -1,0 +1,420 @@
+schema_version: 1
+program:
+  id: ELECTROSCHEME-STUDIO-PROGRAM-001
+  title: ElectroScheme Studio product implementation program
+  status: active
+  baseline_main: 6e1209d800c0cc65da4a922506586d5a100c2a84
+  current_work_item: PROJECT-REFOUNDATION-001
+  current_issue: 1
+  current_branch: governance/project-refoundation-001
+  product_mode:
+    standalone: true
+    eod_module: false
+    desktop_first: true
+    local_first: true
+    required_platforms: [windows, linux]
+    required_interoperability:
+      - vsdx_editable_import
+      - vssx_library_migration
+      - vsdx_editable_export_before_pilot
+      - controlled_visio_round_trip_before_pilot
+  accepted_market_input:
+    document: docs/research/MARKET_ANALYSIS_INTAKE_2026-08-06.md
+    state: strategic_input_accepted_hands_on_validation_pending
+    received_at: 2026-08-06
+  visio_interoperability_contract:
+    document: docs/architecture/VISIO_INTEROPERABILITY_CONTRACT.md
+    state: mandatory_adoption_boundary
+
+principles:
+  - id: GITHUB_CANONICAL
+    statement: GitHub is the only canonical source for code, plans, decisions, evidence and release state.
+  - id: PROTOTYPE_QUARANTINE
+    statement: Prototype assets are not inherited by default; reuse requires explicit classification, tests and owner acceptance.
+  - id: DOMAIN_OVER_DRAWING
+    statement: The engineering document model is authoritative; SVG and UI nodes are projections.
+  - id: ONE_DOCUMENT_MODEL
+    statement: Runtime components share one versioned canonical document contract.
+  - id: COMMAND_MUTATIONS
+    statement: User-visible changes use command/transaction semantics compatible with undo and redo.
+  - id: CROSS_PLATFORM_REQUIRED
+    statement: Windows and Linux are mandatory acceptance targets.
+  - id: SOURCE_PROVENANCE
+    statement: Imported and generated symbols retain source and review provenance.
+  - id: PROVEN_COMPLIANCE
+    statement: GOST/STO claims require identified sources, encoded scope and evidence.
+  - id: SPECIALIZED_ADVANTAGE
+    statement: Product advantage is measured in electrical-engineering workflows, not universal CAD feature count.
+  - id: SCENARIO_BASED_COMPETITION
+    statement: Must-match and must-exceed claims are proven by accepted workflows, not vendor feature-list counting.
+  - id: MULTI_REPRESENTATION_READY
+    statement: The canonical model must allow one equipment identity to have multiple controlled diagram representations without requiring all representation types in MVP.
+  - id: CIM_AS_ADAPTER
+    statement: CIM-compatible concepts influence identity and exchange boundaries, but CIM is not automatically the internal editor document model.
+  - id: VISIO_MIGRATION_BRIDGE
+    statement: Editable VSDX import, VSSX migration and supported VSDX export are mandatory adoption capabilities; VSDX is not the internal canonical model and silent data loss is forbidden.
+
+prototype_asset_dispositions:
+  - retain_as_reference
+  - salvage_after_tests
+  - reimplement_from_contract
+  - retire
+
+default_dispositions:
+  ui_css: reimplement_from_contract
+  interaction_code: reimplement_from_contract
+  document_state_models: reimplement_from_contract
+  vsdx_source_data: retain_as_reference
+  extracted_shapesheet_metrics: salvage_after_tests
+  normative_research: retain_as_reference
+  generated_symbol_drafts: salvage_after_tests
+
+statuses: [not_started, blocked, in_progress, candidate, accepted, deferred]
+
+phases:
+  - id: P0_PROJECT_REFOUNDATION
+    title: Project refoundation and GitHub governance
+    status: in_progress
+    work_item: PROJECT-REFOUNDATION-001
+    depends_on: []
+    objective: Establish the canonical product, architecture, quarantine and execution contract.
+    deliverables:
+      - documentation index
+      - factual current-state baseline
+      - product scope
+      - accepted market analysis intake
+      - mandatory Visio interoperability contract
+      - MVP/demo/pilot scenarios
+      - target architecture
+      - domain invariants
+      - acceptance gates
+      - desktop-first ADR
+      - prototype quarantine policy
+      - next work-item definition
+    gates:
+      - documentation_consistency
+      - market_input_does_not_broaden_MVP_unboundedly
+      - visio_interoperability_is_not_deferred_as_optional_post_MVP
+      - no_product_code_changes
+      - owner_acceptance
+
+  - id: P1_MARKET_AND_WORKFLOW_BASELINE
+    title: Market and electrical-workflow analysis
+    status: not_started
+    input_state: strategic_analysis_received_hands_on_validation_pending
+    depends_on: [P0_PROJECT_REFOUNDATION]
+    objective: Convert competitor and user-workflow research into measurable product requirements without copying general-purpose editors or enterprise platforms blindly.
+    priority_reference_roles:
+      low_friction_editing: [microsoft_visio, avtograf, asmograf]
+      operational_energy_semantics: [modus]
+      intelligent_single_line: [etap]
+      shared_engineering_data: [aucotec_engineering_base_ptd]
+      documentation_automation: [eplan, zuken_e3, see_electrical, wscad]
+      russian_project_context: [model_studio_cs, energycs]
+    deliverables:
+      - source-traceable competitor capability matrix
+      - competitor reference-role matrix
+      - pain-point inventory
+      - 8_to_12 electrical workflow definitions
+      - hands-on_or_reproducible_evidence for priority products
+      - task_time_action_count_error observations
+      - must_match_must_exceed_defer_reject decisions
+      - exact MVP reference scheme recommendation
+      - updated MVP acceptance priorities
+      - normative profile priority recommendation
+      - representative Visio VSDX and VSSX corpus inventory
+      - Visio version and feature usage inventory
+      - legacy VSD and VSS prevalence assessment
+      - supported_subset and loss_tolerance proposal
+    gates:
+      - source_traceability
+      - claims_distinguish_vendor_documentation_from_hands_on_evidence
+      - no_total_feature_count_positioning
+      - real_visio_corpus_available_for_compatibility_planning
+      - owner_product_acceptance
+
+  - id: P2_DESKTOP_PLATFORM_AND_CORE_SPIKE
+    title: Desktop platform and canonical core spike
+    status: blocked
+    work_item: DESKTOP-PLATFORM-AND-CORE-SPIKE-001
+    depends_on: [P0_PROJECT_REFOUNDATION]
+    objective: Select the desktop/runtime architecture using executable Windows/Linux evidence, classify every prototype asset and prove the mandatory local Visio interoperability path.
+    compare:
+      - packaging and startup
+      - filesystem and native dialogs
+      - clipboard and drag_drop
+      - SVG pointer zoom and large-document performance
+      - printing and PDF
+      - updater and signing path
+      - Python VSDX tooling integration
+      - VSDX package read diagnostics
+      - VSSX master read path
+      - minimal VSDX generation
+      - generated VSDX open in Microsoft Visio
+      - automated testability
+      - runtime size and maintenance burden
+    deliverables:
+      - executable candidate spikes
+      - comparative evidence matrix
+      - full prototype asset inventory
+      - disposition and migration map
+      - ADR selecting desktop shell and runtime boundaries
+      - target repository layout
+      - canonical schema ownership decision
+      - Visio interoperability spike report
+      - proposed ownership for import export diagnostics source references and foreign payloads
+      - legacy VSD VSS migration strategy note
+    gates:
+      - windows_smoke
+      - linux_smoke
+      - equivalent_editor_scenario
+      - controlled_VSDX_read
+      - controlled_VSSX_read
+      - minimal_VSDX_write
+      - generated_VSDX_opens_in_Visio_on_Windows
+      - no_network_required_for_interoperability
+      - VSDX_not_internal_canonical_model
+      - no_unreviewed_prototype_reuse
+      - owner_architecture_acceptance
+
+  - id: P3_CANONICAL_DOCUMENT_CORE
+    title: Canonical document storage and command core
+    status: not_started
+    depends_on: [P2_DESKTOP_PLATFORM_AND_CORE_SPIKE]
+    objective: Implement one versioned document model and deterministic mutation/persistence path independent of the full UI, with concrete extension points for states, variants, multiple representations and Visio source provenance.
+    deliverables:
+      - project document schema v1
+      - documents sheets layers objects ports connections properties
+      - stable equipment identities and representation identities
+      - document type and profile version references
+      - equipment and representation property ownership rules
+      - phase-aware extension boundary for ports and connections
+      - state model boundary
+      - source object references
+      - import profile and mapping rule version references
+      - compatibility diagnostic model
+      - preserved foreign object payload boundary
+      - command transaction interface
+      - undo_redo journal
+      - deterministic serializer
+      - project migrations
+      - new_open_save services
+      - round_trip and invariant tests
+    gates:
+      - schema_validation
+      - deterministic_round_trip
+      - migration_tests
+      - command_undo_redo_tests
+      - identity_and_reference_integrity
+      - source_provenance_round_trip
+      - foreign_payload_isolation
+      - core_tests_without_full_UI
+
+  - id: P4_EDITOR_KERNEL_AND_DESIGN_SYSTEM
+    title: Editor kernel and fresh product design system
+    status: not_started
+    depends_on: [P1_MARKET_AND_WORKFLOW_BASELINE, P3_CANONICAL_DOCUMENT_CORE]
+    objective: Build maintainable interactions and a new accepted UX/design foundation rather than repairing prototype UI.
+    deliverables:
+      - interaction specification based on accepted benchmark workflows
+      - design tokens and component system
+      - renderer projection layer
+      - viewport and coordinate transforms
+      - zoom pan selection multi_selection
+      - move rotate copy delete
+      - reference_point insertion
+      - grid rulers guides snapping
+      - layers and properties adapters
+      - command integration for every mutation
+      - autosave dirty_state and recovery baseline
+      - compatibility report navigation and unsupported object presentation
+    gates:
+      - interaction_tests
+      - desktop_e2e
+      - undo_redo_for_primary_operations
+      - performance_baseline
+      - visual_regression
+      - owner_visual_acceptance
+
+  - id: P5_SYMBOL_PLATFORM
+    title: Reviewed electrical symbol platform
+    status: not_started
+    depends_on: [P3_CANONICAL_DOCUMENT_CORE, P4_EDITOR_KERNEL_AND_DESIGN_SYSTEM]
+    objective: Convert source data into accepted parameterized engineering object families without treating conversion success as semantic or normative acceptance.
+    first_object_families:
+      - busbar
+      - circuit_breaker
+      - disconnector
+      - earthing_switch
+      - load_break_switch
+      - power_transformer
+      - current_transformer
+      - voltage_transformer
+      - surge_arrester
+      - line_or_cable
+      - source_or_incomer
+      - title_block
+    deliverables:
+      - symbol definition schema
+      - normalized VSDX ShapeSheet import path
+      - editable VSSX library migration path
+      - source master to accepted SymbolDefinition mapping rules
+      - engineering family and port-role mapping
+      - provenance and review workflow
+      - geometry dimensions ports rotation snap tests
+      - state and parameter contracts
+      - normative profile mapping
+      - accepted MVP library
+    gates:
+      - no_auto_promotion
+      - source_traceability
+      - conversion_success_not_equal_acceptance
+      - visual_geometry_acceptance
+      - engineering_semantic_acceptance
+      - port_rotation_snap_acceptance
+      - VSSX_migration_report
+      - save_load_export_acceptance
+
+  - id: P6_ELECTRICAL_TOPOLOGY
+    title: Electrical connections and topology services
+    status: not_started
+    depends_on: [P3_CANONICAL_DOCUMENT_CORE, P4_EDITOR_KERNEL_AND_DESIGN_SYSTEM, P5_SYMBOL_PLATFORM]
+    objective: Implement electrical connectivity as a model independent from rendered paths.
+    deliverables:
+      - port_to_port connections
+      - busbar and bay_slot attachment
+      - orthogonal route representation
+      - manual waypoints
+      - junction and crossing semantics
+      - topology preservation on transforms
+      - diagnostics and delete policies
+      - phase-awareness extension path
+      - separation of manually assigned device state from future energized_state computation
+      - Visio connector and connection-point mapping for supported subset
+    gates:
+      - topology_invariants
+      - transform_preservation
+      - deterministic_route_serialization
+      - imported_connection_mapping_tests
+      - diagnostic_tests
+
+  - id: P7_MVP_VERTICAL_SLICE
+    title: Complete normal single-line scheme MVP vertical slice
+    status: not_started
+    depends_on: [P4_EDITOR_KERNEL_AND_DESIGN_SYSTEM, P5_SYMBOL_PLATFORM, P6_ELECTRICAL_TOPOLOGY]
+    objective: Complete the end-to-end normal single-line scenario defined in MVP_AND_DEMO.md, including migration from the accepted Visio subset, without adding full three-line, calculation or SCADA scope.
+    deliverables:
+      - new project and normal_single_line document
+      - accepted object set
+      - normal device positions and state validation
+      - editing and topology
+      - validation
+      - save close reopen edit
+      - SVG and PDF
+      - printing
+      - crash recovery baseline
+      - editable import of accepted VSDX normal-scheme corpus
+      - VSSX library migration workflow
+      - structured compatibility report
+      - source provenance preservation
+      - unsupported and foreign object presentation
+    gates:
+      - complete_MVP_scenario_D1_D8
+      - accepted_VSDX_import_scenario
+      - accepted_VSSX_migration_scenario
+      - no_silent_import_data_loss
+      - windows_acceptance
+      - linux_acceptance
+      - no_data_loss
+      - no_topology_loss
+      - owner_acceptance
+
+  - id: P8_GOST_STO_PROFILES_AND_OUTPUT
+    title: GOST STO profiles validation and release output
+    status: not_started
+    depends_on: [P7_MVP_VERTICAL_SLICE]
+    objective: Make normative presentation and output evidence-based, revision-aware and reproducible.
+    initial_sources:
+      - GOST_R_56303_2014_with_applicable_amendments
+      - Ministry_of_Energy_Order_854_2019_applicable_scope
+      - referenced_ESKD_and_UGO_standards
+      - Amendment_2_GOST_R_56303_2014_status_monitoring
+    deliverables:
+      - normative source register
+      - profile versioning rules
+      - validation rule catalog
+      - frames title_blocks modular_grid line_text_color profiles
+      - normal_position presentation rules
+      - print and export conformance fixtures
+      - expert_only_check register
+      - normative mapping diagnostics for imported Visio objects
+    gates:
+      - source_cited_rules
+      - revision_specific_boundary
+      - visual_golden_tests
+      - print_dimension_tests
+      - no_unqualified_full_compliance_claim
+
+  - id: P9_PACKAGING_DEMO_AND_PILOT
+    title: Cross-platform packaging demo and pilot
+    status: not_started
+    depends_on: [P7_MVP_VERTICAL_SLICE, P8_GOST_STO_PROFILES_AND_OUTPUT]
+    objective: Deliver installable Windows/Linux builds and validate a real working scenario including transition from and exchange with Visio.
+    deliverables:
+      - Windows package
+      - Linux package
+      - update and rollback procedure
+      - release notes and known limitations
+      - demo evidence D1_D8
+      - pilot project and feedback register
+      - comparison against accepted source/reference document
+      - editable VSDX export for accepted subset
+      - generated VSDX open and basic edit evidence in Microsoft Visio
+      - controlled VSDX import export round_trip corpus
+      - compatibility and loss reports
+      - documented legacy VSD VSS migration path
+    gates:
+      - clean_machine_install
+      - same_project_cross_platform_round_trip
+      - signed_or_verifiable_artifacts
+      - no_return_to_general_editor_for_accepted_scope
+      - real_scheme_not_redrawn_from_scratch
+      - supported_VSDX_export_opens_in_Visio
+      - controlled_Visio_round_trip
+      - no_silent_export_data_loss
+      - known_compatibility_limits_published
+      - demo_acceptance
+      - pilot_acceptance
+
+  - id: P10_ADVANCED_PRODUCT_CAPABILITIES
+    title: Post-MVP specialized advantages
+    status: not_started
+    depends_on: [P9_PACKAGING_DEMO_AND_PILOT]
+    objective: Add advanced capabilities only from validated user and market priorities.
+    candidates:
+      - temporary_normal_variants
+      - operational_state_snapshots
+      - energized_deenergized_topology_service
+      - phase_explicit_three_line_representations
+      - multiple_representations_per_equipment_identity
+      - representation_consistency_diagnostics
+      - reusable_bay_templates
+      - advanced_transformer_winding_models
+      - automatic_numbering
+      - equipment_registers
+      - reusable_fragments
+      - advanced_routing
+      - revision_comparison
+      - topology_driven_generation
+      - expanded_Visio_compatibility_profiles
+      - native_or_bridged_legacy_VSD_VSS_support
+      - CIM_exchange_adapter
+      - external_calculation_adapters
+      - read_only_telemetry_adapter
+      - external_system_adapters
+      - optional_viewer_or_web_profile
+
+next_work_item:
+  id: DESKTOP-PLATFORM-AND-CORE-SPIKE-001
+  create_after: P0_PROJECT_REFOUNDATION accepted and merged
+  rule: Do not begin feature development before this spike selects the architecture, completes prototype asset dispositions and proves the mandatory Visio interoperability path.

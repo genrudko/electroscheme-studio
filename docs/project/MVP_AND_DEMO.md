@@ -1,0 +1,378 @@
+# MVP, Demo and Pilot — ElectroScheme Studio
+
+## 1. Определения
+
+### MVP
+
+Минимальный продукт, который позволяет выполнить полный реальный инженерный сценарий от создания или миграции проекта до повторного открытия и выпуска схемы.
+
+MVP обязан доказать два входных пути:
+
+- создание новой схемы в ElectroScheme Studio;
+- продолжение работы с существующей схемой Visio в пределах утверждённого compatibility profile без ручной перерисовки с нуля.
+
+### Demo
+
+Доказательная демонстрация MVP на заранее принятой реалистичной нормальной схеме с фиксированным набором оборудования и проверяемыми действиями.
+
+### Pilot
+
+Ограниченная эксплуатация специалистом на реальной рабочей задаче с сохранением проектов, обратной связью, контролем совместимости между версиями и переходным обменом с Visio.
+
+## 2. Первый вертикальный продуктовый контур
+
+MVP строится вокруг одного документа:
+
+> однолинейная нормальная схема электрических соединений реального энергообъекта или принятого репрезентативного фрагмента.
+
+MVP не обязан одновременно реализовывать:
+
+- полноценную трёхлинейную схему;
+- вторичные цепи;
+- временно-нормальную схему как отдельный завершённый workflow;
+- полноценное эксплуатационное ведение;
+- расчёты режимов и КЗ;
+- SCADA/телемеханику;
+- автоматическое создание всех связанных представлений;
+- произвольную совместимость со всеми типами документов и функциями Microsoft Visio.
+
+При этом canonical model не должна делать эти направления невозможными. В MVP должны существовать конкретные extension points для equipment identity, state model, phase-aware ports/connections, document variants, representations and source interoperability.
+
+## 3. MVP scenario — создание новой схемы
+
+Пользователь должен иметь возможность:
+
+1. установить и запустить приложение на Windows или Linux;
+2. создать новый проект;
+3. создать документ типа `normal_single_line_diagram`;
+4. выбрать лист A3/A4 и ориентацию;
+5. выбрать версию применимого presentation/compliance profile;
+6. включить/настроить сетку, линейки, направляющие и привязки;
+7. добавить принятые электротехнические объекты из библиотеки;
+8. настроить свойства, диспетчерские наименования и подписи;
+9. задать нормальное положение коммутационных аппаратов;
+10. разместить и параметризовать шины;
+11. соединить оборудование через реальные ports/terminals;
+12. перемещать и поворачивать объекты без потери топологии;
+13. редактировать ортогональные соединения и waypoints;
+14. использовать copy/cut/paste, duplicate, delete и multi-select;
+15. выполнить undo/redo для всех основных изменений;
+16. получить диагностику неполных, недопустимых или нормативно некорректных данных в заявленном MVP boundary;
+17. сохранить проект в версионируемый файл;
+18. закрыть приложение;
+19. открыть проект повторно без потери геометрии, свойств, состояний и связей;
+20. изменить проект и снова сохранить;
+21. выпустить SVG и PDF с предсказуемыми размерами;
+22. распечатать схему без изменения масштаба, линий и подписей.
+
+## 3.1 MVP scenario — миграция из Visio
+
+Пользователь должен иметь возможность:
+
+1. выбрать существующий `.vsdx` из утверждённого compatibility corpus;
+2. получить предварительный анализ страниц, masters, shapes, groups, connectors, properties и неподдерживаемых элементов;
+3. импортировать поддерживаемое электротехническое подмножество в canonical project;
+4. сохранить source page/master/shape IDs и provenance;
+5. сопоставить известные masters с принятыми SymbolDefinition;
+6. увидеть неизвестные или неоднозначные элементы как явно обозначенный foreign/unsupported content;
+7. получить структурированный compatibility report без скрытых потерь;
+8. подключить или мигрировать связанную `.vssx`-библиотеку;
+9. продолжить редактирование импортированной схемы обычными command-based операциями;
+10. сохранить результат в собственном формате ElectroScheme Studio;
+11. закрыть и повторно открыть проект без потери imported mappings, source provenance и topology;
+12. сравнить импортированное представление с исходным VSDX в пределах утверждённого tolerance.
+
+MVP считается достигнутым только при успешном прохождении обоих сценариев на целевых платформах в применимой части. Фактическая проверка открытия VSDX в Microsoft Visio выполняется на Windows.
+
+## 4. MVP object set
+
+Минимальный принятый набор должен включать не менее:
+
+- параметрическая шина/секция шин;
+- выключатель;
+- разъединитель;
+- заземляющий разъединитель;
+- выключатель нагрузки;
+- силовой трансформатор;
+- трансформатор тока;
+- трансформатор напряжения;
+- ОПН/разрядник;
+- линия/кабель/присоединение;
+- источник/ввод;
+- текст и подпись;
+- рамка/основная надпись MVP-профиля.
+
+Количество символов само по себе не является gate. Каждый объект должен пройти полный acceptance contract:
+
+```text
+source/provenance
+→ geometry and dimensions
+→ engineering family mapping
+→ ports and port roles
+→ properties
+→ states/parameters
+→ rotation and snapping
+→ topology
+→ save/load
+→ export
+→ tests
+→ engineering/visual acceptance
+```
+
+Успешное извлечение VSDX/VSSX или отсутствие ошибок конвертера не является приёмкой объекта.
+
+## 5. MVP state boundary
+
+Для коммутационных families MVP должен различать как минимум:
+
+- нормальное включённое положение;
+- нормальное отключённое положение;
+- заземлённое положение там, где оно семантически допустимо;
+- недопустимое/неполное сочетание состояний как diagnostic condition.
+
+State model должна:
+
+- принадлежать equipment/symbol semantics, а не CSS-классу;
+- сохраняться в project file;
+- проходить undo/redo;
+- влиять на accepted graphical representation;
+- не смешивать вручную заданное положение аппарата с будущим вычисляемым признаком energized/de-energized.
+
+Ремонтные, неисправные, резервные, выкатные и эксплуатационные состояния расширяются после принятия family-specific contracts, если они не нужны для выбранной demo scheme.
+
+## 6. MVP editor capabilities
+
+Обязательные:
+
+- zoom/pan;
+- grid/rulers/guides;
+- selection/multi-selection;
+- move/rotate/copy/delete;
+- insertion by point/reference point;
+- snap to grid, guide, object, port and bus slot;
+- properties panel;
+- layer visibility/lock/printability;
+- command-based undo/redo;
+- autosave or crash-recovery baseline;
+- deterministic project serialization;
+- validation panel with navigation to object;
+- SVG/PDF output;
+- print preview;
+- predictable large-sheet navigation for the accepted demo size;
+- editable VSDX import for the approved normal-scheme subset;
+- VSSX library migration for approved masters;
+- compatibility report and navigation to unsupported/foreign elements;
+- source provenance preservation.
+
+Не блокируют MVP:
+
+- universal autorouting;
+- arbitrary VSDX document import outside the approved compatibility profile;
+- complete editable VSDX export and controlled round-trip, which are mandatory before Pilot;
+- native parsing of every legacy `.vsd/.vss` variant, provided an accepted local migration path is documented before Pilot;
+- VBA, ActiveX/OLE and arbitrary Visio add-ons;
+- DWG;
+- CIM import/export;
+- load-flow or short-circuit calculations;
+- energized/de-energized propagation;
+- cloud sync;
+- multi-user mode;
+- plugin marketplace;
+- automatic generation of full substations;
+- automatic one-line-to-three-line conversion;
+- hundreds of accepted symbols.
+
+## 7. Normative MVP boundary
+
+MVP должен реализовать ограниченный, явно именованный профиль, а не абстрактное «соответствие всем ГОСТ».
+
+Профиль должен зафиксировать:
+
+- применимые редакции нормативных источников;
+- формат листа и основную надпись;
+- модульную сетку;
+- принятый набор УГО;
+- допустимые размеры/соотношения;
+- толщины и типы линий;
+- ортогональность и правила ответвлений/пересечений в принятом scope;
+- правила текстовой информации;
+- цветной и чёрно-белый output boundary;
+- правила нормальных положений отображаемых аппаратов;
+- автоматические и экспертные проверки.
+
+Изменение нормативного источника не должно требовать ручного переписывания каждого проекта; profile/version reference сохраняется в документе.
+
+Импортированный Visio-объект не считается нормативно принятым только из-за визуального сходства. Mapping к profile/family должен быть явным и диагностируемым.
+
+## 8. Demo scheme
+
+Demo должна быть не декоративным примером, а нормальной электрической схемой с достаточной сложностью.
+
+Рекомендуемый состав:
+
+- два класса напряжения или минимум два логических уровня схемы;
+- две секции шин;
+- секционный или шиносоединительный аппарат;
+- минимум два линейных присоединения;
+- минимум одно трансформаторное присоединение;
+- выключатели, разъединители и заземляющие разъединители;
+- ТТ, ТН и ОПН;
+- подписи оборудования;
+- диспетчерские наименования;
+- номера/названия присоединений;
+- явно заданные нормальные положения коммутационных аппаратов;
+- минимум одна намеренно созданная topology/property ошибка;
+- минимум одна намеренно созданная ошибка presentation/compliance profile в автоматизируемом boundary.
+
+Demo reference должна быть заранее принята владельцем и сохранена в репозитории в обезличенном или синтетическом виде.
+
+Для D9 дополнительно используется утверждённая исходная версия этой схемы в VSDX и, при наличии, связанная VSSX-библиотека.
+
+## 9. Demo acceptance script
+
+### D1 — Create and place
+
+- создать проект и документ нормальной однолинейной схемы;
+- выбрать профиль;
+- вставить основные объекты;
+- привязать их к шинам/slots;
+- выровнять и подписать.
+
+### D2 — Connect and edit
+
+- создать electrical connections;
+- переместить присоединение;
+- убедиться, что topology сохранена;
+- изменить waypoint;
+- удалить и восстановить действие через undo.
+
+### D3 — Properties and normal states
+
+- изменить диспетчерское наименование;
+- изменить класс напряжения/профиль отображения;
+- изменить нормальное положение аппарата допустимой командой;
+- попытаться создать недопустимое сочетание и получить diagnostic;
+- проверить корректность сохранения.
+
+### D4 — Validation
+
+- показать dangling connection или отсутствующее обязательное свойство;
+- показать нарушение одной автоматизируемой presentation rule;
+- перейти из диагностики к объекту;
+- исправить ошибки;
+- убедиться, что validation обновилась.
+
+### D5 — Persistence
+
+- сохранить проект;
+- закрыть приложение;
+- открыть файл повторно;
+- сравнить object IDs, topology, states, properties and layout;
+- продолжить редактирование;
+- убедиться, что profile/version reference не потеряна.
+
+### D6 — Output
+
+- экспортировать SVG;
+- экспортировать PDF;
+- проверить размеры листа, толщины линий, цвета/чёрно-белый профиль и читаемость текста;
+- проверить основную надпись и обязательные подписи в принятом boundary;
+- выполнить печатный preview.
+
+### D7 — Cross-platform
+
+- один и тот же project file открыть на Windows и Linux;
+- round-trip не должен создавать семантический diff без действий пользователя;
+- экспорт должен быть визуально эквивалентным в пределах утверждённого tolerance;
+- normal-state and profile metadata должны совпадать.
+
+### D8 — Recovery
+
+- создать несохранённые изменения;
+- смоделировать контролируемое аварийное завершение или использовать recovery fixture;
+- восстановить последнюю безопасную autosave/recovery state;
+- не повредить последний известный корректный project file.
+
+### D9 — Visio migration
+
+- открыть утверждённую исходную VSDX-схему;
+- просмотреть предварительные diagnostics;
+- импортировать поддерживаемые pages/shapes/groups/connectors/properties;
+- мигрировать утверждённые VSSX masters;
+- проверить source mappings и foreign/unsupported content;
+- сравнить компоновку, текст, свойства и связи с исходником;
+- отредактировать один импортированный аппарат и одно соединение;
+- сохранить, закрыть и повторно открыть canonical project;
+- убедиться, что ручная перерисовка схемы с нуля не потребовалась.
+
+## 10. Demo exit criteria
+
+Demo считается принятой, когда:
+
+- все D1–D9 проходят на exact release candidate head;
+- нет ручной подмены project files;
+- нет известных data-loss defects;
+- нет известных topology-loss defects в accepted scenario;
+- нет silent Visio import loss в accepted compatibility profile;
+- compatibility report соответствует фактическому результату;
+- нет обхода command path для основных действий;
+- критические действия покрыты automated interaction tests;
+- normative profile boundary и исключения документированы;
+- visual evidence приложено к PR/release evidence;
+- владелец выполнил содержательную и визуальную проверку.
+
+## 11. Pilot boundary
+
+Pilot допускается после Demo и включает:
+
+- подписанный/проверяемый installer или portable package для обеих платформ;
+- versioned project migrations;
+- backup/recovery process;
+- журнал известных ограничений;
+- минимум один реальный проект пользователя;
+- возможность отката на предыдущую совместимую версию;
+- сбор defect evidence без передачи чувствительных схем во внешние сервисы;
+- documented support/update procedure;
+- сравнение pilot output с принятой исходной схемой/документом;
+- editable VSDX export для утверждённого compatibility profile;
+- открытие и базовое редактирование экспортированного файла в Microsoft Visio;
+- controlled VSDX import/export round-trip corpus;
+- compatibility/loss reports;
+- документированный локальный migration path для реально встречающихся `.vsd/.vss`;
+- отсутствие необходимости возвращаться в Visio/Автограф/АСМОграф для базовых операций accepted scope.
+
+## 12. Pilot success criteria
+
+- реальная существующая Visio-схема импортирована и актуализирована без перерисовки с нуля;
+- новая схема может быть создана непосредственно в приложении;
+- пользователь завершил задачу без возврата в универсальный редактор из-за отсутствия базовой функции;
+- поддерживаемая редакция экспортируется в VSDX и открывается в Visio;
+- проект повторно открывается после обновления версии;
+- нет потери объектов, связей, свойств, состояний, source mappings или печатного результата;
+- известные ограничения совместимости явно опубликованы и совпадают с diagnostics;
+- выявленные неудобства классифицированы как defects, usability improvements или post-MVP scope;
+- следующий release plan основан на фактических pilot findings.
+
+## 13. Post-MVP feature families
+
+После MVP/Pilot могут планироваться:
+
+- временные нормальные схемы как связанные variants;
+- эксплуатационные state snapshots;
+- определение запитанных и обесточенных участков;
+- фазно-явные/трёхлинейные representations;
+- несколько diagram representations одной equipment identity;
+- consistency diagnostics между представлениями;
+- шаблоны типовых присоединений;
+- расширенные трансформаторные параметры и winding models;
+- автоматическая нумерация;
+- equipment registers;
+- reusable fragments/macros без программирования;
+- advanced orthogonal routing;
+- сравнение ревизий схем;
+- автоматическая генерация из topology/equipment list;
+- дополнительные ГОСТ/СТО-профили;
+- расширенные Visio compatibility profiles;
+- собственная или bridged-поддержка legacy VSD/VSS;
+- CIM and calculation adapters;
+- adapters к ЭОД и внешним системам.
