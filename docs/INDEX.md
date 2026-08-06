@@ -10,12 +10,14 @@ Baseline main: `6e1209d800c0cc65da4a922506586d5a100c2a84`
 2. `AGENTS.md` — обязательный GitHub workflow и правила изменения проекта.
 3. `docs/project/CURRENT_STATE.md` — фактическое текущее состояние.
 4. `docs/project/PRODUCT_SCOPE.md` — целевой продукт, границы и конкурентная позиция.
-5. `docs/project/MVP_AND_DEMO.md` — проверяемые пользовательские результаты MVP, demo и pilot.
-6. `docs/project/IMPLEMENTATION_PROGRAM.yaml` — последовательность фаз, зависимости и gates.
-7. `docs/architecture/SYSTEM_ARCHITECTURE.md` — целевая архитектура и migration direction.
-8. `docs/architecture/DOMAIN_INVARIANTS.md` — обязательные правила модели документа и электрической топологии.
-9. `docs/quality/ACCEPTANCE_GATES.md` — CI, тесты, visual evidence и cross-platform требования.
-10. `docs/decisions/0002_desktop_first_refoundation.md` — принятое решение о desktop-first переосновании.
+5. `docs/project/PROTOTYPE_QUARANTINE.md` — запрет автоматического наследования прототипа и правила migration disposition.
+6. `docs/project/MVP_AND_DEMO.md` — проверяемые пользовательские результаты MVP, demo и pilot.
+7. `docs/project/IMPLEMENTATION_PROGRAM.yaml` — последовательность фаз, зависимости и gates.
+8. `docs/architecture/SYSTEM_ARCHITECTURE.md` — целевая архитектура и migration direction.
+9. `docs/architecture/DOMAIN_INVARIANTS.md` — обязательные правила модели документа и электрической топологии.
+10. `docs/quality/ACCEPTANCE_GATES.md` — CI, тесты, visual evidence и cross-platform требования.
+11. `docs/decisions/0002_desktop_first_refoundation.md` — принятое решение о desktop-first переосновании.
+12. `docs/project/NEXT_WORK_ITEM.md` — готовый контракт следующего desktop/platform/core spike.
 
 ## Владение документами
 
@@ -25,12 +27,34 @@ Baseline main: `6e1209d800c0cc65da4a922506586d5a100c2a84`
 | `AGENTS.md` | Процесс разработки и change discipline |
 | `CURRENT_STATE.md` | Изменяемый фактический срез GitHub/проекта |
 | `PRODUCT_SCOPE.md` | Продуктовые границы и приоритеты |
+| `PROTOTYPE_QUARANTINE.md` | Классификация, reuse и retirement prototype assets |
 | `MVP_AND_DEMO.md` | Пользовательские acceptance scenarios |
 | `IMPLEMENTATION_PROGRAM.yaml` | Фазы, зависимости, статусы и gates |
 | `SYSTEM_ARCHITECTURE.md` | Целевая структура компонентов |
 | `DOMAIN_INVARIANTS.md` | Инварианты данных, геометрии и топологии |
 | `ACCEPTANCE_GATES.md` | Обязательная проверка изменений |
+| `NEXT_WORK_ITEM.md` | Boundary следующего work item |
 | `docs/decisions/*` | Принятые архитектурные решения и их последствия |
+
+## Рыночный анализ
+
+Рыночный и конкурентный анализ выполняется отдельным исследовательским потоком и после проверки включается в фазу `P1_MARKET_AND_WORKFLOW_BASELINE`.
+
+Он может менять:
+
+- приоритеты функций;
+- must-match/must-exceed decisions;
+- acceptance scenarios;
+- post-MVP backlog.
+
+Он не может без отдельного ADR отменить:
+
+- one canonical document model;
+- command-based mutations;
+- prototype quarantine;
+- Windows/Linux requirement;
+- local-first boundary;
+- доказательность ГОСТ/СТО claims.
 
 ## Историческая документация
 
@@ -48,6 +72,7 @@ Baseline main: `6e1209d800c0cc65da4a922506586d5a100c2a84`
 ```text
 accepted ADR
 → DOMAIN_INVARIANTS / SYSTEM_ARCHITECTURE
+→ PROTOTYPE_QUARANTINE
 → IMPLEMENTATION_PROGRAM / MVP_AND_DEMO / PRODUCT_SCOPE
 → CURRENT_STATE
 → README / AGENTS
