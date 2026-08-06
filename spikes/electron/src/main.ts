@@ -4,6 +4,7 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
+const processStartedAt = Date.now();
 const here = path.dirname(fileURLToPath(import.meta.url));
 const spikeRoot = app.isPackaged ? app.getAppPath() : path.resolve(here, "../..");
 const toolRoot = app.isPackaged ? path.join(process.resourcesPath, "app.asar.unpacked") : spikeRoot;
@@ -17,7 +18,14 @@ type ToolResult = { exitCode: number; stdout: string; stderr: string };
 
 function register(): void {
   ipcMain.handle("platform", () => process.platform);
-  ipcMain.handle("mark-ready", () => { if (process.env.SPIKE_SMOKE === "1") setTimeout(() => app.quit(), 100); });
+  ipcMain.handle("mark-ready", async () => {
+    const readyFile = process.env.SPIKE_READY_FILE;
+    if (readyFile) {
+      await fs.writeFile(readyFile, JSON.stringify({ candidate: "electron", pid: process.pid, ready_epoch_ms: Date.now(), process_start_epoch_ms: processStartedAt }) + "\n", "utf8");
+    }
+    if (process.env.SPIKE_MEASURE === "1") setTimeout(() => app.quit(), 1500);
+    else if (process.env.SPIKE_SMOKE === "1") setTimeout(() => app.quit(), 100);
+  });
   ipcMain.handle("open-project", async () => {
     const result = await dialog.showOpenDialog({ properties: ["openFile"], filters: [{ name: "ElectroScheme spike", extensions: ["json"] }] });
     return result.canceled || !result.filePaths[0] ? null : fs.readFile(result.filePaths[0], "utf8");

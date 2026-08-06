@@ -3,7 +3,7 @@ use std::{
     fs,
     process::{Command, Stdio},
     thread,
-    time::{Duration, Instant},
+    time::{Duration, Instant, SystemTime, UNIX_EPOCH},
 };
 
 #[derive(Serialize)]
@@ -14,14 +14,32 @@ struct ToolResult {
     stderr: String,
 }
 
+#[derive(Serialize)]
+struct ReadyEvidence {
+    candidate: &'static str,
+    pid: u32,
+    ready_epoch_ms: u128,
+}
+
 #[tauri::command]
 fn platform() -> String { std::env::consts::OS.to_string() }
 
 #[tauri::command]
-fn mark_ready(app: tauri::AppHandle) {
-    if std::env::var("SPIKE_SMOKE").ok().as_deref() == Some("1") {
+fn mark_ready(app: tauri::AppHandle) -> Result<(), String> {
+    if let Ok(path) = std::env::var("SPIKE_READY_FILE") {
+        let ready = ReadyEvidence {
+            candidate: "tauri",
+            pid: std::process::id(),
+            ready_epoch_ms: SystemTime::now().duration_since(UNIX_EPOCH).map_err(|error| error.to_string())?.as_millis(),
+        };
+        fs::write(path, serde_json::to_vec(&ready).map_err(|error| error.to_string())?).map_err(|error| error.to_string())?;
+    }
+    if std::env::var("SPIKE_MEASURE").ok().as_deref() == Some("1") {
+        thread::spawn(move || { thread::sleep(Duration::from_millis(1500)); app.exit(0); });
+    } else if std::env::var("SPIKE_SMOKE").ok().as_deref() == Some("1") {
         thread::spawn(move || { thread::sleep(Duration::from_millis(100)); app.exit(0); });
     }
+    Ok(())
 }
 
 #[tauri::command]
