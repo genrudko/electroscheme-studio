@@ -15,6 +15,10 @@ const child = spawn(command, args, {
   env: { ...process.env, SPIKE_SCENARIO_RESULT: output, SPIKE_SMOKE: "1" },
   stdio: ["ignore", "inherit", "inherit"]
 });
+const exitPromise = new Promise((resolve, reject) => {
+  child.once("error", reject);
+  child.once("close", code => resolve(code));
+});
 
 function sleep(milliseconds) { return new Promise(resolve => setTimeout(resolve, milliseconds)); }
 async function waitForResult() {
@@ -26,12 +30,18 @@ async function waitForResult() {
   throw new Error(`${candidate} did not produce scenario evidence within 60 seconds`);
 }
 
+async function waitForExit() {
+  return Promise.race([
+    exitPromise,
+    sleep(10_000).then(() => {
+      child.kill();
+      throw new Error(`${candidate} did not exit after scenario`);
+    })
+  ]);
+}
+
 const result = await waitForResult();
-const exitCode = await new Promise((resolve, reject) => {
-  const timer = setTimeout(() => { child.kill(); reject(new Error(`${candidate} did not exit after scenario`)); }, 10_000);
-  child.on("error", reject);
-  child.on("close", code => { clearTimeout(timer); resolve(code); });
-});
+const exitCode = await waitForExit();
 if (exitCode !== 0) throw new Error(`${candidate} exited with ${exitCode}`);
 if (result.status !== "ok") throw new Error(`${candidate} scenario status is ${result.status}: ${result.error ?? "check failure"}`);
 const failed = Object.entries(result.checks ?? {}).filter(([, value]) => value !== true).map(([name]) => name);
