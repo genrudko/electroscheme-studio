@@ -2,6 +2,7 @@ import { spawn, spawnSync } from "node:child_process";
 import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { performance } from "node:perf_hooks";
+import { loadVerifiedPackageManifest } from "./package-manifest.mjs";
 
 const separator = process.argv.indexOf("--");
 if (separator < 0) throw new Error("usage: measure-candidate.mjs <candidate> <output> -- <command> [args]");
@@ -10,6 +11,7 @@ const output = process.argv[3];
 const command = process.argv[separator + 1];
 const args = process.argv.slice(separator + 2);
 if (!candidate || !output || !command) throw new Error("candidate, output and command are required");
+const packageEvidence = await loadVerifiedPackageManifest(candidate, command, args);
 const readyFile = path.resolve(path.dirname(output), `${candidate}-ready.json`);
 await mkdir(path.dirname(output), { recursive: true });
 await rm(readyFile, { force: true });
@@ -46,13 +48,20 @@ function descendantsWindows(rootPid) {
   return Number(result.stdout.trim());
 }
 async function waitForExit() {
-  return Promise.race([
-    exitPromise,
-    sleep(10_000).then(() => {
-      child.kill();
-      throw new Error(`${candidate} did not exit after measurement`);
-    })
-  ]);
+  let timer;
+  try {
+    return await Promise.race([
+      exitPromise,
+      new Promise((_, reject) => {
+        timer = setTimeout(() => {
+          child.kill();
+          reject(new Error(`${candidate} did not exit after measurement`));
+        }, 10_000);
+      })
+    ]);
+  } finally {
+    clearTimeout(timer);
+  }
 }
 
 const ready = await waitForReady();
@@ -71,6 +80,7 @@ const result = {
   idle_process_tree_rss_bytes: rssBytes,
   measurement_root_pid: ready.pid,
   measurement_scope: "single CI launch; ready marker emitted after Vue mount and host handshake; RSS is the candidate-reported root process plus descendants 400 ms after ready; display-server wrapper processes are excluded",
+  package_evidence: packageEvidence,
   ready
 };
 await writeFile(output, JSON.stringify(result, null, 2) + "\n", "utf8");

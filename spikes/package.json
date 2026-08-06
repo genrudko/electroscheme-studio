@@ -16,6 +16,7 @@
     "build": "npm run build:ui && npm run build:electron",
     "package:electron": "node scripts/package-electron.mjs",
     "package:tauri": "node scripts/package-tauri.mjs",
+    "archive:candidate": "python tools/archive_candidate.py",
     "scenario:candidate": "node scripts/run-candidate-scenario.mjs",
     "benchmark:shared": "tsx scripts/benchmark-shared.ts",
     "measure:candidate": "node scripts/measure-candidate.mjs",
