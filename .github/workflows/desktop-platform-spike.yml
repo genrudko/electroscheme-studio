@@ -1,10 +1,12 @@
 name: Desktop Platform Spike
 
 on:
-  push:
-    branches: [architecture/desktop-platform-and-core-spike-001]
   pull_request:
     branches: [main]
+
+concurrency:
+  group: desktop-platform-spike-pr-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
 
 permissions:
   contents: read
