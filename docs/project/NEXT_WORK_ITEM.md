@@ -1,141 +1,230 @@
 # Next Work Item — DESKTOP-PLATFORM-AND-CORE-SPIKE-001
 
-This document defines the next implementation work item after acceptance and merge of `PROJECT-REFOUNDATION-001`.
+Status: prepared, blocked by acceptance and merge of `PROJECT-REFOUNDATION-001`
 
-## Objective
+## 1. Purpose
 
-Select the cross-platform desktop/runtime architecture and canonical core ownership using executable Windows/Linux evidence, while completing a full disposition map for the quarantined prototype.
+Select the desktop/runtime architecture and canonical core ownership using executable Windows/Linux evidence before product feature development resumes.
 
-## Required work contour
+This work item must also classify prototype assets and prove that no quarantined UI/state/code is inherited automatically.
 
-Create after P0 merge:
+## 2. Required GitHub contour
 
-- one GitHub issue: `DESKTOP-PLATFORM-AND-CORE-SPIKE-001`;
-- one dedicated branch;
-- one Draft PR;
-- no product feature implementation outside the spike.
+Create only after `PROJECT-REFOUNDATION-001` is accepted and merged:
 
-## Questions to answer
+- issue: `[DESKTOP-PLATFORM-AND-CORE-SPIKE-001] Select desktop platform and canonical core boundary`;
+- branch: `architecture/desktop-platform-and-core-spike-001`;
+- Draft PR linked to that issue.
 
-1. Which desktop shell/runtime provides the best maintainability and user experience on Windows and Linux?
-2. Can Vue 3 + TypeScript + SVG be retained as the editor layer without inheriting prototype architecture?
-3. Where should the canonical document/domain core live?
-4. Is FastAPI needed in the packaged runtime, useful only for tooling, or removable?
-5. How should Python VSDX/ShapeSheet tools be integrated and packaged?
-6. What project package format best supports portability, recovery and inspectability?
-7. Which prototype assets are retained, salvaged, reimplemented or retired?
-8. What is the target repository/module layout?
+Do not reuse issue #1, branch `governance/project-refoundation-001` or PR #2 for implementation code.
 
-## Candidate requirement
+## 3. Inputs
 
-At least two practical desktop architectures must be compared through the same executable scenario.
+Mandatory canonical inputs:
 
-Expected primary candidates:
+- `docs/INDEX.md`;
+- `docs/project/CURRENT_STATE.md`;
+- `docs/project/PRODUCT_SCOPE.md`;
+- `docs/project/PROTOTYPE_QUARANTINE.md`;
+- `docs/project/MVP_AND_DEMO.md`;
+- `docs/project/IMPLEMENTATION_PROGRAM.yaml`;
+- `docs/research/MARKET_ANALYSIS_INTAKE_2026-08-06.md`;
+- `docs/architecture/SYSTEM_ARCHITECTURE.md`;
+- `docs/architecture/DOMAIN_INVARIANTS.md`;
+- `docs/quality/ACCEPTANCE_GATES.md`;
+- accepted ADRs.
 
-- Vue/TypeScript/SVG in a Node-based desktop shell;
-- Vue/TypeScript/SVG in a native lightweight shell such as Tauri or an equivalent accepted candidate.
+The accepted market analysis affects benchmark scenarios and platform expectations, but does not permit feature implementation in this spike.
 
-A Qt/native rewrite candidate is included only if a preliminary evidence note shows a material advantage sufficient to justify losing or porting the TypeScript/SVG research.
+## 4. Questions to decide
 
-This wording intentionally avoids preselecting a product by brand.
+1. Which desktop shell/runtime combination gives the best balance for Windows/Linux?
+2. Can Vue/TypeScript/SVG remain the editor/rendering layer without inheriting the prototype architecture?
+3. Where does the canonical document/domain core live?
+4. Is FastAPI retained, reduced to tooling, replaced by direct bindings or removed from runtime?
+5. How are Python VSDX tools integrated or packaged?
+6. What project/package format is used for the first canonical schema?
+7. How are filesystem, clipboard, drag/drop, printing and updates isolated behind adapters?
+8. What is the target repository layout?
+9. Which prototype assets are retained, salvaged after tests, reimplemented or retired?
+10. What minimum schema boundary supports one equipment identity, one initial representation and later controlled multiple representations without overengineering MVP?
+11. How will future CIM/calculation adapters attach without becoming the internal document model?
 
-## Equivalent spike scenario
+## 5. Candidate technologies
 
-Each accepted candidate must implement the same minimal scenario:
+The spike must compare a small justified candidate set, not every framework on the market.
 
-1. launch a native desktop window;
-2. create/open/save a versioned sample project through native dialogs;
-3. render an SVG sheet with several objects;
-4. zoom and pan;
-5. select and move an object through a command;
-6. perform undo/redo;
-7. use clipboard copy/paste;
-8. drag an item from a palette to the canvas;
+Expected initial candidates:
+
+- Tauri + Vue/TypeScript/SVG + Rust host/core candidate;
+- Electron + Vue/TypeScript/SVG + TypeScript core candidate;
+- Qt/Python or Qt/C++/Rust candidate only if it can demonstrate a credible migration and testability path.
+
+Candidates may be adjusted at issue creation from current ecosystem evidence, but the selection must remain evidence-based.
+
+A documentation-only comparison is insufficient.
+
+## 6. Equivalent executable scenario
+
+Every candidate must implement the same bounded scenario:
+
+1. launch a desktop window;
+2. create/open a minimal canonical test document;
+3. render one accepted temporary test symbol and one busbar representation;
+4. select, move and snap an object through a command path;
+5. perform undo and redo;
+6. use native open/save dialog through an adapter;
+7. copy/paste structured editor data through clipboard adapter;
+8. demonstrate file drag/drop;
 9. invoke the VSDX helper path on a controlled fixture;
-10. export or print a simple SVG/PDF fixture;
-11. run automated smoke tests;
-12. package and start on Windows and Linux.
+10. export or print a deterministic SVG/PDF fixture;
+11. package and run on Windows and Linux;
+12. open the same project file on both platforms without semantic differences.
 
-The scenario is not a product UI and must use deliberately minimal styling.
+The scenario is platform/core evidence, not an MVP feature claim. Temporary test symbols must not be promoted into the product library.
 
-## Comparison matrix
+## 7. Market-informed usability evidence
 
-Measure and record:
+The equivalent scenario must also record low-friction editor observations relevant to Visio/Автограф/АСМОграф-class expectations:
 
-- cold/warm startup;
+- startup and new-project friction;
+- pointer/keyboard responsiveness;
+- selection and move predictability;
+- clipboard behavior;
+- native dialogs;
+- large-canvas/zoom behavior;
+- print/export workflow;
+- packaging/install friction.
+
+Do not attempt to reproduce a full competitor workflow during the platform spike. Detailed competitor benchmarking remains P1.
+
+## 8. Comparison evidence
+
+Record for every candidate:
+
+- clean startup time;
 - package size;
-- memory baseline;
-- SVG pointer/zoom behavior;
-- large-scene baseline;
-- native file dialogs;
-- clipboard and drag/drop;
-- printing/PDF;
-- Unicode and long paths;
-- Windows installer/portable options;
-- Linux packaging options;
+- idle memory;
+- render/pointer behavior on the same fixture;
+- implementation complexity;
+- automated testability;
+- Windows packaging result;
+- Linux packaging result;
+- native dialog behavior;
+- clipboard and drag/drop behavior;
+- PDF/print behavior;
 - update/signing path;
-- Python helper integration;
-- crash diagnostics;
-- automated test tooling;
-- security model;
-- maintenance complexity;
-- dependency and licensing implications.
+- Python tooling integration path;
+- security surface;
+- maintenance burden;
+- licensing implications;
+- known blockers.
 
-## Prototype asset inventory
+Measurements must identify machine/OS/build conditions and should not be presented as universal benchmarks.
 
-Inventory at minimum:
+## 9. Prototype asset inventory
 
-- frontend editor components;
-- editor libraries and algorithms;
-- old `useProject` flow;
-- backend project model/API/service;
-- VSDX inspector/converter/metrics tools;
-- generated symbol catalogs/drafts;
-- parametric busbar backend and frontend logic;
-- CSS/design files;
-- test assets;
-- CI/workflows;
-- historical PowerShell patch tooling and docs.
+Classify at minimum:
 
-Each item receives:
+- backend `Project` model;
+- `project_service.py` persistence/API flow;
+- `useProject.ts`;
+- `EditorDocument`;
+- `EditorCommandStack`;
+- `CanvasViewport.vue`;
+- renderer/SVG helpers;
+- coordinate/snap algorithms;
+- busbar calculations;
+- shape catalog/palette;
+- VSDX inspector;
+- ShapeSheet metrics extractor;
+- VSDX master converter;
+- generated symbol drafts;
+- current design-system/CSS/ribbon/property panels;
+- build/start scripts;
+- existing CI.
 
-- exact source path/SHA;
-- defect/limitation summary;
-- disposition;
-- target owner module;
-- required tests;
-- migration sequence.
+For each asset record:
 
-## Deliverables
+```text
+asset
+current responsibility
+known defects/limitations
+dependencies
+target owner
+disposition
+required tests
+migration method
+retirement condition
+```
 
-- candidate spike code isolated from product feature development;
-- Windows evidence;
-- Linux evidence;
-- comparison report;
-- performance measurements;
-- full prototype asset inventory/disposition;
-- proposed target repository layout;
-- proposed canonical document/core boundary;
-- ADR selecting the desktop architecture;
-- implementation starter for `CANONICAL-DOCUMENT-CORE-001`.
+Default dispositions from `PROTOTYPE_QUARANTINE.md` apply unless evidence justifies an exception.
 
-## Prohibitions
+## 10. Canonical core spike boundary
 
-- do not redesign the product UI;
-- do not migrate large prototype components before disposition;
-- do not add symbol families or editor features;
-- do not select a candidate based only on popularity or model preference;
-- do not require a central server;
-- do not preserve prototype defects as compatibility behavior;
-- do not merge without owner architecture acceptance.
+The work item may implement only the minimum schema/core needed for platform comparison.
 
-## Acceptance
+It must prove:
 
-The work item is accepted only when:
+- one authoritative writable document;
+- stable project/document/object/port/connection IDs;
+- explicit equipment-versus-representation ownership boundary;
+- document type/profile version reference;
+- command-based move and undo/redo;
+- deterministic save/open round trip;
+- no UI-owned authoritative state;
+- no dependency on CIM as internal model;
+- extension boundary for states and phase-aware ports without implementing advanced product features.
 
-- both target platforms execute the same scenario;
-- comparison evidence is reproducible;
-- one architecture is selected in an ADR;
-- every major prototype area has a disposition;
-- the selected architecture supports a testable core independent of the full UI;
-- the next canonical-document implementation boundary is unambiguous.
+It must not implement the full symbol platform, topology service or MVP.
+
+## 11. Deliverables
+
+1. Executable candidate spikes.
+2. Reproducible build/run instructions.
+3. Windows/Linux evidence.
+4. Comparative decision matrix.
+5. Prototype asset inventory and disposition map.
+6. ADR selecting desktop shell/runtime boundaries.
+7. ADR or architecture amendment selecting canonical core ownership.
+8. Target repository layout.
+9. Minimal canonical schema spike and round-trip tests.
+10. Updated `CURRENT_STATE.md` and implementation program.
+11. Precise next work item for full `CANONICAL-DOCUMENT-CORE-001`.
+
+## 12. Prohibited scope
+
+- redesigning the product UI beyond the temporary spike shell;
+- fixing the old prototype UI;
+- importing the whole old `CanvasViewport` as accepted code;
+- producing the permanent symbol library;
+- adding normal/temporary-normal/three-line/operational workflows;
+- implementing CIM import/export;
+- implementing calculations or SCADA;
+- adding hundreds of symbols;
+- claiming GOST compliance;
+- deleting prototype assets before disposition and retirement criteria are accepted;
+- beginning P3/P4 product implementation inside the spike PR.
+
+## 13. Acceptance gates
+
+- same bounded scenario runs on Windows and Linux;
+- exact builds and evidence are reproducible;
+- selected architecture is justified against rejected candidates;
+- one canonical writable document path is proven;
+- prototype asset inventory is complete for relevant runtime/editor assets;
+- no quarantined UI/state code is inherited without explicit evidence;
+- desktop host, editor UI, canonical core and tooling boundaries are explicit;
+- future multi-representation and adapter boundaries are possible without making them MVP scope;
+- owner accepts the ADR and migration direction;
+- PR remains Draft until explicit acceptance command.
+
+## 14. Exit
+
+After acceptance and merge, create:
+
+```text
+CANONICAL-DOCUMENT-CORE-001
+```
+
+That work item implements the first production-quality versioned project model, commands, persistence, migrations and tests. It must not continue as an unbounded extension of the spike PR.
