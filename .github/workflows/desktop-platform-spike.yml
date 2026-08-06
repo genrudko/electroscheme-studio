@@ -129,6 +129,15 @@ jobs:
       - name: Install Linux Tauri runtime dependencies
         if: runner.os == 'Linux'
         run: sudo apt-get update && sudo apt-get install -y libwebkit2gtk-4.1-dev libgtk-3-dev librsvg2-dev patchelf xvfb
+      - name: Start one Linux virtual display outside candidate timing
+        if: runner.os == 'Linux'
+        shell: bash
+        run: |
+          Xvfb :99 -screen 0 1280x1024x24 -nolisten tcp > /tmp/electroscheme-xvfb.log 2>&1 &
+          echo "$!" > /tmp/electroscheme-xvfb.pid
+          echo "DISPLAY=:99" >> "$GITHUB_ENV"
+          sleep 2
+          kill -0 "$(cat /tmp/electroscheme-xvfb.pid)"
       - name: Install exact JavaScript dependencies
         working-directory: spikes
         run: npm ci --ignore-scripts
@@ -184,7 +193,7 @@ jobs:
         env:
           SPIKE_PACKAGE_MANIFEST: evidence/generated/electron-package-manifest-linux.json
           SPIKE_REQUIRE_PACKAGE_MANIFEST: '1'
-        run: npm run scenario:candidate -- electron evidence/generated/electron-scenario-linux.json -- xvfb-run -a ./evidence/generated/electron-package/ElectroSchemeSpikeElectron-linux-x64/ElectroSchemeSpikeElectron
+        run: npm run scenario:candidate -- electron evidence/generated/electron-scenario-linux.json -- ./evidence/generated/electron-package/ElectroSchemeSpikeElectron-linux-x64/ElectroSchemeSpikeElectron
       - name: Run Tauri in-app scenario from restored artifact layout on Linux
         if: runner.os == 'Linux'
         working-directory: spikes
@@ -192,7 +201,7 @@ jobs:
           WEBKIT_DISABLE_COMPOSITING_MODE: '1'
           SPIKE_PACKAGE_MANIFEST: evidence/generated/tauri-package-manifest-linux.json
           SPIKE_REQUIRE_PACKAGE_MANIFEST: '1'
-        run: npm run scenario:candidate -- tauri evidence/generated/tauri-scenario-linux.json -- xvfb-run -a ./evidence/generated/tauri-portable-linux-x64/ElectroSchemeSpikeTauri
+        run: npm run scenario:candidate -- tauri evidence/generated/tauri-scenario-linux.json -- ./evidence/generated/tauri-portable-linux-x64/ElectroSchemeSpikeTauri
       - name: Run Electron in-app scenario from restored artifact layout on Windows
         if: runner.os == 'Windows'
         working-directory: spikes
@@ -215,7 +224,7 @@ jobs:
         env:
           SPIKE_PACKAGE_MANIFEST: evidence/generated/electron-package-manifest-linux.json
           SPIKE_REQUIRE_PACKAGE_MANIFEST: '1'
-        run: npm run measure:candidate -- electron evidence/generated/electron-runtime-linux.json -- xvfb-run -a ./evidence/generated/electron-package/ElectroSchemeSpikeElectron-linux-x64/ElectroSchemeSpikeElectron
+        run: npm run measure:candidate -- electron evidence/generated/electron-runtime-linux.json -- ./evidence/generated/electron-package/ElectroSchemeSpikeElectron-linux-x64/ElectroSchemeSpikeElectron
       - name: Measure Tauri startup and process-tree RSS on Linux
         if: runner.os == 'Linux'
         working-directory: spikes
@@ -223,7 +232,7 @@ jobs:
           WEBKIT_DISABLE_COMPOSITING_MODE: '1'
           SPIKE_PACKAGE_MANIFEST: evidence/generated/tauri-package-manifest-linux.json
           SPIKE_REQUIRE_PACKAGE_MANIFEST: '1'
-        run: npm run measure:candidate -- tauri evidence/generated/tauri-runtime-linux.json -- xvfb-run -a ./evidence/generated/tauri-portable-linux-x64/ElectroSchemeSpikeTauri
+        run: npm run measure:candidate -- tauri evidence/generated/tauri-runtime-linux.json -- ./evidence/generated/tauri-portable-linux-x64/ElectroSchemeSpikeTauri
       - name: Measure Electron startup and process-tree RSS on Windows
         if: runner.os == 'Windows'
         working-directory: spikes
@@ -311,7 +320,7 @@ jobs:
               'package_manifest_json': sorted(str(path.relative_to(root)) for path in package_manifest_paths.values()),
               'npm_lock_sha256': sha256(root / 'package-lock.json'),
               'cargo_lock_sha256': sha256(root / 'tauri/src-tauri/Cargo.lock'),
-              'measurement_scope': 'single GitHub-hosted runner launches from deterministic archives restored in this exact job; values are comparative evidence for this run, not universal benchmarks',
+              'measurement_scope': 'single GitHub-hosted runner launches from deterministic archives restored in this exact job; Linux virtual display is started before timing; values are comparative evidence for this run, not universal benchmarks',
           }
           (generated / f'measurements-{platform_name}.json').write_text(json.dumps(output, indent=2) + '\n', encoding='utf-8')
       - name: Verify build did not modify committed locks or icon resources

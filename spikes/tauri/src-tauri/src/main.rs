@@ -3,9 +3,13 @@ use std::{
     fs,
     path::{Path, PathBuf},
     process::{Command, Stdio},
+    sync::Mutex,
     thread,
     time::{Duration, Instant, SystemTime, UNIX_EPOCH},
 };
+
+#[derive(Default)]
+struct ClipboardState(Mutex<Option<arboard::Clipboard>>);
 
 #[derive(Serialize)]
 #[serde(rename_all = "camelCase")]
@@ -131,14 +135,22 @@ fn export_pdf(default_name: String, bytes: Vec<u8>) -> Result<bool, String> {
     }
 }
 
-#[tauri::command]
-fn clipboard_write(text: String) -> Result<(), String> {
-    arboard::Clipboard::new().map_err(|error| error.to_string())?.set_text(text).map_err(|error| error.to_string())
+fn with_clipboard<T>(state: &ClipboardState, operation: impl FnOnce(&mut arboard::Clipboard) -> Result<T, arboard::Error>) -> Result<T, String> {
+    let mut guard = state.0.lock().map_err(|_| "clipboard state lock was poisoned".to_string())?;
+    if guard.is_none() {
+        *guard = Some(arboard::Clipboard::new().map_err(|error| error.to_string())?);
+    }
+    operation(guard.as_mut().expect("clipboard initialized")).map_err(|error| error.to_string())
 }
 
 #[tauri::command]
-fn clipboard_read() -> Result<String, String> {
-    arboard::Clipboard::new().map_err(|error| error.to_string())?.get_text().map_err(|error| error.to_string())
+fn clipboard_write(state: tauri::State<'_, ClipboardState>, text: String) -> Result<(), String> {
+    with_clipboard(&state, |clipboard| clipboard.set_text(text))
+}
+
+#[tauri::command]
+fn clipboard_read(state: tauri::State<'_, ClipboardState>) -> Result<String, String> {
+    with_clipboard(&state, arboard::Clipboard::get_text)
 }
 
 #[tauri::command]
@@ -163,6 +175,7 @@ fn run_visio_tool(args: Vec<String>) -> Result<ToolResult, String> {
 
 fn main() {
     tauri::Builder::default()
+        .manage(ClipboardState::default())
         .invoke_handler(tauri::generate_handler![
             platform,
             automation_context,
