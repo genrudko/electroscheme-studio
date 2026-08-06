@@ -18,6 +18,10 @@ const child = spawn(command, args, {
   env: { ...process.env, SPIKE_MEASURE: "1", SPIKE_READY_FILE: readyFile },
   stdio: ["ignore", "inherit", "inherit"]
 });
+const exitPromise = new Promise((resolve, reject) => {
+  child.once("error", reject);
+  child.once("close", code => resolve(code));
+});
 
 function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
 async function waitForReady() {
@@ -41,15 +45,21 @@ function descendantsWindows(rootPid) {
   if (result.status !== 0) throw new Error(result.stderr || "PowerShell process measurement failed");
   return Number(result.stdout.trim());
 }
+async function waitForExit() {
+  return Promise.race([
+    exitPromise,
+    sleep(10_000).then(() => {
+      child.kill();
+      throw new Error(`${candidate} did not exit after measurement`);
+    })
+  ]);
+}
+
 const ready = await waitForReady();
 const startupMs = performance.now() - started;
 await sleep(400);
 const rssBytes = process.platform === "win32" ? descendantsWindows(child.pid) : descendantsLinux(child.pid);
-const exitCode = await new Promise((resolve, reject) => {
-  const timer = setTimeout(() => { child.kill(); reject(new Error(`${candidate} did not exit after measurement`)); }, 10_000);
-  child.on("error", reject);
-  child.on("close", code => { clearTimeout(timer); resolve(code); });
-});
+const exitCode = await waitForExit();
 if (exitCode !== 0) throw new Error(`${candidate} exited with ${exitCode}`);
 const result = {
   candidate,
