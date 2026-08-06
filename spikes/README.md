@@ -7,12 +7,12 @@ Both candidates use exactly the same TypeScript canonical fixture, command histo
 ## Local checks
 
 ```bash
-npm install --ignore-scripts
+npm ci --ignore-scripts
 npm test
 python -m unittest tools/test_visio_spike_tool.py -v
 npm run build
 ```
 
-Tauri build additionally requires Rust 1.97.1 and platform prerequisites.
+Tauri build additionally requires Rust 1.97.1, the committed `src-tauri/Cargo.lock`, and platform prerequisites. Candidate evidence uses locked npm and Cargo resolution; dependency lockfiles are canonical repository inputs rather than CI-generated substitutes.
 
 The generated VSDX fixture is package-tested automatically. Opening/editing/saving it in Microsoft Visio remains a separate manual acceptance gate and must not be inferred from ZIP/XML validation.
