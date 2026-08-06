@@ -1,0 +1,237 @@
+schema_version: 1
+inventory:
+  id: DESKTOP-PLATFORM-AND-CORE-SPIKE-001-PROTOTYPE-ASSETS
+  status: in_progress
+  baseline_commit: b95d7111d9c5a36db4c355ee91f742efea8ecc10
+  policy: docs/project/PROTOTYPE_QUARANTINE.md
+  allowed_dispositions:
+    - retain_as_reference
+    - salvage_after_tests
+    - reimplement_from_contract
+    - retire
+
+rules:
+  - No asset is accepted because it works in the prototype.
+  - Blob SHA records the inspected baseline revision, not a promise to reuse it.
+  - UI/CSS, interactions and writable state default to reimplement_from_contract.
+  - Reuse requires new target ownership, tests, migration method and owner acceptance.
+  - No old and new model may both save authoritative project state.
+
+assets:
+  - id: frontend_canvas_viewport
+    path: frontend/src/components/editor/CanvasViewport.vue
+    blob_sha: fdefafae2eaea4ac47bef006505a5d80c9a95177
+    category: editor_ui_and_interactions
+    current_responsibility:
+      - SVG canvas composition
+      - viewport interactions
+      - object collections and editing behavior
+      - guides rulers grid snapping and context UI
+    known_findings:
+      - monolithic responsibility boundary
+      - owns or mutates substantial local editor state
+      - not driven by one canonical document model
+      - prototype UI and behavior are not compatibility requirements
+    preliminary_disposition: reimplement_from_contract
+    proposed_target_owner:
+      - editor_kernel
+      - renderer_projection
+      - temporary_interaction_state
+    required_tests:
+      - coordinate_transform_tests
+      - pointer_interaction_tests
+      - command_path_tests
+      - visual_regression_tests
+      - large_scene_performance_tests
+    migration_method: extract algorithms only after independent tests; do not port the component wholesale
+    retirement_condition: accepted editor kernel and renderer provide equivalent approved scenarios without legacy state ownership
+
+  - id: frontend_editor_shell
+    path: frontend/src/components/editor/EditorShell.vue
+    blob_sha: e492b81abd4679e1a56449b0710623a57ac50f7e
+    category: application_shell_prototype
+    current_responsibility:
+      - composes ribbon palette canvas and status bar
+      - constructs prototype command stack and editor document
+      - forwards commands and settings
+    known_findings:
+      - command stack is not the mandatory mutation path for CanvasViewport operations
+      - editor document is not the authoritative state rendered by the canvas
+      - contains prototype wiring and status defects
+    preliminary_disposition: reimplement_from_contract
+    proposed_target_owner:
+      - desktop_application_ui
+      - application_command_dispatch
+    required_tests:
+      - shell_component_tests
+      - command_dispatch_tests
+      - desktop_e2e_tests
+    migration_method: retain only factual interaction lessons; create fresh shell after platform decision
+    retirement_condition: selected desktop candidate has accepted application composition and command wiring
+
+  - id: frontend_editor_document
+    path: frontend/src/lib/editor/editorDocument.ts
+    blob_sha: 0f785b5b528f802d7165dc17f661054b418ea5cf
+    category: document_model_prototype
+    current_responsibility:
+      - defines prototype layers objects selection and settings
+      - provides empty editor document factory
+    known_findings:
+      - incomplete object union relative to declared object kinds
+      - parallel to backend Project and useProject state
+      - not authoritative for CanvasViewport local collections
+      - lacks accepted equipment identity representation and interoperability boundaries
+    preliminary_disposition: reimplement_from_contract
+    proposed_target_owner:
+      - canonical_document_core
+    required_tests:
+      - schema_validation
+      - deterministic_round_trip
+      - stable_identity_tests
+      - migration_tests
+      - source_provenance_tests
+    migration_method: use only as inventory input when designing the minimal spike schema
+    retirement_condition: one accepted canonical document contract replaces all parallel writable models
+
+  - id: frontend_command_stack
+    path: frontend/src/lib/editor/commandStack.ts
+    blob_sha: d39ec41297382047af5c348cf1f371ed2bbe4317
+    category: command_research
+    current_responsibility:
+      - generic execute undo redo stacks
+    known_findings:
+      - commands wrap callbacks rather than deterministic document transactions
+      - does not enforce atomic validation or topology/index updates
+      - disconnected from many actual prototype mutations
+    preliminary_disposition: reimplement_from_contract
+    proposed_target_owner:
+      - application_command_core
+    required_tests:
+      - atomic_command_tests
+      - deterministic_undo_redo_tests
+      - compound_transaction_tests
+      - failure_no_change_tests
+    migration_method: retain interface lessons only; implement commands against canonical document state
+    retirement_condition: all accepted mutations use the new command/transaction contract
+
+  - id: frontend_use_project
+    path: frontend/src/lib/useProject.ts
+    blob_sha: dc3d4b124d65c0f01705af716f276531fd968911
+    category: legacy_frontend_state_and_api
+    current_responsibility:
+      - loads project and symbol library through API
+      - maintains fallback project state
+      - mutates symbols and connections with partial rollback
+    known_findings:
+      - parallel writable model
+      - tied to prototype FastAPI flow
+      - direct reactive mutation is not the accepted command architecture
+    preliminary_disposition: retire
+    proposed_target_owner:
+      - none
+    required_tests:
+      - legacy_behavior_inventory_only
+    migration_method: no direct migration; replace with application services over canonical core
+    retirement_condition: canonical project lifecycle and command services are active
+
+  - id: backend_project_schema
+    path: backend/app/schemas/project.py
+    blob_sha: 3163b1ec13b697de2935475c9ec8fea7c2e35ec2
+    category: backend_document_model_prototype
+    current_responsibility:
+      - Pydantic project sheet symbol terminal and connection structures
+    known_findings:
+      - parallel to frontend models
+      - insufficient equipment identity representation state profile and interoperability ownership
+      - endpoint semantics are not yet a complete accepted topology contract
+    preliminary_disposition: reimplement_from_contract
+    proposed_target_owner:
+      - canonical_document_core_input
+    required_tests:
+      - schema_reconciliation_tests
+      - topology_reference_tests
+      - deterministic_serialization_tests
+    migration_method: compare fields and example data against the new spike schema; do not keep as coequal runtime owner
+    retirement_condition: selected canonical core owns the only writable schema
+
+  - id: visio_vsdx_inspector
+    path: tools/visio_inspect_vsdx.py
+    blob_sha: eeaac17fe2a5a785d4f30fc1ada12e9a0d0a46b9
+    category: visio_source_inspection
+    current_responsibility:
+      - inspects VSDX packages and ShapeSheet-oriented source data
+      - preserves warnings and selected semantic clues
+    known_findings:
+      - inspector rather than editable document importer
+      - does not prove VSSX migration VSDX write or controlled round trip
+      - heuristics cannot be treated as engineering or normative acceptance
+    preliminary_disposition: salvage_after_tests
+    proposed_target_owner:
+      - visio_interoperability_tooling
+    required_tests:
+      - package_relationship_fixtures
+      - source_id_and_formula_preservation
+      - malformed_package_fail_closed_tests
+      - structured_diagnostic_tests
+    migration_method: isolate reusable package parsing behind a normalized source model and fixture suite
+    retirement_condition: accepted interoperability adapter supersedes or incorporates tested parsing behavior
+
+  - id: visio_master_draft_converter
+    path: tools/visio_master_to_symbol_draft.py
+    blob_sha: a852cf426d7d64b179084431fcd72e35321de836
+    category: visio_symbol_conversion_research
+    current_responsibility:
+      - converts Visio masters into review-required symbol drafts
+    known_findings:
+      - output is intentionally draft quality
+      - incomplete geometry and transform coverage
+      - conversion success is not semantic or normative acceptance
+    preliminary_disposition: salvage_after_tests
+    proposed_target_owner:
+      - symbol_source_pipeline
+    required_tests:
+      - geometry_command_fixtures
+      - transform_and_group_fixtures
+      - unsupported_formula_diagnostics
+      - no_auto_promotion_tests
+    migration_method: retain diagnostics and provenance concepts; replace approximations with explicit supported/unsupported behavior
+    retirement_condition: accepted VSSX migration and SymbolDefinition candidate pipeline exists
+
+  - id: visio_master_metrics_extractor
+    path: tools/extract_vsdx_master_metrics.py
+    blob_sha: d0752cf7ba279a578d5825be546160e4105becb1
+    category: shapesheet_metrics_research
+    current_responsibility:
+      - extracts dimensions connection data and metrics from Visio packages
+    known_findings:
+      - extracted values require fixture verification and engineering review
+      - formulas and local transforms may require broader resolution
+    preliminary_disposition: salvage_after_tests
+    proposed_target_owner:
+      - symbol_source_pipeline
+      - visio_interoperability_tooling
+    required_tests:
+      - unit_conversion_tests
+      - formula_resolution_fixtures
+      - connection_point_transform_tests
+      - source_provenance_tests
+    migration_method: wrap normalized outputs in a versioned schema with diagnostics and exact source references
+    retirement_condition: accepted normalized ShapeSheet extraction service is established
+
+inventory_backlog:
+  - backend API routes and in-memory project service
+  - frontend renderer coordinate snap and routing helpers
+  - busbar backend and frontend calculations
+  - shapeCatalog and ShapePalette
+  - generated symbol drafts and source manifests
+  - ribbon properties panels design tokens and CSS overrides
+  - start/build scripts
+  - CI workflows and test assets
+  - historical patch scripts and patch documentation
+
+completion_gate:
+  - every runtime editor tooling and library area has an exact path and blob SHA
+  - every item has a disposition and target owner
+  - no automatic reuse entries remain
+  - dispositions are reconciled with the selected architecture ADR
+  - owner accepts the migration and retirement map
