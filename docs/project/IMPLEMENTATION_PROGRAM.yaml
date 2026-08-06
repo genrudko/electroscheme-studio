@@ -13,6 +13,10 @@ program:
     desktop_first: true
     local_first: true
     required_platforms: [windows, linux]
+  accepted_market_input:
+    document: docs/research/MARKET_ANALYSIS_INTAKE_2026-08-06.md
+    state: strategic_input_accepted_hands_on_validation_pending
+    received_at: 2026-08-06
 
 principles:
   - id: GITHUB_CANONICAL
@@ -33,6 +37,12 @@ principles:
     statement: GOST/STO claims require identified sources, encoded scope and evidence.
   - id: SPECIALIZED_ADVANTAGE
     statement: Product advantage is measured in electrical-engineering workflows, not universal CAD feature count.
+  - id: SCENARIO_BASED_COMPETITION
+    statement: Must-match and must-exceed claims are proven by accepted workflows, not vendor feature-list counting.
+  - id: MULTI_REPRESENTATION_READY
+    statement: The canonical model must allow one equipment identity to have multiple controlled diagram representations without requiring all representation types in MVP.
+  - id: CIM_AS_ADAPTER
+    statement: CIM-compatible concepts influence identity and exchange boundaries, but CIM is not automatically the internal editor document model.
 
 prototype_asset_dispositions:
   - retain_as_reference
@@ -62,6 +72,7 @@ phases:
       - documentation index
       - factual current-state baseline
       - product scope
+      - accepted market analysis intake
       - MVP/demo/pilot scenarios
       - target architecture
       - domain invariants
@@ -71,22 +82,38 @@ phases:
       - next work-item definition
     gates:
       - documentation_consistency
+      - market_input_does_not_broaden_MVP_unboundedly
       - no_product_code_changes
       - owner_acceptance
 
   - id: P1_MARKET_AND_WORKFLOW_BASELINE
     title: Market and electrical-workflow analysis
     status: not_started
+    input_state: strategic_analysis_received_hands_on_validation_pending
     depends_on: [P0_PROJECT_REFOUNDATION]
-    objective: Convert competitor and user-workflow research into measurable product requirements without copying general-purpose editors blindly.
+    objective: Convert competitor and user-workflow research into measurable product requirements without copying general-purpose editors or enterprise platforms blindly.
+    priority_reference_roles:
+      low_friction_editing: [microsoft_visio, avtograf, asmograf]
+      operational_energy_semantics: [modus]
+      intelligent_single_line: [etap]
+      shared_engineering_data: [aucotec_engineering_base_ptd]
+      documentation_automation: [eplan, zuken_e3, see_electrical, wscad]
+      russian_project_context: [model_studio_cs, energycs]
     deliverables:
-      - competitor capability matrix
+      - source-traceable competitor capability matrix
+      - competitor reference-role matrix
       - pain-point inventory
-      - electrical workflow map
-      - must_match_must_exceed_not_needed decisions
+      - 8_to_12 electrical workflow definitions
+      - hands-on_or_reproducible_evidence for priority products
+      - task_time_action_count_error observations
+      - must_match_must_exceed_defer_reject decisions
+      - exact MVP reference scheme recommendation
       - updated MVP acceptance priorities
+      - normative profile priority recommendation
     gates:
       - source_traceability
+      - claims_distinguish_vendor_documentation_from_hands_on_evidence
+      - no_total_feature_count_positioning
       - owner_product_acceptance
 
   - id: P2_DESKTOP_PLATFORM_AND_CORE_SPIKE
@@ -124,11 +151,15 @@ phases:
     title: Canonical document storage and command core
     status: not_started
     depends_on: [P2_DESKTOP_PLATFORM_AND_CORE_SPIKE]
-    objective: Implement one versioned document model and deterministic mutation/persistence path independent of the full UI.
+    objective: Implement one versioned document model and deterministic mutation/persistence path independent of the full UI, with concrete extension points for states, variants and multiple representations.
     deliverables:
       - project document schema v1
-      - sheets layers objects ports connections properties
-      - stable IDs and references
+      - documents sheets layers objects ports connections properties
+      - stable equipment identities and representation identities
+      - document type and profile version references
+      - equipment and representation property ownership rules
+      - phase-aware extension boundary for ports and connections
+      - state model boundary
       - command transaction interface
       - undo_redo journal
       - deterministic serializer
@@ -140,6 +171,7 @@ phases:
       - deterministic_round_trip
       - migration_tests
       - command_undo_redo_tests
+      - identity_and_reference_integrity
       - core_tests_without_full_UI
 
   - id: P4_EDITOR_KERNEL_AND_DESIGN_SYSTEM
@@ -148,7 +180,7 @@ phases:
     depends_on: [P1_MARKET_AND_WORKFLOW_BASELINE, P3_CANONICAL_DOCUMENT_CORE]
     objective: Build maintainable interactions and a new accepted UX/design foundation rather than repairing prototype UI.
     deliverables:
-      - interaction specification
+      - interaction specification based on accepted benchmark workflows
       - design tokens and component system
       - renderer projection layer
       - viewport and coordinate transforms
@@ -171,7 +203,7 @@ phases:
     title: Reviewed electrical symbol platform
     status: not_started
     depends_on: [P3_CANONICAL_DOCUMENT_CORE, P4_EDITOR_KERNEL_AND_DESIGN_SYSTEM]
-    objective: Convert source data into accepted parameterized engineering object families.
+    objective: Convert source data into accepted parameterized engineering object families without treating conversion success as semantic or normative acceptance.
     first_object_families:
       - busbar
       - circuit_breaker
@@ -188,14 +220,18 @@ phases:
     deliverables:
       - symbol definition schema
       - normalized VSDX ShapeSheet import path
+      - engineering family and port-role mapping
       - provenance and review workflow
       - geometry dimensions ports rotation snap tests
       - state and parameter contracts
+      - normative profile mapping
       - accepted MVP library
     gates:
       - no_auto_promotion
       - source_traceability
+      - conversion_success_not_equal_acceptance
       - visual_geometry_acceptance
+      - engineering_semantic_acceptance
       - port_rotation_snap_acceptance
       - save_load_export_acceptance
 
@@ -212,6 +248,8 @@ phases:
       - junction and crossing semantics
       - topology preservation on transforms
       - diagnostics and delete policies
+      - phase-awareness extension path
+      - separation of manually assigned device state from future energized_state computation
     gates:
       - topology_invariants
       - transform_preservation
@@ -219,13 +257,14 @@ phases:
       - diagnostic_tests
 
   - id: P7_MVP_VERTICAL_SLICE
-    title: Complete normal-scheme MVP vertical slice
+    title: Complete normal single-line scheme MVP vertical slice
     status: not_started
     depends_on: [P4_EDITOR_KERNEL_AND_DESIGN_SYSTEM, P5_SYMBOL_PLATFORM, P6_ELECTRICAL_TOPOLOGY]
-    objective: Complete the end-to-end scenario defined in MVP_AND_DEMO.md.
+    objective: Complete the end-to-end normal single-line scenario defined in MVP_AND_DEMO.md without adding full three-line, calculation or SCADA scope.
     deliverables:
-      - new project and sheets
+      - new project and normal_single_line document
       - accepted object set
+      - normal device positions and state validation
       - editing and topology
       - validation
       - save close reopen edit
@@ -233,25 +272,34 @@ phases:
       - printing
       - crash recovery baseline
     gates:
-      - complete_MVP_scenario
+      - complete_MVP_scenario_D1_D8
       - windows_acceptance
       - linux_acceptance
       - no_data_loss
+      - no_topology_loss
       - owner_acceptance
 
   - id: P8_GOST_STO_PROFILES_AND_OUTPUT
     title: GOST STO profiles validation and release output
     status: not_started
     depends_on: [P7_MVP_VERTICAL_SLICE]
-    objective: Make normative presentation and output evidence-based and reproducible.
+    objective: Make normative presentation and output evidence-based, revision-aware and reproducible.
+    initial_sources:
+      - GOST_R_56303_2014_with_applicable_amendments
+      - Ministry_of_Energy_Order_854_2019_applicable_scope
+      - referenced_ESKD_and_UGO_standards
+      - Amendment_2_GOST_R_56303_2014_status_monitoring
     deliverables:
       - normative source register
-      - profile rules
+      - profile versioning rules
       - validation rule catalog
-      - frames title_blocks line_text_color profiles
+      - frames title_blocks modular_grid line_text_color profiles
+      - normal_position presentation rules
       - print and export conformance fixtures
+      - expert_only_check register
     gates:
       - source_cited_rules
+      - revision_specific_boundary
       - visual_golden_tests
       - print_dimension_tests
       - no_unqualified_full_compliance_claim
@@ -266,12 +314,14 @@ phases:
       - Linux package
       - update and rollback procedure
       - release notes and known limitations
-      - demo evidence D1_D7
+      - demo evidence D1_D8
       - pilot project and feedback register
+      - comparison against accepted source/reference document
     gates:
       - clean_machine_install
       - same_project_cross_platform_round_trip
       - signed_or_verifiable_artifacts
+      - no_return_to_general_editor_for_accepted_scope
       - demo_acceptance
       - pilot_acceptance
 
@@ -281,6 +331,12 @@ phases:
     depends_on: [P9_PACKAGING_DEMO_AND_PILOT]
     objective: Add advanced capabilities only from validated user and market priorities.
     candidates:
+      - temporary_normal_variants
+      - operational_state_snapshots
+      - energized_deenergized_topology_service
+      - phase_explicit_three_line_representations
+      - multiple_representations_per_equipment_identity
+      - representation_consistency_diagnostics
       - reusable_bay_templates
       - advanced_transformer_winding_models
       - automatic_numbering
@@ -289,6 +345,9 @@ phases:
       - advanced_routing
       - revision_comparison
       - topology_driven_generation
+      - CIM_exchange_adapter
+      - external_calculation_adapters
+      - read_only_telemetry_adapter
       - external_system_adapters
       - optional_viewer_or_web_profile
 
