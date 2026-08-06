@@ -11,6 +11,10 @@
 - Active issue: #1 `PROJECT-REFOUNDATION-001`
 - Active branch: `governance/project-refoundation-001`
 - Active Draft PR: #2 `[PROJECT-REFOUNDATION-001] Re-found product architecture and GitHub workflow`
+- Current exact head: `2d613176858bd339e0abf1089595ab44d4691200`
+- `behind_by`: `0`
+- `ahead_by`: `23`
+- changed files: `14`
 
 До явного merge-командования `main` остаётся неизменённым prototype baseline. PR #2 остаётся Draft.
 
@@ -143,6 +147,14 @@ DESKTOP-PLATFORM-AND-CORE-SPIKE-001
 ```
 
 Его контракт находится в `docs/project/NEXT_WORK_ITEM.md`.
+
+## Проверки текущего head
+
+- GitHub Actions CI run `31102061532`: `SUCCESS`.
+- CI остаётся старым placeholder check и не считается product verification.
+- changed-file boundary: documentation/governance only;
+- product code changes: `0`;
+- branch is mergeable and not behind `main`.
 
 ## Состояние программы
 
