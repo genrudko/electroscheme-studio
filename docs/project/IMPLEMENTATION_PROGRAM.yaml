@@ -4,9 +4,13 @@ program:
   title: ElectroScheme Studio product implementation program
   status: active
   baseline_main: 6e1209d800c0cc65da4a922506586d5a100c2a84
-  current_work_item: PROJECT-REFOUNDATION-001
-  current_issue: 1
-  current_branch: governance/project-refoundation-001
+  accepted_refoundation_main: b95d7111d9c5a36db4c355ee91f742efea8ecc10
+  current_work_item: DESKTOP-PLATFORM-AND-CORE-SPIKE-001
+  current_issue: 3
+  current_branch: architecture/desktop-platform-and-core-spike-001
+  current_pr: 4
+  current_pr_state: draft
+  volatile_exact_state_owner: Draft PR #4 and GitHub Actions
   product_mode:
     standalone: true
     eod_module: false
@@ -74,8 +78,10 @@ statuses: [not_started, blocked, in_progress, candidate, accepted, deferred]
 phases:
   - id: P0_PROJECT_REFOUNDATION
     title: Project refoundation and GitHub governance
-    status: in_progress
+    status: accepted
     work_item: PROJECT-REFOUNDATION-001
+    accepted_pr: 2
+    accepted_merge: b95d7111d9c5a36db4c355ee91f742efea8ecc10
     depends_on: []
     objective: Establish the canonical product, architecture, quarantine and execution contract.
     deliverables:
@@ -135,10 +141,37 @@ phases:
 
   - id: P2_DESKTOP_PLATFORM_AND_CORE_SPIKE
     title: Desktop platform and canonical core spike
-    status: blocked
+    status: in_progress
     work_item: DESKTOP-PLATFORM-AND-CORE-SPIKE-001
+    issue: 3
+    branch: architecture/desktop-platform-and-core-spike-001
+    pr: 4
+    pr_state: draft
+    execution_state: automated_platform_evidence_pending
     depends_on: [P0_PROJECT_REFOUNDATION]
     objective: Select the desktop/runtime architecture using executable Windows/Linux evidence, classify every prototype asset and prove the mandatory local Visio interoperability path.
+    exact_head_evidence_contract:
+      trigger: pull_request
+      checkout: pull_request_head_sha
+      jobs:
+        - shared-contracts
+        - candidate-build_ubuntu-22.04
+        - candidate-build_windows-2022
+        - comparative-evidence
+      required_artifacts:
+        - desktop-spike-security-lock-evidence
+        - desktop-spike-Linux-X64
+        - desktop-spike-Windows-X64
+        - desktop-spike-comparison-evidence
+      dependency_resolution:
+        npm: committed_package_lock_and_npm_ci_ignore_scripts
+        cargo: committed_Cargo_lock_and_locked_build
+      source_tree_launch_forbidden: true
+      mixed_head_run_or_lock_artifacts_forbidden: true
+      hosted_runner_measurements_are_not_universal_benchmarks: true
+    external_manual_gates:
+      - OWNER_OR_WINDOWS_VISIO_EVIDENCE_REQUIRED
+      - OWNER_OR_INTERACTIVE_RUNNER_EVIDENCE_REQUIRED
     compare:
       - packaging and startup
       - filesystem and native dialogs
@@ -179,7 +212,8 @@ phases:
 
   - id: P3_CANONICAL_DOCUMENT_CORE
     title: Canonical document storage and command core
-    status: not_started
+    status: blocked
+    blocked_by: [P2_DESKTOP_PLATFORM_AND_CORE_SPIKE]
     depends_on: [P2_DESKTOP_PLATFORM_AND_CORE_SPIKE]
     objective: Implement one versioned document model and deterministic mutation/persistence path independent of the full UI, with concrete extension points for states, variants, multiple representations and Visio source provenance.
     deliverables:
@@ -415,6 +449,7 @@ phases:
       - optional_viewer_or_web_profile
 
 next_work_item:
-  id: DESKTOP-PLATFORM-AND-CORE-SPIKE-001
-  create_after: P0_PROJECT_REFOUNDATION accepted and merged
-  rule: Do not begin feature development before this spike selects the architecture, completes prototype asset dispositions and proves the mandatory Visio interoperability path.
+  id: CANONICAL-DOCUMENT-CORE-001
+  phase: P3_CANONICAL_DOCUMENT_CORE
+  create_after: P2_DESKTOP_PLATFORM_AND_CORE_SPIKE accepted and merged
+  rule: Do not begin P3 implementation before the desktop-host ADR, exact-head automated platform evidence and owner architecture acceptance are complete.
