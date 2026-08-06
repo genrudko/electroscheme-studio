@@ -87,7 +87,7 @@ app.whenReady().then(() => {
     height: 700,
     show: true,
     webPreferences: {
-      preload: path.join(here, "preload.js"),
+      preload: path.join(here, "preload.cjs"),
       contextIsolation: true,
       nodeIntegration: false,
       sandbox: true,
