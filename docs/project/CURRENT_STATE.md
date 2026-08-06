@@ -7,18 +7,18 @@
 
 - Repository: `genrudko/electroscheme-studio`
 - Default branch: `main`
-- Accepted prototype baseline head: `6e1209d800c0cc65da4a922506586d5a100c2a84`
+- Prototype baseline head: `6e1209d800c0cc65da4a922506586d5a100c2a84`
 - Active issue: #1 `PROJECT-REFOUNDATION-001`
 - Active branch: `governance/project-refoundation-001`
-- Active PR: создаётся как Draft в рамках issue #1
+- Active Draft PR: #2 `[PROJECT-REFOUNDATION-001] Re-found product architecture and GitHub workflow`
 
-До явного merge-командования `main` остаётся неизменённым prototype baseline.
+До явного merge-командования `main` остаётся неизменённым prototype baseline. PR #2 остаётся Draft.
 
 ## Фактическая зрелость
 
-Проект содержит работоспособные исследовательские элементы редактора, но не является MVP.
+Проект содержит исследовательские элементы редактора, но не является MVP, product UX baseline или compatibility baseline.
 
-### Существующие полезные активы
+### Существующие исследовательские активы
 
 - Vue 3 + TypeScript + SVG frontend prototype;
 - FastAPI/Pydantic backend prototype;
@@ -31,7 +31,9 @@
 - VSDX/VSSX inspector и ShapeSheet metrics extraction;
 - converter VSDX masters → reviewable draft symbols;
 - generated symbol catalog и review workflow;
-- ГОСТ/СТО-oriented цветовые и визуальные исследования.
+- ГОСТ/СТО-oriented исследования.
+
+Наличие в этом списке не означает разрешение на автоматический reuse. Действует `docs/project/PROTOTYPE_QUARANTINE.md`.
 
 ### Критические ограничения baseline
 
@@ -47,8 +49,9 @@
 6. CI проверяет только наличие нескольких файлов и не защищает продукт от регрессий.
 7. Cross-platform desktop packaging отсутствует.
 8. Windows/Linux platform gates отсутствуют.
-9. README и часть документации не соответствуют фактическому состоянию.
+9. README и часть старой документации не соответствовали фактическому состоянию.
 10. UI развивался серией repair/override patches, что создало design/CSS debt.
+11. Внешний вид и пользовательский опыт текущего build не приняты владельцем как направление нового продукта.
 
 ## Принятые решения переоснования
 
@@ -56,11 +59,14 @@
 - Цель — desktop-first/local-first продукт для Windows и Linux.
 - Browser-only WebUI не является обязательным.
 - Vue/TypeScript/SVG не выбрасываются автоматически; их судьба определяется архитектурным spike.
-- Существующие активы сохраняются как prototype/research assets.
-- Переписывание с нуля не начинается до asset inventory и comparative spike.
+- Прототип помещён в карантин, а не объявлен основой нового продукта.
+- Для UI/CSS, взаимодействий и state ownership решение по умолчанию — `reimplement_from_contract`.
+- Reuse допускается только через asset disposition, новые тесты и owner acceptance.
+- Переписывание всего репозитория с нуля не начинается до asset inventory и comparative spike.
 - GitHub заменяет локальный patch-script workflow как canonical delivery process.
-- Конкурентное преимущество определяется специализированными электротехническими сценариями, а не абсолютным количеством универсальных CAD-функций.
+- Конкурентное преимущество определяется специализированными электротехническими сценариями.
 - ГОСТ/СТО claims требуют нормативной трассировки и acceptance evidence.
+- Рыночный анализ выполняется отдельным потоком и интегрируется через фазу P1.
 
 ## Что не принято
 
@@ -72,24 +78,39 @@
 - окончательная repository layout;
 - способ packaging Python VSDX tooling;
 - формат installer/update delivery;
-- точная схема лицензирования и внешнего распространения.
+- точная схема лицензирования и внешнего распространения;
+- финальная feature priority до завершения market/workflow analysis.
 
-Эти решения не должны приниматься «по вкусу». Они входят в сравнительный spike.
+Эти решения не должны приниматься «по вкусу» или по инерции прототипа.
 
 ## Текущий work item boundary
 
 `PROJECT-REFOUNDATION-001` изменяет только governance/canonical documentation.
 
-Запрещено в этом PR:
+Запрещено в PR #2:
 
 - удалять или переносить product code;
 - выбирать desktop shell;
 - выполнять широкую реорганизацию каталогов;
-- исправлять UI;
+- исправлять старый UI;
 - добавлять новые symbols/features;
-- выдавать prototype за MVP.
+- выдавать prototype за MVP;
+- делать prototype appearance compatibility requirement.
 
-## Следующий обязательный work item
+## Следующие потоки
+
+### Market/workflow stream
+
+Отдельный анализ рынка формирует:
+
+- competitor capability matrix;
+- user pain points;
+- must-match/must-exceed/not-needed decisions;
+- обновление продуктовых приоритетов.
+
+Результат после проверки интегрируется в P1 отдельным GitHub work item.
+
+### Следующий implementation work item
 
 После принятия и merge `PROJECT-REFOUNDATION-001`:
 
@@ -97,27 +118,20 @@
 DESKTOP-PLATFORM-AND-CORE-SPIKE-001
 ```
 
-Его задача:
-
-1. построить минимальный одинаковый editor scenario для кандидатов desktop architecture;
-2. сравнить Windows/Linux packaging, filesystem, dialogs, clipboard, printing, updater path и SVG/pointer behavior;
-3. определить runtime boundary между desktop host, UI и domain/editor core;
-4. создать asset inventory и migration map для существующего prototype;
-5. принять ADR о desktop shell и canonical core ownership;
-6. не развивать продуктовые функции до принятия решения.
+Его контракт находится в `docs/project/NEXT_WORK_ITEM.md`.
 
 ## Состояние программы
 
 | Phase | Status |
 |---|---|
 | P0 Project refoundation | IN_PROGRESS |
-| P1 Desktop/platform and core spike | BLOCKED_BY_P0 |
-| P2 Canonical document core | NOT_STARTED |
-| P3 Editor kernel | NOT_STARTED |
-| P4 Symbol platform | NOT_STARTED |
-| P5 Electrical topology | NOT_STARTED |
-| P6 MVP vertical slice | NOT_STARTED |
-| P7 ГОСТ/СТО profiles and release output | NOT_STARTED |
-| P8 Cross-platform packaging | NOT_STARTED |
-| P9 Demo and pilot | NOT_STARTED |
+| P1 Market and workflow baseline | NOT_STARTED / RESEARCH_EXTERNAL_TO_PR |
+| P2 Desktop/platform and core spike | BLOCKED_BY_P0 |
+| P3 Canonical document core | NOT_STARTED |
+| P4 Editor kernel and design system | NOT_STARTED |
+| P5 Symbol platform | NOT_STARTED |
+| P6 Electrical topology | NOT_STARTED |
+| P7 MVP vertical slice | NOT_STARTED |
+| P8 ГОСТ/СТО profiles and output | NOT_STARTED |
+| P9 Packaging, Demo and Pilot | NOT_STARTED |
 | P10 Advanced product capabilities | NOT_STARTED |
