@@ -82,10 +82,18 @@ fn mark_ready(app: tauri::AppHandle) -> Result<(), String> {
         };
         fs::write(path, serde_json::to_vec(&ready).map_err(|error| error.to_string())?).map_err(|error| error.to_string())?;
     }
-    if std::env::var("SPIKE_MEASURE").ok().as_deref() == Some("1") {
-        thread::spawn(move || { thread::sleep(Duration::from_millis(1500)); app.exit(0); });
+    let exit_delay_ms = if std::env::var("SPIKE_MEASURE").ok().as_deref() == Some("1") {
+        Some(1500)
     } else if std::env::var("SPIKE_SMOKE").ok().as_deref() == Some("1") {
-        thread::spawn(move || { thread::sleep(Duration::from_millis(100)); app.exit(0); });
+        Some(100)
+    } else {
+        None
+    };
+    if let Some(delay_ms) = exit_delay_ms {
+        thread::spawn(move || {
+            thread::sleep(Duration::from_millis(delay_ms));
+            app.exit(0);
+        });
     }
     Ok(())
 }
