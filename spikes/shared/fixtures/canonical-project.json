@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "projectId": "project-spike-0001",
+  "title": "Desktop platform canonical fixture",
+  "documentIds": ["document-spike-0001"],
+  "documents": [{"id":"document-spike-0001","documentType":"normal_single_line_spike","profileVersion":"spike-profile-1","sheetIds":["sheet-spike-0001"]}],
+  "sheets": [{"id":"sheet-spike-0001","name":"Sheet 1","width":800,"height":500,"layerIds":["layer-spike-0001"],"representationIds":["representation-symbol-0001","representation-busbar-0001"]}],
+  "layers": [{"id":"layer-spike-0001","name":"Primary","visible":true,"locked":false}],
+  "equipment": [{"id":"equipment-spike-0001","family":"temporary_test_equipment","designation":"Q-SPK-1","properties":{"nominalVoltageKv":110}}],
+  "representations": [
+    {"id":"representation-symbol-0001","equipmentId":"equipment-spike-0001","sheetId":"sheet-spike-0001","objectIds":["object-symbol-0001"],"profileVersion":"spike-profile-1"},
+    {"id":"representation-busbar-0001","sheetId":"sheet-spike-0001","objectIds":["object-busbar-0001"],"profileVersion":"spike-profile-1"}
+  ],
+  "objects": [
+    {"id":"object-symbol-0001","representationId":"representation-symbol-0001","kind":"temporary_test_symbol","x":120,"y":120,"width":80,"height":60,"rotation":0,"ports":[{"id":"port-symbol-top-0001","role":"primary","x":40,"y":0},{"id":"port-symbol-bottom-0001","role":"secondary","x":40,"y":60}],"properties":{"label":"TEST"},"source":{"sourceKind":"native","sourceId":"fixture:test-symbol","importMappingVersion":"native-1"}},
+    {"id":"object-busbar-0001","representationId":"representation-busbar-0001","kind":"busbar","x":300,"y":220,"width":320,"height":8,"rotation":0,"ports":[{"id":"port-busbar-left-0001","role":"busbar","x":0,"y":4},{"id":"port-busbar-right-0001","role":"busbar","x":320,"y":4}],"properties":{"sections":1}}
+  ],
+  "connections": [{"id":"connection-spike-0001","fromPortId":"port-symbol-bottom-0001","toPortId":"port-busbar-left-0001","electricalKind":"temporary_spike_connection"}],
+  "diagnostics": []
+}
