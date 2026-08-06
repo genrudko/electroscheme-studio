@@ -1,206 +1,194 @@
 # Current State — ElectroScheme Studio
 
 Дата среза: 2026-08-06  
-Статус: `DESKTOP-PLATFORM-AND-CORE-SPIKE-001` in progress
+Статус: `DESKTOP-PLATFORM-AND-CORE-SPIKE-001` — `IN_PROGRESS / AUTOMATED_PLATFORM_EVIDENCE_PENDING`
 
-## 1. GitHub state
+## 1. Canonical GitHub state
 
-- Repository: `genrudko/electroscheme-studio`
-- Default branch: `main`
-- Accepted refoundation PR: #2
-- Accepted PR #2 head: `e1ca482a2cbb4e59acf43474f37e2880ffb24839`
-- Merge commit: `b95d7111d9c5a36db4c355ee91f742efea8ecc10`
-- Active issue: #3 `DESKTOP-PLATFORM-AND-CORE-SPIKE-001`
-- Active branch: `architecture/desktop-platform-and-core-spike-001`
-- Active PR: Draft PR for issue #3, created after the first substantive spike commit
+- repository: `genrudko/electroscheme-studio`;
+- default branch: `main`;
+- accepted refoundation PR: #2;
+- accepted PR #2 head: `e1ca482a2cbb4e59acf43474f37e2880ffb24839`;
+- accepted merge/base commit: `b95d7111d9c5a36db4c355ee91f742efea8ecc10`;
+- active issue: #3 `DESKTOP-PLATFORM-AND-CORE-SPIKE-001`;
+- active branch: `architecture/desktop-platform-and-core-spike-001`;
+- active PR: Draft PR #4.
 
-Exact PR head, compare state, changed files and workflow results are volatile GitHub state and must be read from GitHub before continuation or acceptance.
+Exact head, ahead/behind, changed-file count, workflow run IDs and artifact IDs/digests are volatile GitHub metadata. Read them from Draft PR #4 and GitHub Actions before continuation or acceptance; do not commit a self-referential exact head into this document.
 
 ## 2. Accepted product direction
 
 ElectroScheme Studio is a standalone, desktop-first and local-first Windows/Linux engineering application.
 
-The target product is:
+The first complete product vertical remains a normal single-line power-engineering scheme workflow with typed equipment, ports, topology, operating-state semantics, Russian normative profiles and a mandatory Visio migration/exchange bridge.
 
-> a low-friction object editor for power-engineering schemes with typed equipment, ports, topology, switching states, Russian normative profiles and a mandatory Visio migration/exchange bridge.
-
-The first product vertical remains a complete normal single-line scheme workflow.
-
-The product is not currently:
+It is not currently:
 
 - an EOD module;
 - a browser-only service;
 - a universal CAD;
 - an ETAP/PowerFactory calculation replacement;
-- an EPLAN replacement for every electrical discipline;
+- a replacement for every EPLAN discipline;
 - a SCADA system.
 
 ## 3. Accepted architecture invariants
 
-- one versioned canonical document model;
-- one authoritative writable document path;
-- command/transaction-based document mutations;
-- stable IDs for equipment, representations, objects, ports and connections;
+- one versioned canonical document model and one authoritative writable path;
+- command/transaction mutations compatible with undo/redo;
+- stable equipment, representation, object, port and connection IDs;
+- equipment identity separated from diagram representation;
 - topology independent from rendered SVG paths;
-- UI as projection and command source, not document owner;
-- desktop/platform operations behind adapters;
-- core tests without the complete desktop UI;
-- deterministic and migratable project format;
-- Windows/Linux semantic portability;
-- VSDX/VSSX as interoperability formats, not the internal model;
-- structured diagnostics and no silent import/export loss;
-- prototype reuse only through explicit disposition and new tests.
+- UI is a projection and command source, not document owner;
+- platform operations stay behind typed adapters;
+- core is testable without the complete desktop UI;
+- project serialization and logical output are deterministic;
+- Windows/Linux semantic portability is mandatory;
+- VSDX/VSSX are interoperability formats, not the internal canonical model;
+- import/export diagnostics and source provenance are explicit;
+- no silent compatibility loss;
+- prototype reuse requires explicit disposition and new evidence.
 
 ## 4. Prototype status
 
-The pre-refoundation application remains a quarantined engineering prototype.
+The pre-refoundation application remains quarantined engineering research, not a product architecture or UX baseline.
 
-It contains potentially useful research:
+Default dispositions remain:
 
-- Vue/TypeScript/SVG editor work;
-- rulers, grid, guides and snapping experiments;
-- pointer and palette interaction research;
-- busbar and slot calculations;
-- backend schema/API examples;
-- VSDX/VSSX inspection and ShapeSheet extraction tools;
-- generated review-required symbol drafts.
-
-It is not:
-
-- product UX baseline;
-- visual baseline;
-- architecture baseline;
-- state-model baseline;
-- compatibility baseline.
-
-Default dispositions:
-
-| Area | Default |
+| Area | Disposition |
 |---|---|
 | UI/CSS | `reimplement_from_contract` |
-| Interaction code | `reimplement_from_contract` |
-| Writable state/document models | `reimplement_from_contract` |
+| Interaction/state code | `reimplement_from_contract` |
+| Writable document models | `reimplement_from_contract` |
 | VSDX/VSSX source data | `retain_as_reference` |
 | Tested ShapeSheet extraction | `salvage_after_tests` |
 | Generated symbol drafts | `salvage_after_tests` |
 
-The active factual inventory is `docs/architecture/spikes/PROTOTYPE_ASSET_INVENTORY.yaml`.
+Canonical inventory and migration mapping:
 
-## 5. Known prototype blockers
+- `docs/architecture/spikes/PROTOTYPE_ASSET_INVENTORY.yaml`;
+- `docs/architecture/spikes/PROTOTYPE_MIGRATION_MAP.md`.
 
-1. Parallel writable models exist:
-   - backend `Project`;
-   - frontend `useProject`;
-   - frontend `EditorDocument`;
-   - local state in `CanvasViewport`.
-2. The command stack is not the mandatory path for actual mutations.
-3. `CanvasViewport` has monolithic responsibilities.
-4. Persistence is not an accepted durable desktop project lifecycle.
-5. VSDX tooling does not yet prove editable document import, VSDX export or controlled round-trip.
-6. Generated symbols are review candidates, not accepted engineering objects.
-7. Current CI is a placeholder and does not protect product behavior.
-8. Windows/Linux packaging and cross-platform gates do not exist.
-9. Prototype UI accumulated repair/override debt and is not accepted for reuse.
+## 5. Implemented spike boundary
 
-## 6. Active work item
+Implemented in Draft PR #4:
 
-`DESKTOP-PLATFORM-AND-CORE-SPIKE-001` selects the desktop/runtime architecture and canonical core ownership using executable evidence.
+- pure TypeScript canonical fixture, schema types, deterministic serializer and command history;
+- stable identity for project/document/sheet/layer/equipment/representation/object/port/connection entities;
+- deterministic SVG and minimal PDF output;
+- one shared Vue/SVG in-app scenario used by Electron and Tauri;
+- typed platform ports for file dialogs/storage, clipboard, drag/drop, PDF and local Python tooling;
+- Electron main process with sandboxed renderer, context isolation, no renderer Node integration and a narrow CommonJS preload bridge;
+- Tauri Rust host with custom commands, long-lived managed clipboard state and controlled Python timeout;
+- controlled VSDX/VSSX fixtures, package/XML diagnostics and minimal generated VSDX;
+- committed npm and Cargo lockfiles;
+- deterministic neutral spike-only Tauri PNG/ICO resources generated by reviewed Python stdlib code;
+- exact Vite high-severity finding classification and update from `7.1.1` to `7.3.6` without forced audit repair;
+- deterministic Electron/Tauri portable `tar.gz` archives with archive SHA-256, unpacked tree digest and mode/symlink preservation;
+- archive deletion/restoration before scenario and measurement execution;
+- scenario and runtime evidence that rejects source-tree launches;
+- startup and process-tree RSS harness rooted in the candidate-reported process PID;
+- one prestarted Linux Xvfb display outside candidate timing;
+- exact PR-head checkout rather than the synthetic pull-request merge ref;
+- cross-platform evidence aggregation that rejects mixed head/run/lock artifacts;
+- artifact-driven desktop and Microsoft Visio manual protocols requiring no local project build.
 
-Required full candidates:
+## 6. Reproducibility and security state
 
-- Tauri + Vue/TypeScript/SVG;
-- Electron + Vue/TypeScript/SVG.
+Canonical dependency inputs:
 
-Qt proceeds to a full equivalent implementation only if a preliminary evidence note demonstrates a material advantage sufficient to justify porting or discarding TypeScript/SVG research.
+- `spikes/package-lock.json`;
+- `spikes/tauri/src-tauri/Cargo.lock`.
 
-The same bounded scenario must prove:
+Workflow requirements:
 
-- desktop launch;
-- minimal canonical document create/open/save;
-- SVG render and pointer interaction;
-- command-based move and undo/redo;
-- native dialogs, clipboard and drag/drop through adapters;
-- deterministic storage and output;
-- controlled VSDX read;
-- controlled VSSX master read;
-- minimal valid VSDX write;
-- generated VSDX open/edit evidence in Microsoft Visio on Windows;
-- Windows/Linux package smoke and same-project round-trip.
+- `npm ci --ignore-scripts`;
+- Cargo metadata with `--locked`;
+- Tauri build with locked Cargo resolution;
+- zero-result all-dependency and production-only npm audits;
+- build failure if committed locks or neutral icon resources change;
+- artifact manifests contain lock SHA-256 values and exact toolchain versions.
 
-Execution contract:
+The former npm high finding was a direct spike-only build dependency on `vite@7.1.1`. It was updated to patched `vite@7.3.6`; Vite is not included in either packaged runtime. Full classification is owned by `docs/architecture/spikes/NPM_SECURITY_FINDING.md`.
 
-- `docs/architecture/spikes/DESKTOP_PLATFORM_AND_CORE_SPIKE_EXECUTION.md`
+## 7. Automated evidence contract
 
-## 7. Current spike progress
+One exact PR head must produce one successful `Desktop Platform Spike` workflow run containing:
 
-Completed:
+1. `shared-contracts`;
+2. `candidate-build (ubuntu-22.04)`;
+3. `candidate-build (windows-2022)`;
+4. `comparative-evidence`, which runs only after the three jobs above succeed.
 
-- issue #3 created;
-- branch created from accepted merge commit;
-- execution plan added;
-- initial exact-SHA prototype inventory added;
-- first high-risk assets classified, including `CanvasViewport`, parallel document models, command stack and VSDX tools;
-- canonical documentation index switched to the active work item.
+Required published artifacts:
 
-In progress:
+- `desktop-spike-security-lock-evidence`;
+- `desktop-spike-Linux-X64`;
+- `desktop-spike-Windows-X64`;
+- `desktop-spike-comparison-evidence`.
 
-- complete prototype asset inventory;
-- current candidate/toolchain evidence;
-- shared fixture and acceptance definitions;
-- Draft PR creation and CI bootstrap;
-- executable candidate implementation.
+The two platform artifacts must contain portable Electron and Tauri archives, restored package directories, package manifests, in-app scenario JSON, startup/RSS JSON, package-size data, VSDX/VSSX outputs, exact toolchains and lock SHA values. The comparison artifact must prove both platform artifacts share one exact head, workflow run and lock set.
 
-Not yet accepted:
+## 8. Current external infrastructure condition
 
-- desktop host;
-- canonical core language/ownership;
-- project package format;
-- FastAPI runtime role;
-- Python tooling package strategy;
-- Qt full-candidate admission;
+At this snapshot GitHub officially reports a major GitHub Actions outage affecting workflow registration, hosted runners and Actions API calls. Current absence or queueing of a run is infrastructure state, not a successful product gate and not evidence of a code failure.
+
+Do not claim automated completion until the exact-head workflow has actually executed every step and all four artifacts are published and independently inspected.
+
+## 9. Decisions not yet accepted
+
+Pending factual platform evidence and owner acceptance:
+
+- final desktop host: Electron or Tauri;
+- final desktop-host ADR;
+- package/startup/RSS comparison values;
+- Windows/Linux renderer consistency conclusion;
+- production Python tooling packaging strategy;
+- signing and updater implementation path;
 - final Visio compatibility profile;
 - legacy `.vsd/.vss` migration mechanism.
 
-## 8. Scope prohibitions
+Qt remains behind the material-advantage admission gate and is not a full candidate without evidence that justifies the rewrite cost.
 
-Inside this work item do not:
+## 10. Honest manual gates
 
-- repair or redesign the old prototype UI;
-- port `CanvasViewport` wholesale;
-- create the permanent design system;
-- build full symbol families;
-- implement the complete topology service;
-- implement normal/temporary-normal/three-line/operational product workflows;
-- implement calculations, SCADA or CIM exchange;
-- treat generated VSDX parsing as semantic or normative acceptance;
-- delete prototype assets before accepted retirement criteria;
-- mark Ready for Review or merge without explicit owner command.
+These gates remain open and cannot be closed by CI:
 
-## 9. Program state
+- `OWNER_OR_WINDOWS_VISIO_EVIDENCE_REQUIRED`;
+- `OWNER_OR_INTERACTIVE_RUNNER_EVIDENCE_REQUIRED`.
 
-| Phase | Status |
+Protocols:
+
+- `spikes/evidence/VISIO_MANUAL_ACCEPTANCE_PROTOCOL.md`;
+- `spikes/evidence/DESKTOP_MANUAL_ACCEPTANCE_PROTOCOL.md`.
+
+Both protocols consume downloaded exact-run artifacts; the owner is not required to build the project.
+
+## 11. Program state
+
+| Phase | State |
 |---|---|
-| P0 Project refoundation | ACCEPTED / MERGED |
-| P1 Market and workflow baseline | STRATEGIC_INPUT_RECEIVED / HANDS_ON_VALIDATION_PENDING |
-| P2 Desktop/platform/core and Visio-path spike | IN_PROGRESS |
-| P3 Canonical document core | BLOCKED_BY_P2 |
-| P4 Editor kernel and design system | NOT_STARTED |
-| P5 Symbol platform and VSSX migration | NOT_STARTED |
-| P6 Electrical topology | NOT_STARTED |
-| P7 Normal single-line MVP plus accepted VSDX import | NOT_STARTED |
-| P8 ГОСТ/СТО profiles and output | NOT_STARTED |
-| P9 Packaging, Visio export, Demo and Pilot | NOT_STARTED |
-| P10 Advanced capabilities | NOT_STARTED |
+| P0 Project refoundation | `ACCEPTED / MERGED` |
+| P1 Market and workflow baseline | `STRATEGIC_INPUT_RECEIVED / HANDS_ON_VALIDATION_PENDING` |
+| P2 Desktop/platform/core and Visio-path spike | `IN_PROGRESS` |
+| P3 Canonical document core | `BLOCKED_BY_P2` |
+| P4 Editor kernel and design system | `NOT_STARTED` |
+| P5 Symbol platform and VSSX migration | `NOT_STARTED` |
+| P6 Electrical topology | `NOT_STARTED` |
+| P7 Normal single-line MVP and accepted VSDX import | `NOT_STARTED` |
+| P8 ГОСТ/СТО profiles and output | `NOT_STARTED` |
+| P9 Packaging, Visio export, demo and pilot | `NOT_STARTED` |
+| P10 Advanced capabilities | `NOT_STARTED` |
 
-## 10. Exit from current work item
+## 12. Exit boundary for this work item
 
-The spike can become an acceptance candidate only after:
+Draft PR #4 can become an architecture acceptance candidate only after:
 
-- accepted candidates pass the same scenario on Windows and Linux;
-- one architecture is selected by ADR;
-- one canonical writable document path is proven;
-- major prototype assets have accepted dispositions;
-- VSDX/VSSX read/write evidence exists;
-- generated VSDX opens in Microsoft Visio on Windows;
-- target repository layout is accepted;
-- `CANONICAL-DOCUMENT-CORE-001` has an unambiguous boundary.
+- all available automated Windows/Linux gates are green on one exact head;
+- all four evidence artifacts are published and independently verified;
+- the npm finding remains resolved under committed locks;
+- the factual comparative matrix and desktop-host ADR are committed;
+- `IMPLEMENTATION_PROGRAM.yaml` and this state document are synchronized;
+- PR metadata records final exact head, compare counts, workflow run and artifact IDs/digests;
+- the two external manual gates remain explicit unless real evidence is supplied.
+
+Do not mark Ready for Review or merge without an explicit owner command.
