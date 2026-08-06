@@ -9,7 +9,11 @@ Both candidates use exactly the same TypeScript canonical fixture, command histo
 ```bash
 npm ci --ignore-scripts
 npm test
-python -m unittest tools/test_visio_spike_tool.py tools/test_archive_candidate.py -v
+python -m unittest \
+  tools/test_visio_spike_tool.py \
+  tools/test_archive_candidate.py \
+  tools/test_compare_candidate_evidence.py \
+  -v
 npm run build
 ```
 
