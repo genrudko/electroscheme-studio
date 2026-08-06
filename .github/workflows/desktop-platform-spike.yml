@@ -11,12 +11,16 @@ concurrency:
 permissions:
   contents: read
 
+env:
+  SPIKE_EXACT_HEAD: ${{ github.event.pull_request.head.sha }}
+
 jobs:
   shared-contracts:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: ${{ env.SPIKE_EXACT_HEAD }}
           fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
@@ -45,9 +49,14 @@ jobs:
       - name: Typecheck and canonical core tests
         working-directory: spikes
         run: npm test
-      - name: VSDX, VSSX and deterministic package archive tests
+      - name: VSDX, VSSX, archive and comparison evidence tests
         working-directory: spikes
-        run: python -m unittest tools/test_visio_spike_tool.py tools/test_archive_candidate.py -v
+        run: >-
+          python -m unittest
+          tools/test_visio_spike_tool.py
+          tools/test_archive_candidate.py
+          tools/test_compare_candidate_evidence.py
+          -v
       - name: Build shared Vue SVG renderer and Electron boundary
         working-directory: spikes
         run: npm run build
@@ -72,7 +81,7 @@ jobs:
           }
           output = {
               'workflow_run_id': os.environ['GITHUB_RUN_ID'],
-              'exact_head': os.environ['GITHUB_SHA'],
+              'exact_head': os.environ['SPIKE_EXACT_HEAD'],
               'artifact_name': 'desktop-spike-security-lock-evidence',
               'files': {
                   name: {
@@ -106,6 +115,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.SPIKE_EXACT_HEAD }}
       - uses: actions/setup-node@v4
         with:
           node-version: 24.19.0
@@ -265,7 +276,7 @@ jobs:
                   raise RuntimeError(f'package layout round trip was not verified for {candidate}')
           output = {
               'workflow_run_id': os.environ['GITHUB_RUN_ID'],
-              'exact_head': os.environ['GITHUB_SHA'],
+              'exact_head': os.environ['SPIKE_EXACT_HEAD'],
               'artifact_name': f"desktop-spike-{os.environ['RUNNER_OS']}-{os.environ['RUNNER_ARCH']}",
               'runner_os': platform.platform(),
               'runner_architecture': platform.machine(),
@@ -313,4 +324,63 @@ jobs:
             spikes/package-lock.json
             spikes/tauri/src-tauri/Cargo.lock
             spikes/tauri/src-tauri/icons/**
+          if-no-files-found: error
+
+  comparative-evidence:
+    needs: [shared-contracts, candidate-build]
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.SPIKE_EXACT_HEAD }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: desktop-spike-*-X64
+          path: spikes/evidence/platform-artifacts
+          merge-multiple: false
+      - name: Validate and aggregate both platform artifacts
+        working-directory: spikes
+        run: >-
+          python tools/compare_candidate_evidence.py
+          evidence/platform-artifacts
+          evidence/generated/desktop-candidate-comparison.json
+          evidence/generated/desktop-candidate-comparison.md
+          --expected-head "$SPIKE_EXACT_HEAD"
+          --expected-run "$GITHUB_RUN_ID"
+      - name: Record comparison artifact hashes
+        working-directory: spikes
+        shell: python
+        run: |
+          import hashlib, json, os, pathlib
+          generated = pathlib.Path('evidence/generated')
+          paths = [
+              generated / 'desktop-candidate-comparison.json',
+              generated / 'desktop-candidate-comparison.md',
+          ]
+          output = {
+              'workflow_run_id': os.environ['GITHUB_RUN_ID'],
+              'exact_head': os.environ['SPIKE_EXACT_HEAD'],
+              'artifact_name': 'desktop-spike-comparison-evidence',
+              'files': {
+                  path.name: {
+                      'sha256': hashlib.sha256(path.read_bytes()).hexdigest(),
+                      'bytes': path.stat().st_size,
+                  }
+                  for path in paths
+              },
+          }
+          (generated / 'desktop-candidate-comparison-hashes.json').write_text(
+              json.dumps(output, indent=2) + '\n',
+              encoding='utf-8',
+          )
+      - uses: actions/upload-artifact@v4
+        with:
+          name: desktop-spike-comparison-evidence
+          path: |
+            spikes/evidence/generated/desktop-candidate-comparison.json
+            spikes/evidence/generated/desktop-candidate-comparison.md
+            spikes/evidence/generated/desktop-candidate-comparison-hashes.json
           if-no-files-found: error
