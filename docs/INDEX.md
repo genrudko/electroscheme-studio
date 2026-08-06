@@ -20,8 +20,9 @@ Accepted main baseline: `b95d7111d9c5a36db4c355ee91f742efea8ecc10`
 12. `docs/quality/ACCEPTANCE_GATES.md` — CI, тесты и evidence.
 13. `docs/decisions/0002_desktop_first_refoundation.md` — принятое desktop-first переоснование.
 14. `docs/architecture/spikes/DESKTOP_PLATFORM_AND_CORE_SPIKE_EXECUTION.md` — исполнимый план активного spike.
-15. `docs/architecture/spikes/PROTOTYPE_ASSET_INVENTORY.yaml` — factual inventory и dispositions прототипа.
-16. `docs/project/NEXT_WORK_ITEM.md` — исторически принятый контракт, по которому создан текущий work item; до завершения spike не является активным будущим заданием.
+15. `docs/architecture/spikes/CANDIDATE_EVIDENCE_BASELINE_2026-08-06.md` — официальный-source baseline по Tauri, Electron и Qt admission gate.
+16. `docs/architecture/spikes/PROTOTYPE_ASSET_INVENTORY.yaml` — factual inventory и dispositions прототипа.
+17. `docs/project/NEXT_WORK_ITEM.md` — исторически принятый контракт, по которому создан текущий work item; до завершения spike не является активным будущим заданием.
 
 ## Владение документами
 
@@ -40,6 +41,7 @@ Accepted main baseline: `b95d7111d9c5a36db4c355ee91f742efea8ecc10`
 | `DOMAIN_INVARIANTS.md` | Инварианты данных, геометрии и топологии |
 | `ACCEPTANCE_GATES.md` | Обязательная проверка изменений |
 | `DESKTOP_PLATFORM_AND_CORE_SPIKE_EXECUTION.md` | Work packages, fixtures и exit criteria текущего spike |
+| `CANDIDATE_EVIDENCE_BASELINE_2026-08-06.md` | Проверенные возможности, риски и обязательные эксперименты кандидатов |
 | `PROTOTYPE_ASSET_INVENTORY.yaml` | Exact paths/SHAs, findings, dispositions и retirement conditions |
 | `docs/decisions/*` | Принятые архитектурные решения и последствия |
 
@@ -91,7 +93,7 @@ accepted ADR
 → DOMAIN_INVARIANTS / SYSTEM_ARCHITECTURE / VISIO_INTEROPERABILITY_CONTRACT
 → PROTOTYPE_QUARANTINE
 → IMPLEMENTATION_PROGRAM / MVP_AND_DEMO / PRODUCT_SCOPE
-→ active spike execution and inventory documents
+→ active spike execution, candidate evidence and inventory documents
 → accepted research intake
 → CURRENT_STATE
 → README / AGENTS
