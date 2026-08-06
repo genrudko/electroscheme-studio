@@ -15,4 +15,6 @@ npm run build
 
 Tauri build additionally requires Rust 1.97.1, the committed `src-tauri/Cargo.lock`, and platform prerequisites. Candidate evidence uses locked npm and Cargo resolution; dependency lockfiles are canonical repository inputs rather than CI-generated substitutes.
 
+The one-time bootstrap that creates the initial lockfiles and neutral Tauri resources is setup evidence only. It is not a substitute for the final exact-head Windows/Linux candidate workflow.
+
 The generated VSDX fixture is package-tested automatically. Opening/editing/saving it in Microsoft Visio remains a separate manual acceptance gate and must not be inferred from ZIP/XML validation.
