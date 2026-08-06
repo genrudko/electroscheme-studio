@@ -1,26 +1,90 @@
 #!/usr/bin/env python3
 from __future__ import annotations
-import argparse, hashlib, json, pathlib, zipfile
+
+import argparse
+import hashlib
+import json
+import pathlib
+import zipfile
 from xml.etree import ElementTree as ET
-REQUIRED={"[Content_Types].xml","_rels/.rels","visio/document.xml","visio/_rels/document.xml.rels"}
-def inspect_package(path:pathlib.Path,kind:str)->dict:
- diagnostics=[]
- try:
-  with zipfile.ZipFile(path) as z:
-   names=set(z.namelist()); missing=sorted(REQUIRED-names)
-   if missing: diagnostics.append({"severity":"error","code":"PACKAGE_PART_MISSING","parts":missing})
-   xml_parts=[]
-   for name in sorted(n for n in names if n.endswith((".xml",".rels"))):
-    try: ET.fromstring(z.read(name)); xml_parts.append(name)
-    except ET.ParseError as exc: diagnostics.append({"severity":"error","code":"INVALID_XML","part":name,"message":str(exc)})
-   source_ids=[]
-   for name in sorted(n for n in names if n.endswith(".xml")):
+
+from generate_controlled_visio_fixtures import _write_package, build_vsdx
+
+REQUIRED = {
+    "[Content_Types].xml",
+    "_rels/.rels",
+    "visio/document.xml",
+    "visio/_rels/document.xml.rels",
+}
+
+
+def inspect_package(path: pathlib.Path, kind: str) -> dict:
+    diagnostics: list[dict] = []
     try:
-     root=ET.fromstring(z.read(name)); source_ids += [e.attrib["ID"] for e in root.iter() if "ID" in e.attrib]
-    except ET.ParseError: pass
-   return {"protocol":"electroscheme-visio-tool/1","operation":"inspect","kind":kind,"sha256":hashlib.sha256(path.read_bytes()).hexdigest(),"parts":sorted(names),"xmlParts":xml_parts,"sourceIds":sorted(set(source_ids)),"diagnostics":diagnostics,"status":"ok" if not any(d["severity"]=="error" for d in diagnostics) else "invalid"}
- except (OSError,zipfile.BadZipFile) as exc:
-  return {"protocol":"electroscheme-visio-tool/1","operation":"inspect","kind":kind,"status":"invalid","diagnostics":[{"severity":"error","code":"PACKAGE_OPEN_FAILED","message":str(exc)}]}
-def main():
- p=argparse.ArgumentParser(); sub=p.add_subparsers(dest="cmd",required=True); i=sub.add_parser("inspect"); i.add_argument("kind",choices=["vsdx","vssx"]); i.add_argument("path",type=pathlib.Path); args=p.parse_args(); result=inspect_package(args.path,args.kind); print(json.dumps(result,sort_keys=True,separators=(",",":"))); raise SystemExit(0 if result["status"]=="ok" else 2)
-if __name__=="__main__": main()
+        with zipfile.ZipFile(path) as archive:
+            names = set(archive.namelist())
+            missing = sorted(REQUIRED - names)
+            if missing:
+                diagnostics.append({"severity": "error", "code": "PACKAGE_PART_MISSING", "parts": missing})
+            xml_parts: list[str] = []
+            source_ids: list[str] = []
+            for name in sorted(item for item in names if item.endswith((".xml", ".rels"))):
+                try:
+                    root = ET.fromstring(archive.read(name))
+                    xml_parts.append(name)
+                    source_ids.extend(element.attrib["ID"] for element in root.iter() if "ID" in element.attrib)
+                except ET.ParseError as error:
+                    diagnostics.append({"severity": "error", "code": "INVALID_XML", "part": name, "message": str(error)})
+            return {
+                "protocol": "electroscheme-visio-tool/1",
+                "operation": "inspect",
+                "kind": kind,
+                "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+                "parts": sorted(names),
+                "xmlParts": xml_parts,
+                "sourceIds": sorted(set(source_ids)),
+                "diagnostics": diagnostics,
+                "status": "ok" if not any(item["severity"] == "error" for item in diagnostics) else "invalid",
+            }
+    except (OSError, zipfile.BadZipFile) as error:
+        return {
+            "protocol": "electroscheme-visio-tool/1",
+            "operation": "inspect",
+            "kind": kind,
+            "status": "invalid",
+            "diagnostics": [{"severity": "error", "code": "PACKAGE_OPEN_FAILED", "message": str(error)}],
+        }
+
+
+def generate_vsdx(canonical_path: pathlib.Path, output_path: pathlib.Path) -> dict:
+    project = json.loads(canonical_path.read_text(encoding="utf-8"))
+    _write_package(output_path, build_vsdx(project))
+    result = inspect_package(output_path, "vsdx")
+    result["operation"] = "generate-vsdx"
+    result["canonicalProjectId"] = project.get("projectId")
+    return result
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser()
+    commands = parser.add_subparsers(dest="command", required=True)
+
+    inspect = commands.add_parser("inspect")
+    inspect.add_argument("kind", choices=["vsdx", "vssx"])
+    inspect.add_argument("path", type=pathlib.Path)
+
+    generate = commands.add_parser("generate-vsdx")
+    generate.add_argument("canonical_path", type=pathlib.Path)
+    generate.add_argument("output_path", type=pathlib.Path)
+
+    args = parser.parse_args()
+    if args.command == "inspect":
+        result = inspect_package(args.path, args.kind)
+    else:
+        result = generate_vsdx(args.canonical_path, args.output_path)
+    print(json.dumps(result, sort_keys=True, separators=(",", ":")))
+    raise SystemExit(0 if result["status"] == "ok" else 2)
+
+
+if __name__ == "__main__":
+    main()
