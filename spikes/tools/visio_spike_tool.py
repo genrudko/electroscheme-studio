@@ -10,11 +10,27 @@ from xml.etree import ElementTree as ET
 
 from generate_controlled_visio_fixtures import _write_package, build_vsdx
 
-REQUIRED = {
+COMMON_REQUIRED = {
     "[Content_Types].xml",
     "_rels/.rels",
+    "docProps/core.xml",
     "visio/document.xml",
     "visio/_rels/document.xml.rels",
+}
+
+REQUIRED_BY_KIND = {
+    "vsdx": COMMON_REQUIRED
+    | {
+        "visio/pages/pages.xml",
+        "visio/pages/_rels/pages.xml.rels",
+        "visio/pages/page1.xml",
+    },
+    "vssx": COMMON_REQUIRED
+    | {
+        "visio/masters/masters.xml",
+        "visio/masters/_rels/masters.xml.rels",
+        "visio/masters/master1.xml",
+    },
 }
 
 
@@ -23,9 +39,16 @@ def inspect_package(path: pathlib.Path, kind: str) -> dict:
     try:
         with zipfile.ZipFile(path) as archive:
             names = set(archive.namelist())
-            missing = sorted(REQUIRED - names)
+            missing = sorted(REQUIRED_BY_KIND[kind] - names)
             if missing:
-                diagnostics.append({"severity": "error", "code": "PACKAGE_PART_MISSING", "parts": missing})
+                diagnostics.append(
+                    {
+                        "severity": "error",
+                        "code": "PACKAGE_PART_MISSING",
+                        "kind": kind,
+                        "parts": missing,
+                    }
+                )
             xml_parts: list[str] = []
             source_ids: list[str] = []
             for name in sorted(item for item in names if item.endswith((".xml", ".rels"))):
@@ -34,7 +57,14 @@ def inspect_package(path: pathlib.Path, kind: str) -> dict:
                     xml_parts.append(name)
                     source_ids.extend(element.attrib["ID"] for element in root.iter() if "ID" in element.attrib)
                 except ET.ParseError as error:
-                    diagnostics.append({"severity": "error", "code": "INVALID_XML", "part": name, "message": str(error)})
+                    diagnostics.append(
+                        {
+                            "severity": "error",
+                            "code": "INVALID_XML",
+                            "part": name,
+                            "message": str(error),
+                        }
+                    )
             return {
                 "protocol": "electroscheme-visio-tool/1",
                 "operation": "inspect",
