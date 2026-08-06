@@ -3,9 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "engines": { "node": "24.19.0" },
+  "engines": {
+    "node": "24.19.0"
+  },
   "scripts": {
-    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "typecheck": "tsc -p tsconfig.json && vue-tsc -p shared/ui/tsconfig.json --noEmit && tsc -p electron/tsconfig.json --noEmit",
     "test:core": "tsx --test shared/core/test/*.test.ts",
     "test": "npm run typecheck && npm run test:core",
     "build:ui": "vite build --config shared/ui/vite.config.ts",
