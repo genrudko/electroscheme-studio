@@ -1,66 +1,73 @@
-﻿# ElectroScheme Studio
+# ElectroScheme Studio
 
-**ElectroScheme Studio** is a local-first WebUI application for creating interactive electrical schemes with ГОСТ-oriented symbol libraries, smart equipment objects, connection topology, validation checks, and export to PDF/JPEG/SVG.
+**ElectroScheme Studio** — самостоятельное local-first приложение для создания, редактирования, проверки и выпуска нормальных электрических схем и связанных электротехнических схем.
 
-Repository code name: $ProjectCodeName.
+## Текущий статус
 
-## Scope
+Проект находится в фазе **project refoundation**.
 
-The project is not intended to replace a full CAD system. The first target is a focused engineering editor:
+Существующий код на `main` зафиксирован как исследовательский prototype baseline. Он содержит полезные наработки по SVG-редактору, VSDX/ShapeSheet, библиотеке фигур, параметрическим шинам, привязкам и UI, но пока не является MVP и не считается устойчивой архитектурной основой продукта.
 
-- SVG-based scheme canvas;
-- smart electrical symbols with terminals;
-- model-backed connections;
-- ГОСТ-oriented visual profiles;
-- project JSON format;
-- local WebUI;
-- PDF/JPEG/SVG export later.
+Активная программа переоснования:
 
-## Planned stack
+- issue: `PROJECT-REFOUNDATION-001` / #1;
+- branch: `governance/project-refoundation-001`;
+- baseline main: `6e1209d800c0cc65da4a922506586d5a100c2a84`.
 
-### Backend
+## Целевой продукт
 
-- Python 3.12+
-- FastAPI
-- Pydantic
-- Uvicorn
+Приложение должно:
 
-### Frontend
+- работать на Windows и Linux;
+- быть desktop-first и local-first;
+- не зависеть от постоянного подключения к серверу или облаку;
+- поддерживать инженерные объекты, а не только графические примитивы;
+- использовать модель терминалов, соединений и топологии;
+- поддерживать ГОСТ/СТО-профили с доказуемой нормативной трассировкой;
+- использовать VSDX/VSSX ShapeSheet как один из источников геометрии, размеров, connection points и свойств;
+- превосходить универсальные редакторы в специализированных сценариях электрических схем;
+- сохранять схемы в версионируемом открытом формате;
+- обеспечивать качественную печать и экспорт.
 
-- Node.js LTS
-- Vue 3
-- Vite
-- TypeScript
-- SVG renderer
+Продукт не обязан воспроизводить весь функционал Visio, AutoCAD или универсальных CAD-систем. Его преимущество должно быть в электротехнической предметной модели, скорости инженерной работы, корректных символах, соединениях, проверках и выпуске схем.
 
-### Storage
+## Архитектурная позиция
 
-- JSON project format first;
-- SQLite later.
+Чистый browser-only WebUI больше не является обязательным ограничением.
 
-## Development workflow
+Существующие Vue 3 + TypeScript + SVG наработки могут быть сохранены как редакторский слой внутри кроссплатформенной desktop-оболочки. Выбор конкретной оболочки выполняется отдельным сравнительным spike и ADR; заранее фиксировать Electron, Tauri, Qt или другой вариант запрещено.
 
-This repository is maintained through PowerShell patch scripts.
+До завершения reconciliation существуют несколько несовместимых моделей состояния (`Project`, `EditorDocument`, локальные структуры `CanvasViewport`). Они не должны развиваться параллельно. Цель следующего архитектурного этапа — один canonical document model и один mutation/command path.
 
-Patch directory:
+## Разработка
 
-`	ext
-C:\1
-`
+GitHub является единственным canonical source:
 
-Project directory:
+```text
+issue
+→ branch
+→ Draft PR
+→ CI / evidence
+→ содержательная приёмка владельцем
+→ явная команда merge
+```
 
-`	ext
-G:\electroscheme-studio
-`
+Локальные numbered PowerShell patch scripts больше не являются способом управления продуктовой разработкой. Они могут сохраняться как исторические или вспомогательные инструменты, но изменения должны быть представлены и проверяемы через GitHub diff.
 
-Typical flow:
+## Canonical documentation
 
-1. Apply a patch from C:\1.
-2. Review PowerShell output.
-3. Send the full log.
-4. Continue with the next patch or repair patch.
+Начинать чтение с:
 
-## Current status
+- `AGENTS.md`;
+- `docs/INDEX.md`;
+- `docs/project/CURRENT_STATE.md`;
+- `docs/project/PRODUCT_SCOPE.md`;
+- `docs/project/MVP_AND_DEMO.md`;
+- `docs/project/IMPLEMENTATION_PROGRAM.yaml`;
+- `docs/architecture/SYSTEM_ARCHITECTURE.md`;
+- `docs/architecture/DOMAIN_INVARIANTS.md`;
+- `docs/quality/ACCEPTANCE_GATES.md`.
 
-Initial repository bootstrap.
+## Важно
+
+Текущий prototype нельзя выдавать за готовое приложение. До архитектурной сверки запрещено продолжать развитие через очередные UI-repair патчи, массово переписывать код или удалять существующие исследовательские активы.
