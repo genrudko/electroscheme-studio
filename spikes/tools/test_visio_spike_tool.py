@@ -14,6 +14,14 @@ FIXTURES = ROOT / "shared" / "fixtures" / "visio"
 CANONICAL = ROOT / "shared" / "fixtures" / "canonical-project.json"
 
 
+def expected_hashes() -> dict[str, str]:
+    result: dict[str, str] = {}
+    for line in (FIXTURES / "SHA256SUMS.txt").read_text(encoding="utf-8").splitlines():
+        digest, name = line.split(maxsplit=1)
+        result[name.strip()] = digest
+    return result
+
+
 class VisioFixtureTests(unittest.TestCase):
     def run_tool(self, *args: str) -> dict:
         result = subprocess.run(
@@ -24,17 +32,27 @@ class VisioFixtureTests(unittest.TestCase):
         )
         return json.loads(result.stdout)
 
+    def generate(self, directory: pathlib.Path) -> None:
+        subprocess.run(
+            [sys.executable, str(GENERATOR), str(directory), "--canonical", str(CANONICAL)],
+            check=True,
+        )
+
     def test_vsdx(self) -> None:
         result = self.run_tool("inspect", "vsdx", str(FIXTURES / "controlled-minimal.vsdx"))
         self.assertEqual(result["status"], "ok")
         self.assertIn("visio/pages/page1.xml", result["parts"])
         self.assertTrue({"1", "2", "3"}.issubset(set(result["sourceIds"])))
 
-    def test_vssx(self) -> None:
-        result = self.run_tool("inspect", "vssx", str(FIXTURES / "controlled-master.vssx"))
-        self.assertEqual(result["status"], "ok")
-        self.assertIn("visio/masters/master1.xml", result["parts"])
-        self.assertIn("10", result["sourceIds"])
+    def test_generated_vssx(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            generated = pathlib.Path(temporary)
+            self.generate(generated)
+            stencil = generated / "controlled-master.vssx"
+            result = self.run_tool("inspect", "vssx", str(stencil))
+            self.assertEqual(result["status"], "ok")
+            self.assertIn("visio/masters/master1.xml", result["parts"])
+            self.assertIn("10", result["sourceIds"])
 
     def test_generated_package_structure(self) -> None:
         with zipfile.ZipFile(FIXTURES / "controlled-minimal.vsdx") as archive:
@@ -42,16 +60,17 @@ class VisioFixtureTests(unittest.TestCase):
             self.assertIn(b"Q-SPK-1", archive.read("visio/pages/page1.xml"))
 
     def test_fixtures_are_reproducible_byte_for_byte(self) -> None:
+        expected = expected_hashes()
         with tempfile.TemporaryDirectory() as temporary:
             generated = pathlib.Path(temporary)
-            subprocess.run(
-                [sys.executable, str(GENERATOR), str(generated), "--canonical", str(CANONICAL)],
-                check=True,
+            self.generate(generated)
+            self.assertEqual(
+                (generated / "controlled-minimal.vsdx").read_bytes(),
+                (FIXTURES / "controlled-minimal.vsdx").read_bytes(),
             )
             for name in ("controlled-minimal.vsdx", "controlled-master.vssx"):
-                expected = hashlib.sha256((FIXTURES / name).read_bytes()).hexdigest()
                 actual = hashlib.sha256((generated / name).read_bytes()).hexdigest()
-                self.assertEqual(actual, expected, name)
+                self.assertEqual(actual, expected[name], name)
 
     def test_generate_vsdx_from_canonical_document(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:

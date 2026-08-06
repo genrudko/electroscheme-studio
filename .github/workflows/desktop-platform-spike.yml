@@ -33,7 +33,7 @@ jobs:
       - name: Typecheck and canonical core tests
         working-directory: spikes
         run: npm test
-      - name: VSDX and VSSX package tests
+      - name: VSDX and generated VSSX package tests
         working-directory: spikes
         run: python -m unittest tools/test_visio_spike_tool.py -v
       - name: Build shared Vue SVG renderer and Electron boundary
@@ -77,6 +77,9 @@ jobs:
       - name: Build Tauri executable
         working-directory: spikes/tauri
         run: npx tauri build --no-bundle
+      - name: Generate controlled runtime Visio fixtures
+        working-directory: spikes
+        run: python tools/generate_controlled_visio_fixtures.py evidence/generated/visio-fixtures --canonical shared/fixtures/canonical-project.json
       - name: Package Electron executable directory
         working-directory: spikes
         run: npm run package:electron
