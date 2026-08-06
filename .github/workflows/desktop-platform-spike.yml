@@ -1,27 +1,34 @@
 name: Desktop Platform Spike
+
 on:
   push:
     branches: [architecture/desktop-platform-and-core-spike-001]
   pull_request:
     branches: [main]
+
 permissions:
   contents: read
+
 jobs:
   shared-contracts:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
-        with: { fetch-depth: 0 }
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v4
-        with: { node-version: 24.19.0 }
+        with:
+          node-version: 24.19.0
       - uses: actions/setup-python@v5
-        with: { python-version: '3.13' }
+        with:
+          python-version: '3.13'
       - name: Install exact JavaScript dependencies
         working-directory: spikes
         run: npm install --ignore-scripts
       - name: Verify changed scope
         working-directory: spikes
-        env: { SPIKE_BASE_SHA: b95d7111d9c5a36db4c355ee91f742efea8ecc10 }
+        env:
+          SPIKE_BASE_SHA: b95d7111d9c5a36db4c355ee91f742efea8ecc10
         run: npm run verify:scope
       - name: Typecheck and canonical core tests
         working-directory: spikes
@@ -36,7 +43,11 @@ jobs:
         working-directory: spikes
         run: npm install --package-lock-only --ignore-scripts
       - uses: actions/upload-artifact@v4
-        with: { name: desktop-spike-lock-evidence, path: spikes/package-lock.json, if-no-files-found: error }
+        with:
+          name: desktop-spike-lock-evidence
+          path: spikes/package-lock.json
+          if-no-files-found: error
+
   candidate-build:
     strategy:
       fail-fast: false
@@ -46,11 +57,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-        with: { node-version: 24.19.0 }
+        with:
+          node-version: 24.19.0
       - uses: actions/setup-python@v5
-        with: { python-version: '3.13' }
+        with:
+          python-version: '3.13'
       - uses: dtolnay/rust-toolchain@stable
-        with: { toolchain: 1.97.1 }
+        with:
+          toolchain: 1.97.1
       - name: Install Linux Tauri runtime dependencies
         if: runner.os == 'Linux'
         run: sudo apt-get update && sudo apt-get install -y libwebkit2gtk-4.1-dev libgtk-3-dev librsvg2-dev patchelf xvfb
@@ -69,43 +83,58 @@ jobs:
       - name: Package Tauri portable evidence directory
         working-directory: spikes
         run: npm run package:tauri
-      - name: Electron launch smoke (Linux)
+      - name: Benchmark shared canonical/editor core
+        working-directory: spikes
+        shell: bash
+        run: npm run benchmark:shared -- "evidence/generated/shared-benchmark-${RUNNER_OS}.json"
+      - name: Measure Electron startup and process-tree RSS (Linux)
         if: runner.os == 'Linux'
         working-directory: spikes
-        env: { SPIKE_SMOKE: '1' }
-        run: timeout 30s xvfb-run -a ./evidence/generated/electron-package/ElectroSchemeSpikeElectron-linux-x64/ElectroSchemeSpikeElectron
-      - name: Tauri launch smoke (Linux)
+        run: npm run measure:candidate -- electron evidence/generated/electron-runtime-linux.json -- xvfb-run -a ./evidence/generated/electron-package/ElectroSchemeSpikeElectron-linux-x64/ElectroSchemeSpikeElectron
+      - name: Measure Tauri startup and process-tree RSS (Linux)
         if: runner.os == 'Linux'
         working-directory: spikes
-        env: { SPIKE_SMOKE: '1', WEBKIT_DISABLE_COMPOSITING_MODE: '1' }
-        run: timeout 30s xvfb-run -a ./evidence/generated/tauri-portable-linux-x64/ElectroSchemeSpikeTauri
-      - name: Electron launch smoke (Windows)
+        env:
+          WEBKIT_DISABLE_COMPOSITING_MODE: '1'
+        run: npm run measure:candidate -- tauri evidence/generated/tauri-runtime-linux.json -- xvfb-run -a ./evidence/generated/tauri-portable-linux-x64/ElectroSchemeSpikeTauri
+      - name: Measure Electron startup and process-tree RSS (Windows)
         if: runner.os == 'Windows'
         working-directory: spikes
         shell: pwsh
-        run: |
-          $env:SPIKE_SMOKE='1'
-          $p=Start-Process -FilePath '.\evidence\generated\electron-package\ElectroSchemeSpikeElectron-win32-x64\ElectroSchemeSpikeElectron.exe' -PassThru
-          if(-not $p.WaitForExit(30000)){Stop-Process -Id $p.Id -Force; throw 'Electron smoke timeout'}
-          if($p.ExitCode -ne 0){throw "Electron exit $($p.ExitCode)"}
-      - name: Tauri launch smoke (Windows)
+        run: npm run measure:candidate -- electron evidence/generated/electron-runtime-windows.json -- .\evidence\generated\electron-package\ElectroSchemeSpikeElectron-win32-x64\ElectroSchemeSpikeElectron.exe
+      - name: Measure Tauri startup and process-tree RSS (Windows)
         if: runner.os == 'Windows'
         working-directory: spikes
         shell: pwsh
-        run: |
-          $env:SPIKE_SMOKE='1'
-          $p=Start-Process -FilePath '.\evidence\generated\tauri-portable-win32-x64\ElectroSchemeSpikeTauri.exe' -PassThru
-          if(-not $p.WaitForExit(30000)){Stop-Process -Id $p.Id -Force; throw 'Tauri smoke timeout'}
-          if($p.ExitCode -ne 0){throw "Tauri exit $($p.ExitCode)"}
-      - name: Record artifact measurements
+        run: npm run measure:candidate -- tauri evidence/generated/tauri-runtime-windows.json -- .\evidence\generated\tauri-portable-win32-x64\ElectroSchemeSpikeTauri.exe
+      - name: Record artifact sizes and toolchain conditions
         shell: python
         run: |
-          import json, pathlib, platform
-          root=pathlib.Path('spikes')
-          paths=[root/'evidence'/'generated'/'electron-package', root/'evidence'/'generated'/f"tauri-portable-{'win32' if platform.system()=='Windows' else 'linux'}-x64"]
-          def size(p): return sum(f.stat().st_size for f in p.rglob('*') if f.is_file()) if p.exists() else 0
-          out={'runner_os':platform.platform(),'python':platform.python_version(),'candidate_sizes_bytes':{'electron':size(paths[0]),'tauri_portable':size(paths[1])},'measurement_scope':'CI output tree; not universal runtime benchmark'}
-          d=root/'evidence'/'generated';d.mkdir(parents=True,exist_ok=True);(d/f'measurements-{platform.system().lower()}.json').write_text(json.dumps(out,indent=2)+'\n')
+          import json, pathlib, platform, subprocess
+          root = pathlib.Path('spikes')
+          tauri_name = 'tauri-portable-win32-x64' if platform.system() == 'Windows' else 'tauri-portable-linux-x64'
+          paths = {
+              'electron': root / 'evidence' / 'generated' / 'electron-package',
+              'tauri_portable': root / 'evidence' / 'generated' / tauri_name,
+          }
+          def size(path):
+              return sum(item.stat().st_size for item in path.rglob('*') if item.is_file()) if path.exists() else 0
+          def version(command):
+              return subprocess.run(command, text=True, capture_output=True, check=True).stdout.strip()
+          output = {
+              'runner_os': platform.platform(),
+              'runner_architecture': platform.machine(),
+              'python': platform.python_version(),
+              'node': version(['node', '--version']),
+              'npm': version(['npm', '--version']),
+              'rustc': version(['rustc', '--version']),
+              'cargo': version(['cargo', '--version']),
+              'candidate_sizes_bytes': {name: size(path) for name, path in paths.items()},
+              'measurement_scope': 'GitHub Actions output trees from this exact run; not universal runtime benchmark',
+          }
+          destination = root / 'evidence' / 'generated'
+          destination.mkdir(parents=True, exist_ok=True)
+          (destination / f'measurements-{platform.system().lower()}.json').write_text(json.dumps(output, indent=2) + '\n')
       - uses: actions/upload-artifact@v4
         with:
           name: desktop-spike-${{ runner.os }}-${{ runner.arch }}
