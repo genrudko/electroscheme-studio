@@ -12,6 +12,7 @@
     "build:electron": "tsc -p electron/tsconfig.json",
     "build": "npm run build:ui && npm run build:electron",
     "package:electron": "node scripts/package-electron.mjs",
+    "package:tauri": "node scripts/package-tauri.mjs",
     "verify:scope": "node scripts/verify-changed-scope.mjs"
   },
   "devDependencies": {

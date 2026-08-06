@@ -1,5 +1,5 @@
 import { invoke } from "@tauri-apps/api/core";
-import { listen } from "@tauri-apps/api/event";
+import { getCurrentWebview } from "@tauri-apps/api/webview";
 import type { HostPorts } from "@core";
 
 function tauriPorts(): HostPorts {
@@ -13,10 +13,9 @@ function tauriPorts(): HostPorts {
     writePath: (path, content) => invoke<void>("write_path", { path, content }),
     writeStructured: text => invoke<void>("clipboard_write", { text }),
     readStructured: () => invoke<string>("clipboard_read"),
-    subscribe: async handler => {
-      const unlisten = await listen<{ paths: string[] }>("tauri://drag-drop", event => event.payload.paths.forEach(handler));
-      return unlisten;
-    },
+    subscribe: async handler => getCurrentWebview().onDragDropEvent(event => {
+      if (event.payload.type === "drop") event.payload.paths.forEach(handler);
+    }),
     readDroppedPath: path => invoke<string>("read_path", { path }),
     readBrowserDroppedFile: async () => null,
     exportPdf: (defaultName, bytes) => invoke<boolean>("export_pdf", { defaultName, bytes: Array.from(bytes) }),
