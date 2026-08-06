@@ -56,9 +56,11 @@ async function waitForExit() {
 }
 
 const ready = await waitForReady();
+if (!Number.isInteger(ready.pid) || ready.pid <= 0) throw new Error(`${candidate} ready evidence does not contain a valid process pid`);
 const startupMs = performance.now() - started;
 await sleep(400);
-const rssBytes = process.platform === "win32" ? descendantsWindows(child.pid) : descendantsLinux(child.pid);
+const rssBytes = process.platform === "win32" ? descendantsWindows(ready.pid) : descendantsLinux(ready.pid);
+if (!Number.isFinite(rssBytes) || rssBytes <= 0) throw new Error(`${candidate} process-tree RSS was not measurable from pid ${ready.pid}`);
 const exitCode = await waitForExit();
 if (exitCode !== 0) throw new Error(`${candidate} exited with ${exitCode}`);
 const result = {
@@ -67,7 +69,8 @@ const result = {
   command: [command, ...args],
   startup_to_renderer_ready_ms: startupMs,
   idle_process_tree_rss_bytes: rssBytes,
-  measurement_scope: "single CI launch; ready marker emitted after Vue mount and host handshake; RSS is root process plus descendants 400 ms after ready",
+  measurement_root_pid: ready.pid,
+  measurement_scope: "single CI launch; ready marker emitted after Vue mount and host handshake; RSS is the candidate-reported root process plus descendants 400 ms after ready; display-server wrapper processes are excluded",
   ready
 };
 await writeFile(output, JSON.stringify(result, null, 2) + "\n", "utf8");
