@@ -11,12 +11,10 @@
 - Active issue: #1 `PROJECT-REFOUNDATION-001`
 - Active branch: `governance/project-refoundation-001`
 - Active Draft PR: #2 `[PROJECT-REFOUNDATION-001] Re-found product architecture and GitHub workflow`
-- Current exact head: `2d613176858bd339e0abf1089595ab44d4691200`
-- `behind_by`: `0`
-- `ahead_by`: `23`
-- changed files: `14`
 
 До явного merge-командования `main` остаётся неизменённым prototype baseline. PR #2 остаётся Draft.
+
+Exact branch head, `ahead_by`, `behind_by`, changed-file count and current workflow results are volatile GitHub state and must be read from PR #2 before every continuation or acceptance action. They are intentionally not self-recorded as immutable values inside a commit that changes the head itself.
 
 ## Фактическая зрелость
 
@@ -148,13 +146,12 @@ DESKTOP-PLATFORM-AND-CORE-SPIKE-001
 
 Его контракт находится в `docs/project/NEXT_WORK_ITEM.md`.
 
-## Проверки текущего head
+## Проверки
 
-- GitHub Actions CI run `31102061532`: `SUCCESS`.
-- CI остаётся старым placeholder check и не считается product verification.
-- changed-file boundary: documentation/governance only;
-- product code changes: `0`;
-- branch is mergeable and not behind `main`.
+- Current PR changes remain documentation/governance only.
+- Product code changes: `0`.
+- Existing CI remains a prototype placeholder and cannot be represented as product verification.
+- Acceptance requires a fresh factual read of PR #2 exact head, compare state and workflow runs.
 
 ## Состояние программы
 
