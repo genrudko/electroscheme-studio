@@ -27,12 +27,13 @@ const exitPromise = new Promise((resolve, reject) => {
 
 function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
 async function waitForReady() {
-  const deadline = performance.now() + 30_000;
+  const readyTimeoutMs = candidate === "tauri" ? 60_000 : 30_000;
+  const deadline = performance.now() + readyTimeoutMs;
   while (performance.now() < deadline) {
     try { return JSON.parse(await readFile(readyFile, "utf8")); } catch { await sleep(50); }
   }
   child.kill();
-  throw new Error(`${candidate} did not report ready within 30 seconds`);
+  throw new Error(`${candidate} did not report ready within ${readyTimeoutMs / 1000} seconds`);
 }
 function descendantsLinux(rootPid) {
   const rows = spawnSync("ps", ["-e", "-o", "pid=,ppid=,rss="], { encoding: "utf8" }).stdout.trim().split(/\r?\n/).map(line => line.trim().split(/\s+/).map(Number));
