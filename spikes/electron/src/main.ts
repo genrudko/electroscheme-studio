@@ -4,7 +4,9 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
+const automationLaunch = process.env.SPIKE_SMOKE === "1" || process.env.SPIKE_MEASURE === "1";
 app.disableHardwareAcceleration();
+if (automationLaunch) app.commandLine.appendSwitch("disable-gpu");
 
 const processStartedAt = Date.now();
 const here = path.dirname(fileURLToPath(import.meta.url));
@@ -84,7 +86,6 @@ function register(): void {
 
 app.whenReady().then(() => {
   register();
-  const automationLaunch = process.env.SPIKE_SMOKE === "1" || process.env.SPIKE_MEASURE === "1";
   windowRef = new BrowserWindow({
     width: 1000,
     height: 700,
