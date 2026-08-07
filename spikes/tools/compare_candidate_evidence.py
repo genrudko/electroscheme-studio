@@ -37,7 +37,7 @@ def require_sha256(value: Any, label: str) -> str:
 
 
 def package_evidence(data: dict[str, Any]) -> dict[str, Any]:
-    package = data.get("harness", {}).get("package_evidence", {})
+    package = data.get("package_evidence") or data.get("harness", {}).get("package_evidence", {})
     require(package.get("artifact_layout_round_trip_verified") is True,
             "scenario/runtime did not verify archive round trip")
     require(package.get("launched_from_verified_package_root") is True,
