@@ -1,115 +1,120 @@
 # Desktop platform manual acceptance protocol
 
-Status: `OWNER_OR_INTERACTIVE_RUNNER_EVIDENCE_REQUIRED`
+Status: `OWNER_OR_INTERACTIVE_RUNNER_EVIDENCE_REQUIRED`  
+Selected host candidate: `Tauri 2`
 
-Automated CI exercises canonical files, structured clipboard, deterministic PDF, Python tooling and VSDX/VSSX operations inside packaged Electron and Tauri candidates. Native dialogs, OS drag/drop, independent clipboard applications and printer-driver behavior still require a real interactive desktop.
+This protocol validates the remaining real-desktop behavior of the selected Tauri candidate. Automated CI already proves packaged canonical-file, structured-clipboard, deterministic-PDF, Python-tool and VSDX/VSSX scenarios. It does not prove native dialogs, real OS drag/drop, independent clipboard applications or printer-driver behavior.
 
-No project build is required for this protocol.
+No project build is required.
 
-## 1. Select and verify the exact artifacts
+## 1. Select exact artifacts
 
-Use only the Windows and Linux artifacts from the workflow run and exact head recorded in Draft PR #4:
+Use only the final Windows and Linux artifacts recorded in Draft PR #4:
 
 - `desktop-spike-Windows-X64`;
 - `desktop-spike-Linux-X64`.
 
-For each downloaded GitHub artifact:
+For each artifact:
 
-1. Record workflow run ID, exact head, artifact ID/name and GitHub artifact digest from PR metadata.
+1. Record workflow run ID, exact head, artifact ID/name and GitHub digest from PR #4.
 2. Extract the outer GitHub artifact ZIP into a new temporary directory.
-3. Open `evidence/generated/measurements-windows.json` or `measurements-linux.json` and confirm its `workflow_run_id`, `exact_head`, artifact name and lock SHA values match PR metadata.
-4. For each candidate, open `evidence/generated/<candidate>-package-manifest-<platform>.json`.
-5. Verify `artifact_layout_round_trip_verified` is `true`.
-6. Verify the portable archive SHA-256:
+3. Open `evidence/generated/measurements-windows.json` or `measurements-linux.json`.
+4. Confirm `workflow_run_id`, `exact_head`, artifact name and lock SHA values match PR #4.
+5. Open `evidence/generated/tauri-package-manifest-windows.json` or `tauri-package-manifest-linux.json`.
+6. Confirm `artifact_layout_round_trip_verified: true`.
+7. Verify the authoritative Tauri archive SHA-256 against `archive_sha256` in the manifest.
 
-   Windows PowerShell:
+Windows:
 
-   ```powershell
-   Get-FileHash .\evidence\generated\archives\electron-windows-x64.tar.gz -Algorithm SHA256
-   Get-FileHash .\evidence\generated\archives\tauri-windows-x64.tar.gz -Algorithm SHA256
-   ```
+```powershell
+Get-FileHash .\evidence\generated\archives\tauri-windows-x64.tar.gz -Algorithm SHA256
+```
 
-   Linux:
+Linux:
 
-   ```bash
-   sha256sum evidence/generated/archives/electron-linux-x64.tar.gz
-   sha256sum evidence/generated/archives/tauri-linux-x64.tar.gz
-   ```
+```bash
+sha256sum evidence/generated/archives/tauri-linux-x64.tar.gz
+```
 
-7. Compare each result with `archive_sha256` in the corresponding package manifest.
-8. Extract each verified `tar.gz` into a separate empty directory. The archive, not the surrounding GitHub ZIP, is authoritative for Linux executable modes.
+8. Extract the verified `tar.gz` into a separate empty directory. Do not launch from source checkout, `node_modules`, Cargo `target` or CI staging directories.
 
-Current spike runtime prerequisites are not build prerequisites:
+Current spike runtime prerequisites:
 
 - Python 3.13 available as `python` on Windows and `python3` on Linux;
-- WebView2 available for the Windows Tauri candidate;
-- WebKitGTK 4.1 runtime libraries available for the Linux Tauri candidate.
+- WebView2 available on Windows;
+- WebKitGTK 4.1 runtime libraries available on Linux.
 
-Record missing prerequisites as `FAILED_WITH_EVIDENCE`; do not rebuild or silently modify the package.
+These are spike prerequisites, not accepted production packaging requirements. Missing prerequisites are recorded as `FAILED_WITH_EVIDENCE`; do not rebuild or silently alter the package.
 
 ## 2. Launch paths
 
-Launch only from the extracted portable archives:
+Launch only from the extracted Tauri archive:
 
-| Platform | Candidate | Executable |
-|---|---|---|
-| Windows | Electron | `ElectroSchemeSpikeElectron-win32-x64\ElectroSchemeSpikeElectron.exe` |
-| Windows | Tauri | `tauri-portable-win32-x64\ElectroSchemeSpikeTauri.exe` |
-| Linux | Electron | `ElectroSchemeSpikeElectron-linux-x64/ElectroSchemeSpikeElectron` |
-| Linux | Tauri | `tauri-portable-linux-x64/ElectroSchemeSpikeTauri` |
+| Platform | Executable |
+|---|---|
+| Windows | `tauri-portable-win32-x64\ElectroSchemeSpikeTauri.exe` |
+| Linux | `tauri-portable-linux-x64/ElectroSchemeSpikeTauri` |
 
-Do not launch from a source checkout, `node_modules`, Cargo `target` directory or CI staging path.
+Record:
+
+- OS version;
+- runtime prerequisites;
+- time from launch to usable editor-ready state;
+- whether any security/runtime warning appears.
+
+The Linux timing is especially important because hosted/Xvfb evidence showed a ~30 s startup anomaly. Record the real interactive result rather than assuming the CI value is representative.
 
 ## 3. Native open/save dialogs
 
-For each candidate and OS:
+On each OS:
 
-1. Launch the executable listed above.
+1. Launch Tauri.
 2. Select **Save**.
-3. Confirm a platform-native save dialog appears, defaults to `desktop-platform-spike.esspike.json`, filters JSON files and permits cancellation without creating a file.
+3. Confirm a platform-native save dialog appears, defaults to `desktop-platform-spike.esspike.json`, filters JSON and permits cancellation without creating a file.
 4. Save to a non-repository temporary directory.
-5. Select **Open**, choose the saved file and confirm the editor returns to `ready` without semantic or visual changes.
-6. Compare the saved file with the packaged `fixtures/canonical-project.json` for Tauri or `resources/app.asar.unpacked/shared/fixtures/canonical-project.json` for Electron after deterministic normalization.
-7. Record OS version, candidate, artifact ID, screenshot/video, saved path and SHA-256.
+5. Select **Open**, choose the saved file and confirm the editor returns to ready without semantic/visual change.
+6. Compare the saved file with packaged `fixtures/canonical-project.json` after deterministic normalization.
+7. Preserve screenshot/video, saved path and SHA-256.
 
 ## 4. Native file drag/drop
 
-1. Drag the saved canonical JSON file from the OS file manager into the SVG sheet.
-2. Confirm exactly one drop event is handled and the project opens.
+1. Drag the saved canonical JSON from the OS file manager into the SVG sheet.
+2. Confirm exactly one drop is handled and the project opens.
 3. Cancel a second drag and confirm no file is opened.
-4. Drop an invalid JSON file and confirm a visible error without replacement of the current project.
-5. Record video and application diagnostics.
+4. Drop invalid JSON and confirm a visible error without replacing the current project.
+5. Preserve video and diagnostics.
 
-## 5. Structured clipboard across the application boundary
+## 5. Structured clipboard across applications
 
 1. Select the test figure and use **Copy**.
 2. Paste into an independent plain-text editor and preserve the versioned JSON payload.
-3. Copy that payload back from the text editor and select **Paste**.
-4. Confirm it is accepted as structured data and does not become arbitrary SVG/DOM state.
-5. Repeat after closing and reopening the candidate to identify platform clipboard-lifetime behavior.
-6. Record the clipboard payload and SHA-256.
+3. Copy that payload back and use **Paste** in Tauri.
+4. Confirm it is accepted as structured editor data and does not become arbitrary SVG/DOM state.
+5. Repeat after closing/reopening the app to observe OS clipboard lifetime.
+6. Preserve payload and SHA-256.
 
 ## 6. PDF and print boundary
 
 1. Select **PDF** and save through the native dialog.
 2. Open the PDF in an independent viewer.
-3. Confirm it opens without a repair warning and contains the expected title/content.
-4. Invoke the candidate's platform print path when available and print through the OS PDF printer.
-5. Record viewer, OS and printer-driver versions plus output SHA-256.
+3. Confirm it opens without repair warning and contains expected title/content.
+4. Invoke the available platform print path and print through the OS PDF printer where available.
+5. Record viewer, OS, printer-driver versions and output SHA-256.
 
-The automated deterministic PDF proves logical output equality. It does not prove production typography, pagination or printer-driver compatibility.
+Automated deterministic PDF equality does not prove production typography, pagination or printer-driver compatibility.
 
-## 7. Evidence record
+## 7. Evidence result
 
-For every candidate/OS pair preserve:
+Preserve for each OS:
 
-- exact workflow run and head;
+- exact workflow run/head;
 - artifact ID/name/digest;
-- package manifest and archive SHA-256;
-- OS/runtime prerequisites;
-- screen recording or screenshots;
-- saved canonical JSON and PDF outputs with SHA-256;
-- result and observed diagnostics.
+- Tauri package manifest and archive SHA;
+- OS/runtime versions;
+- screenshots/video;
+- saved JSON/PDF outputs and SHA;
+- startup observation;
+- result and diagnostics.
 
 Use only:
 
@@ -117,4 +122,4 @@ Use only:
 - `FAILED_WITH_EVIDENCE`;
 - `NOT_RUN`.
 
-Do not convert automated package/build success into a manual interaction pass.
+Electron is not part of the owner manual acceptance protocol because it was rejected by the automated Windows secure-runtime comparison. Do not convert its Linux pass into product-host acceptance.

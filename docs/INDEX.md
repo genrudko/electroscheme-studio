@@ -1,7 +1,7 @@
 # ElectroScheme Studio — Documentation Index
 
 Статус: canonical index  
-Активный work item: `DESKTOP-PLATFORM-AND-CORE-SPIKE-001`  
+Активный work item: `DESKTOP-PLATFORM-AND-CORE-SPIKE-001` — acceptance candidate  
 Accepted main baseline: `b95d7111d9c5a36db4c355ee91f742efea8ecc10`
 
 ## Порядок чтения
@@ -19,10 +19,16 @@ Accepted main baseline: `b95d7111d9c5a36db4c355ee91f742efea8ecc10`
 11. `docs/architecture/DOMAIN_INVARIANTS.md` — обязательные инварианты модели и топологии.
 12. `docs/quality/ACCEPTANCE_GATES.md` — CI, тесты и evidence.
 13. `docs/decisions/0002_desktop_first_refoundation.md` — принятое desktop-first переоснование.
-14. `docs/architecture/spikes/DESKTOP_PLATFORM_AND_CORE_SPIKE_EXECUTION.md` — исполнимый план активного spike.
-15. `docs/architecture/spikes/CANDIDATE_EVIDENCE_BASELINE_2026-08-06.md` — официальный-source baseline по Tauri, Electron и Qt admission gate.
-16. `docs/architecture/spikes/PROTOTYPE_ASSET_INVENTORY.yaml` — factual inventory и dispositions прототипа.
-17. `docs/project/NEXT_WORK_ITEM.md` — исторически принятый контракт, по которому создан текущий work item; до завершения spike не является активным будущим заданием.
+14. `docs/decisions/0003_canonical_core_and_tool_boundaries.md` — pure TypeScript canonical core, FastAPI/Python/tool boundaries.
+15. `docs/decisions/0004_desktop_host_and_runtime_boundaries.md` — Tauri desktop-host candidate pending owner acceptance.
+16. `docs/architecture/spikes/DESKTOP_PLATFORM_AND_CORE_SPIKE_EXECUTION.md` — исполнимый план текущего spike.
+17. `docs/architecture/spikes/DESKTOP_PLATFORM_COMPARISON.md` — factual Tauri/Electron comparison and selection evidence.
+18. `docs/architecture/spikes/CANDIDATE_EVIDENCE_BASELINE_2026-08-06.md` — официальный-source baseline по Tauri, Electron и Qt admission gate.
+19. `docs/architecture/spikes/PROTOTYPE_ASSET_INVENTORY.yaml` — factual inventory и dispositions прототипа.
+20. `docs/architecture/spikes/PROTOTYPE_MIGRATION_MAP.md` — migration/disposition map.
+21. `docs/architecture/spikes/VISIO_INTEROPERABILITY_SPIKE_REPORT.md` — automated Visio boundary and remaining manual gate.
+22. `docs/project/CANONICAL_DOCUMENT_CORE_001_SCOPE.md` — exact production scope after P2.
+23. `docs/project/NEXT_WORK_ITEM.md` — current next-work-item contract.
 
 ## Владение документами
 
@@ -32,34 +38,48 @@ Accepted main baseline: `b95d7111d9c5a36db4c355ee91f742efea8ecc10`
 | `AGENTS.md` | Процесс разработки и change discipline |
 | `CURRENT_STATE.md` | Изменяемый фактический срез GitHub и проекта |
 | `PRODUCT_SCOPE.md` | Продуктовые границы и приоритеты |
-| `MARKET_ANALYSIS_INTAKE_2026-08-06.md` | Рыночные гипотезы, reference roles и доказательность |
-| `VISIO_INTEROPERABILITY_CONTRACT.md` | Compatibility boundary, diagnostics и acceptance corpus |
-| `PROTOTYPE_QUARANTINE.md` | Reuse, migration disposition и retirement прототипа |
-| `MVP_AND_DEMO.md` | Пользовательские acceptance scenarios |
 | `IMPLEMENTATION_PROGRAM.yaml` | Фазы, зависимости, статусы и gates |
 | `SYSTEM_ARCHITECTURE.md` | Целевая структура компонентов |
 | `DOMAIN_INVARIANTS.md` | Инварианты данных, геометрии и топологии |
+| `VISIO_INTEROPERABILITY_CONTRACT.md` | Compatibility boundary, diagnostics и acceptance corpus |
 | `ACCEPTANCE_GATES.md` | Обязательная проверка изменений |
-| `DESKTOP_PLATFORM_AND_CORE_SPIKE_EXECUTION.md` | Work packages, fixtures и exit criteria текущего spike |
-| `CANDIDATE_EVIDENCE_BASELINE_2026-08-06.md` | Проверенные возможности, риски и обязательные эксперименты кандидатов |
+| `DESKTOP_PLATFORM_COMPARISON.md` | Измеренная сравнительная evidence-база выбора host |
+| `0003_canonical_core_and_tool_boundaries.md` | Canonical core/runtime-tool ownership |
+| `0004_desktop_host_and_runtime_boundaries.md` | Desktop host/runtime decision candidate |
 | `PROTOTYPE_ASSET_INVENTORY.yaml` | Exact paths/SHAs, findings, dispositions и retirement conditions |
-| `docs/decisions/*` | Принятые архитектурные решения и последствия |
+| `CANONICAL_DOCUMENT_CORE_001_SCOPE.md` | Точный production boundary следующего work item |
+| `NEXT_WORK_ITEM.md` | Что разрешено начинать после принятия текущего work item |
+| `docs/decisions/*` | Принятые/предлагаемые архитектурные решения и последствия |
 
 ## Активный work item
 
-`DESKTOP-PLATFORM-AND-CORE-SPIKE-001` должен:
+`DESKTOP-PLATFORM-AND-CORE-SPIKE-001` находится в стадии окончательной приёмки.
 
-- сравнить Tauri и Electron на одном исполнимом сценарии;
-- допустить Qt к полному сравнению только при доказанном материальном преимуществе;
-- доказать один canonical writable document path;
-- изолировать desktop/platform adapters;
-- классифицировать prototype assets;
-- доказать controlled VSDX/VSSX read и минимальный VSDX write;
-- подтвердить открытие generated VSDX в Microsoft Visio на Windows;
-- принять ADR по desktop host/runtime и canonical core ownership;
-- подготовить точный `CANONICAL-DOCUMENT-CORE-001`.
+Автоматизировано доказано:
 
-Внутри этого spike запрещено строить полноценный MVP, новый постоянный UI, завершённую библиотеку символов или переносить `CanvasViewport` целиком.
+- один pure TypeScript canonical writable core boundary;
+- Tauri secure packaged scenario на Windows/Linux;
+- deterministic package/archive evidence;
+- cross-platform logical-output equality;
+- controlled VSDX/VSSX read и minimal VSDX write;
+- prototype asset dispositions;
+- Qt не прошёл admission threshold;
+- Electron retained only as comparison evidence because Windows secure packaged startup fails.
+
+Для окончательной owner acceptance остаются только:
+
+- `OWNER_OR_WINDOWS_VISIO_EVIDENCE_REQUIRED`;
+- `OWNER_OR_INTERACTIVE_RUNNER_EVIDENCE_REQUIRED`.
+
+PR #4 должен оставаться Draft до явной команды владельца.
+
+## Следующий work item
+
+После принятия и merge PR #4:
+
+`CANONICAL-DOCUMENT-CORE-001`
+
+Он не должен начинаться внутри текущего spike.
 
 ## Рыночный анализ
 
@@ -79,12 +99,7 @@ Accepted main baseline: `b95d7111d9c5a36db4c355ee91f742efea8ecc10`
 
 `docs/development/patch_*`, bootstrap-описания, ранние стратегии и старые VSDX-отчёты являются историческими или исследовательскими материалами.
 
-Они:
-
-- не удаляются без отдельного accepted work item;
-- не имеют приоритета над canonical документами;
-- могут содержать устаревшие планы, пути и patch-script инструкции;
-- классифицируются в prototype inventory.
+Они не имеют приоритета над canonical документами и не удаляются автоматически.
 
 При противоречии действует приоритет:
 
@@ -93,7 +108,7 @@ accepted ADR
 → DOMAIN_INVARIANTS / SYSTEM_ARCHITECTURE / VISIO_INTEROPERABILITY_CONTRACT
 → PROTOTYPE_QUARANTINE
 → IMPLEMENTATION_PROGRAM / MVP_AND_DEMO / PRODUCT_SCOPE
-→ active spike execution, candidate evidence and inventory documents
+→ active spike execution/comparison/evidence/inventory
 → accepted research intake
 → CURRENT_STATE
 → README / AGENTS
