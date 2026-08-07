@@ -94,7 +94,8 @@ app.whenReady().then(() => {
       contextIsolation: true,
       nodeIntegration: false,
       sandbox: true,
-      webSecurity: true
+      webSecurity: true,
+      offscreen: automationLaunch
     }
   });
   windowRef.webContents.setWindowOpenHandler(() => ({ action: "deny" }));
