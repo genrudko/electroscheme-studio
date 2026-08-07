@@ -5,6 +5,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const automationLaunch = process.env.SPIKE_SMOKE === "1" || process.env.SPIKE_MEASURE === "1";
+const offscreenAutomation = automationLaunch && process.platform !== "win32";
 app.disableHardwareAcceleration();
 if (automationLaunch) app.commandLine.appendSwitch("disable-gpu");
 
@@ -96,7 +97,7 @@ app.whenReady().then(() => {
       nodeIntegration: false,
       sandbox: true,
       webSecurity: true,
-      offscreen: automationLaunch
+      offscreen: offscreenAutomation
     }
   });
   windowRef.webContents.setWindowOpenHandler(() => ({ action: "deny" }));
