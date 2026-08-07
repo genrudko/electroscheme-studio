@@ -31,15 +31,52 @@ function formatExitCode(code) {
   if (typeof code !== "number") return String(code ?? "unknown");
   return `${code} (0x${(code >>> 0).toString(16).padStart(8, "0")})`;
 }
-async function electronDiagnosticSuffix() {
-  if (!electronLog) return "";
+function exitEvidence(code) {
+  if (typeof code !== "number") return { decimal: null, hex: null };
+  return { decimal: code, hex: `0x${(code >>> 0).toString(16).padStart(8, "0")}` };
+}
+async function electronDiagnosticText() {
+  if (!electronLog) return null;
   try {
     const text = await readFile(electronLog, "utf8");
-    const tail = text.slice(-16_000);
-    return `\nElectron Chromium log (${electronLog}):\n${tail || "<empty>"}`;
+    return text.slice(-16_000);
   } catch {
-    return `\nElectron Chromium log was not created at ${electronLog}`;
+    return null;
   }
+}
+async function diagnosticSuffix() {
+  if (!electronLog) return "";
+  const text = await electronDiagnosticText();
+  return text === null
+    ? `\nElectron Chromium log was not created at ${electronLog}`
+    : `\nElectron Chromium log (${electronLog}):\n${text || "<empty>"}`;
+}
+async function persistFailure(error, exitCode) {
+  const exit = exitEvidence(exitCode);
+  const nativeWindowsElectron = electronWindows && exit.hex === "0x80000003";
+  const failure = {
+    candidate,
+    status: "failed",
+    failure_class: nativeWindowsElectron ? "native_startup_failure" : "candidate_scenario_failure",
+    secure_runtime_required: true,
+    platform: process.platform,
+    architecture: process.arch,
+    error: error instanceof Error ? error.message : String(error),
+    exit_code_decimal: exit.decimal,
+    exit_code_hex: exit.hex,
+    harness: {
+      launch_command: [command, ...launchArgs],
+      working_directory: process.cwd(),
+      package_evidence: packageEvidence,
+      electron_windows_diagnostics: electronWindows ? {
+        no_stdio_init: true,
+        chromium_log: electronLog,
+        chromium_log_tail: await electronDiagnosticText(),
+        stack_dumping_enabled: true
+      } : null
+    }
+  };
+  await writeFile(output, JSON.stringify(failure, null, 2) + "\n", "utf8");
 }
 
 const child = spawn(command, launchArgs, {
@@ -63,12 +100,12 @@ async function waitForResult() {
   while (Date.now() < deadline) {
     try { return JSON.parse(await readFile(output, "utf8")); } catch {}
     if (observedExit) {
-      throw new Error(`${candidate} exited with ${formatExitCode(observedExitCode)} before producing scenario evidence${await electronDiagnosticSuffix()}`);
+      throw new Error(`${candidate} exited with ${formatExitCode(observedExitCode)} before producing scenario evidence${await diagnosticSuffix()}`);
     }
     await sleep(100);
   }
   child.kill();
-  throw new Error(`${candidate} did not produce scenario evidence within 60 seconds${await electronDiagnosticSuffix()}`);
+  throw new Error(`${candidate} did not produce scenario evidence within 60 seconds${await diagnosticSuffix()}`);
 }
 
 async function waitForExit() {
@@ -88,21 +125,26 @@ async function waitForExit() {
   }
 }
 
-const result = await waitForResult();
-const exitCode = await waitForExit();
-if (exitCode !== 0) throw new Error(`${candidate} exited with ${formatExitCode(exitCode)}${await electronDiagnosticSuffix()}`);
-if (result.status !== "ok") throw new Error(`${candidate} scenario status is ${result.status}: ${result.error ?? "check failure"}`);
-const failed = Object.entries(result.checks ?? {}).filter(([, value]) => value !== true).map(([name]) => name);
-if (failed.length) throw new Error(`${candidate} scenario checks failed: ${failed.join(", ")}`);
-result.harness = {
-  launch_command: [command, ...launchArgs],
-  working_directory: process.cwd(),
-  package_evidence: packageEvidence,
-  electron_windows_diagnostics: electronWindows ? {
-    no_stdio_init: true,
-    chromium_log: electronLog,
-    stack_dumping_enabled: true
-  } : null
-};
-await writeFile(output, JSON.stringify(result, null, 2) + "\n", "utf8");
-console.log(JSON.stringify(result, null, 2));
+try {
+  const result = await waitForResult();
+  const exitCode = await waitForExit();
+  if (exitCode !== 0) throw new Error(`${candidate} exited with ${formatExitCode(exitCode)}${await diagnosticSuffix()}`);
+  if (result.status !== "ok") throw new Error(`${candidate} scenario status is ${result.status}: ${result.error ?? "check failure"}`);
+  const failed = Object.entries(result.checks ?? {}).filter(([, value]) => value !== true).map(([name]) => name);
+  if (failed.length) throw new Error(`${candidate} scenario checks failed: ${failed.join(", ")}`);
+  result.harness = {
+    launch_command: [command, ...launchArgs],
+    working_directory: process.cwd(),
+    package_evidence: packageEvidence,
+    electron_windows_diagnostics: electronWindows ? {
+      no_stdio_init: true,
+      chromium_log: electronLog,
+      stack_dumping_enabled: true
+    } : null
+  };
+  await writeFile(output, JSON.stringify(result, null, 2) + "\n", "utf8");
+  console.log(JSON.stringify(result, null, 2));
+} catch (error) {
+  await persistFailure(error, observedExitCode);
+  throw error;
+}
