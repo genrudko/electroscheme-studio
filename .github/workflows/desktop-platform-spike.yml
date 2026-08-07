@@ -84,11 +84,7 @@ jobs:
               'exact_head': os.environ['SPIKE_EXACT_HEAD'],
               'artifact_name': 'desktop-spike-security-lock-evidence',
               'files': {
-                  name: {
-                      'path': str(path),
-                      'sha256': hashlib.sha256(path.read_bytes()).hexdigest(),
-                      'bytes': path.stat().st_size,
-                  }
+                  name: {'path': str(path), 'sha256': hashlib.sha256(path.read_bytes()).hexdigest(), 'bytes': path.stat().st_size}
                   for name, path in paths.items()
               },
           }
@@ -164,24 +160,13 @@ jobs:
           generated = pathlib.Path('evidence/generated')
           windows = platform.system() == 'Windows'
           platform_name = 'windows' if windows else 'linux'
-          electron_root = generated / 'electron-package' / (
-              'ElectroSchemeSpikeElectron-win32-x64' if windows
-              else 'ElectroSchemeSpikeElectron-linux-x64'
-          )
-          tauri_root = generated / (
-              'tauri-portable-win32-x64' if windows
-              else 'tauri-portable-linux-x64'
-          )
+          electron_root = generated / 'electron-package' / ('ElectroSchemeSpikeElectron-win32-x64' if windows else 'ElectroSchemeSpikeElectron-linux-x64')
+          tauri_root = generated / ('tauri-portable-win32-x64' if windows else 'tauri-portable-linux-x64')
           for candidate, package_root in [('electron', electron_root), ('tauri', tauri_root)]:
               subprocess.run([
-                  sys.executable,
-                  'tools/archive_candidate.py',
-                  candidate,
-                  str(package_root),
+                  sys.executable, 'tools/archive_candidate.py', candidate, str(package_root),
                   str(generated / 'archives' / f'{candidate}-{platform_name}-x64.tar.gz'),
-                  str(generated / f'{candidate}-package-manifest-{platform_name}.json'),
-                  '--base-root',
-                  '.',
+                  str(generated / f'{candidate}-package-manifest-{platform_name}.json'), '--base-root', '.',
               ], check=True)
       - name: Benchmark shared canonical and editor core
         working-directory: spikes
@@ -202,14 +187,40 @@ jobs:
           SPIKE_PACKAGE_MANIFEST: evidence/generated/tauri-package-manifest-linux.json
           SPIKE_REQUIRE_PACKAGE_MANIFEST: '1'
         run: npm run scenario:candidate -- tauri evidence/generated/tauri-scenario-linux.json -- ./evidence/generated/tauri-portable-linux-x64/ElectroSchemeSpikeTauri
-      - name: Run Electron in-app scenario from restored artifact layout on Windows
+      - name: Run secure Electron in-app scenario from restored artifact layout on Windows
+        id: electron_windows_scenario
         if: runner.os == 'Windows'
+        continue-on-error: true
         working-directory: spikes
         shell: pwsh
         env:
           SPIKE_PACKAGE_MANIFEST: evidence/generated/electron-package-manifest-windows.json
           SPIKE_REQUIRE_PACKAGE_MANIFEST: '1'
         run: npm run scenario:candidate -- electron evidence/generated/electron-scenario-windows.json -- .\evidence\generated\electron-package\ElectroSchemeSpikeElectron-win32-x64\ElectroSchemeSpikeElectron.exe
+      - name: Validate admitted Electron Windows native failure evidence
+        if: runner.os == 'Windows' && steps.electron_windows_scenario.outcome == 'failure'
+        working-directory: spikes
+        shell: python
+        run: |
+          import json, pathlib
+          path = pathlib.Path('evidence/generated/electron-scenario-windows.json')
+          if not path.is_file():
+              raise SystemExit('Electron Windows failure did not publish structured scenario evidence')
+          data = json.loads(path.read_text(encoding='utf-8'))
+          required = {
+              'candidate': 'electron',
+              'status': 'failed',
+              'failure_class': 'native_startup_failure',
+              'exit_code_hex': '0x80000003',
+              'secure_runtime_required': True,
+          }
+          for key, expected in required.items():
+              if data.get(key) != expected:
+                  raise SystemExit(f'unexpected Electron Windows failure evidence: {key}={data.get(key)!r}, expected {expected!r}')
+          package = data.get('harness', {}).get('package_evidence', {})
+          if package.get('artifact_layout_round_trip_verified') is not True or package.get('launched_from_verified_package_root') is not True:
+              raise SystemExit('Electron Windows failure did not originate from the verified restored package root')
+          print(json.dumps(data, indent=2))
       - name: Run Tauri in-app scenario from restored artifact layout on Windows
         if: runner.os == 'Windows'
         working-directory: spikes
@@ -233,8 +244,8 @@ jobs:
           SPIKE_PACKAGE_MANIFEST: evidence/generated/tauri-package-manifest-linux.json
           SPIKE_REQUIRE_PACKAGE_MANIFEST: '1'
         run: npm run measure:candidate -- tauri evidence/generated/tauri-runtime-linux.json -- ./evidence/generated/tauri-portable-linux-x64/ElectroSchemeSpikeTauri
-      - name: Measure Electron startup and process-tree RSS on Windows
-        if: runner.os == 'Windows'
+      - name: Measure Electron startup and process-tree RSS on Windows when secure launch passed
+        if: runner.os == 'Windows' && steps.electron_windows_scenario.outcome == 'success'
         working-directory: spikes
         shell: pwsh
         env:
@@ -257,14 +268,8 @@ jobs:
           generated = root / 'evidence/generated'
           windows = platform.system() == 'Windows'
           platform_name = 'windows' if windows else 'linux'
-          package_manifest_paths = {
-              candidate: generated / f'{candidate}-package-manifest-{platform_name}.json'
-              for candidate in ('electron', 'tauri')
-          }
-          package_manifests = {
-              candidate: json.loads(path.read_text(encoding='utf-8'))
-              for candidate, path in package_manifest_paths.items()
-          }
+          package_manifest_paths = {candidate: generated / f'{candidate}-package-manifest-{platform_name}.json' for candidate in ('electron', 'tauri')}
+          package_manifests = {candidate: json.loads(path.read_text(encoding='utf-8')) for candidate, path in package_manifest_paths.items()}
           def version(name):
               executable = shutil.which(name)
               if executable is None:
@@ -283,6 +288,25 @@ jobs:
                   raise RuntimeError(f'archive digest mismatch for {candidate}')
               if manifest['artifact_layout_round_trip_verified'] is not True:
                   raise RuntimeError(f'package layout round trip was not verified for {candidate}')
+          npm_lock = sha256(root / 'package-lock.json')
+          cargo_lock = sha256(root / 'tauri/src-tauri/Cargo.lock')
+          package_sizes_path = generated / f'package-sizes-{platform_name}.json'
+          package_sizes = {
+              'protocol': 'electroscheme-package-sizes/1',
+              'workflow_run_id': os.environ['GITHUB_RUN_ID'],
+              'exact_head': os.environ['SPIKE_EXACT_HEAD'],
+              'artifact_name': f"desktop-spike-{os.environ['RUNNER_OS']}-{os.environ['RUNNER_ARCH']}",
+              'npm_lock_sha256': npm_lock,
+              'cargo_lock_sha256': cargo_lock,
+              'packages': {
+                  candidate: {
+                      key: manifest[key]
+                      for key in ('archive_path', 'archive_sha256', 'archive_size_bytes', 'package_root', 'unpacked_tree_sha256', 'unpacked_size_bytes', 'unpacked_file_count')
+                  }
+                  for candidate, manifest in package_manifests.items()
+              },
+          }
+          package_sizes_path.write_text(json.dumps(package_sizes, indent=2) + '\n', encoding='utf-8')
           output = {
               'workflow_run_id': os.environ['GITHUB_RUN_ID'],
               'exact_head': os.environ['SPIKE_EXACT_HEAD'],
@@ -295,31 +319,17 @@ jobs:
               'rustc': version('rustc'),
               'cargo': version('cargo'),
               'package_manifests': package_manifests,
-              'candidate_unpacked_sizes_bytes': {
-                  candidate: manifest['unpacked_size_bytes']
-                  for candidate, manifest in package_manifests.items()
-              },
-              'candidate_archive_sizes_bytes': {
-                  candidate: manifest['archive_size_bytes']
-                  for candidate, manifest in package_manifests.items()
-              },
-              'candidate_archive_sha256': {
-                  candidate: manifest['archive_sha256']
-                  for candidate, manifest in package_manifests.items()
-              },
-              'package_roots': {
-                  candidate: manifest['package_root']
-                  for candidate, manifest in package_manifests.items()
-              },
-              'package_archives': {
-                  candidate: manifest['archive_path']
-                  for candidate, manifest in package_manifests.items()
-              },
+              'candidate_unpacked_sizes_bytes': {candidate: manifest['unpacked_size_bytes'] for candidate, manifest in package_manifests.items()},
+              'candidate_archive_sizes_bytes': {candidate: manifest['archive_size_bytes'] for candidate, manifest in package_manifests.items()},
+              'candidate_archive_sha256': {candidate: manifest['archive_sha256'] for candidate, manifest in package_manifests.items()},
+              'package_roots': {candidate: manifest['package_root'] for candidate, manifest in package_manifests.items()},
+              'package_archives': {candidate: manifest['archive_path'] for candidate, manifest in package_manifests.items()},
               'scenario_json': sorted(str(path.relative_to(root)) for path in generated.glob('*-scenario-*.json')),
               'runtime_measurement_json': sorted(str(path.relative_to(root)) for path in generated.glob('*-runtime-*.json')),
               'package_manifest_json': sorted(str(path.relative_to(root)) for path in package_manifest_paths.values()),
-              'npm_lock_sha256': sha256(root / 'package-lock.json'),
-              'cargo_lock_sha256': sha256(root / 'tauri/src-tauri/Cargo.lock'),
+              'package_size_json': str(package_sizes_path.relative_to(root)),
+              'npm_lock_sha256': npm_lock,
+              'cargo_lock_sha256': cargo_lock,
               'measurement_scope': 'single GitHub-hosted runner launches from deterministic archives restored in this exact job; Linux virtual display is started before timing; values are comparative evidence for this run, not universal benchmarks',
           }
           (generated / f'measurements-{platform_name}.json').write_text(json.dumps(output, indent=2) + '\n', encoding='utf-8')
@@ -365,26 +375,14 @@ jobs:
         run: |
           import hashlib, json, os, pathlib
           generated = pathlib.Path('evidence/generated')
-          paths = [
-              generated / 'desktop-candidate-comparison.json',
-              generated / 'desktop-candidate-comparison.md',
-          ]
+          paths = [generated / 'desktop-candidate-comparison.json', generated / 'desktop-candidate-comparison.md']
           output = {
               'workflow_run_id': os.environ['GITHUB_RUN_ID'],
               'exact_head': os.environ['SPIKE_EXACT_HEAD'],
               'artifact_name': 'desktop-spike-comparison-evidence',
-              'files': {
-                  path.name: {
-                      'sha256': hashlib.sha256(path.read_bytes()).hexdigest(),
-                      'bytes': path.stat().st_size,
-                  }
-                  for path in paths
-              },
+              'files': {path.name: {'sha256': hashlib.sha256(path.read_bytes()).hexdigest(), 'bytes': path.stat().st_size} for path in paths},
           }
-          (generated / 'desktop-candidate-comparison-hashes.json').write_text(
-              json.dumps(output, indent=2) + '\n',
-              encoding='utf-8',
-          )
+          (generated / 'desktop-candidate-comparison-hashes.json').write_text(json.dumps(output, indent=2) + '\n', encoding='utf-8')
       - uses: actions/upload-artifact@v4
         with:
           name: desktop-spike-comparison-evidence
