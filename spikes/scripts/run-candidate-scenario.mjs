@@ -17,16 +17,24 @@ const child = spawn(command, args, {
   env: { ...process.env, SPIKE_SCENARIO_RESULT: output, SPIKE_SMOKE: "1" },
   stdio: ["ignore", "inherit", "inherit"]
 });
+let observedExit = false;
+let observedExitCode = null;
 const exitPromise = new Promise((resolve, reject) => {
   child.once("error", reject);
-  child.once("close", code => resolve(code));
+  child.once("close", code => {
+    observedExit = true;
+    observedExitCode = code;
+    resolve(code);
+  });
 });
 
 function sleep(milliseconds) { return new Promise(resolve => setTimeout(resolve, milliseconds)); }
 async function waitForResult() {
   const deadline = Date.now() + 60_000;
   while (Date.now() < deadline) {
-    try { return JSON.parse(await readFile(output, "utf8")); } catch { await sleep(100); }
+    try { return JSON.parse(await readFile(output, "utf8")); } catch {}
+    if (observedExit) throw new Error(`${candidate} exited with ${observedExitCode ?? "unknown"} before producing scenario evidence`);
+    await sleep(100);
   }
   child.kill();
   throw new Error(`${candidate} did not produce scenario evidence within 60 seconds`);
