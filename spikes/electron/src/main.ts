@@ -84,10 +84,11 @@ function register(): void {
 
 app.whenReady().then(() => {
   register();
+  const automationLaunch = process.env.SPIKE_SMOKE === "1" || process.env.SPIKE_MEASURE === "1";
   windowRef = new BrowserWindow({
     width: 1000,
     height: 700,
-    show: true,
+    show: !automationLaunch,
     webPreferences: {
       preload: path.join(here, "preload.cjs"),
       contextIsolation: true,
