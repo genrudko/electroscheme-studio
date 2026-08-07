@@ -87,7 +87,10 @@ fn mark_ready(app: tauri::AppHandle) -> Result<(), String> {
         fs::write(path, serde_json::to_vec(&ready).map_err(|error| error.to_string())?).map_err(|error| error.to_string())?;
     }
     let exit_delay_ms = if std::env::var("SPIKE_MEASURE").ok().as_deref() == Some("1") {
-        Some(1500)
+        // Windows process-tree RSS is sampled through PowerShell/CIM. Starting that
+        // probe can take several seconds on a fresh hosted runner, so keep the
+        // already-ready automation process alive long enough for the snapshot.
+        Some(10_000)
     } else if std::env::var("SPIKE_SMOKE").ok().as_deref() == Some("1") {
         Some(100)
     } else {
