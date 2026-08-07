@@ -4,6 +4,8 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
+app.disableHardwareAcceleration();
+
 const processStartedAt = Date.now();
 const here = path.dirname(fileURLToPath(import.meta.url));
 const spikeRoot = app.isPackaged ? app.getAppPath() : path.resolve(here, "../..");
