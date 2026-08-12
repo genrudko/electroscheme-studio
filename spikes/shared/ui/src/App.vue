@@ -128,6 +128,13 @@ async function runAutomationScenario(context: AutomationContext): Promise<void> 
     await host.writeStructured(clipboardPayload);
     const clipboardRoundTrip = await host.readStructured();
 
+    // Exercise the exact data shape used by real toolbar actions. project.value is
+    // a Vue reactive proxy; the old automated scenario only covered plain JSON
+    // objects and therefore missed the structuredClone/Proxy regression.
+    const reactiveSerialized = serializeProject(project.value);
+    const reactiveClipboardPayload = encodeClipboard(project.value, [selected.value]);
+    const reactiveClipboard = decodeClipboard(reactiveClipboardPayload);
+
     const pdfBytes = renderDeterministicPdf(loaded);
     await host.writeBytesPath(context.pdfPath, pdfBytes);
 
@@ -140,6 +147,8 @@ async function runAutomationScenario(context: AutomationContext): Promise<void> 
       canonical_read: sourceText.length > 0,
       deterministic_round_trip: reopened === serialized && serializeProject(parseProject(reopened)) === serialized,
       structured_clipboard_round_trip: clipboardRoundTrip === clipboardPayload,
+      reactive_project_serialization: reactiveSerialized === serialized,
+      reactive_structured_clipboard_encode: reactiveClipboard.schema === "electroscheme-spike-clipboard/1" && reactiveClipboard.objects.length === 1 && reactiveClipboard.objects[0]?.id === selected.value,
       deterministic_pdf_written: pdfBytes.length > 0,
       controlled_vsdx_read: vsdx.exitCode === 0 && JSON.parse(vsdx.stdout).status === "ok",
       controlled_vssx_read: vssx.exitCode === 0 && JSON.parse(vssx.stdout).status === "ok",
