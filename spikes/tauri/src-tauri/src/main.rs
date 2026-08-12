@@ -122,20 +122,35 @@ fn open_project() -> Result<Option<String>, String> {
     }
 }
 
-#[tauri::command]
-fn save_project(default_name: String, content: String) -> Result<bool, String> {
-    match rfd::FileDialog::new().set_file_name(&default_name).add_filter("ElectroScheme spike", &["json"]).save_file() {
-        Some(path) => { fs::write(path, content).map_err(|error| error.to_string())?; Ok(true) }
+fn native_save_bytes(
+    window: &tauri::WebviewWindow,
+    default_name: &str,
+    filter_name: &str,
+    extensions: &[&str],
+    bytes: &[u8],
+) -> Result<bool, String> {
+    match rfd::FileDialog::new()
+        .set_parent(window)
+        .set_file_name(default_name)
+        .add_filter(filter_name, extensions)
+        .save_file()
+    {
+        Some(path) => {
+            fs::write(&path, bytes).map_err(|error| format!("save failed: {error}"))?;
+            Ok(true)
+        }
         None => Ok(false),
     }
 }
 
 #[tauri::command]
-fn export_pdf(default_name: String, bytes: Vec<u8>) -> Result<bool, String> {
-    match rfd::FileDialog::new().set_file_name(&default_name).add_filter("PDF", &["pdf"]).save_file() {
-        Some(path) => { fs::write(path, bytes).map_err(|error| error.to_string())?; Ok(true) }
-        None => Ok(false),
-    }
+fn save_project(window: tauri::WebviewWindow, default_name: String, content: String) -> Result<bool, String> {
+    native_save_bytes(&window, &default_name, "ElectroScheme spike", &["json"], content.as_bytes())
+}
+
+#[tauri::command]
+fn export_pdf(window: tauri::WebviewWindow, default_name: String, bytes: Vec<u8>) -> Result<bool, String> {
+    native_save_bytes(&window, &default_name, "PDF", &["pdf"], &bytes)
 }
 
 fn with_clipboard<T>(state: &ClipboardState, operation: impl FnOnce(&mut arboard::Clipboard) -> Result<T, arboard::Error>) -> Result<T, String> {

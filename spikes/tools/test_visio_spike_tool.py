@@ -22,14 +22,26 @@ def expected_hashes() -> dict[str, str]:
     return result
 
 
+def rewrite_zip(source: pathlib.Path, destination: pathlib.Path, replacements: dict[str, bytes]) -> None:
+    with zipfile.ZipFile(source) as input_archive, zipfile.ZipFile(destination, "w", compression=zipfile.ZIP_DEFLATED) as output_archive:
+        for item in input_archive.infolist():
+            payload = replacements.get(item.filename, input_archive.read(item.filename))
+            output_archive.writestr(item, payload)
+
+
 class VisioFixtureTests(unittest.TestCase):
-    def run_tool(self, *args: str) -> dict:
-        result = subprocess.run(
+    def run_tool_process(self, *args: str) -> subprocess.CompletedProcess[str]:
+        return subprocess.run(
             [sys.executable, str(TOOL), *args],
             text=True,
             capture_output=True,
-            check=True,
+            check=False,
         )
+
+    def run_tool(self, *args: str) -> dict:
+        result = self.run_tool_process(*args)
+        if result.returncode != 0:
+            self.fail(f"tool failed rc={result.returncode}: {result.stderr}\n{result.stdout}")
         return json.loads(result.stdout)
 
     def generate(self, directory: pathlib.Path) -> None:
@@ -43,6 +55,7 @@ class VisioFixtureTests(unittest.TestCase):
         self.assertEqual(result["status"], "ok")
         self.assertIn("visio/pages/page1.xml", result["parts"])
         self.assertTrue({"1", "2", "3"}.issubset(set(result["sourceIds"])))
+        self.assertEqual(result["diagnostics"], [])
 
     def test_generated_vssx(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
@@ -53,11 +66,17 @@ class VisioFixtureTests(unittest.TestCase):
             self.assertEqual(result["status"], "ok")
             self.assertIn("visio/masters/master1.xml", result["parts"])
             self.assertIn("10", result["sourceIds"])
+            self.assertEqual(result["diagnostics"], [])
 
     def test_generated_package_structure(self) -> None:
         with zipfile.ZipFile(FIXTURES / "controlled-minimal.vsdx") as archive:
-            self.assertIn("docProps/core.xml", archive.namelist())
-            self.assertIn(b"Q-SPK-1", archive.read("visio/pages/page1.xml"))
+            self.assertIn("docProps/app.xml", archive.namelist())
+            self.assertIn(b"<Rel r:id=\"rId1\"/>", archive.read("visio/pages/pages.xml"))
+            self.assertNotIn(b"<Pages r:id=", archive.read("visio/document.xml"))
+            page = archive.read("visio/pages/page1.xml")
+            self.assertIn(b"Q-SPK-1", page)
+            self.assertIn(b"<Cell N=\"BeginX\"", page)
+            self.assertIn(b"<Cell N=\"EndX\"", page)
 
     def test_fixtures_are_reproducible_byte_for_byte(self) -> None:
         expected = expected_hashes()
@@ -79,6 +98,40 @@ class VisioFixtureTests(unittest.TestCase):
             self.assertEqual(result["status"], "ok")
             self.assertEqual(result["canonicalProjectId"], "project-spike-0001")
             self.assertEqual(output.read_bytes(), (FIXTURES / "controlled-minimal.vsdx").read_bytes())
+
+    def test_legacy_invalid_vsdx_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            directory = pathlib.Path(temporary)
+            self.generate(directory)
+            source = directory / "controlled-minimal.vsdx"
+            broken = directory / "legacy-invalid.vsdx"
+            bad_document = b'''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<VisioDocument xmlns="http://schemas.microsoft.com/office/visio/2012/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><DocumentProperties/><Pages r:id="rId1"/></VisioDocument>'''
+            bad_pages = b'''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<Pages xmlns="http://schemas.microsoft.com/office/visio/2012/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><Page ID="0" NameU="Page-1" Name="Page-1" r:id="rId1"/></Pages>'''
+            rewrite_zip(source, broken, {"visio/document.xml": bad_document, "visio/pages/pages.xml": bad_pages})
+            process = self.run_tool_process("inspect", "vsdx", str(broken))
+            self.assertEqual(process.returncode, 2)
+            result = json.loads(process.stdout)
+            self.assertEqual(result["status"], "invalid")
+            codes = {item["code"] for item in result["diagnostics"]}
+            self.assertIn("INLINE_PAGES_RELATION_INVALID", codes)
+            self.assertIn("PAGE_REL_INVALID", codes)
+            self.assertIn("PAGE_REL_ATTRIBUTE_INVALID", codes)
+
+    def test_dangling_relationship_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            directory = pathlib.Path(temporary)
+            self.generate(directory)
+            source = directory / "controlled-minimal.vsdx"
+            broken = directory / "dangling.vsdx"
+            bad_rels = b'''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.microsoft.com/visio/2010/relationships/page" Target="missing-page.xml"/></Relationships>'''
+            rewrite_zip(source, broken, {"visio/pages/_rels/pages.xml.rels": bad_rels})
+            process = self.run_tool_process("inspect", "vsdx", str(broken))
+            self.assertEqual(process.returncode, 2)
+            result = json.loads(process.stdout)
+            self.assertEqual(result["status"], "invalid")
+            codes = {item["code"] for item in result["diagnostics"]}
+            self.assertIn("DANGLING_RELATIONSHIP", codes)
+            self.assertIn("REQUIRED_RELATIONSHIP_MISSING", codes)
 
 
 if __name__ == "__main__":

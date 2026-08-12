@@ -18,6 +18,10 @@ const status = ref("initializing");
 const candidate = host.candidate();
 const objects = computed(() => project.value.objects);
 
+function errorMessage(error: unknown): string {
+  return error instanceof Error ? error.message : String(error);
+}
+
 function move() {
   project.value = history.execute({ type: "MoveObjects", objectIds: [selected.value], dx: 17, dy: 24, grid: 10 });
   status.value = "moved through command path";
@@ -27,9 +31,25 @@ function redo() { project.value = history.redo(); status.value = "redo"; }
 async function copy() { await host.writeStructured(encodeClipboard(project.value, [selected.value])); status.value = "structured clipboard copied"; }
 async function paste() { const text = await host.readStructured(); status.value = `structured clipboard ${text.length} bytes`; }
 async function openFile() { const text = await host.openProject(); if (text) { project.value = parseProject(text); status.value = "opened through native dialog adapter"; } }
-async function saveFile() { const ok = await host.saveProject("desktop-platform-spike.esspike.json", serializeProject(project.value)); status.value = ok ? "saved through native dialog adapter" : "save cancelled"; }
+async function saveFile() {
+  try {
+    const ok = await host.saveProject("desktop-platform-spike.esspike.json", serializeProject(project.value));
+    status.value = ok ? "saved through native dialog adapter" : "save cancelled";
+  } catch (error) {
+    const diagnostic = errorMessage(error);
+    status.value = diagnostic.startsWith("save failed:") ? diagnostic : `save failed: ${diagnostic}`;
+  }
+}
 async function onBrowserDrop(event: DragEvent) { event.preventDefault(); const file = event.dataTransfer?.files[0]; if (!file) return; const text = await host.readBrowserDroppedFile(file); if (text) { project.value = parseProject(text); status.value = "opened through browser-to-host drag/drop adapter"; } }
-async function pdf() { const ok = await host.exportPdf("desktop-platform-spike.pdf", renderDeterministicPdf(project.value)); status.value = ok ? "deterministic PDF exported" : "PDF export cancelled"; }
+async function pdf() {
+  try {
+    const ok = await host.exportPdf("desktop-platform-spike.pdf", renderDeterministicPdf(project.value));
+    status.value = ok ? "deterministic PDF exported" : "PDF export cancelled";
+  } catch (error) {
+    const diagnostic = errorMessage(error);
+    status.value = diagnostic.startsWith("save failed:") ? diagnostic : `save failed: ${diagnostic}`;
+  }
+}
 
 async function sha256(value: string | Uint8Array): Promise<string> {
   const bytes = typeof value === "string" ? new TextEncoder().encode(value) : value;
