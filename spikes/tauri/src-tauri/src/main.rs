@@ -7,6 +7,7 @@ use std::{
     thread,
     time::{Duration, Instant, SystemTime, UNIX_EPOCH},
 };
+use tauri::Manager;
 
 #[derive(Default)]
 struct ClipboardState(Mutex<Option<arboard::Clipboard>>);
@@ -123,14 +124,18 @@ fn open_project() -> Result<Option<String>, String> {
 }
 
 fn native_save_bytes(
-    window: &tauri::WebviewWindow,
+    app: &tauri::AppHandle,
     default_name: &str,
     filter_name: &str,
     extensions: &[&str],
     bytes: &[u8],
 ) -> Result<bool, String> {
+    let window = app
+        .get_webview_window("main")
+        .ok_or_else(|| "save failed: main webview window not found".to_string())?;
+
     match rfd::FileDialog::new()
-        .set_parent(window)
+        .set_parent(&window)
         .set_file_name(default_name)
         .add_filter(filter_name, extensions)
         .save_file()
@@ -144,13 +149,13 @@ fn native_save_bytes(
 }
 
 #[tauri::command]
-fn save_project(window: tauri::WebviewWindow, default_name: String, content: String) -> Result<bool, String> {
-    native_save_bytes(&window, &default_name, "ElectroScheme spike", &["json"], content.as_bytes())
+fn save_project(app: tauri::AppHandle, default_name: String, content: String) -> Result<bool, String> {
+    native_save_bytes(&app, &default_name, "ElectroScheme spike", &["json"], content.as_bytes())
 }
 
 #[tauri::command]
-fn export_pdf(window: tauri::WebviewWindow, default_name: String, bytes: Vec<u8>) -> Result<bool, String> {
-    native_save_bytes(&window, &default_name, "PDF", &["pdf"], &bytes)
+fn export_pdf(app: tauri::AppHandle, default_name: String, bytes: Vec<u8>) -> Result<bool, String> {
+    native_save_bytes(&app, &default_name, "PDF", &["pdf"], &bytes)
 }
 
 fn with_clipboard<T>(state: &ClipboardState, operation: impl FnOnce(&mut arboard::Clipboard) -> Result<T, arboard::Error>) -> Result<T, String> {
