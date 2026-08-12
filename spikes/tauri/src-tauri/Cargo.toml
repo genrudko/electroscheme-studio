@@ -1,0 +1,15 @@
+[package]
+name = "electroscheme-tauri-spike"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.97"
+
+[build-dependencies]
+tauri-build = "=2.6.3"
+
+[dependencies]
+tauri = "=2.11.5"
+serde = { version = "=1.0.219", features = ["derive"] }
+serde_json = "=1.0.142"
+rfd = "=0.15.4"
+arboard = "=3.6.0"

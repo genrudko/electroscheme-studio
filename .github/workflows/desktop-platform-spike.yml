@@ -1,0 +1,393 @@
+name: Desktop Platform Spike
+
+on:
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: desktop-platform-spike-pr-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  SPIKE_EXACT_HEAD: ${{ github.event.pull_request.head.sha }}
+
+jobs:
+  shared-contracts:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.SPIKE_EXACT_HEAD }}
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.19.0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: 1.97.1
+      - name: Install exact JavaScript dependencies
+        working-directory: spikes
+        run: npm ci --ignore-scripts
+      - name: Verify npm security state
+        working-directory: spikes
+        shell: bash
+        run: |
+          mkdir -p evidence/generated
+          npm audit --json > evidence/generated/npm-audit.json
+          npm audit --omit=dev --json > evidence/generated/npm-audit-production.json
+      - name: Verify changed scope
+        working-directory: spikes
+        env:
+          SPIKE_BASE_SHA: b95d7111d9c5a36db4c355ee91f742efea8ecc10
+        run: npm run verify:scope
+      - name: Typecheck and canonical core tests
+        working-directory: spikes
+        run: npm test
+      - name: VSDX, VSSX, archive and comparison evidence tests
+        working-directory: spikes
+        run: >-
+          python -m unittest
+          tools/test_visio_spike_tool.py
+          tools/test_archive_candidate.py
+          tools/test_compare_candidate_evidence.py
+          -v
+      - name: Build shared Vue SVG renderer and Electron boundary
+        working-directory: spikes
+        run: npm run build
+      - name: Verify committed locks and neutral icon resources
+        shell: bash
+        run: |
+          python spikes/tauri/src-tauri/generate_spike_icons.py /tmp/electroscheme-spike-icons
+          cmp /tmp/electroscheme-spike-icons/icon.png spikes/tauri/src-tauri/icons/icon.png
+          cmp /tmp/electroscheme-spike-icons/icon.ico spikes/tauri/src-tauri/icons/icon.ico
+          cargo metadata --locked --format-version 1 --manifest-path spikes/tauri/src-tauri/Cargo.toml > spikes/evidence/generated/cargo-metadata.json
+          git diff --exit-code -- spikes/package-lock.json spikes/tauri/src-tauri/Cargo.lock spikes/tauri/src-tauri/icons
+      - name: Record lock, resource and workflow evidence
+        shell: python
+        run: |
+          import hashlib, json, os, pathlib
+          root = pathlib.Path('spikes')
+          paths = {
+              'npm_lock': root / 'package-lock.json',
+              'cargo_lock': root / 'tauri/src-tauri/Cargo.lock',
+              'tauri_icon_png': root / 'tauri/src-tauri/icons/icon.png',
+              'tauri_icon_ico': root / 'tauri/src-tauri/icons/icon.ico',
+          }
+          output = {
+              'workflow_run_id': os.environ['GITHUB_RUN_ID'],
+              'exact_head': os.environ['SPIKE_EXACT_HEAD'],
+              'artifact_name': 'desktop-spike-security-lock-evidence',
+              'files': {
+                  name: {'path': str(path), 'sha256': hashlib.sha256(path.read_bytes()).hexdigest(), 'bytes': path.stat().st_size}
+                  for name, path in paths.items()
+              },
+          }
+          destination = root / 'evidence/generated/lock-resource-hashes.json'
+          destination.write_text(json.dumps(output, indent=2) + '\n', encoding='utf-8')
+      - uses: actions/upload-artifact@v4
+        with:
+          name: desktop-spike-security-lock-evidence
+          path: |
+            spikes/package-lock.json
+            spikes/tauri/src-tauri/Cargo.lock
+            spikes/tauri/src-tauri/icons/**
+            spikes/evidence/generated/npm-audit.json
+            spikes/evidence/generated/npm-audit-production.json
+            spikes/evidence/generated/cargo-metadata.json
+            spikes/evidence/generated/lock-resource-hashes.json
+          if-no-files-found: error
+
+  candidate-build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-22.04, windows-2022]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.SPIKE_EXACT_HEAD }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.19.0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: 1.97.1
+      - name: Install Linux Tauri runtime dependencies
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y libwebkit2gtk-4.1-dev libgtk-3-dev librsvg2-dev patchelf xvfb
+      - name: Start one Linux virtual display outside candidate timing
+        if: runner.os == 'Linux'
+        shell: bash
+        run: |
+          Xvfb :99 -screen 0 1280x1024x24 -nolisten tcp > /tmp/electroscheme-xvfb.log 2>&1 &
+          echo "$!" > /tmp/electroscheme-xvfb.pid
+          echo "DISPLAY=:99" >> "$GITHUB_ENV"
+          sleep 2
+          kill -0 "$(cat /tmp/electroscheme-xvfb.pid)"
+      - name: Install exact JavaScript dependencies
+        working-directory: spikes
+        run: npm ci --ignore-scripts
+      - name: Build shared renderer and Electron adapter
+        working-directory: spikes
+        run: npm run build
+      - name: Build Tauri executable with committed Cargo lock
+        working-directory: spikes/tauri
+        run: npx tauri build --no-bundle -- --locked
+      - name: Generate controlled runtime Visio fixtures
+        working-directory: spikes
+        run: python tools/generate_controlled_visio_fixtures.py evidence/generated/visio-fixtures --canonical shared/fixtures/canonical-project.json
+      - name: Package Electron executable directory
+        working-directory: spikes
+        run: npm run package:electron
+      - name: Package Tauri portable evidence directory
+        working-directory: spikes
+        run: npm run package:tauri
+      - name: Archive, restore and verify candidate package layouts
+        working-directory: spikes
+        shell: python
+        run: |
+          import pathlib, platform, subprocess, sys
+          generated = pathlib.Path('evidence/generated')
+          windows = platform.system() == 'Windows'
+          platform_name = 'windows' if windows else 'linux'
+          electron_root = generated / 'electron-package' / ('ElectroSchemeSpikeElectron-win32-x64' if windows else 'ElectroSchemeSpikeElectron-linux-x64')
+          tauri_root = generated / ('tauri-portable-win32-x64' if windows else 'tauri-portable-linux-x64')
+          for candidate, package_root in [('electron', electron_root), ('tauri', tauri_root)]:
+              subprocess.run([
+                  sys.executable, 'tools/archive_candidate.py', candidate, str(package_root),
+                  str(generated / 'archives' / f'{candidate}-{platform_name}-x64.tar.gz'),
+                  str(generated / f'{candidate}-package-manifest-{platform_name}.json'), '--base-root', '.',
+              ], check=True)
+      - name: Benchmark shared canonical and editor core
+        working-directory: spikes
+        shell: bash
+        run: npm run benchmark:shared -- "evidence/generated/shared-benchmark-${RUNNER_OS}.json"
+      - name: Run Electron in-app scenario from restored artifact layout on Linux
+        if: runner.os == 'Linux'
+        working-directory: spikes
+        env:
+          SPIKE_PACKAGE_MANIFEST: evidence/generated/electron-package-manifest-linux.json
+          SPIKE_REQUIRE_PACKAGE_MANIFEST: '1'
+        run: npm run scenario:candidate -- electron evidence/generated/electron-scenario-linux.json -- ./evidence/generated/electron-package/ElectroSchemeSpikeElectron-linux-x64/ElectroSchemeSpikeElectron
+      - name: Run Tauri in-app scenario from restored artifact layout on Linux
+        if: runner.os == 'Linux'
+        working-directory: spikes
+        env:
+          WEBKIT_DISABLE_COMPOSITING_MODE: '1'
+          SPIKE_PACKAGE_MANIFEST: evidence/generated/tauri-package-manifest-linux.json
+          SPIKE_REQUIRE_PACKAGE_MANIFEST: '1'
+        run: npm run scenario:candidate -- tauri evidence/generated/tauri-scenario-linux.json -- ./evidence/generated/tauri-portable-linux-x64/ElectroSchemeSpikeTauri
+      - name: Run secure Electron in-app scenario from restored artifact layout on Windows
+        id: electron_windows_scenario
+        if: runner.os == 'Windows'
+        continue-on-error: true
+        working-directory: spikes
+        shell: pwsh
+        env:
+          SPIKE_PACKAGE_MANIFEST: evidence/generated/electron-package-manifest-windows.json
+          SPIKE_REQUIRE_PACKAGE_MANIFEST: '1'
+        run: npm run scenario:candidate -- electron evidence/generated/electron-scenario-windows.json -- .\evidence\generated\electron-package\ElectroSchemeSpikeElectron-win32-x64\ElectroSchemeSpikeElectron.exe
+      - name: Validate admitted Electron Windows native failure evidence
+        if: runner.os == 'Windows' && steps.electron_windows_scenario.outcome == 'failure'
+        working-directory: spikes
+        shell: python
+        run: |
+          import json, pathlib
+          path = pathlib.Path('evidence/generated/electron-scenario-windows.json')
+          if not path.is_file():
+              raise SystemExit('Electron Windows failure did not publish structured scenario evidence')
+          data = json.loads(path.read_text(encoding='utf-8'))
+          required = {
+              'candidate': 'electron',
+              'status': 'failed',
+              'failure_class': 'native_startup_failure',
+              'exit_code_hex': '0x80000003',
+              'secure_runtime_required': True,
+          }
+          for key, expected in required.items():
+              if data.get(key) != expected:
+                  raise SystemExit(f'unexpected Electron Windows failure evidence: {key}={data.get(key)!r}, expected {expected!r}')
+          package = data.get('harness', {}).get('package_evidence', {})
+          if package.get('artifact_layout_round_trip_verified') is not True or package.get('launched_from_verified_package_root') is not True:
+              raise SystemExit('Electron Windows failure did not originate from the verified restored package root')
+          print(json.dumps(data, indent=2))
+      - name: Run Tauri in-app scenario from restored artifact layout on Windows
+        if: runner.os == 'Windows'
+        working-directory: spikes
+        shell: pwsh
+        env:
+          SPIKE_PACKAGE_MANIFEST: evidence/generated/tauri-package-manifest-windows.json
+          SPIKE_REQUIRE_PACKAGE_MANIFEST: '1'
+        run: npm run scenario:candidate -- tauri evidence/generated/tauri-scenario-windows.json -- .\evidence\generated\tauri-portable-win32-x64\ElectroSchemeSpikeTauri.exe
+      - name: Measure Electron startup and process-tree RSS on Linux
+        if: runner.os == 'Linux'
+        working-directory: spikes
+        env:
+          SPIKE_PACKAGE_MANIFEST: evidence/generated/electron-package-manifest-linux.json
+          SPIKE_REQUIRE_PACKAGE_MANIFEST: '1'
+        run: npm run measure:candidate -- electron evidence/generated/electron-runtime-linux.json -- ./evidence/generated/electron-package/ElectroSchemeSpikeElectron-linux-x64/ElectroSchemeSpikeElectron
+      - name: Measure Tauri startup and process-tree RSS on Linux
+        if: runner.os == 'Linux'
+        working-directory: spikes
+        env:
+          WEBKIT_DISABLE_COMPOSITING_MODE: '1'
+          SPIKE_PACKAGE_MANIFEST: evidence/generated/tauri-package-manifest-linux.json
+          SPIKE_REQUIRE_PACKAGE_MANIFEST: '1'
+        run: npm run measure:candidate -- tauri evidence/generated/tauri-runtime-linux.json -- ./evidence/generated/tauri-portable-linux-x64/ElectroSchemeSpikeTauri
+      - name: Measure Electron startup and process-tree RSS on Windows when secure launch passed
+        if: runner.os == 'Windows' && steps.electron_windows_scenario.outcome == 'success'
+        working-directory: spikes
+        shell: pwsh
+        env:
+          SPIKE_PACKAGE_MANIFEST: evidence/generated/electron-package-manifest-windows.json
+          SPIKE_REQUIRE_PACKAGE_MANIFEST: '1'
+        run: npm run measure:candidate -- electron evidence/generated/electron-runtime-windows.json -- .\evidence\generated\electron-package\ElectroSchemeSpikeElectron-win32-x64\ElectroSchemeSpikeElectron.exe
+      - name: Measure Tauri startup and process-tree RSS on Windows
+        if: runner.os == 'Windows'
+        working-directory: spikes
+        shell: pwsh
+        env:
+          SPIKE_PACKAGE_MANIFEST: evidence/generated/tauri-package-manifest-windows.json
+          SPIKE_REQUIRE_PACKAGE_MANIFEST: '1'
+        run: npm run measure:candidate -- tauri evidence/generated/tauri-runtime-windows.json -- .\evidence\generated\tauri-portable-win32-x64\ElectroSchemeSpikeTauri.exe
+      - name: Record package, runtime, lock and toolchain evidence
+        shell: python
+        run: |
+          import hashlib, json, os, pathlib, platform, shutil, subprocess
+          root = pathlib.Path('spikes')
+          generated = root / 'evidence/generated'
+          windows = platform.system() == 'Windows'
+          platform_name = 'windows' if windows else 'linux'
+          package_manifest_paths = {candidate: generated / f'{candidate}-package-manifest-{platform_name}.json' for candidate in ('electron', 'tauri')}
+          package_manifests = {candidate: json.loads(path.read_text(encoding='utf-8')) for candidate, path in package_manifest_paths.items()}
+          def version(name):
+              executable = shutil.which(name)
+              if executable is None:
+                  raise RuntimeError(f'{name} not found')
+              return subprocess.run([executable, '--version'], text=True, capture_output=True, check=True).stdout.strip()
+          def sha256(path):
+              return hashlib.sha256(path.read_bytes()).hexdigest()
+          for candidate, manifest in package_manifests.items():
+              package_root = root / manifest['package_root']
+              archive_path = root / manifest['archive_path']
+              if not package_root.is_dir():
+                  raise RuntimeError(f'missing restored package root {candidate}: {package_root}')
+              if not archive_path.is_file():
+                  raise RuntimeError(f'missing portable package archive {candidate}: {archive_path}')
+              if sha256(archive_path) != manifest['archive_sha256']:
+                  raise RuntimeError(f'archive digest mismatch for {candidate}')
+              if manifest['artifact_layout_round_trip_verified'] is not True:
+                  raise RuntimeError(f'package layout round trip was not verified for {candidate}')
+          npm_lock = sha256(root / 'package-lock.json')
+          cargo_lock = sha256(root / 'tauri/src-tauri/Cargo.lock')
+          package_sizes_path = generated / f'package-sizes-{platform_name}.json'
+          package_sizes = {
+              'protocol': 'electroscheme-package-sizes/1',
+              'workflow_run_id': os.environ['GITHUB_RUN_ID'],
+              'exact_head': os.environ['SPIKE_EXACT_HEAD'],
+              'artifact_name': f"desktop-spike-{os.environ['RUNNER_OS']}-{os.environ['RUNNER_ARCH']}",
+              'npm_lock_sha256': npm_lock,
+              'cargo_lock_sha256': cargo_lock,
+              'packages': {
+                  candidate: {
+                      key: manifest[key]
+                      for key in ('archive_path', 'archive_sha256', 'archive_size_bytes', 'package_root', 'unpacked_tree_sha256', 'unpacked_size_bytes', 'unpacked_file_count')
+                  }
+                  for candidate, manifest in package_manifests.items()
+              },
+          }
+          package_sizes_path.write_text(json.dumps(package_sizes, indent=2) + '\n', encoding='utf-8')
+          output = {
+              'workflow_run_id': os.environ['GITHUB_RUN_ID'],
+              'exact_head': os.environ['SPIKE_EXACT_HEAD'],
+              'artifact_name': f"desktop-spike-{os.environ['RUNNER_OS']}-{os.environ['RUNNER_ARCH']}",
+              'runner_os': platform.platform(),
+              'runner_architecture': platform.machine(),
+              'python': platform.python_version(),
+              'node': version('node'),
+              'npm': version('npm'),
+              'rustc': version('rustc'),
+              'cargo': version('cargo'),
+              'package_manifests': package_manifests,
+              'candidate_unpacked_sizes_bytes': {candidate: manifest['unpacked_size_bytes'] for candidate, manifest in package_manifests.items()},
+              'candidate_archive_sizes_bytes': {candidate: manifest['archive_size_bytes'] for candidate, manifest in package_manifests.items()},
+              'candidate_archive_sha256': {candidate: manifest['archive_sha256'] for candidate, manifest in package_manifests.items()},
+              'package_roots': {candidate: manifest['package_root'] for candidate, manifest in package_manifests.items()},
+              'package_archives': {candidate: manifest['archive_path'] for candidate, manifest in package_manifests.items()},
+              'scenario_json': sorted(str(path.relative_to(root)) for path in generated.glob('*-scenario-*.json')),
+              'runtime_measurement_json': sorted(str(path.relative_to(root)) for path in generated.glob('*-runtime-*.json')),
+              'package_manifest_json': sorted(str(path.relative_to(root)) for path in package_manifest_paths.values()),
+              'package_size_json': str(package_sizes_path.relative_to(root)),
+              'npm_lock_sha256': npm_lock,
+              'cargo_lock_sha256': cargo_lock,
+              'measurement_scope': 'single GitHub-hosted runner launches from deterministic archives restored in this exact job; Linux virtual display is started before timing; values are comparative evidence for this run, not universal benchmarks',
+          }
+          (generated / f'measurements-{platform_name}.json').write_text(json.dumps(output, indent=2) + '\n', encoding='utf-8')
+      - name: Verify build did not modify committed locks or icon resources
+        run: git diff --exit-code -- spikes/package-lock.json spikes/tauri/src-tauri/Cargo.lock spikes/tauri/src-tauri/icons
+      - uses: actions/upload-artifact@v4
+        with:
+          name: desktop-spike-${{ runner.os }}-${{ runner.arch }}
+          path: |
+            spikes/evidence/generated/**
+            spikes/package-lock.json
+            spikes/tauri/src-tauri/Cargo.lock
+            spikes/tauri/src-tauri/icons/**
+          if-no-files-found: error
+
+  comparative-evidence:
+    needs: [shared-contracts, candidate-build]
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.SPIKE_EXACT_HEAD }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: desktop-spike-*-X64
+          path: spikes/evidence/platform-artifacts
+          merge-multiple: false
+      - name: Validate and aggregate both platform artifacts
+        working-directory: spikes
+        run: >-
+          python tools/compare_candidate_evidence.py
+          evidence/platform-artifacts
+          evidence/generated/desktop-candidate-comparison.json
+          evidence/generated/desktop-candidate-comparison.md
+          --expected-head "$SPIKE_EXACT_HEAD"
+          --expected-run "$GITHUB_RUN_ID"
+      - name: Record comparison artifact hashes
+        working-directory: spikes
+        shell: python
+        run: |
+          import hashlib, json, os, pathlib
+          generated = pathlib.Path('evidence/generated')
+          paths = [generated / 'desktop-candidate-comparison.json', generated / 'desktop-candidate-comparison.md']
+          output = {
+              'workflow_run_id': os.environ['GITHUB_RUN_ID'],
+              'exact_head': os.environ['SPIKE_EXACT_HEAD'],
+              'artifact_name': 'desktop-spike-comparison-evidence',
+              'files': {path.name: {'sha256': hashlib.sha256(path.read_bytes()).hexdigest(), 'bytes': path.stat().st_size} for path in paths},
+          }
+          (generated / 'desktop-candidate-comparison-hashes.json').write_text(json.dumps(output, indent=2) + '\n', encoding='utf-8')
+      - uses: actions/upload-artifact@v4
+        with:
+          name: desktop-spike-comparison-evidence
+          path: |
+            spikes/evidence/generated/desktop-candidate-comparison.json
+            spikes/evidence/generated/desktop-candidate-comparison.md
+            spikes/evidence/generated/desktop-candidate-comparison-hashes.json
+          if-no-files-found: error

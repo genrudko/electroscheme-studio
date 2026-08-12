@@ -1,0 +1,3 @@
+# Reproducibility evidence compares committed dependency inputs byte-for-byte.
+spikes/package-lock.json text eol=lf
+spikes/tauri/src-tauri/Cargo.lock text eol=lf

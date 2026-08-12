@@ -1,0 +1,140 @@
+{
+  "connections": [
+    {
+      "electricalKind": "temporary_spike_connection",
+      "fromPortId": "port-symbol-bottom-0001",
+      "id": "connection-spike-0001",
+      "toPortId": "port-busbar-left-0001"
+    }
+  ],
+  "diagnostics": [],
+  "documentIds": [
+    "document-spike-0001"
+  ],
+  "documents": [
+    {
+      "documentType": "normal_single_line_spike",
+      "id": "document-spike-0001",
+      "profileVersion": "spike-profile-1",
+      "sheetIds": [
+        "sheet-spike-0001"
+      ]
+    }
+  ],
+  "equipment": [
+    {
+      "designation": "Q-SPK-1",
+      "family": "temporary_test_equipment",
+      "id": "equipment-spike-0001",
+      "properties": {
+        "nominalVoltageKv": 110
+      }
+    }
+  ],
+  "layers": [
+    {
+      "id": "layer-spike-0001",
+      "locked": false,
+      "name": "Primary",
+      "visible": true
+    }
+  ],
+  "objects": [
+    {
+      "height": 8,
+      "id": "object-busbar-0001",
+      "kind": "busbar",
+      "ports": [
+        {
+          "id": "port-busbar-left-0001",
+          "role": "busbar",
+          "x": 0,
+          "y": 4
+        },
+        {
+          "id": "port-busbar-right-0001",
+          "role": "busbar",
+          "x": 320,
+          "y": 4
+        }
+      ],
+      "properties": {
+        "sections": 1
+      },
+      "representationId": "representation-busbar-0001",
+      "rotation": 0,
+      "width": 320,
+      "x": 300,
+      "y": 220
+    },
+    {
+      "height": 60,
+      "id": "object-symbol-0001",
+      "kind": "temporary_test_symbol",
+      "ports": [
+        {
+          "id": "port-symbol-bottom-0001",
+          "role": "secondary",
+          "x": 40,
+          "y": 60
+        },
+        {
+          "id": "port-symbol-top-0001",
+          "role": "primary",
+          "x": 40,
+          "y": 0
+        }
+      ],
+      "properties": {
+        "label": "TEST"
+      },
+      "representationId": "representation-symbol-0001",
+      "rotation": 0,
+      "source": {
+        "importMappingVersion": "native-1",
+        "sourceId": "fixture:test-symbol",
+        "sourceKind": "native"
+      },
+      "width": 80,
+      "x": 120,
+      "y": 120
+    }
+  ],
+  "projectId": "project-spike-0001",
+  "representations": [
+    {
+      "id": "representation-busbar-0001",
+      "objectIds": [
+        "object-busbar-0001"
+      ],
+      "profileVersion": "spike-profile-1",
+      "sheetId": "sheet-spike-0001"
+    },
+    {
+      "equipmentId": "equipment-spike-0001",
+      "id": "representation-symbol-0001",
+      "objectIds": [
+        "object-symbol-0001"
+      ],
+      "profileVersion": "spike-profile-1",
+      "sheetId": "sheet-spike-0001"
+    }
+  ],
+  "schemaVersion": 1,
+  "sheets": [
+    {
+      "height": 500,
+      "id": "sheet-spike-0001",
+      "layerIds": [
+        "layer-spike-0001"
+      ],
+      "name": "Sheet 1",
+      "representationIds": [
+        "representation-busbar-0001",
+        "representation-symbol-0001"
+      ],
+      "width": 800
+    }
+  ],
+  "title": "Desktop platform canonical fixture"
+}

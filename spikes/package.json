@@ -1,0 +1,38 @@
+{
+  "name": "electroscheme-desktop-platform-spikes",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": "24.19.0"
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json && vue-tsc -p shared/ui/tsconfig.json --noEmit && tsc -p electron/tsconfig.json --noEmit",
+    "test:core": "tsx --test shared/core/test/*.test.ts",
+    "test:harness": "node --test scripts/test/*.test.mjs",
+    "test": "npm run typecheck && npm run test:core && npm run test:harness",
+    "build:ui": "vite build --config shared/ui/vite.config.ts",
+    "build:electron": "tsc -p electron/tsconfig.json",
+    "build": "npm run build:ui && npm run build:electron",
+    "package:electron": "node scripts/package-electron.mjs",
+    "package:tauri": "node scripts/package-tauri.mjs",
+    "archive:candidate": "python tools/archive_candidate.py",
+    "scenario:candidate": "node scripts/run-candidate-scenario.mjs",
+    "benchmark:shared": "tsx scripts/benchmark-shared.ts",
+    "measure:candidate": "node scripts/measure-candidate.mjs",
+    "verify:scope": "node scripts/verify-changed-scope.mjs"
+  },
+  "devDependencies": {
+    "@electron/packager": "18.3.6",
+    "@tauri-apps/api": "2.11.1",
+    "@tauri-apps/cli": "2.11.4",
+    "@types/node": "24.10.0",
+    "@vitejs/plugin-vue": "6.0.0",
+    "electron": "43.3.0",
+    "tsx": "4.20.5",
+    "typescript": "5.9.2",
+    "vite": "7.3.6",
+    "vue": "3.5.18",
+    "vue-tsc": "3.0.5"
+  }
+}

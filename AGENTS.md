@@ -11,7 +11,7 @@ Required target platforms:
 - Windows;
 - Linux.
 
-The product may retain Vue 3, TypeScript and SVG as the editor/rendering layer, but browser-only deployment is not a product requirement. The desktop shell and native integration layer must be selected through an explicit architecture spike and ADR.
+Vue 3, TypeScript and SVG remain the accepted editor/rendering direction. Tauri 2 is the desktop-host decision candidate from `DESKTOP-PLATFORM-AND-CORE-SPIKE-001`; it becomes accepted only through explicit owner acceptance/merge of Draft PR #4.
 
 ## 2. Canonical source
 
@@ -149,6 +149,10 @@ The following are non-negotiable unless changed by an accepted ADR:
 8. Desktop/platform integration is behind an adapter boundary.
 9. Domain/editor core must be testable without launching the full desktop UI.
 10. Generated or imported content must preserve source provenance.
+11. The production canonical core is pure TypeScript unless a later accepted ADR changes it.
+12. Rust is limited to Tauri host/platform responsibilities; it must not become a second canonical document owner.
+13. FastAPI is not part of the packaged desktop runtime.
+14. Python Visio tooling is a bounded process/tool boundary and must not own writable project state.
 
 Until reconciliation is complete, do not expand parallel state models such as backend `Project`, frontend `EditorDocument` and local `CanvasViewport` collections independently.
 
@@ -248,19 +252,29 @@ Canonical ownership:
 - `docs/project/IMPLEMENTATION_PROGRAM.yaml` — phases, dependencies and gates;
 - `docs/architecture/SYSTEM_ARCHITECTURE.md` — target component structure;
 - `docs/architecture/DOMAIN_INVARIANTS.md` — non-negotiable data/domain rules;
+- `docs/architecture/VISIO_INTEROPERABILITY_CONTRACT.md` — mandatory Visio compatibility boundary;
+- `docs/architecture/spikes/DESKTOP_PLATFORM_COMPARISON.md` — P2 measured host comparison;
+- `docs/project/CANONICAL_DOCUMENT_CORE_001_SCOPE.md` — exact P3 production scope;
 - `docs/quality/ACCEPTANCE_GATES.md` — required verification evidence;
-- `docs/decisions/` — accepted architecture decisions.
+- `docs/decisions/` — architecture decisions.
 
 When an architectural decision changes, update its owner document in the same PR.
 
 ## 13. Current work item
 
-During `PROJECT-REFOUNDATION-001`:
+During `DESKTOP-PLATFORM-AND-CORE-SPIKE-001`:
 
-- work only in issue #1;
-- work only in branch `governance/project-refoundation-001`;
-- create/use its Draft PR;
-- do not modify product code;
-- do not select the final desktop shell;
-- do not delete legacy files;
-- establish the canonical program and next implementation work item.
+- work only in issue #3;
+- work only in branch `architecture/desktop-platform-and-core-spike-001`;
+- use only Draft PR #4;
+- do not create a replacement issue/branch/PR;
+- keep PR #4 Draft;
+- do not mark Ready for Review or merge without explicit owner command;
+- do not begin `CANONICAL-DOCUMENT-CORE-001` implementation inside PR #4;
+- preserve Tauri as the host decision candidate from ADR-0004 unless owner acceptance rejects it or new evidence requires a repair;
+- keep Electron as comparison/diagnostic evidence, not a production dependency;
+- keep Qt behind the material-advantage admission gate;
+- final automated acceptance must be green on one documentation-inclusive exact head;
+- only `OWNER_OR_WINDOWS_VISIO_EVIDENCE_REQUIRED` and `OWNER_OR_INTERACTIVE_RUNNER_EVIDENCE_REQUIRED` may remain open for final owner acceptance.
+
+After explicit owner acceptance and merge of PR #4, `docs/project/NEXT_WORK_ITEM.md` governs creation of `CANONICAL-DOCUMENT-CORE-001`.

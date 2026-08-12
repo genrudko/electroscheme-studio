@@ -4,9 +4,21 @@ program:
   title: ElectroScheme Studio product implementation program
   status: active
   baseline_main: 6e1209d800c0cc65da4a922506586d5a100c2a84
-  current_work_item: PROJECT-REFOUNDATION-001
-  current_issue: 1
-  current_branch: governance/project-refoundation-001
+  accepted_refoundation_main: b95d7111d9c5a36db4c355ee91f742efea8ecc10
+  current_work_item: DESKTOP-PLATFORM-AND-CORE-SPIKE-001
+  current_issue: 3
+  current_branch: architecture/desktop-platform-and-core-spike-001
+  current_pr: 4
+  current_pr_state: draft
+  current_work_item_state: acceptance_candidate_owner_manual_gates_pending
+  volatile_exact_state_owner: Draft PR #4 and GitHub Actions
+  selected_architecture_candidate:
+    desktop_host: tauri_2
+    canonical_core: pure_typescript
+    editor_renderer: vue3_typescript_svg
+    host_adapters: rust_tauri
+    visio_tooling: bounded_python_process
+    acceptance_state: pending_owner_acceptance_of_pr_4
   product_mode:
     standalone: true
     eod_module: false
@@ -74,8 +86,10 @@ statuses: [not_started, blocked, in_progress, candidate, accepted, deferred]
 phases:
   - id: P0_PROJECT_REFOUNDATION
     title: Project refoundation and GitHub governance
-    status: in_progress
+    status: accepted
     work_item: PROJECT-REFOUNDATION-001
+    accepted_pr: 2
+    accepted_merge: b95d7111d9c5a36db4c355ee91f742efea8ecc10
     depends_on: []
     objective: Establish the canonical product, architecture, quarantine and execution contract.
     deliverables:
@@ -135,10 +149,52 @@ phases:
 
   - id: P2_DESKTOP_PLATFORM_AND_CORE_SPIKE
     title: Desktop platform and canonical core spike
-    status: blocked
+    status: candidate
     work_item: DESKTOP-PLATFORM-AND-CORE-SPIKE-001
+    issue: 3
+    branch: architecture/desktop-platform-and-core-spike-001
+    pr: 4
+    pr_state: draft
+    execution_state: acceptance_candidate_owner_manual_gates_pending
+    selected_host_candidate: tauri_2
+    canonical_core_decision: pure_typescript
     depends_on: [P0_PROJECT_REFOUNDATION]
     objective: Select the desktop/runtime architecture using executable Windows/Linux evidence, classify every prototype asset and prove the mandatory local Visio interoperability path.
+    exact_head_evidence_contract:
+      trigger: pull_request
+      checkout: pull_request_head_sha
+      jobs:
+        - shared-contracts
+        - candidate-build_ubuntu-22.04
+        - candidate-build_windows-2022
+        - comparative-evidence
+      required_artifacts:
+        - desktop-spike-security-lock-evidence
+        - desktop-spike-Linux-X64
+        - desktop-spike-Windows-X64
+        - desktop-spike-comparison-evidence
+      dependency_resolution:
+        npm: committed_package_lock_and_npm_ci_ignore_scripts
+        cargo: committed_Cargo_lock_and_locked_build
+      source_tree_launch_forbidden: true
+      mixed_head_run_or_lock_artifacts_forbidden: true
+      hosted_runner_measurements_are_not_universal_benchmarks: true
+      decision_input_automated_state: green_and_independently_inspected
+      final_documentation_inclusive_exact_head_required: true
+    host_decision_evidence:
+      comparison: docs/architecture/spikes/DESKTOP_PLATFORM_COMPARISON.md
+      canonical_core_adr: docs/decisions/0003_canonical_core_and_tool_boundaries.md
+      desktop_host_adr: docs/decisions/0004_desktop_host_and_runtime_boundaries.md
+      tauri_windows_secure_packaged_scenario: pass
+      tauri_linux_secure_packaged_scenario: pass
+      electron_linux_secure_packaged_scenario: pass
+      electron_windows_secure_packaged_scenario: fail_secure_native_startup_0x80000003
+      qt: not_admitted_to_full_spike
+      linux_tauri_startup_anomaly_requires_interactive_remeasurement: true
+      production_python_sidecar_packaging_pending: true
+    external_manual_gates:
+      - OWNER_OR_WINDOWS_VISIO_EVIDENCE_REQUIRED
+      - OWNER_OR_INTERACTIVE_RUNNER_EVIDENCE_REQUIRED
     compare:
       - packaging and startup
       - filesystem and native dialogs
@@ -167,7 +223,7 @@ phases:
     gates:
       - windows_smoke
       - linux_smoke
-      - equivalent_editor_scenario
+      - equivalent_editor_scenario_for_selected_host
       - controlled_VSDX_read
       - controlled_VSSX_read
       - minimal_VSDX_write
@@ -179,8 +235,10 @@ phases:
 
   - id: P3_CANONICAL_DOCUMENT_CORE
     title: Canonical document storage and command core
-    status: not_started
+    status: blocked
+    blocked_by: [P2_DESKTOP_PLATFORM_AND_CORE_SPIKE_OWNER_ACCEPTANCE_AND_MERGE]
     depends_on: [P2_DESKTOP_PLATFORM_AND_CORE_SPIKE]
+    scope_owner: docs/project/CANONICAL_DOCUMENT_CORE_001_SCOPE.md
     objective: Implement one versioned document model and deterministic mutation/persistence path independent of the full UI, with concrete extension points for states, variants, multiple representations and Visio source provenance.
     deliverables:
       - project document schema v1
@@ -370,7 +428,7 @@ phases:
       - comparison against accepted source/reference document
       - editable VSDX export for accepted subset
       - generated VSDX open and basic edit evidence in Microsoft Visio
-      - controlled VSDX import export round_trip corpus
+      - controlled VSDX import export_round_trip corpus
       - compatibility and loss reports
       - documented legacy VSD VSS migration path
     gates:
@@ -415,6 +473,8 @@ phases:
       - optional_viewer_or_web_profile
 
 next_work_item:
-  id: DESKTOP-PLATFORM-AND-CORE-SPIKE-001
-  create_after: P0_PROJECT_REFOUNDATION accepted and merged
-  rule: Do not begin feature development before this spike selects the architecture, completes prototype asset dispositions and proves the mandatory Visio interoperability path.
+  id: CANONICAL-DOCUMENT-CORE-001
+  phase: P3_CANONICAL_DOCUMENT_CORE
+  scope_owner: docs/project/CANONICAL_DOCUMENT_CORE_001_SCOPE.md
+  create_after: P2_DESKTOP_PLATFORM_AND_CORE_SPIKE accepted and merged
+  rule: Do not begin P3 implementation before the final documentation-inclusive exact-head automated evidence and owner architecture acceptance are complete.
