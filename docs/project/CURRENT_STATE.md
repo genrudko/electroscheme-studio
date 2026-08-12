@@ -1,6 +1,6 @@
 # Current State — ElectroScheme Studio
 
-Дата среза: 2026-08-07  
+Дата среза: 2026-08-12  
 Статус: `DESKTOP-PLATFORM-AND-CORE-SPIKE-001` — `ACCEPTANCE_CANDIDATE / OWNER_MANUAL_GATES_PENDING`
 
 ## 1. Canonical GitHub state
@@ -16,7 +16,7 @@
 
 Exact head, ahead/behind, changed-file count, workflow run IDs and artifact IDs/digests are volatile GitHub metadata. Read them from Draft PR #4 and GitHub Actions before acceptance; do not create a self-referential exact-head loop in committed documentation.
 
-At the decision-input snapshot the branch is `behind_by: 0`. Final acceptance still requires the same condition on the documentation-inclusive exact head.
+At the 2026-08-12 repair-evidence snapshot the branch is `behind_by: 0`. Final acceptance still requires the same condition on the documentation-inclusive exact head.
 
 ## 2. Product direction
 
@@ -63,33 +63,56 @@ The host recommendation is evidence-based and remains pending explicit owner acc
 
 Qt remains `NOT_ADMITTED_TO_FULL_SPIKE`.
 
-## 4. Automated platform evidence
+## 4. 2026-08-12 Save and VSDX repair evidence
 
-The automated evidence contract has been achieved on the decision-input code state:
+Manual Windows testing of the previous Tauri artifact exposed a real regression that automation had not proved:
 
-- `shared-contracts` — success;
-- `candidate-build (ubuntu-22.04)` — success;
-- `candidate-build (windows-2022)` — success;
-- `comparative-evidence` — success;
-- all four required evidence artifacts published;
-- artifact archives independently inspected and their SHA-256 values matched the package manifests;
-- npm all-dependency and production audit results contain zero vulnerabilities;
-- npm/Cargo lock SHA values are equal across the platform evidence;
-- candidate package archives are restored before scenario/measurement execution;
-- source-tree launches are rejected by the evidence harness.
+- previous exact head: `9a99545694717007a5e4b20f2f72e903082e2af1`;
+- **Save result: FAIL** — pressing Save did not show a native Windows Save dialog;
+- PDF native save on the same owner environment worked;
+- therefore prior automated scenario success was not accepted as native-dialog evidence.
 
-The final documentation-inclusive exact head must repeat all applicable automated gates before owner acceptance.
+Repository repair was then restored at source level:
 
-## 5. Candidate result
+- JSON Save and PDF now share one Rust `native_save_bytes` helper;
+- the helper receives the current Tauri `WebviewWindow` as native-dialog parent;
+- JSON is passed to the helper as bytes, the same way as PDF;
+- cancellation remains a non-error and is surfaced in the UI as `save cancelled`;
+- write/invoke failures are surfaced in the UI as `save failed: <diagnostic>`;
+- no fixed-path or silent-save workaround was introduced.
 
-### Tauri
+The same repair also restores the VSDX generator/validator/test boundary:
 
-Automated packaged scenario:
+- explicit OPC relationship graph `package -> document -> pages -> page`;
+- `Page/Rel` relationship ownership rather than the previously invalid inline relationship shape;
+- correct PageSheet ownership;
+- controlled 1-D connector cells `BeginX/BeginY/EndX/EndY`;
+- relationship/content-type checks and dangling-relationship rejection;
+- negative regression fixture for the previously false-green VSDX structure;
+- deterministic VSDX/VSSX generation.
 
-- Windows — PASS;
-- Linux — PASS.
+Repair-evidence Desktop Platform Spike run `31603119700` completed successfully on repair head `5032bbda0e947465c54c3ca62dc70d7b7237de40`:
 
-Proved automatically on both operating systems:
+- `shared-contracts` — SUCCESS;
+- `candidate-build (ubuntu-22.04)` — SUCCESS;
+- `candidate-build (windows-2022)` — SUCCESS;
+- `comparative-evidence` — SUCCESS;
+- repaired Tauri compiled on Windows and Linux;
+- packaged/restored Tauri scenario passed on Windows and Linux;
+- Windows native Save dialog itself remains intentionally outside the automated claim.
+
+Repair-evidence selected-Tauri measurements:
+
+| Platform | Archive | Unpacked | Startup-to-ready | Process-tree RSS |
+|---|---:|---:|---:|---:|
+| Windows | ~2.53 MB | ~8.75 MB | ~494.0 ms | ~277.2 MB |
+| Linux | ~4.21 MB | ~15.93 MB | ~30.32 s | ~410.3 MB |
+
+The Linux startup value remains an explicit hosted-Xvfb anomaly/risk and is not a production performance claim.
+
+## 5. Automated platform evidence boundary
+
+The automated evidence contract has been achieved on the repair code state:
 
 - canonical document read and deterministic round trip;
 - structured clipboard round trip;
@@ -98,16 +121,37 @@ Proved automatically on both operating systems:
 - controlled VSSX read;
 - minimal VSDX generation;
 - generated VSDX package reinspection;
-- deterministic archive/package-root execution.
+- deterministic archive/package-root execution;
+- artifact archive restore verification;
+- npm/Cargo lock equality and immutability checks;
+- zero-result all-dependency and production-only npm audits.
 
-Decision-input hosted-runner measurements:
+The repaired controlled/generated VSDX SHA-256 is:
 
-| Platform | Archive | Unpacked | Startup-to-ready | Process-tree RSS |
-|---|---:|---:|---:|---:|
-| Windows | ~2.52 MB | ~8.72 MB | ~730.6 ms | ~285.5 MB |
-| Linux | ~4.18 MB | ~15.77 MB | ~30.42 s | ~415.1 MB |
+```text
+37af1404c342757d8641d3faa43a472d5559c821c0057647a7f33a226dad2664
+```
 
-The Linux startup value is an explicit anomaly/risk of the hosted Xvfb evidence and is not a production performance claim.
+The repaired controlled VSSX SHA-256 is:
+
+```text
+4184ec60635d67b6aa653cf2dd6f83ec0a34f4146668a3df6d8eb3927712b4f8
+```
+
+Automated evidence does **not** prove real native-dialog visibility, real OS drag/drop, independent cross-application clipboard lifetime, printer-driver behavior or Microsoft Visio edit/save/reopen.
+
+The final documentation-inclusive exact head must repeat all applicable automated gates before owner acceptance.
+
+## 6. Candidate result
+
+### Tauri
+
+Automated packaged scenario:
+
+- Windows — PASS;
+- Linux — PASS.
+
+Decision remains: Tauri 2 is the selected architecture candidate, not yet an accepted/merged architecture.
 
 ### Electron
 
@@ -117,25 +161,16 @@ The Linux startup value is an explicit anomaly/risk of the hosted Xvfb evidence 
 
 Electron remains valid comparison evidence but is not the selected product host.
 
-Decision-input Linux measurements:
-
-- archive ~125.04 MB;
-- unpacked ~327.43 MB;
-- startup-to-ready ~419.2 ms;
-- process-tree RSS ~625.6 MB.
-
-Windows package evidence exists (~143.73 MB archive / ~364.25 MB unpacked), but startup/RSS are not accepted because the secure runtime did not reach renderer-ready.
-
 Full comparison: `docs/architecture/spikes/DESKTOP_PLATFORM_COMPARISON.md`.
 
-## 6. Reproducibility and security state
+## 7. Reproducibility and security state
 
 Canonical dependency inputs:
 
 - `spikes/package-lock.json`;
 - `spikes/tauri/src-tauri/Cargo.lock`.
 
-Required workflow behavior:
+Required workflow behavior remains:
 
 - `npm ci --ignore-scripts`;
 - Cargo metadata with `--locked`;
@@ -145,9 +180,9 @@ Required workflow behavior:
 - LF policy for lockfiles across Windows/Linux checkout;
 - artifact manifests contain lock SHA-256 values and exact toolchain versions.
 
-The former Vite high-severity finding was repaired by the exact update `7.1.1 -> 7.3.6` without `npm audit fix --force`.
+The former Vite high-severity finding remains repaired by the exact update `7.1.1 -> 7.3.6` without `npm audit fix --force`.
 
-## 7. Canonical core and prototype state
+## 8. Canonical core and prototype state
 
 The spike proves:
 
@@ -177,27 +212,36 @@ Canonical inventory and migration mapping:
 - `docs/architecture/spikes/PROTOTYPE_ASSET_INVENTORY.yaml`;
 - `docs/architecture/spikes/PROTOTYPE_MIGRATION_MAP.md`.
 
-## 8. Visio boundary
+## 9. Visio boundary and owner evidence
 
-Automated evidence proves a local, deterministic package/tool boundary for:
+Automated evidence now validates the repaired relationship-safe controlled package boundary and rejects the previously false-green malformed package class.
 
-- controlled VSDX read;
-- controlled VSSX read;
-- minimal VSDX write;
-- generated package reinspection;
-- source IDs and structured diagnostics;
-- no network dependency.
+Owner evidence already exists for a repaired VSDX artifact with SHA-256:
 
-It does **not** prove that Microsoft Visio desktop accepts, edits and resaves the generated file.
+```text
+b9758d3b9f6c96cc761f4ddac31b72cec53d0701f499b4c5242a423663e28784
+```
+
+In Microsoft Visio Professional on Windows the owner reported:
+
+- file opened without corruption/repair message;
+- `Q-SPK-1` rendered;
+- `BUS` rendered;
+- connector rendered;
+- document appeared visually correct.
+
+This is accepted as positive **open/render** evidence for the repaired VSDX structure. It is not a claim of full arbitrary VSDX compatibility or lossless round trip.
+
+The current deterministic repository fixture has a different content digest (`37af1404...`) after source-level restoration. Therefore the existing owner evidence must not be misrepresented as byte-for-byte validation of the current final artifact. The formal exact-artifact edit/save/reopen protocol remains open.
 
 Production Python packaging is also not complete: the spike currently assumes an available interpreter. End-user installation of Python is not an accepted product runtime dependency.
 
-## 9. Remaining external/manual gates
+## 10. Remaining external/manual gates
 
-Exactly two external gates are allowed to remain open for owner acceptance:
+Two external gate families remain open for owner acceptance:
 
-- `OWNER_OR_WINDOWS_VISIO_EVIDENCE_REQUIRED`;
-- `OWNER_OR_INTERACTIVE_RUNNER_EVIDENCE_REQUIRED`.
+- `OWNER_OR_WINDOWS_VISIO_EVIDENCE_REQUIRED` — **PARTIAL**: repaired VSDX open/render evidence is positive; exact final artifact edit/save/reopen is still required by the formal protocol;
+- `OWNER_OR_INTERACTIVE_RUNNER_EVIDENCE_REQUIRED` — **OPEN**: the previous Windows artifact failed native Save; a new final artifact containing the common parented native-save helper must be retested.
 
 Protocols:
 
@@ -206,7 +250,7 @@ Protocols:
 
 Both protocols use downloaded exact-run artifacts and require no project build.
 
-## 10. Program state
+## 11. Program state
 
 | Phase | State |
 |---|---|
@@ -222,7 +266,9 @@ Both protocols use downloaded exact-run artifacts and require no project build.
 | P9 Packaging, Visio export, demo and pilot | `NOT_STARTED` |
 | P10 Advanced capabilities | `NOT_STARTED` |
 
-## 11. Next work item
+`docs/project/IMPLEMENTATION_PROGRAM.yaml` remains semantically synchronized: P2 is still a candidate, PR #4 is still Draft, Tauri remains the selected candidate, and the same two external/manual gate families remain open. Volatile exact-run metadata remains intentionally outside that YAML.
+
+## 12. Next work item
 
 After owner acceptance and merge of PR #4, the next work item is exactly:
 
@@ -236,11 +282,11 @@ Its production boundary is owned by:
 
 Do not begin P3 implementation inside PR #4.
 
-## 12. Acceptance boundary for PR #4
+## 13. Acceptance boundary for PR #4
 
 Draft PR #4 is ready for final owner/manual acceptance only when:
 
-- comparison matrix and ADR-0004 are committed;
+- comparison matrix and ADR-0004 are synchronized;
 - canonical project/program/next-work-item documentation is synchronized;
 - final documentation-inclusive exact head has green CI;
 - final documentation-inclusive exact head has green `shared-contracts`, Windows candidate, Linux candidate and `comparative-evidence`;
@@ -249,6 +295,6 @@ Draft PR #4 is ready for final owner/manual acceptance only when:
 - `behind_by: 0`;
 - issue #3 remains open;
 - PR #4 remains OPEN / DRAFT / NOT MERGED;
-- only the two manual gates above remain open.
+- the remaining manual subgates are represented without converting automated IPC/scenario checks into native-UI evidence.
 
 Do not mark Ready for Review or merge without explicit owner command.

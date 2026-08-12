@@ -67,6 +67,28 @@ The executable evidence demonstrated:
 
 The Electron Windows failure is not treated as proof that Electron is generally unusable on Windows. It is sufficient to reject Electron for this work item because the mandatory secure packaged Windows acceptance scenario did not pass while Tauri did.
 
+## Post-manual repair evidence — 2026-08-12
+
+Owner manual testing exposed an important limitation in the earlier automated evidence boundary.
+
+On the previous Windows Tauri artifact from head `9a99545694717007a5e4b20f2f72e903082e2af1`:
+
+```text
+Save: FAIL
+```
+
+Pressing **Save** did not show a native Windows Save dialog, while the PDF native save path worked on the same machine. Therefore successful command/IPC scenarios were not accepted as evidence of real native-dialog behavior.
+
+The repository repair now makes JSON Save and PDF use one common Rust native-save helper. The current Tauri `WebviewWindow` is supplied to `rfd::FileDialog::set_parent(...)`, JSON is passed as bytes, cancellation remains non-error, and write failures are surfaced as `save failed: <diagnostic>`.
+
+Repair-evidence Desktop Platform Spike run `31603119700` on head `5032bbda0e947465c54c3ca62dc70d7b7237de40` completed successfully on Windows and Linux, including Tauri compilation, deterministic packaging/archive restore and packaged in-app scenarios.
+
+This is source/build/package evidence for the repaired path. It is **not** a claim that the visible Windows Save dialog now works. The final exact Windows artifact still requires owner/interactive verification under `OWNER_OR_INTERACTIVE_RUNNER_EVIDENCE_REQUIRED`.
+
+The same repair restored stricter relationship-aware VSDX generation/validation and negative regressions for the previously false-green malformed package class. Owner Microsoft Visio Professional evidence is positive for open/render of a prior repaired VSDX artifact (`b9758d3b9f6c96cc761f4ddac31b72cec53d0701f499b4c5242a423663e28784`). The reconstructed deterministic GitHub fixture has SHA-256 `37af1404c342757d8641d3faa43a472d5559c821c0057647a7f33a226dad2664`, so exact-artifact Visio edit/save/reopen remains an open manual subgate rather than being inferred from the earlier artifact.
+
+These findings do not reverse the host recommendation. They strengthen the requirement that native UI and Microsoft Visio behavior remain explicit manual gates instead of being inferred from automated IPC/package checks.
+
 ## Why Tauri
 
 Tauri is selected because it satisfies the mandatory platform scenario on both operating systems and provides the stronger overall product boundary for this repository:
@@ -185,9 +207,9 @@ Costs:
 
 This ADR becomes accepted only with explicit owner acceptance of Draft PR #4.
 
-Before merge, all automatable gates must be green on one final documentation-inclusive exact head. The only permitted open gates are:
+Before merge, all automatable gates must be green on one final documentation-inclusive exact head. The only permitted open gate families are:
 
-- `OWNER_OR_WINDOWS_VISIO_EVIDENCE_REQUIRED`;
-- `OWNER_OR_INTERACTIVE_RUNNER_EVIDENCE_REQUIRED`.
+- `OWNER_OR_WINDOWS_VISIO_EVIDENCE_REQUIRED` — currently partial because open/render evidence exists while exact-artifact edit/save/reopen remains open;
+- `OWNER_OR_INTERACTIVE_RUNNER_EVIDENCE_REQUIRED` — currently open and must include a real retest of the repaired native Save dialog.
 
 Ready for Review and merge remain owner-only actions.

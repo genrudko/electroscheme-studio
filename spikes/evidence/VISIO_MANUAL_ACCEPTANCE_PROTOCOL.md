@@ -1,9 +1,38 @@
 # Microsoft Visio manual acceptance protocol
 
-Status: `OWNER_OR_WINDOWS_VISIO_EVIDENCE_REQUIRED`  
+Status: `OWNER_OR_WINDOWS_VISIO_EVIDENCE_REQUIRED — PARTIAL`  
 Selected host candidate: `Tauri 2`
 
 This protocol validates the controlled VSDX input and VSDX generated through the packaged Tauri Windows candidate. No project build is required.
+
+## 0. Existing owner evidence
+
+A repaired VSDX artifact with SHA-256:
+
+```text
+b9758d3b9f6c96cc761f4ddac31b72cec53d0701f499b4c5242a423663e28784
+```
+
+was opened manually by the owner in Microsoft Visio Professional on Windows.
+
+Recorded result:
+
+- the file opened;
+- Visio did not show a corruption/repair message;
+- `Q-SPK-1` displayed;
+- `BUS` displayed;
+- the connector displayed;
+- the document looked visually correct.
+
+This is positive owner evidence for **open/render of the repaired package structure**. It is not evidence for arbitrary VSDX compatibility, lossless round trip or edit/save/reopen preservation.
+
+The source-level repair had to be reconstructed in GitHub after the previous connector outage. The current deterministic controlled fixture therefore has a different SHA-256:
+
+```text
+37af1404c342757d8641d3faa43a472d5559c821c0057647a7f33a226dad2664
+```
+
+Because the bytes differ, the prior owner open/render result must not be represented as byte-for-byte acceptance of the final GitHub artifact. The exact-artifact edit/save/reopen steps below remain open.
 
 ## 1. Select exact Windows artifact
 
@@ -13,8 +42,9 @@ Use only `desktop-spike-Windows-X64` from the final workflow run/exact head reco
 2. Extract the GitHub artifact into a new temporary directory.
 3. Open `evidence/generated/measurements-windows.json` and confirm run/head/lock SHA values match PR #4.
 4. Open `evidence/generated/tauri-scenario-windows.json`.
-5. Confirm `status: "ok"` and every scenario check is `true`.
-6. Open `evidence/generated/tauri-package-manifest-windows.json` and confirm `artifact_layout_round_trip_verified: true`.
+5. Confirm `status: "ok"` and every automated scenario check is `true`.
+6. Confirm the scenario still marks native/interactive gates as manual rather than claiming them automatically.
+7. Open `evidence/generated/tauri-package-manifest-windows.json` and confirm `artifact_layout_round_trip_verified: true`.
 
 The Electron Windows scenario is intentionally not an input to this protocol: it is retained as negative comparison evidence and did not reach the secure renderer.
 
@@ -47,10 +77,10 @@ Get-FileHash .\evidence\generated\visio-fixtures\controlled-minimal.vsdx -Algori
 Get-FileHash .\evidence\generated\tauri-generated-minimal.vsdx -Algorithm SHA256
 ```
 
-For the current controlled fixture family, expected SHA-256 is:
+For the current repaired controlled fixture family, expected SHA-256 is:
 
 ```text
-541c036d6ca34971d4470c7d4523f4eee83f80c31c2de5effea220837b463af2
+37af1404c342757d8641d3faa43a472d5559c821c0057647a7f33a226dad2664
 ```
 
 Any mismatch is `FAILED_WITH_EVIDENCE`; do not accept a mismatched file.
@@ -59,7 +89,7 @@ Any mismatch is `FAILED_WITH_EVIDENCE`; do not accept a mismatched file.
 
 Record Microsoft Visio edition/build, Windows version and date.
 
-For each of the two files:
+For each of the two **exact final-artifact** files:
 
 1. Open it in Microsoft Visio desktop.
 2. Confirm no repair, corruption, blocked-content or compatibility warning.
@@ -70,6 +100,8 @@ For each of the two files:
 7. Close Visio completely.
 8. Reopen the saved copy and confirm the move/text edit persist without a repair dialog.
 9. Preserve before/after screenshots and the edited copy.
+
+The existing owner evidence in section 0 may be retained as supporting open/render evidence, but it does not replace these exact-artifact edit/save/reopen steps because its SHA differs from the current deterministic fixture.
 
 A pass for the controlled fixture does not automatically substitute for the packaged Tauri output record even if their input bytes are currently identical; preserve both provenance records.
 
@@ -92,4 +124,6 @@ Use only:
 - `FAILED_WITH_EVIDENCE`;
 - `NOT_RUN`.
 
-Automated ZIP/XML/package validation is necessary but is not evidence that Microsoft Visio accepted, edited and resaved the file.
+The gate may be reported as `PARTIAL` while section 0 is positive but the exact final-artifact edit/save/reopen procedure has not been completed.
+
+Automated ZIP/XML/relationship/package validation is necessary but is not evidence that Microsoft Visio accepted, edited and resaved the file.

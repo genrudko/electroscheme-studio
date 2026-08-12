@@ -7,6 +7,29 @@ This protocol validates the remaining real-desktop behavior of the selected Taur
 
 No project build is required.
 
+## 0. Known Windows Save evidence and repair under test
+
+The previous Windows artifact built from head `9a99545694717007a5e4b20f2f72e903082e2af1` was manually tested by the owner.
+
+Actual result:
+
+```text
+Save: FAIL
+```
+
+Pressing **Save** did not show a native Windows Save dialog. PDF save did work in the same owner environment. That real owner result overrides any earlier inference from CI/in-app scenario success: automated command/IPC execution is not native-dialog evidence.
+
+The repository repair now routes JSON Save and PDF through one common Rust native-save helper. The helper:
+
+- receives the current Tauri `WebviewWindow` as the dialog parent;
+- calls `rfd::FileDialog::set_parent(...)`;
+- receives JSON as bytes, like PDF;
+- writes only after the user chooses a path;
+- returns cancellation as a normal result;
+- returns write failures as `save failed: <diagnostic>`.
+
+The repaired code compiles and passes packaged Windows/Linux scenarios. This section remains open until the **final exact Windows artifact recorded in Draft PR #4** is tested interactively. Do not reuse the old failed executable or an intermediate repair artifact after the branch head changes.
+
 ## 1. Select exact artifacts
 
 Use only the final Windows and Linux artifacts recorded in Draft PR #4:
@@ -70,11 +93,28 @@ On each OS:
 
 1. Launch Tauri.
 2. Select **Save**.
-3. Confirm a platform-native save dialog appears, defaults to `desktop-platform-spike.esspike.json`, filters JSON and permits cancellation without creating a file.
-4. Save to a non-repository temporary directory.
-5. Select **Open**, choose the saved file and confirm the editor returns to ready without semantic/visual change.
-6. Compare the saved file with packaged `fixtures/canonical-project.json` after deterministic normalization.
-7. Preserve screenshot/video, saved path and SHA-256.
+3. Confirm a platform-native Save dialog appears, is parented to the Tauri window, defaults to `desktop-platform-spike.esspike.json` and offers the JSON filter.
+4. Cancel once and confirm no file is created and the application visibly reports exactly:
+
+```text
+save cancelled
+```
+
+5. Select **Save** again, choose a non-repository temporary path and save.
+6. Confirm the JSON file physically exists and record its SHA-256.
+7. Select **Open**, choose the saved file and confirm the editor returns to ready without semantic/visual change.
+8. Compare the saved file with packaged `fixtures/canonical-project.json` after deterministic normalization.
+9. Preserve screenshot/video, saved path and SHA-256.
+
+If a safe, ordinary unwritable destination is already available, one additional negative test may be run. The application must show a visible diagnostic beginning with:
+
+```text
+save failed:
+```
+
+Do not change filesystem permissions, system policy or security settings solely to manufacture this error. Failure-path evidence is useful but must not make the manual test invasive.
+
+A successful automated `save_project` invocation is not a substitute for steps 2-6: the visible native dialog and actual user-selected path are the evidence being tested.
 
 ## 4. Native file drag/drop
 
