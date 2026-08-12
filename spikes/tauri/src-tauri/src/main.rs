@@ -58,6 +58,11 @@ fn fixture_root() -> PathBuf {
         .unwrap_or_else(|| development_root().join("shared/fixtures"))
 }
 
+fn main_webview_window(app: &tauri::AppHandle, operation: &str) -> Result<tauri::WebviewWindow, String> {
+    app.get_webview_window("main")
+        .ok_or_else(|| format!("{operation}: main webview window not found"))
+}
+
 #[tauri::command]
 fn platform() -> String { std::env::consts::OS.to_string() }
 
@@ -88,9 +93,6 @@ fn mark_ready(app: tauri::AppHandle) -> Result<(), String> {
         fs::write(path, serde_json::to_vec(&ready).map_err(|error| error.to_string())?).map_err(|error| error.to_string())?;
     }
     let exit_delay_ms = if std::env::var("SPIKE_MEASURE").ok().as_deref() == Some("1") {
-        // Windows process-tree RSS is sampled through PowerShell/CIM. Starting that
-        // probe can take several seconds on a fresh hosted runner, so keep the
-        // already-ready automation process alive long enough for the snapshot.
         Some(10_000)
     } else if std::env::var("SPIKE_SMOKE").ok().as_deref() == Some("1") {
         Some(100)
@@ -116,9 +118,16 @@ fn write_path(path: String, content: String) -> Result<(), String> { fs::write(p
 fn write_bytes_path(path: String, bytes: Vec<u8>) -> Result<(), String> { fs::write(path, bytes).map_err(|error| error.to_string()) }
 
 #[tauri::command]
-fn open_project() -> Result<Option<String>, String> {
-    match rfd::FileDialog::new().add_filter("ElectroScheme spike", &["json"]).pick_file() {
-        Some(path) => fs::read_to_string(path).map(Some).map_err(|error| error.to_string()),
+fn open_project(app: tauri::AppHandle) -> Result<Option<String>, String> {
+    let window = main_webview_window(&app, "open failed")?;
+    match rfd::FileDialog::new()
+        .set_parent(&window)
+        .add_filter("ElectroScheme spike", &["json"])
+        .pick_file()
+    {
+        Some(path) => fs::read_to_string(path)
+            .map(Some)
+            .map_err(|error| format!("open failed: {error}")),
         None => Ok(None),
     }
 }
@@ -130,9 +139,7 @@ fn native_save_bytes(
     extensions: &[&str],
     bytes: &[u8],
 ) -> Result<bool, String> {
-    let window = app
-        .get_webview_window("main")
-        .ok_or_else(|| "save failed: main webview window not found".to_string())?;
+    let window = main_webview_window(app, "save failed")?;
 
     match rfd::FileDialog::new()
         .set_parent(&window)
@@ -180,17 +187,32 @@ fn clipboard_read(state: tauri::State<'_, ClipboardState>) -> Result<String, Str
 fn run_visio_tool(args: Vec<String>) -> Result<ToolResult, String> {
     let executable = if cfg!(windows) { "python" } else { "python3" };
     let tool = runtime_root().join("tools/visio_spike_tool.py");
-    let mut child = Command::new(executable).arg(tool).args(args).stdin(Stdio::null()).stdout(Stdio::piped()).stderr(Stdio::piped()).spawn().map_err(|error| error.to_string())?;
+    let mut child = Command::new(executable)
+        .arg(tool)
+        .args(args)
+        .stdin(Stdio::null())
+        .stdout(Stdio::piped())
+        .stderr(Stdio::piped())
+        .spawn()
+        .map_err(|error| error.to_string())?;
     let started = Instant::now();
     loop {
         if child.try_wait().map_err(|error| error.to_string())?.is_some() {
             let output = child.wait_with_output().map_err(|error| error.to_string())?;
-            return Ok(ToolResult { exit_code: output.status.code().unwrap_or(-1), stdout: String::from_utf8_lossy(&output.stdout).into_owned(), stderr: String::from_utf8_lossy(&output.stderr).into_owned() });
+            return Ok(ToolResult {
+                exit_code: output.status.code().unwrap_or(-1),
+                stdout: String::from_utf8_lossy(&output.stdout).into_owned(),
+                stderr: String::from_utf8_lossy(&output.stderr).into_owned(),
+            });
         }
         if started.elapsed() >= Duration::from_secs(15) {
             child.kill().map_err(|error| error.to_string())?;
             let output = child.wait_with_output().map_err(|error| error.to_string())?;
-            return Ok(ToolResult { exit_code: -2, stdout: String::from_utf8_lossy(&output.stdout).into_owned(), stderr: format!("{}timeout", String::from_utf8_lossy(&output.stderr)) });
+            return Ok(ToolResult {
+                exit_code: -2,
+                stdout: String::from_utf8_lossy(&output.stdout).into_owned(),
+                stderr: format!("{}timeout", String::from_utf8_lossy(&output.stderr)),
+            });
         }
         thread::sleep(Duration::from_millis(50));
     }

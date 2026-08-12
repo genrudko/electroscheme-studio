@@ -2,7 +2,17 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
-import { CommandHistory, createCanonicalFixture, parseProject, renderDeterministicPdf, renderDeterministicSvg, serializeProject, validateProject } from "../src/index.ts";
+import {
+  CommandHistory,
+  createCanonicalFixture,
+  decodeClipboard,
+  encodeClipboard,
+  parseProject,
+  renderDeterministicPdf,
+  renderDeterministicSvg,
+  serializeProject,
+  validateProject
+} from "../src/index.ts";
 
 const canonicalFixtureText = readFileSync(new URL("../../fixtures/canonical-project.json", import.meta.url), "utf8");
 const svgFixtureText = readFileSync(new URL("../../fixtures/editor-output.svg", import.meta.url), "utf8");
@@ -19,6 +29,24 @@ test("fixture validates and round-trips deterministically", () => {
 test("serializer accepts a reactive-style proxied project", () => {
   const proxied = new Proxy(createCanonicalFixture(), {});
   assert.equal(serializeProject(proxied), canonicalFixtureText);
+});
+
+test("structured clipboard accepts a reactive-style proxied editor object", () => {
+  const fixture = createCanonicalFixture();
+  const proxiedObject = new Proxy(fixture.objects[0]!, {});
+  const proxiedProject = new Proxy(
+    { ...fixture, objects: [proxiedObject, ...fixture.objects.slice(1)] },
+    {}
+  );
+  const encoded = encodeClipboard(proxiedProject, ["object-symbol-0001"]);
+  const decoded = decodeClipboard(encoded);
+  assert.equal(decoded.schema, "electroscheme-spike-clipboard/1");
+  assert.equal(decoded.objects.length, 1);
+  assert.equal(decoded.objects[0]?.id, "object-symbol-0001");
+  assert.throws(
+    () => decodeClipboard('{"schema":"electroscheme-spike-clipboard/1","objects":[null]}'),
+    /invalid clipboard object/
+  );
 });
 
 test("move uses command path, snaps, undo and redo", () => {

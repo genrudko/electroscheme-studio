@@ -3,15 +3,17 @@ import { computed, onMounted, onUnmounted, ref } from "vue";
 import {
   CommandHistory,
   createCanonicalFixture,
+  decodeClipboard,
   encodeClipboard,
   parseProject,
   renderDeterministicPdf,
   serializeProject,
-  type AutomationContext
+  type AutomationContext,
+  type CanonicalProject
 } from "@core";
 import { host } from "./host.ts";
 
-const history = new CommandHistory(createCanonicalFixture());
+let history = new CommandHistory(createCanonicalFixture());
 const project = ref(history.current);
 const selected = ref("object-symbol-0001");
 const status = ref("initializing");
@@ -22,15 +24,52 @@ function errorMessage(error: unknown): string {
   return error instanceof Error ? error.message : String(error);
 }
 
+function adoptProject(next: CanonicalProject, success: string): void {
+  history = new CommandHistory(next);
+  project.value = history.current;
+  selected.value = project.value.objects[0]?.id ?? "";
+  status.value = success;
+}
+
 function move() {
   project.value = history.execute({ type: "MoveObjects", objectIds: [selected.value], dx: 17, dy: 24, grid: 10 });
   status.value = "moved through command path";
 }
 function undo() { project.value = history.undo(); status.value = "undo"; }
 function redo() { project.value = history.redo(); status.value = "redo"; }
-async function copy() { await host.writeStructured(encodeClipboard(project.value, [selected.value])); status.value = "structured clipboard copied"; }
-async function paste() { const text = await host.readStructured(); status.value = `structured clipboard ${text.length} bytes`; }
-async function openFile() { const text = await host.openProject(); if (text) { project.value = parseProject(text); status.value = "opened through native dialog adapter"; } }
+
+async function copy() {
+  try {
+    const payload = encodeClipboard(project.value, [selected.value]);
+    await host.writeStructured(payload);
+    status.value = "structured clipboard copied";
+  } catch (error) {
+    status.value = `clipboard failed: ${errorMessage(error)}`;
+  }
+}
+
+async function paste() {
+  try {
+    const payload = decodeClipboard(await host.readStructured());
+    status.value = `structured clipboard accepted: ${payload.objects.length} object(s)`;
+  } catch (error) {
+    status.value = `clipboard failed: ${errorMessage(error)}`;
+  }
+}
+
+async function openFile() {
+  try {
+    const text = await host.openProject();
+    if (text === null) {
+      status.value = "open cancelled";
+      return;
+    }
+    adoptProject(parseProject(text), "opened through native dialog adapter");
+  } catch (error) {
+    status.value = `open failed: ${errorMessage(error)}`;
+  }
+}
+
 async function saveFile() {
   try {
     const ok = await host.saveProject("desktop-platform-spike.esspike.json", serializeProject(project.value));
@@ -40,7 +79,19 @@ async function saveFile() {
     status.value = diagnostic.startsWith("save failed:") ? diagnostic : `save failed: ${diagnostic}`;
   }
 }
-async function onBrowserDrop(event: DragEvent) { event.preventDefault(); const file = event.dataTransfer?.files[0]; if (!file) return; const text = await host.readBrowserDroppedFile(file); if (text) { project.value = parseProject(text); status.value = "opened through browser-to-host drag/drop adapter"; } }
+
+async function onBrowserDrop(event: DragEvent) {
+  event.preventDefault();
+  const file = event.dataTransfer?.files[0];
+  if (!file) return;
+  try {
+    const text = await host.readBrowserDroppedFile(file);
+    if (text !== null) adoptProject(parseProject(text), "opened through browser-to-host drag/drop adapter");
+  } catch (error) {
+    status.value = `drop failed: ${errorMessage(error)}`;
+  }
+}
+
 async function pdf() {
   try {
     const ok = await host.exportPdf("desktop-platform-spike.pdf", renderDeterministicPdf(project.value));
@@ -125,8 +176,12 @@ let unsubscribe: (() => void) | undefined;
 onMounted(async () => {
   try {
     unsubscribe = await host.subscribe(async path => {
-      project.value = parseProject(await host.readDroppedPath(path));
-      status.value = "opened through native drag/drop adapter";
+      try {
+        const text = await host.readDroppedPath(path);
+        adoptProject(parseProject(text), "opened through native drag/drop adapter");
+      } catch (error) {
+        status.value = `drop failed: ${errorMessage(error)}`;
+      }
     });
     status.value = `ready on ${await host.platform()}`;
     const automation = await host.automationContext();
@@ -136,7 +191,7 @@ onMounted(async () => {
       status.value = "automated platform scenario passed";
     }
   } catch (error) {
-    status.value = error instanceof Error ? error.message : String(error);
+    status.value = errorMessage(error);
   } finally {
     await host.markReady();
   }
