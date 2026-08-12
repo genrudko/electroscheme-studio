@@ -6,6 +6,7 @@ import hashlib
 import json
 import pathlib
 import posixpath
+import re
 import zipfile
 from xml.etree import ElementTree as ET
 
@@ -15,8 +16,10 @@ REL_NS = "http://schemas.openxmlformats.org/package/2006/relationships"
 OFFICE_REL_NS = "http://schemas.openxmlformats.org/officeDocument/2006/relationships"
 VISIO_NS = "http://schemas.microsoft.com/office/visio/2012/main"
 CT_NS = "http://schemas.openxmlformats.org/package/2006/content-types"
+EXTENDED_PROPS_NS = "http://schemas.openxmlformats.org/officeDocument/2006/extended-properties"
 REL = f"{{{REL_NS}}}Relationship"
 RID = f"{{{OFFICE_REL_NS}}}id"
+APP_VERSION_RE = re.compile(r"^\d{2}\.\d{4}$")
 
 COMMON_REQUIRED = {
     "[Content_Types].xml",
@@ -102,6 +105,21 @@ def _validate_content_types(archive: zipfile.ZipFile, kind: str, diagnostics: li
             diagnostics.append({"severity": "error", "code": "CONTENT_TYPE_MISMATCH", "part": part, "expected": expected, "actual": overrides.get(part)})
 
 
+def _validate_extended_properties(archive: zipfile.ZipFile, diagnostics: list[dict]) -> None:
+    try:
+        root = ET.fromstring(archive.read("docProps/app.xml"))
+    except (KeyError, ET.ParseError):
+        return
+    if root.tag != f"{{{EXTENDED_PROPS_NS}}}Properties":
+        diagnostics.append({"severity": "error", "code": "EXTENDED_PROPERTIES_ROOT_INVALID", "part": "docProps/app.xml"})
+        return
+    app_version = root.find(f"{{{EXTENDED_PROPS_NS}}}AppVersion")
+    if app_version is not None:
+        value = (app_version.text or "").strip()
+        if not APP_VERSION_RE.fullmatch(value):
+            diagnostics.append({"severity": "error", "code": "APP_VERSION_INVALID", "part": "docProps/app.xml", "value": value, "expectedFormat": "XX.YYYY"})
+
+
 def _validate_vsdx(archive: zipfile.ZipFile, graph: dict, diagnostics: list[dict]) -> None:
     document_rel = _require_relationship(graph, None, "http://schemas.microsoft.com/visio/2010/relationships/document", "visio/document.xml", diagnostics)
     pages_rel = _require_relationship(graph, "visio/document.xml", "http://schemas.microsoft.com/visio/2010/relationships/pages", "visio/pages/pages.xml", diagnostics)
@@ -173,6 +191,8 @@ def inspect_package(path: pathlib.Path, kind: str) -> dict:
                     diagnostics.append({"severity": "error", "code": "INVALID_XML", "part": name, "message": str(error)})
             if "[Content_Types].xml" in names:
                 _validate_content_types(archive, kind, diagnostics)
+            if "docProps/app.xml" in names:
+                _validate_extended_properties(archive, diagnostics)
             graph = _relationships(archive, names, diagnostics)
             if kind == "vsdx":
                 _validate_vsdx(archive, graph, diagnostics)

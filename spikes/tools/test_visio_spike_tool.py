@@ -71,6 +71,7 @@ class VisioFixtureTests(unittest.TestCase):
     def test_generated_package_structure(self) -> None:
         with zipfile.ZipFile(FIXTURES / "controlled-minimal.vsdx") as archive:
             self.assertIn("docProps/app.xml", archive.namelist())
+            self.assertIn(b"<AppVersion>01.0000</AppVersion>", archive.read("docProps/app.xml"))
             self.assertIn(b"<Rel r:id=\"rId1\"/>", archive.read("visio/pages/pages.xml"))
             self.assertNotIn(b"<Pages r:id=", archive.read("visio/document.xml"))
             page = archive.read("visio/pages/page1.xml")
@@ -132,6 +133,27 @@ class VisioFixtureTests(unittest.TestCase):
             codes = {item["code"] for item in result["diagnostics"]}
             self.assertIn("DANGLING_RELATIONSHIP", codes)
             self.assertIn("REQUIRED_RELATIONSHIP_MISSING", codes)
+
+    def test_nonconformant_app_version_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            directory = pathlib.Path(temporary)
+            self.generate(directory)
+            source = directory / "controlled-minimal.vsdx"
+            broken = directory / "bad-app-version.vsdx"
+            with zipfile.ZipFile(source) as archive:
+                bad_app = archive.read("docProps/app.xml").replace(
+                    b"<AppVersion>01.0000</AppVersion>",
+                    b"<AppVersion>0.1</AppVersion>",
+                )
+            rewrite_zip(source, broken, {"docProps/app.xml": bad_app})
+            process = self.run_tool_process("inspect", "vsdx", str(broken))
+            self.assertEqual(process.returncode, 2)
+            result = json.loads(process.stdout)
+            self.assertEqual(result["status"], "invalid")
+            diagnostics = [item for item in result["diagnostics"] if item["code"] == "APP_VERSION_INVALID"]
+            self.assertEqual(len(diagnostics), 1)
+            self.assertEqual(diagnostics[0]["value"], "0.1")
+            self.assertEqual(diagnostics[0]["expectedFormat"], "XX.YYYY")
 
 
 if __name__ == "__main__":

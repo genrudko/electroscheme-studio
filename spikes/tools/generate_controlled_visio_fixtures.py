@@ -99,7 +99,7 @@ def build_vsdx(project: dict) -> dict[str, bytes]:
   <Relationship Id="rId3" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties" Target="docProps/app.xml"/>
 </Relationships>'''),
         "docProps/app.xml": _xml('''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<Properties xmlns="http://schemas.openxmlformats.org/officeDocument/2006/extended-properties" xmlns:vt="http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes"><Application>ElectroScheme Studio</Application><AppVersion>0.1</AppVersion></Properties>'''),
+<Properties xmlns="http://schemas.openxmlformats.org/officeDocument/2006/extended-properties" xmlns:vt="http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes"><Application>ElectroScheme Studio</Application><AppVersion>01.0000</AppVersion></Properties>'''),
         "docProps/core.xml": _xml(f'''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <cp:coreProperties xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" xmlns:dc="http://purl.org/dc/elements/1.1/"><dc:title>{title}</dc:title></cp:coreProperties>'''),
         "visio/_rels/document.xml.rels": _xml('''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
