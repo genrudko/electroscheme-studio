@@ -17,7 +17,10 @@ function canonicalize(value: unknown): unknown {
 export function serializeProject(project: CanonicalProject): string {
   const errors = validateProject(project);
   if (errors.length) throw new Error(`Invalid project: ${errors.join("; ")}`);
-  const normalized = structuredClone(project);
+  // The editor exposes the canonical document through Vue reactive proxies.
+  // structuredClone rejects Proxy objects, so create a plain JSON-compatible
+  // canonical copy through the same recursive projection used for serialization.
+  const normalized = canonicalize(project) as CanonicalProject;
   normalized.documentIds.sort();
   normalized.documents.sort((a,b) => a.id.localeCompare(b.id)).forEach(v => v.sheetIds.sort());
   normalized.sheets.sort((a,b) => a.id.localeCompare(b.id)).forEach(v => { v.layerIds.sort(); v.representationIds.sort(); });
