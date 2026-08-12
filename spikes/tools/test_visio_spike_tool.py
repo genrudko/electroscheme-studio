@@ -51,11 +51,14 @@ class VisioFixtureTests(unittest.TestCase):
         )
 
     def test_vsdx(self) -> None:
-        result = self.run_tool("inspect", "vsdx", str(FIXTURES / "controlled-minimal.vsdx"))
-        self.assertEqual(result["status"], "ok")
-        self.assertIn("visio/pages/page1.xml", result["parts"])
-        self.assertTrue({"1", "2", "3"}.issubset(set(result["sourceIds"])))
-        self.assertEqual(result["diagnostics"], [])
+        with tempfile.TemporaryDirectory() as temporary:
+            generated = pathlib.Path(temporary)
+            self.generate(generated)
+            result = self.run_tool("inspect", "vsdx", str(generated / "controlled-minimal.vsdx"))
+            self.assertEqual(result["status"], "ok")
+            self.assertIn("visio/pages/page1.xml", result["parts"])
+            self.assertTrue({"1", "2", "3"}.issubset(set(result["sourceIds"])))
+            self.assertEqual(result["diagnostics"], [])
 
     def test_generated_vssx(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
@@ -69,36 +72,44 @@ class VisioFixtureTests(unittest.TestCase):
             self.assertEqual(result["diagnostics"], [])
 
     def test_generated_package_structure(self) -> None:
-        with zipfile.ZipFile(FIXTURES / "controlled-minimal.vsdx") as archive:
-            self.assertIn("docProps/app.xml", archive.namelist())
-            self.assertIn(b"<AppVersion>01.0000</AppVersion>", archive.read("docProps/app.xml"))
-            self.assertIn(b"<Rel r:id=\"rId1\"/>", archive.read("visio/pages/pages.xml"))
-            self.assertNotIn(b"<Pages r:id=", archive.read("visio/document.xml"))
-            page = archive.read("visio/pages/page1.xml")
-            self.assertIn(b"Q-SPK-1", page)
-            self.assertIn(b"<Cell N=\"BeginX\"", page)
-            self.assertIn(b"<Cell N=\"EndX\"", page)
-
-    def test_fixtures_are_reproducible_byte_for_byte(self) -> None:
-        expected = expected_hashes()
         with tempfile.TemporaryDirectory() as temporary:
             generated = pathlib.Path(temporary)
             self.generate(generated)
-            self.assertEqual(
-                (generated / "controlled-minimal.vsdx").read_bytes(),
-                (FIXTURES / "controlled-minimal.vsdx").read_bytes(),
-            )
+            with zipfile.ZipFile(generated / "controlled-minimal.vsdx") as archive:
+                self.assertIn("docProps/app.xml", archive.namelist())
+                self.assertIn(b"<AppVersion>01.0000</AppVersion>", archive.read("docProps/app.xml"))
+                self.assertIn(b"<Rel r:id=\"rId1\"/>", archive.read("visio/pages/pages.xml"))
+                self.assertNotIn(b"<Pages r:id=", archive.read("visio/document.xml"))
+                page = archive.read("visio/pages/page1.xml")
+                self.assertIn(b"Q-SPK-1", page)
+                self.assertIn(b"<Cell N=\"BeginX\"", page)
+                self.assertIn(b"<Cell N=\"EndX\"", page)
+
+    def test_fixtures_are_reproducible_byte_for_byte(self) -> None:
+        expected = expected_hashes()
+        with tempfile.TemporaryDirectory() as first_temporary, tempfile.TemporaryDirectory() as second_temporary:
+            first = pathlib.Path(first_temporary)
+            second = pathlib.Path(second_temporary)
+            self.generate(first)
+            self.generate(second)
             for name in ("controlled-minimal.vsdx", "controlled-master.vssx"):
-                actual = hashlib.sha256((generated / name).read_bytes()).hexdigest()
+                first_bytes = (first / name).read_bytes()
+                second_bytes = (second / name).read_bytes()
+                self.assertEqual(first_bytes, second_bytes, name)
+                actual = hashlib.sha256(first_bytes).hexdigest()
                 self.assertEqual(actual, expected[name], name)
 
     def test_generate_vsdx_from_canonical_document(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
-            output = pathlib.Path(temporary) / "generated.vsdx"
+            directory = pathlib.Path(temporary)
+            baseline = directory / "baseline"
+            baseline.mkdir()
+            self.generate(baseline)
+            output = directory / "generated.vsdx"
             result = self.run_tool("generate-vsdx", str(CANONICAL), str(output))
             self.assertEqual(result["status"], "ok")
             self.assertEqual(result["canonicalProjectId"], "project-spike-0001")
-            self.assertEqual(output.read_bytes(), (FIXTURES / "controlled-minimal.vsdx").read_bytes())
+            self.assertEqual(output.read_bytes(), (baseline / "controlled-minimal.vsdx").read_bytes())
 
     def test_legacy_invalid_vsdx_is_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
