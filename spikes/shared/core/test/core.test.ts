@@ -16,6 +16,11 @@ test("fixture validates and round-trips deterministically", () => {
   assert.equal(two, one);
 });
 
+test("serializer accepts a reactive-style proxied project", () => {
+  const proxied = new Proxy(createCanonicalFixture(), {});
+  assert.equal(serializeProject(proxied), canonicalFixtureText);
+});
+
 test("move uses command path, snaps, undo and redo", () => {
   const history = new CommandHistory(createCanonicalFixture());
   history.execute({ type: "MoveObjects", objectIds: ["object-symbol-0001"], dx: 17, dy: 24, grid: 10 });
