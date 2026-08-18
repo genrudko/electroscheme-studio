@@ -1,188 +1,166 @@
-# Current State — ElectroScheme Studio
+# Current State — Unified Electrical Engineering Platform
 
-Дата среза: 2026-08-06  
-Статус: `PROJECT-REFOUNDATION-001` in progress
+Дата среза: **2026-08-18**  
+Активная программа: `UNIFIED-FOUNDATION-001`
 
-## GitHub baseline
+## GitHub factual state
 
 - Repository: `genrudko/electroscheme-studio`
 - Default branch: `main`
-- Prototype baseline head: `6e1209d800c0cc65da4a922506586d5a100c2a84`
-- Active issue: #1 `PROJECT-REFOUNDATION-001`
-- Active branch: `governance/project-refoundation-001`
-- Active Draft PR: #2 `[PROJECT-REFOUNDATION-001] Re-found product architecture and GitHub workflow`
+- Active foundation issue: #5 `UNIFIED-FOUNDATION-001`
+- Active foundation branch: `architecture/unified-foundation-001`
+- Foundation Draft PR: создаётся в рамках этого work item и до owner acceptance остаётся Draft.
+- Previous issue #3 `DESKTOP-PLATFORM-AND-CORE-SPIKE-001`: OPEN at foundation start.
+- Previous Draft PR #4: OPEN / DRAFT / NOT MERGED at foundation start; Tauri/WebView-first recommendation is superseded as a final architecture decision by the new unified scope, but PR contents remain research evidence.
 
-До явного merge-командования `main` остаётся неизменённым prototype baseline. PR #2 остаётся Draft.
+Exact heads, compare counts and workflow runs are volatile and must be read directly from GitHub before implementation/acceptance actions rather than copied here as permanent facts.
 
-Exact branch head, `ahead_by`, `behind_by`, changed-file count and current workflow results are volatile GitHub state and must be read from PR #2 before every continuation or acceptance action. They are intentionally not self-recorded as immutable values inside a commit that changes the head itself.
+## Product decision now in force
 
-## Фактическая зрелость
+The project is no longer planned as only an independent scheme editor.
 
-Проект содержит исследовательские элементы редактора, но не является MVP, product UX baseline или compatibility baseline.
+The target is one standalone, desktop-first/local-first **modular electrical-engineering complex** unifying:
 
-### Существующие исследовательские активы
+1. Scheme Studio;
+2. NPT Engineering Toolkit / compatibility;
+3. Switching/TBP;
+4. shared import/topology/state/normative/UI foundations.
 
-- Vue 3 + TypeScript + SVG frontend prototype;
-- FastAPI/Pydantic backend prototype;
-- SVG canvas с сеткой, масштабированием, линейками и направляющими;
-- выделение, мультивыбор, базовые примитивы и текст;
-- pointer-based drag/drop research;
-- параметрическая модель шин и bay slots;
-- заготовка command stack;
-- backend-модель проекта, символов, терминалов и соединений;
-- VSDX/VSSX inspector и ShapeSheet metrics extraction;
-- converter VSDX masters → reviewable draft symbols;
-- generated symbol catalog и review workflow;
-- ГОСТ/СТО-oriented исследования.
+`ElectricalProject` / neutral domain model becomes the source of truth. Diagram geometry, CSV/XLSX, NPT files and switching-form documents are bounded views/imports/adapters.
 
-Наличие в этом списке не означает разрешение на автоматический reuse. Действует `docs/project/PROTOTYPE_QUARANTINE.md`.
+## Foundation status
 
-### Критические ограничения baseline
+### Accepted direction
 
-1. Существуют параллельные и несовместимые state/document models:
-   - backend `Project`;
-   - frontend `useProject`;
-   - frontend `EditorDocument`;
-   - локальные коллекции и состояния `CanvasViewport`.
-2. Undo/redo stack не является обязательным mutation path для реальных операций.
-3. `CanvasViewport` объединяет слишком много ответственности.
-4. Backend хранит активный проект преимущественно in-memory.
-5. VSDX drafts в основном не являются принятыми рабочими символами.
-6. Текущие VSDX tools преимущественно читают/конвертируют отдельные masters и не доказывают editable document import, VSDX export или round-trip compatibility.
-7. CI проверяет только наличие нескольких файлов и не защищает продукт от регрессий.
-8. Cross-platform desktop packaging отсутствует.
-9. Windows/Linux platform gates отсутствуют.
-10. README и часть старой документации не соответствовали фактическому состоянию.
-11. UI развивался серией repair/override patches, что создало design/CSS debt.
-12. Внешний вид и пользовательский опыт текущего build не приняты владельцем как направление нового продукта.
+- modular monolith;
+- one neutral Domain Core;
+- first-class UI Core;
+- topology separated from geometry;
+- explicit State Core with `UNKNOWN` as a first-class safe state;
+- first-class structured CSV/XLSX Import + reconciliation + auto-layout;
+- versioned normative/compliance registry;
+- ГОСТ/ЕСКД graphic profiles;
+- switching rules traced to Russian energy-sector normative sources;
+- enterprise/site/equipment/project policy overlays that cannot weaken an applicable mandatory baseline;
+- NPT compatibility behind adapter/module boundary;
+- optional EOD integration behind a strict feasibility/cost gate;
+- GitHub as canonical control plane and existing VPS as development execution plane;
+- risk-based CI and visual-first UI acceptance;
+- final platform stack to be selected only by Avalonia-vs-Qt executable spike.
 
-## Принятые решения переоснования
+### Not yet proven / not yet selected
 
-- Проект остаётся самостоятельным приложением, не частью ЭОД.
-- Цель — desktop-first/local-first продукт для Windows и Linux.
-- Browser-only WebUI не является обязательным.
-- Vue/TypeScript/SVG не выбрасываются автоматически; их судьба определяется архитектурным spike.
-- Прототип помещён в карантин, а не объявлен основой нового продукта.
-- Для UI/CSS, взаимодействий и state ownership решение по умолчанию — `reimplement_from_contract`.
-- Reuse допускается только через asset disposition, новые тесты и owner acceptance.
-- Переписывание всего репозитория с нуля не начинается до asset inventory и comparative spike.
-- GitHub заменяет локальный patch-script workflow как canonical delivery process.
-- Конкурентное преимущество определяется специализированными электротехническими сценариями.
-- ГОСТ/СТО claims требуют нормативной трассировки и acceptance evidence.
-- Рыночный анализ от 2026-08-06 принят как стратегический вход и зарегистрирован в `docs/research/MARKET_ANALYSIS_INTAKE_2026-08-06.md`.
-- Долгосрочный контур включает главные, нормальные, временно-нормальные, однолинейные, трёхлинейные и эксплуатационные representations.
-- Первый MVP остаётся ограничен однолинейной нормальной схемой.
-- Первый MVP обязан включать editable import утверждённого VSDX-подмножества и migration path для утверждённых VSSX masters.
-- До Pilot обязательны editable VSDX export, открытие результата в Microsoft Visio и controlled round-trip corpus.
-- Visio interoperability является обязательным adoption/migration bridge, а не optional post-MVP feature.
-- VSDX/VSSX — source/import/export subsystem, а не semantic authority и не canonical internal document model.
-- Silent import/export losses запрещены; unsupported content должен диагностироваться и сохраняться/блокироваться по явной стратегии.
-- Legacy `.vsd/.vss` входят в corpus inventory; до Pilot требуется локальный документированный migration path.
-- CIM — будущий exchange adapter и источник архитектурных понятий, а не обязательная внутренняя UI/document model.
-- Canonical model должен позволять одну equipment identity и несколько controlled diagram representations, не реализуя все виды схем в MVP.
+- Avalonia vs Qt final selection;
+- heavy-canvas performance of Avalonia on representative electrical workload;
+- exact native project package format;
+- exact domain schema version 1;
+- complete equipment-type library;
+- completeness/correctness of NPT `nodes` as a topology source;
+- production-safe creation of arbitrary new XSDE topology objects;
+- full normative rule coverage;
+- exact EOD integration API/cost;
+- installer/update channel;
+- product/brand name.
 
-## Принятые конкурентные reference roles
+## Important inherited evidence
 
-- Visio, Автограф, АСМОграф: low-friction editing, библиотеки, свободная компоновка и большие схемы;
-- Модус: эксплуатационная энергетическая семантика, topology, states and CIM-oriented preparation;
-- ETAP: intelligent single-line, continuity and energized/de-energized presentation;
-- AUCOTEC Engineering Base PTD: shared data for primary, secondary, protection and control;
-- EPLAN/Zuken/SEE/WSCAD: documentation automation;
-- Model Studio CS/EnergyCS: Russian project, normative and calculation context.
+### ElectroScheme Studio
 
-Ни один продукт не принят как единый архитектурный или UX-шаблон.
+Useful evidence/assets include:
 
-## Что не принято
+- object/terminal/connection research;
+- SVG/editor interaction experiments;
+- VSDX/VSSX/ShapeSheet tooling;
+- snapping/busbar/symbol research;
+- desktop packaging and Tauri spike evidence;
+- market/reference-product research.
 
-На текущем этапе не выбран окончательно:
+These are migration inputs, not automatically accepted production architecture.
 
-- desktop shell;
-- основной runtime-язык canonical domain/editor core;
-- необходимость постоянного FastAPI runtime внутри desktop application;
-- окончательная repository layout;
-- способ packaging Python VSDX tooling;
-- формат installer/update delivery;
-- точная схема лицензирования и внешнего распространения;
-- окончательная приоритизация post-MVP функций;
-- конкретный внутренний формат project package;
-- конкретный CIM profile coverage;
-- состав расчётных adapters;
-- точный первый Visio compatibility profile и tolerance;
-- corpus реальных VSDX/VSSX/VSD/VSS;
-- механизм migration для legacy `.vsd/.vss`;
-- необходимость и допустимость Windows-only bridge для отдельных legacy форматов.
+### NPT Engineering Toolkit
 
-Эти решения не должны приниматься «по вкусу», по инерции прототипа или только по vendor feature lists.
+Current research baseline includes:
 
-## Текущий work item boundary
+- ~475 parseable real XSDE files and large real industrial corpus;
+- lossless XSDE round-trip for the studied corpus;
+- identified NPT/Modus custom-value semantics and important non-KKS exceptions;
+- embedded `CustElem` behavior and external `.menu` library role;
+- large ASU/TECH/KKS signal catalog;
+- lossless XTABL v6.0 core for seven production tables / 1461 records;
+- proven unknown/preserve-only XTABL fields;
+- evidence that NPT `nodes` are topology-related, but not proof that they form a complete neutral electrical graph;
+- current Mnemo renderer fidelity is still insufficient and must not be disguised by adding unrelated editor features.
 
-`PROJECT-REFOUNDATION-001` изменяет только governance/canonical documentation.
+Full vendor/reference corpus must remain outside the public Git repository.
 
-Запрещено в PR #2:
+### TBP / switching-forms-generator
 
-- удалять или переносить product code;
-- выбирать desktop shell;
-- выполнять широкую реорганизацию каталогов;
-- исправлять старый UI;
-- добавлять новые symbols/features;
-- выдавать prototype за MVP;
-- делать prototype appearance compatibility requirement;
-- превращать VSDX в canonical project format;
-- заявлять arbitrary/lossless Visio compatibility;
-- начинать calculation/SCADA/CIM implementation.
+Useful inherited concepts include:
 
-## Следующие потоки
+- draft switching-form generation with mandatory human review;
+- YAML/profile-driven site-specific behavior;
+- normative-reference structures;
+- real operational wording/pattern research.
 
-### P1 Market/workflow baseline
+The new module must re-trace migrated rules to explicit source/version/applicability metadata; old behavior is not accepted merely because it exists in code/YAML.
 
-Полученный анализ является входом, но не заменяет hands-on benchmark.
+## Normative baseline state
 
-P1 должен сформировать:
+Foundation establishes the **registry mechanism**, not a false claim that all Russian energy-sector requirements are already encoded.
 
-- source-traceable competitor capability/reference-role matrix;
-- 8–12 реальных user workflows;
-- pain-point inventory;
-- reproducible/manual evidence для priority products;
-- task time/action count/error observations;
-- must-match/must-exceed/defer/reject decisions;
-- точную reference scheme для MVP;
-- recommendation по начальному normative profile;
-- representative Visio VSDX/VSSX corpus;
-- inventory версий Visio и реально используемых ShapeSheet/connector/property features;
-- prevalence и migration requirements для `.vsd/.vss`;
-- supported compatibility subset и loss-tolerance proposal.
+Initial authoritative-source discovery includes:
 
-### Следующий implementation work item
+- ГОСТ 2.701-2008, ГОСТ 2.702-2011 and relevant ESKD graphical-symbol standards;
+- ПОТЭЭ under Ministry of Labour order №903н with amendments;
+- PTEEP consumer rules under Ministry of Energy order №811;
+- PTEES under Ministry of Energy order №1070 with later amendments;
+- Switching Rules under Ministry of Energy order №757 with later amendments;
+- applicable PУЭ chapters/sources tracked separately rather than as one synthetic version.
 
-После принятия и merge `PROJECT-REFOUNDATION-001`:
+Every production rule still requires source-level extraction, applicability classification, testability decision and owner/domain review.
+
+## Development sequence after Foundation
 
 ```text
-DESKTOP-PLATFORM-AND-CORE-SPIKE-001
+UNIFIED-FOUNDATION-001
+        ↓
+INFRASTRUCTURE-SPIKE-001
+GitHub ↔ self-hosted VPS runner ↔ artifacts
+        ↓
+PLATFORM-STACK-SPIKE-001
+Avalonia vs Qt
+        ↓
+UI-CORE-FOUNDATION-001
++
+DOMAIN-CORE-FOUNDATION-001
+        ↓
+IMPORT-TO-SCHEME-VERTICAL-SLICE-001
+CSV/XLSX → topology → auto-layout → manual correction → save → reimport
+        ↓
+module expansion: Scheme / NPT / Switching
 ```
 
-Его контракт находится в `docs/project/NEXT_WORK_ITEM.md`.
+Foundation itself must not prematurely implement product code or pick a stack.
 
-Spike обязан доказать controlled VSDX read, VSSX read, minimal VSDX write и открытие generated VSDX в Microsoft Visio на Windows, не выбирая VSDX внутренней моделью продукта.
+## Explicitly out of current product scope
 
-## Проверки
+Without a new owner decision, do not build:
 
-- Current PR changes remain documentation/governance only.
-- Product code changes: `0`.
-- Existing CI remains a prototype placeholder and cannot be represented as product verification.
-- Acceptance requires a fresh factual read of PR #2 exact head, compare state and workflow runs.
+- replacement SCADA runtime;
+- IEC-104 server/client platform as a product objective;
+- historian;
+- P/Q control;
+- redundancy/failover SCADA platform;
+- remote real-equipment switching execution;
+- microservice platform;
+- dynamic plugin marketplace;
+- universal CAD replacement.
 
-## Состояние программы
+## Acceptance posture
 
-| Phase | Status |
-|---|---|
-| P0 Project refoundation | IN_PROGRESS |
-| P1 Market and workflow baseline | STRATEGIC_INPUT_RECEIVED / HANDS_ON_VALIDATION_PENDING |
-| P2 Desktop/platform/core and Visio-path spike | BLOCKED_BY_P0 |
-| P3 Canonical document core | NOT_STARTED |
-| P4 Editor kernel and design system | NOT_STARTED |
-| P5 Symbol platform and VSSX migration | NOT_STARTED |
-| P6 Electrical topology | NOT_STARTED |
-| P7 Normal single-line MVP plus accepted VSDX import | NOT_STARTED |
-| P8 ГОСТ/СТО profiles and output | NOT_STARTED |
-| P9 Packaging, Visio export, Demo and Pilot | NOT_STARTED |
-| P10 Advanced product capabilities | NOT_STARTED |
+Foundation is accepted when it makes the next implementation steps unambiguous and protects the project from four known failure modes:
+
+1. three competing domain models;
+2. legacy-looking/unusable UI despite correct backend;
+3. untraceable normative folklore embedded in code;
+4. development pipelines where a tiny visible repair becomes days of unrelated CI work.
