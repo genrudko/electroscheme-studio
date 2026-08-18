@@ -9,7 +9,8 @@
 - Default branch: `main`
 - Active foundation issue: #5 `UNIFIED-FOUNDATION-001`
 - Active foundation branch: `architecture/unified-foundation-001`
-- Foundation Draft PR: создаётся в рамках этого work item и до owner acceptance остаётся Draft.
+- Foundation Draft PR: #6 `[UNIFIED-FOUNDATION-001] Establish unified electrical engineering platform foundation`
+- PR #6 state: OPEN / DRAFT / NOT MERGED at this documentation snapshot.
 - Previous issue #3 `DESKTOP-PLATFORM-AND-CORE-SPIKE-001`: OPEN at foundation start.
 - Previous Draft PR #4: OPEN / DRAFT / NOT MERGED at foundation start; Tauri/WebView-first recommendation is superseded as a final architecture decision by the new unified scope, but PR contents remain research evidence.
 
@@ -108,13 +109,13 @@ The new module must re-trace migrated rules to explicit source/version/applicabi
 
 Foundation establishes the **registry mechanism**, not a false claim that all Russian energy-sector requirements are already encoded.
 
-Initial authoritative-source discovery includes:
+Initial authoritative-source discovery/current-edition cross-check includes:
 
-- ГОСТ 2.701-2008, ГОСТ 2.702-2011 and relevant ESKD graphical-symbol standards;
-- ПОТЭЭ under Ministry of Labour order №903н with amendments;
+- ГОСТ 2.701-2008 and ГОСТ 2.702-2011 from the Rosstandart catalogue;
+- ПОТЭЭ under Ministry of Labour order №903н with identified amendment chain;
 - PTEEP consumer rules under Ministry of Energy order №811;
-- PTEES under Ministry of Energy order №1070 with later amendments;
-- Switching Rules under Ministry of Energy order №757 with later amendments;
+- PTEES under Ministry of Energy order №1070 with identified amendments through 2026;
+- Switching Rules under Ministry of Energy order №757 with identified amendments through 2026;
 - applicable PУЭ chapters/sources tracked separately rather than as one synthetic version.
 
 Every production rule still requires source-level extraction, applicability classification, testability decision and owner/domain review.
