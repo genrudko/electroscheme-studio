@@ -1,99 +1,108 @@
-# ElectroScheme Studio — Documentation Index
+# Unified Electrical Engineering Platform — Documentation Index
 
-Статус: canonical index  
-Программа: `PROJECT-REFOUNDATION-001`  
-Baseline main: `6e1209d800c0cc65da4a922506586d5a100c2a84`
+Статус: **canonical index for `UNIFIED-FOUNDATION-001`**  
+Repository: `genrudko/electroscheme-studio`  
+Active issue: #5  
+Active branch: `architecture/unified-foundation-001`
 
-## Порядок чтения
+## 1. Порядок чтения нового проекта
 
-1. `README.md` — назначение и текущий статус репозитория.
-2. `AGENTS.md` — обязательный GitHub workflow и правила изменения проекта.
-3. `docs/project/CURRENT_STATE.md` — фактическое текущее состояние.
-4. `docs/project/PRODUCT_SCOPE.md` — целевой продукт, границы и конкурентная позиция.
-5. `docs/research/MARKET_ANALYSIS_INTAKE_2026-08-06.md` — принятый рыночный вход, проверенные стратегические выводы и границы доказательности.
-6. `docs/architecture/VISIO_INTEROPERABILITY_CONTRACT.md` — обязательный переходный мост Visio, уровни совместимости и запрет скрытых потерь.
-7. `docs/project/PROTOTYPE_QUARANTINE.md` — запрет автоматического наследования прототипа и правила migration disposition.
-8. `docs/project/MVP_AND_DEMO.md` — проверяемые пользовательские результаты MVP, demo и pilot.
-9. `docs/project/IMPLEMENTATION_PROGRAM.yaml` — последовательность фаз, зависимости и gates.
-10. `docs/architecture/SYSTEM_ARCHITECTURE.md` — целевая архитектура и migration direction.
-11. `docs/architecture/DOMAIN_INVARIANTS.md` — обязательные правила модели документа и электрической топологии.
-12. `docs/quality/ACCEPTANCE_GATES.md` — CI, тесты, visual evidence и cross-platform требования.
-13. `docs/decisions/0002_desktop_first_refoundation.md` — принятое решение о desktop-first переосновании.
-14. `docs/project/NEXT_WORK_ITEM.md` — готовый контракт следующего desktop/platform/core spike.
+1. `README.md` — краткое назначение и текущий product direction.
+2. `AGENTS.md` — обязательный operating/development contract.
+3. `docs/project/CURRENT_STATE.md` — фактический текущий срез.
+4. `docs/project/UNIFIED_PRODUCT_VISION.md` — зачем существует единый комплекс и какой user value он должен дать.
+5. `docs/project/UNIFIED_SCOPE_AND_ROADMAP.md` — scope, исключения, фазы и первые vertical slices.
+6. `docs/project/MIGRATION_PLAN_UNIFIED.md` — как используются/мигрируют ElectroScheme Studio, NPT Toolkit и TBP без механического слияния кода.
+7. `docs/architecture/UNIFIED_SYSTEM_ARCHITECTURE.md` — modular-monolith структура и ownership.
+8. `docs/architecture/DOMAIN_AND_PROJECT_MODEL.md` — `ElectricalProject`, equipment/terminal/connection/topology/state/view invariants.
+9. `docs/architecture/UI_CORE.md` — design system, workspace, multi-window, shared controls/canvas и UX budgets.
+10. `docs/architecture/IMPORT_AND_AUTO_LAYOUT.md` — CSV/XLSX mapping, staging, reconciliation, topology construction, layout constraints.
+11. `docs/architecture/SWITCHING_AND_INTERLOCKS.md` — switching sequence/state transition/interlock model.
+12. `docs/architecture/NPT_COMPATIBILITY_BOUNDARY.md` — XSDE/XTABL/NPT signal compatibility без загрязнения Core.
+13. `docs/architecture/EOD_INTEGRATION_BOUNDARY.md` — optional EOD adapter и reject/cost gate.
+14. `docs/compliance/NORMATIVE_ARCHITECTURE.md` — нормативный rule engine, provenance, applicability и versioning.
+15. `docs/compliance/NORMATIVE_REGISTRY.md` — initial source registry и правила поддержания актуальности.
+16. `docs/compliance/GRAPHICS_GOST_PROFILE.md` — графический ГОСТ/ЕСКД profile architecture.
+17. `docs/compliance/LOCAL_POLICY_OVERLAYS.md` — manufacturer/enterprise/site/project тонкая настройка и non-weakening.
+18. `docs/compliance/SAFETY_BOUNDARIES.md` — границы автоматизации и safety claims.
+19. `docs/development/DEVELOPMENT_PLATFORM.md` — GitHub + existing VPS + self-hosted runner.
+20. `docs/development/PLATFORM_STACK_SPIKE.md` — Avalonia vs Qt executable decision contract.
+21. `docs/development/CI_AND_ACCEPTANCE.md` — risk-based CI, visual-first acceptance, preview builds.
+22. `docs/decisions/0003_unified_electrical_platform.md` — решение об объединении продукта.
+23. `docs/decisions/0004_domain_model_source_of_truth.md` — решение о neutral domain authority.
+24. `docs/decisions/0005_layered_normative_policy.md` — rule layering/non-weakening.
+25. `docs/decisions/0006_github_vps_development_plane.md` — control/execution plane.
 
-## Владение документами
+## 2. PENDING decisions
 
-| Документ | Владеет |
-|---|---|
-| `README.md` | Входная точка и публичный статус |
-| `AGENTS.md` | Процесс разработки и change discipline |
-| `CURRENT_STATE.md` | Изменяемый фактический срез GitHub/проекта |
-| `PRODUCT_SCOPE.md` | Продуктовые границы и приоритеты |
-| `MARKET_ANALYSIS_INTAKE_2026-08-06.md` | Рыночные гипотезы, конкурентные reference roles и проверенные стратегические выводы |
-| `VISIO_INTEROPERABILITY_CONTRACT.md` | Обязательная совместимость Visio, mapping boundary, diagnostics и acceptance corpus |
-| `PROTOTYPE_QUARANTINE.md` | Классификация, reuse и retirement prototype assets |
-| `MVP_AND_DEMO.md` | Пользовательские acceptance scenarios |
-| `IMPLEMENTATION_PROGRAM.yaml` | Фазы, зависимости, статусы и gates |
-| `SYSTEM_ARCHITECTURE.md` | Целевая структура компонентов |
-| `DOMAIN_INVARIANTS.md` | Инварианты данных, геометрии и топологии |
-| `ACCEPTANCE_GATES.md` | Обязательная проверка изменений |
-| `NEXT_WORK_ITEM.md` | Boundary следующего work item |
-| `docs/decisions/*` | Принятые архитектурные решения и их последствия |
+До доказательного spike **не считаются принятыми**:
 
-## Рыночный анализ
+- final platform stack: Avalonia/C#/.NET vs Qt 6/C++/QML;
+- exact native project package format;
+- full plugin/dynamic-module mechanism;
+- EOD integration implementation;
+- полнота извлекаемой NPT topology из `nodes`/Tech relationships;
+- exact scope автоматизируемых normative rules;
+- final product/brand name and repository rename.
 
-Полученный 6 августа 2026 года рыночный анализ принят как стратегический вход и зарегистрирован в `docs/research/MARKET_ANALYSIS_INTAKE_2026-08-06.md`.
+## 3. Legacy/research documentation
 
-Он уже подтверждает:
+Существующие документы project refoundation, Visio interoperability, market research, prototype quarantine, VSDX/VSSX research, old patch/development history и Draft PR #4 **не удаляются**.
 
-- фрагментацию рынка между drawing, ECAD, calculation, substation engineering и operational systems;
-- нишу low-friction объектного редактора энергетических схем;
-- необходимость изучать Модус, ETAP, Engineering Base, EPLAN, Visio, Model Studio, EnergyCS, Автограф и АСМОграф в разных reference roles;
-- важность topology/state/document semantics;
-- обязательность Visio interoperability как переходного рыночного моста;
-- ошибочность раннего включения расчётного комплекса, SCADA и universal CAD scope.
-
-Детальный hands-on benchmark, измеримые пользовательские сценарии и окончательные `must_match / must_exceed / defer / reject` решения остаются фазой `P1_MARKET_AND_WORKFLOW_BASELINE`.
-
-Рыночный анализ может менять:
-
-- приоритеты функций;
-- must-match/must-exceed decisions;
-- acceptance scenarios;
-- post-MVP backlog.
-
-Он не может без отдельного ADR отменить:
-
-- one canonical document model;
-- command-based mutations;
-- prototype quarantine;
-- Windows/Linux requirement;
-- local-first boundary;
-- доказательность ГОСТ/СТО claims;
-- обязательный Visio migration/exchange bridge для принятого compatibility profile.
-
-## Историческая документация
-
-Существующие документы `docs/development/patch_*`, bootstrap-описания, ранние стратегии и отчёты VSDX являются историческими или исследовательскими материалами.
-
-Они:
-
-- не удаляются в `PROJECT-REFOUNDATION-001`;
-- не имеют приоритета над canonical документами из этого индекса;
-- могут содержать устаревшие планы, локальные пути и patch-script инструкции;
-- подлежат классификации/архивации отдельным work item после принятия новой архитектуры.
-
-При противоречии действует следующий приоритет:
+Они имеют статус:
 
 ```text
-accepted ADR
-→ DOMAIN_INVARIANTS / SYSTEM_ARCHITECTURE / VISIO_INTEROPERABILITY_CONTRACT
-→ PROTOTYPE_QUARANTINE
-→ IMPLEMENTATION_PROGRAM / MVP_AND_DEMO / PRODUCT_SCOPE
-→ accepted research intake
-→ CURRENT_STATE
-→ README / AGENTS
-→ historical documents
+historical / research / migration evidence
 ```
 
-`AGENTS.md` имеет высший приоритет по процедуре работы, но не может самовольно менять продуктовые или архитектурные решения без ADR/owner acceptance.
+если явно не включены в новый canonical reading order выше.
+
+Особенно сохраняются:
+
+- `docs/architecture/VISIO_INTEROPERABILITY_CONTRACT.md` и связанные Visio исследования — как migration/interoperability evidence;
+- prototype disposition материалы — как источник reuse/retire решений;
+- Tauri/WebView platform spike в PR #4 — как измерительный и implementation evidence, но не как выбранный stack;
+- market/reference-product исследования — как product discovery input.
+
+## 4. Source authority
+
+При конфликте содержания:
+
+```text
+explicit owner instruction
+→ accepted ADR
+→ new canonical architecture/compliance docs from this INDEX
+→ CURRENT_STATE / roadmap / migration plan
+→ current research evidence
+→ historical project-refoundation/prototype documents
+```
+
+`AGENTS.md` имеет высший приоритет только по operating process, но не может сам менять product/domain/normative решения.
+
+## 5. Normative-source authority
+
+Для нормативных фактов приоритет источников:
+
+```text
+official publication / official standards catalogue
+→ official issuer material
+→ authoritative legal/reference system used as cross-check
+→ secondary explanatory source
+```
+
+Ни одна зафиксированная редакция не считается бессрочно «актуальной». `NORMATIVE_REGISTRY.md` хранит дату проверки, effective dates, amendments/supersedes и статус review.
+
+## 6. Documentation change rule
+
+Если код/архитектура меняют:
+
+- source-of-truth model;
+- module boundary;
+- normative behavior;
+- project storage;
+- import semantics;
+- safety boundary;
+- UI Core contract;
+- deployment/development process;
+
+соответствующий canonical owner document обновляется в том же PR.
