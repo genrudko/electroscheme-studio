@@ -1,266 +1,375 @@
-# Agent Instructions — ElectroScheme Studio
+# Agent Instructions — Unified Electrical Engineering Platform
 
 ## 1. Product identity
 
-ElectroScheme Studio is a standalone, desktop-first, local-first engineering application for normal electrical schemes and related electrical diagrams.
+Repository `genrudko/electroscheme-studio` is being refounded as the canonical umbrella for one **standalone, desktop-first, local-first, modular electrical-engineering software complex**.
 
-It is not currently a module of EOD.
+The product unifies three former directions:
 
-Required target platforms:
+- ElectroScheme Studio;
+- NPT Engineering Toolkit;
+- TBP / switching-forms-generator.
 
-- Windows;
-- Linux.
+These old projects are reference/migration sources, not three future sources of truth.
 
-The product may retain Vue 3, TypeScript and SVG as the editor/rendering layer, but browser-only deployment is not a product requirement. The desktop shell and native integration layer must be selected through an explicit architecture spike and ADR.
+The repository name is historical and may be renamed later only by an accepted naming/migration decision.
 
-## 2. Canonical source
+## 2. Canonical source and precedence
 
-GitHub repository `genrudko/electroscheme-studio` is the only canonical source for:
+GitHub is the canonical source for code, architecture, plans, issues, branches, PRs, tests and accepted evidence.
 
-- code;
-- architecture;
-- product plans;
-- issue state;
-- branches and pull requests;
-- test and build evidence;
-- release and migration decisions.
+Before work restore from GitHub:
 
-A local machine is a development/runtime environment only. Local logs, chat memory, patch markers and unpushed files are not authoritative.
-
-Before work, restore factual state from GitHub:
-
-1. current `main` head;
+1. current `main`;
 2. active issue;
-3. active branch;
-4. Draft PR and exact head;
-5. changed-file boundary;
-6. CI/check results;
+3. active branch and Draft PR;
+4. exact PR head / compare state;
+5. changed files;
+6. applicable workflow state;
 7. canonical documents from `docs/INDEX.md`.
 
-Do not request a handoff, old-chat summary or manually supplied SHA when GitHub can provide the state.
+Do not ask the owner for handoffs/SHA/state that GitHub can provide.
+
+For product/architecture meaning use this precedence:
+
+```text
+explicit owner instruction
+→ accepted ADR
+→ canonical architecture/compliance documents from docs/INDEX.md
+→ CURRENT_STATE / ROADMAP
+→ research and migration evidence
+→ historical prototype documents
+```
+
+This file owns development procedure but does not override accepted product/engineering decisions.
 
 ## 3. Work-item workflow
 
-Every implementation or governance change must use one explicit work item:
+Normal implementation/governance flow:
 
 ```text
 issue
 → dedicated branch
 → Draft PR
-→ implementation and checks
+→ targeted implementation/checks
+→ visual/manual evidence when applicable
 → owner acceptance
-→ explicit merge command
+→ explicit Ready/Merge command
 ```
 
 Rules:
 
-1. One active work item per development stream.
-2. If an issue, branch and Draft PR already exist, use them; do not create replacements.
-3. Do not commit directly to `main`.
-4. Do not mark a PR Ready for Review without an explicit owner command.
-5. Do not merge without an explicit owner command.
-6. Keep the PR Draft while repairs, visual checks or acceptance evidence are incomplete.
-7. Use coherent, risk-based changes rather than dozens of cosmetic repair commits.
-8. Keep issue, PR description and canonical project state synchronized.
+1. Reuse an existing issue/branch/Draft PR for the same work item; do not create duplicates.
+2. Do not commit directly to `main`.
+3. Do not mark Ready for Review without explicit owner command.
+4. Do not merge without explicit owner command.
+5. Keep changes risk-bounded; avoid repair-on-repair churn.
+6. Full/nuclear CI is not the default tax on a small UI change.
+7. Visual acceptance for UI changes must happen before expensive unrelated gates where feasible.
+8. GitHub state, not chat memory or local patch markers, determines factual status.
 
-## 4. Legacy patch workflow
+## 4. Core architecture invariants
 
-Historical numbered PowerShell patches under the old workflow are not the delivery mechanism for future product development.
+Unless superseded by accepted ADR:
 
-Forbidden as the primary workflow:
+1. `ElectricalProject` / neutral domain model is the engineering source of truth.
+2. Diagram geometry is a view/projection and is not electrical topology.
+3. CSV/XLSX, VSDX/VSSX, XSDE, XTABL and switching-form documents are imports/exports/views/adapters, not parallel canonical models.
+4. Equipment, terminals, connections, signals and rules use stable identifiers.
+5. Connections reference semantic terminals/ports, not incidental screen coordinates.
+6. Mutations use explicit command/transaction paths compatible with undo/redo and validation.
+7. Project storage is versioned and migratable.
+8. `UNKNOWN` is first-class. Unknown position/quality/energization must never be silently interpreted as open/off/de-energized.
+9. Domain Core contains no NPT implementation identifiers such as `sTag`, `RTID`, `TechData`, `CustElem` or `scd*`.
+10. UI Core contains no product-specific business rules that belong to modules/domain services.
+11. Domain modules are testable without launching the full UI.
+12. Standalone operation must remain possible with EOD integration absent.
+
+## 5. Target modular-monolith boundary
+
+Initial logical ownership:
 
 ```text
-create local patch script
-→ apply outside GitHub review
-→ send transcript
-→ stack repair patch over repair patch
+Core.Domain
+Core.UI
+Core.Compliance
+Core.ProjectStorage
+
+Modules.EquipmentLibrary
+Modules.Import
+Modules.Schemes
+Modules.Npt
+Modules.Switching
+
+Adapters.Platform
+Adapters.Eod        # optional / feasibility-gated
+App
 ```
 
-Allowed uses of scripts:
+Separate assemblies/libraries are allowed and expected; distributed microservices and dynamic plugin marketplace are not early requirements.
 
-- reproducible repository tooling;
-- build/package automation;
-- migration tools;
-- developer environment bootstrap;
-- one-off diagnostics preserved as reviewed code.
+Do not introduce a shared abstraction until at least one real cross-module use case proves it.
 
-All resulting changes must still be visible in the branch and PR diff.
+## 6. Import and auto-layout invariants
 
-Do not delete historical patch documentation merely to clean the repository. Classify or archive it through an approved migration work item.
+Structured equipment/topology import is a first-class product workflow.
 
-## 5. Prototype baseline
+Required flow:
 
-The `main` head `6e1209d800c0cc65da4a922506586d5a100c2a84` is the initial prototype baseline for `PROJECT-REFOUNDATION-001`.
+```text
+source CSV/XLSX
+→ mapping profile
+→ normalization
+→ staging candidate
+→ validation/ambiguity resolution
+→ reconciliation
+→ ElectricalProject update
+→ topology validation
+→ auto-layout proposal
+→ engineer review
+```
 
-Preserve until migration decisions are accepted:
+Rules:
 
-- SVG canvas and interaction research;
-- VSDX/VSSX inspection and conversion tools;
-- ShapeSheet-derived metrics and generated catalogs;
-- parametric busbar research;
-- snapping, rulers, guides and pointer interaction work;
-- symbol review data and provenance;
-- existing backend/frontend examples.
+- CSV/XLSX is not native project storage.
+- Never silently guess an ambiguous terminal or connection.
+- Imported entities keep source/provenance identifiers.
+- Re-import must show a diff/reconciliation plan before destructive change.
+- Manual layout corrections are stored as layout constraints and must not be erased by routine re-import/auto-layout.
+- Electrical correctness and layout confidence are separate diagnostics.
 
-Do not assume these assets are production-ready. Reuse requires tests, reconciliation and explicit ownership in the target architecture.
+## 7. NPT compatibility boundary
 
-## 6. Product boundaries
+NPT/Modus material is valuable industrial evidence and compatibility input, not the architecture of the new platform.
 
-The product must outperform general diagram editors in electrical-engineering workflows, not imitate every feature of a general CAD system.
+Preserve proven findings and lossless handling, including unknown fields/elements/order where applicable.
 
-Core product direction:
+Never assume without evidence:
 
-- normal electrical schemes;
-- smart equipment objects;
-- terminals and connection topology;
-- parameterized symbols;
-- explicit operating states where relevant;
-- electrical properties and metadata;
-- ГОСТ/СТО-oriented presentation profiles;
-- validation and diagnostics;
-- print-quality output;
-- open, versioned project format;
-- optional future automatic scheme generation from structured equipment/topology data.
+- that NPT `nodes` are a complete electrical topology graph;
+- that every `scd*` value is KKS;
+- that reconstruction from a simplified XML model is lossless;
+- that an experimentally generated XSDE object is native-Modus-safe until native acceptance is proven.
 
-Not mandatory for the first product stages:
+NPT-specific IDs and storage rules belong in `Modules.Npt` / adapters.
 
-- DWG compatibility;
-- universal mechanical/building CAD;
-- cloud collaboration;
-- multi-user editing;
-- marketplace or plugin ecosystem;
-- arbitrary Visio document fidelity;
-- universal autorouting;
-- complete replacement of every Visio drawing feature.
+Full NPT corpus and vendor binaries must not be committed to the public repository. Keep proprietary/reference material outside Git; repository tests use synthetic/cleared fixtures, while private VPS corpus tests may exercise the full reference set.
 
-Do not add a broad feature merely because another editor has it. Require a defined electrical-engineering use case and acceptance scenario.
+## 8. Normative/compliance discipline
 
-## 7. Architecture invariants
+The product must support traceable compliance profiles rather than hard-coded folklore.
 
-The following are non-negotiable unless changed by an accepted ADR:
+Every encoded normative rule must carry at least:
 
-1. One canonical document model is the source of truth.
-2. SVG/visual nodes are projections, not authoritative engineering data.
-3. Objects, ports, connections and properties use stable IDs.
-4. Connections reference ports, not incidental screen coordinates.
-5. Document mutations use a command/transaction path compatible with undo/redo.
-6. Save/load round trips must preserve engineering meaning.
-7. Project format is versioned and migratable.
-8. Desktop/platform integration is behind an adapter boundary.
-9. Domain/editor core must be testable without launching the full desktop UI.
-10. Generated or imported content must preserve source provenance.
+- stable rule ID;
+- source document and issuer;
+- edition/amendment/effective dates;
+- applicability/scope;
+- normative level/authority;
+- machine-checkable predicate/action where possible;
+- severity;
+- explanation;
+- source/provenance reference;
+- test/evidence status.
 
-Until reconciliation is complete, do not expand parallel state models such as backend `Project`, frontend `EditorDocument` and local `CanvasViewport` collections independently.
+Never claim full compliance to a whole ГОСТ, ПУЭ, ПОТЭЭ, ПТЭЭС, ПТЭЭП/ПТЭЭПЭЭ or switching-rule set unless the claimed scope is explicitly encoded, traced and accepted.
 
-## 8. Symbol source authority
+PУЭ must not be treated as one monolithic modern version; track applicable chapters/sources/revisions.
 
-When a trusted VSDX/VSSX master exists, ShapeSheet data is an engineering source for:
+## 9. Non-weakening local policy rule
 
-- dimensions;
-- geometry;
-- connection points;
-- formulas;
-- user and property cells;
+Configuration layers may reflect manufacturer, enterprise, site and project specifics, but a lower/local layer must not weaken an applicable mandatory baseline.
+
+Conceptual hierarchy:
+
+```text
+Mandatory regulatory baseline
+→ applicable standards/profile baseline
+→ manufacturer/equipment constraints
+→ enterprise policy
+→ site/object policy
+→ project policy
+```
+
+A lower layer may add requirements or choose a stricter alternative. An attempted weakening of a locked mandatory requirement is a configuration error, not an override.
+
+Conflict diagnostics must explain which sources/rules conflict and which rule wins.
+
+## 10. Graphics and ГОСТ/ЕСКД
+
+Electrical-scheme graphics are semantic assets governed by versioned graphic-standard profiles.
+
+Do not promote a symbol because it merely looks familiar.
+
+A promoted native symbol/profile requires, where applicable:
+
+- equipment/domain type mapping;
+- terminal semantics;
 - state variants;
-- text fields;
-- rotation/stretch behavior clues.
+- normative source/profile;
+- geometry/dimension evidence;
+- orientation/rotation/stretch behavior;
+- connection points;
+- labels/designations;
+- print/export evidence;
+- validation tests;
+- licensing/provenance clarity.
 
-Do not replace an available engineering master with a hand-drawn placeholder and call it complete.
+NPT graphical assets may be used as compatibility/reference evidence; do not silently copy proprietary assets into the native symbol library.
 
-Import is not automatic acceptance. Every promoted symbol requires evidence for:
+## 11. Switching, state and interlocks
 
-- geometry;
-- scale and dimensions;
-- terminals and directions;
-- rotation;
-- snapping;
-- stretching/parameterization where applicable;
-- states;
-- properties;
-- ГОСТ/СТО profile;
-- save/load and export.
+Switching/TBP functionality must be driven by explicit domain state and normative rules.
 
-## 9. ГОСТ/СТО claims
+Safety boundaries:
 
-Never claim full compliance without encoded rules, identified normative sources and acceptance evidence.
+- software simulation is not physical equipment control;
+- logical/project interlock is not a substitute for relay/PLC/hardwired interlock;
+- TBP generation remains a draft/decision-support workflow with required human review until a separately accepted safety case says otherwise;
+- no operation is considered safe merely because the model lacks contradictory data;
+- denial/uncertainty must be explainable to the user.
 
-Each rule/profile must record:
+Do not add real SCADA command execution, IEC-104 server, historian, P/Q control or redundancy to this product scope without a new explicit owner decision.
 
-- source document and edition/date;
-- applicable scope;
-- exact product behavior;
-- validation severity;
-- test or visual evidence;
-- known exceptions.
+## 12. UI Core and UX quality
 
-Use wording such as `ГОСТ-oriented` or `profile implemented` until the formal compliance boundary is proven.
+UI Core is a first-class architecture area, not cosmetic styling.
 
-## 10. Quality gates
+Target: modern, dense, professional desktop engineering UX suitable for long sessions, large projects, keyboard+mouse and multi-monitor work.
 
-Changes must run the applicable gates from `docs/quality/ACCEPTANCE_GATES.md`.
+Required foundation includes:
 
-At minimum, product code must not be accepted without:
+- application shell/workspace;
+- document tabs/splits/detachable windows;
+- multi-window and workspace persistence;
+- design system and UI Gallery;
+- property inspector;
+- trees and virtualized tables;
+- command/shortcut/context-menu system;
+- dialogs/notifications/status;
+- shared canvas infrastructure;
+- HiDPI/mixed-DPI support;
+- accessible focus/keyboard behavior.
 
-- backend/tool tests where relevant;
-- frontend build and typecheck;
-- schema and round-trip checks;
-- invariant tests for document/topology changes;
-- browser/desktop interaction evidence for UI changes;
-- Windows and Linux CI coverage when platform behavior is affected.
+Reject MS-DOS/legacy-looking UI as well as sparse/mobile-first desktop composition.
 
-A placeholder CI job that only checks file existence is not sufficient.
+UI changes require visible evidence. Do not hide structural problems behind broad CSS/style overrides.
 
-Visual acceptance is required for editor UI and print/export changes. Compilation alone is not acceptance.
+## 13. Platform stack rule
 
-## 11. Change discipline
+The final UI/runtime stack is currently PENDING.
 
-Before editing:
+Admitted final candidates:
 
-1. identify the owner document/module;
-2. state the invariant being changed;
-3. define acceptance evidence;
-4. identify migration/compatibility impact;
-5. constrain the changed-file boundary.
+- Avalonia + C#/.NET;
+- Qt 6 + C++/QML.
 
-Forbidden without explicit scope:
+Tauri/WebView work in Draft PR #4 is retained as research evidence but is not the selected product baseline.
 
-- broad repository reformatting;
-- deleting prototype assets;
-- replacing the stack;
-- selecting a desktop shell by preference alone;
-- adding large dependencies;
-- changing public project format without migration;
-- mixing UI redesign with document-model migration;
-- shipping generated VSDX drafts as accepted core symbols;
-- hiding failures with broad CSS overrides or exception lists.
+Do not select the stack by familiarity or preference. `PLATFORM-STACK-SPIKE` must compare equivalent scenarios and measure canvas, tables, multi-window, HiDPI, headless/visual testing, packaging and development iteration cost.
 
-## 12. Documentation ownership
+## 14. Development Platform and CI
+
+Baseline development control plane:
+
+```text
+ChatGPT/owner
+→ GitHub
+→ self-hosted runner on existing VPS
+→ targeted build/test/benchmark/package
+→ GitHub logs/artifacts
+→ owner acceptance
+```
+
+No mandatory Business/MCP/new paid service is assumed.
+
+The local PC is an acceptance endpoint, not a required build environment.
+
+Repository tooling should converge on one deterministic launcher (`./dev` or platform-neutral equivalent) with commands for targeted lanes.
+
+Risk-based lanes:
+
+- UI-only: compile + targeted UI/headless/visual evidence + preview;
+- domain: core + affected module + serialization/migration;
+- NPT: lossless/round-trip/corpus/format invariants;
+- topology/switching/compliance: scenario/invariant/property/rule tests;
+- full suite: release/nightly or genuinely systemic changes.
+
+Do not make a small UI patch wait for unrelated full-corpus and release gates before the owner can see it.
+
+## 15. Optional EOD integration
+
+EOD integration is feasibility-gated and optional.
+
+Acceptable direction: thin adapter/module registration, launcher/deep links, bounded context handoff, links to project/equipment/scheme/switching documents, optional shared authentication/context if cheap and clean.
+
+Reject integration if it requires:
+
+- EOD-specific entities in Domain Core;
+- mandatory runtime dependency on EOD;
+- separate product fork;
+- duplicate UI shell implementation;
+- pervasive conditional branches;
+- substantial independent release/deploy burden.
+
+Standalone product tests must pass with EOD adapter absent.
+
+## 16. Historical/prototype preservation
+
+Do not delete old prototype, Visio, market, Tauri or migration evidence merely because the new foundation supersedes its conclusions.
+
+Classify each significant asset as:
+
+- retain as evidence;
+- salvage behind new contract/tests;
+- reimplement from behavior;
+- archive/historical;
+- retire only after accepted migration.
+
+## 17. Documentation ownership
 
 Start with `docs/INDEX.md`.
 
-Canonical ownership:
+Canonical new-foundation owners include:
 
-- `README.md` — repository entry point and public current status;
-- `AGENTS.md` — contributor/agent operating contract;
-- `docs/project/CURRENT_STATE.md` — volatile factual project state;
-- `docs/project/PRODUCT_SCOPE.md` — product boundaries and positioning;
-- `docs/project/MVP_AND_DEMO.md` — user-visible acceptance scenarios;
-- `docs/project/IMPLEMENTATION_PROGRAM.yaml` — phases, dependencies and gates;
-- `docs/architecture/SYSTEM_ARCHITECTURE.md` — target component structure;
-- `docs/architecture/DOMAIN_INVARIANTS.md` — non-negotiable data/domain rules;
-- `docs/quality/ACCEPTANCE_GATES.md` — required verification evidence;
-- `docs/decisions/` — accepted architecture decisions.
+- `README.md` — entry point/status;
+- `AGENTS.md` — operating contract;
+- `docs/project/CURRENT_STATE.md` — volatile factual state;
+- `docs/project/UNIFIED_PRODUCT_VISION.md` — product goal/value;
+- `docs/architecture/UNIFIED_SYSTEM_ARCHITECTURE.md` — modules/boundaries;
+- `docs/architecture/DOMAIN_AND_PROJECT_MODEL.md` — source-of-truth model/invariants;
+- `docs/architecture/UI_CORE.md` — shared UI architecture;
+- `docs/architecture/IMPORT_AND_AUTO_LAYOUT.md` — structured import/reconciliation/layout;
+- `docs/architecture/SWITCHING_AND_INTERLOCKS.md` — state transition and rule boundary;
+- `docs/architecture/NPT_COMPATIBILITY_BOUNDARY.md` — NPT isolation/compatibility;
+- `docs/architecture/EOD_INTEGRATION_BOUNDARY.md` — optional EOD gate;
+- `docs/compliance/NORMATIVE_ARCHITECTURE.md` — compliance engine/registry;
+- `docs/compliance/NORMATIVE_REGISTRY.md` — source baseline and lifecycle;
+- `docs/compliance/LOCAL_POLICY_OVERLAYS.md` — enterprise/site customization;
+- `docs/compliance/SAFETY_BOUNDARIES.md` — safety claims/non-claims;
+- `docs/development/DEVELOPMENT_PLATFORM.md` — GitHub/VPS DevEx;
+- `docs/development/PLATFORM_STACK_SPIKE.md` — Avalonia-vs-Qt decision contract;
+- `docs/development/CI_AND_ACCEPTANCE.md` — risk-based gates.
 
-When an architectural decision changes, update its owner document in the same PR.
+Update owner documents in the same PR when their decision changes.
 
-## 13. Current work item
+## 18. Current work item
 
-During `PROJECT-REFOUNDATION-001`:
+For `UNIFIED-FOUNDATION-001`:
 
-- work only in issue #1;
-- work only in branch `governance/project-refoundation-001`;
-- create/use its Draft PR;
-- do not modify product code;
-- do not select the final desktop shell;
-- do not delete legacy files;
-- establish the canonical program and next implementation work item.
+- issue #5;
+- branch `architecture/unified-foundation-001`;
+- Draft PR only;
+- documentation/governance/architecture contracts first;
+- no bulk product-code migration;
+- no final platform-stack selection;
+- no Ready/Merge without explicit owner command.
+
+The immediate next sequence after accepted Foundation is:
+
+```text
+Infrastructure Spike
+→ Avalonia vs Qt Platform Spike
+→ UI Core + minimal Domain Core
+→ structured import / topology / auto-layout vertical slice
+```
